@@ -81,7 +81,7 @@ DO UPDATE SET
         'modifiedBy' = $lastModifiedBy
     }
 
-    Invoke-SqlLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
+    Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
 
     # sync if not local
     if ($SynchronizationKey -ne "Local") {

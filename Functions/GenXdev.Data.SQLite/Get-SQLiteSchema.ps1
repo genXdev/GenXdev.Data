@@ -1,6 +1,24 @@
 #######################################################################################
+<#
+.SYNOPSIS
+Get the schema of a SQLite database.
 
-function Get-SqlLiteTableSchema {
+.DESCRIPTION
+Get the schema of a SQLite database.
+
+.PARAMETER ConnectionString
+The connection string to the SQLite database.
+
+.PARAMETER DatabaseFilePath
+The path to the SQLite database file.
+
+.EXAMPLE
+Get-SQLiteSchema -DatabaseFilePath "C:\path\to\database.db"
+
+.EXAMPLE
+Get-SQLiteSchema -ConnectionString "Data Source=C:\path\to\database.db"
+#>
+function Get-SQLiteSchema {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
 
@@ -24,19 +42,10 @@ function Get-SqlLiteTableSchema {
             ParameterSetName = 'DatabaseFilePath',
             HelpMessage = 'The path to the SQLite database file.'
         )]
-        [string]$DatabaseFilePath,
-
-        ###############################################################################
-
-        [Parameter(
-            Position = 1,
-            Mandatory,
-            HelpMessage = 'The name of the table.'
-        )]
-        [string]$TableName
+        [string]$DatabaseFilePath
     )
 
-    $PSBoundParameters["Queries"] = "PRAGMA table_info($TableName)"
+    $PSBoundParameters["Queries"] = "SELECT * FROM sqlite_master"
 
-    Invoke-SqlLiteQuery @PSBoundParameters
+    Invoke-SQLiteQuery @PSBoundParameters
 }

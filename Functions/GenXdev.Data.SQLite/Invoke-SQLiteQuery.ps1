@@ -19,7 +19,7 @@
 .PARAMETER Queries
     The query or queries to execute.
 #>
-function Invoke-SqlLiteQuery {
+function Invoke-SQLiteQuery {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
 

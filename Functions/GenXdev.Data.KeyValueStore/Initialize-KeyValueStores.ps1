@@ -51,7 +51,7 @@ function Initialize-KeyValueStores {
             if (-not (Test-Path $dbPath)) {
 
                 Write-Verbose "Creating database at: $dbPath"
-                New-SqlLiteDatabase -DatabaseFilePath $dbPath
+                New-SQLiteDatabase -DatabaseFilePath $dbPath
 
                 # create table with sync support
                 $sqlCreateTable = @"
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS KeyValueStore (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
     ON KeyValueStore (synchronizationKey, storeName, keyName);
 "@
-                Invoke-SqlLiteQuery -DatabaseFilePath $dbPath -Queries $sqlCreateTable
+                Invoke-SQLiteQuery -DatabaseFilePath $dbPath -Queries $sqlCreateTable
             }
         }
     }

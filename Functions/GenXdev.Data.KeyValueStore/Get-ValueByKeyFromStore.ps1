@@ -63,7 +63,7 @@ AND deletedDate IS NULL;
         'syncKey' = $SynchronizationKey
     }
 
-    $result = Invoke-SqlLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
+    $result = Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
 
     if ($result) {
 

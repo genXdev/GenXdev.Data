@@ -6,7 +6,7 @@
   RootModule           = 'GenXdev.Data.psm1'
 
   # Version number of this module.
-  ModuleVersion        = '1.94.2025'
+  ModuleVersion        = '1.104.2025'
   # Supported PSEditions
   # CompatiblePSEditions = @()
 
@@ -38,7 +38,7 @@
   # ProcessorArchitecture = ''
 
   # Modules that must be imported into the global environment prior to importing this module
-  RequiredModules      = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.94.2025' }, @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.94.2025' });
+  RequiredModules      = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.104.2025' }, @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.104.2025' });
 
   # Assemblies that must be loaded prior to importing this module
   RequiredAssemblies   = @()
@@ -53,7 +53,7 @@
   # FormatsToProcess = @()
 
   # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-  NestedModules        = @("GenXdev.Data.SqlLite.psm1","GenXdev.Data.KeyValueStore.psm1", "GenXdev.Data.SqlServer.psm1", "GenXdev.Data.Preferences.psm1")
+  NestedModules        = @("GenXdev.Data.SQLite.psm1","GenXdev.Data.KeyValueStore.psm1", "GenXdev.Data.SqlServer.psm1", "GenXdev.Data.Preferences.psm1")
 
   # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
   FunctionsToExport    = '*' # @("*")
@@ -90,21 +90,20 @@
   ".\\Functions\\GenXdev.Data.Preferences\\Remove-GenXdevPreference.ps1",
   ".\\Functions\\GenXdev.Data.Preferences\\Set-GenXdevDefaultPreference.ps1",
   ".\\Functions\\GenXdev.Data.Preferences\\Set-GenXdevPreference.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\AssureSQLiteStudioInstalled.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteSchema.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteTableColumnData.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteTableData.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteTables.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteTableSchema.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteViewColumnData.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteViewData.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteViews.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Get-SqlLiteViewSchema.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Invoke-SqlLiteQuery.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\Invoke-SqlLiteStudio.ps1",
-  ".\\Functions\\GenXdev.Data.SqlLite\\New-SqlLiteDatabase.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\AssureSQLiteStudioInstalled.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteSchema.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteTableColumnData.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteTableData.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteTables.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteTableSchema.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteViewColumnData.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteViewData.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteViews.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Get-SQLiteViewSchema.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Invoke-SQLiteQuery.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\Invoke-SQLiteStudio.ps1",
+  ".\\Functions\\GenXdev.Data.SQLite\\New-SQLiteDatabase.ps1",
   ".\\Functions\\GenXdev.Data.SqlServer\\Invoke-SqlServerQuery.ps1",
-  ".\\GenXdev.Local\\KeyValueStores.sqllite.db",
   ".\\lib\\GenXdev.Data.deps.json",
   ".\\lib\\GenXdev.Data.dll",
   ".\\lib\\getfilesiginforedist.dll",
@@ -142,7 +141,7 @@
   ".\\GenXdev.Data.Preferences.psm1",
   ".\\GenXdev.Data.psd1",
   ".\\GenXdev.Data.psm1",
-  ".\\GenXdev.Data.SqlLite.psm1",
+  ".\\GenXdev.Data.SQLite.psm1",
   ".\\GenXdev.Data.SqlServer.psm1",
   ".\\LICENSE",
   ".\\license.txt",
@@ -158,7 +157,7 @@
     PSData = @{
 
       # Tags applied to this module. These help with module discovery in online galleries.
-      Tags                     = 'DataScience', 'Data', 'SqlServer', 'MWSQLServer', 'SqlLite'
+      Tags                     = 'DataScience', 'Data', 'SqlServer', 'MWSQLServer', 'SQLite'
 
       # A URL to the license for this module.
       LicenseUri               = 'https://raw.githubusercontent.com/genXdev/GenXdev.Data/main/LICENSE'

@@ -1,22 +1,35 @@
-###############################################################################
-BeforeAll {
-    # Clean-up
-    & "$PSScriptRoot\Clear-TestData.ps1"
-}
-AfterAll {
-    # Clean-up
-    & "$PSScriptRoot\Clear-TestData.ps1"
-}
-###############################################################################
-Describe "Initialize-KeyValueStores" {
+################################################################################
+
+Describe "Initialize-KeyValueStores Initialize-KeyValueStores" {
 
     BeforeAll {
+        # set up test paths
+        $Script:testRoot = $PSScriptRoot
+
+        # set local database path
+        $Script:localDbPath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
+
+        # determine onedrive path dynamically
+        $Script:userProfile = [Environment]::GetFolderPath('UserProfile')
+        $Script:shadowDbPath = Expand-Path "$userProfile\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
+
+        Write-Verbose "Setting up test environment"
         try {
-            Write-Verbose "Setting up test environment"
+            # ensure clean test environment
             & "$PSScriptRoot\Clear-TestData.ps1"
         }
         catch {
+            throw
+        }
+    }
 
+    AfterAll {
+        Write-Verbose "Cleaning up test environment"
+        try {
+            # clean up test data
+            & "$PSScriptRoot\Clear-TestData.ps1"
+        }
+        catch {
             throw
         }
     }
@@ -26,13 +39,9 @@ Describe "Initialize-KeyValueStores" {
         Initialize-KeyValueStores
 
         # verify database files exist
-        $localDb = [System.IO.Path]::Combine(
-            $PSScriptRoot, "..\..", "GenXdev.Local", "KeyValueStores.sqllite.db")
-        $shadowDb = [System.IO.Path]::Combine(
-            [Environment]::GetFolderPath('UserProfile'),
-            "OneDrive", "GenXdev.PowerShell.SyncObjects", "KeyValueStores.sqllite.db")
-
-        [System.IO.File]::Exists($localDb) | Should -BeTrue
-        [System.IO.File]::Exists($shadowDb) | Should -BeTrue
+        $null = Test-Path $Script:localDbPath | Should -BeTrue
+        $null = Test-Path $Script:shadowDbPath | Should -BeTrue
     }
 }
+
+################################################################################

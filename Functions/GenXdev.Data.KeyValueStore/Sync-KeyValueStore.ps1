@@ -81,5 +81,5 @@ AND (
         'syncKey' = $SynchronizationKey
     }
 
-    Invoke-SqlLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
+    Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
 }

@@ -12,10 +12,13 @@
 
 ### FEATURES
 
-    * ✅ Text-to-speech
-    * ✅ Spotify control
-    * ✅ Microsoft Shell helpers
-    * ✅ after installation, use 'cmds' to see full list of installed GenXdev cmdslets
+    * ✅ Key-Value Store based upon SQLite with OneDrive synchronization
+    * ✅ Preferences Store with local and default values
+    * ✅ SQLite database schema and data retrieval
+    * ✅ SQL Server query execution
+    * ✅ SQLite Studio installation assurance
+    * ✅ SQLite Studio execution
+    * ✅ SQLite database creation
 
 ### DEPENDENCIES
 [![WinOS - Windows-10 or later](https://img.shields.io/badge/WinOS-Windows--10--10.0.19041--SP0-brightgreen)](https://www.microsoft.com/en-us/windows/get-windows-10) [![GenXdev.Helpers](https://img.shields.io/powershellgallery/v/GenXdev.Helpers.svg?style=flat-square&label=GenXdev.Helpers)](https://www.powershellgallery.com/packages/GenXdev.Helpers/) [![GenXdev.FileSystem](https://img.shields.io/powershellgallery/v/GenXdev.Filesystem.svg?style=flat-square&label=GenXdev.FileSystem)](https://www.powershellgallery.com/packages/GenXdev.FileSystem/)
@@ -35,7 +38,7 @@ Update-Module
 ### GenXdev.Data<hr/>
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
-| [AssureSQLiteStudioInstalled](#AssureSQLiteStudioInstalled) |  |  |
+| [AssureSQLiteStudioInstalled](#AssureSQLiteStudioInstalled) |  | This function checks if SQLiteStudio is installed and available in the system PATH.If not found, it attempts to install it using WinGet and configures the PATHenvironment variable accordingly. |
 
 <hr/>
 &nbsp;
@@ -75,21 +78,21 @@ Update-Module
 <hr/>
 &nbsp;
 
-### GenXdev.Data.SqlLite</hr>
+### GenXdev.Data.SQLite</hr>
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
-| [AssureSQLiteStudioInstalled](#AssureSQLiteStudioInstalled) |  |  |
-| [Get-SqlLiteSchema](#Get-SqlLiteSchema) |  | Get the schema of a SQLite database. |
-| [Get-SqlLiteTableColumnData](#Get-SqlLiteTableColumnData) |  |  |
-| [Get-SqlLiteTableData](#Get-SqlLiteTableData) |  |  |
-| [Get-SqlLiteTables](#Get-SqlLiteTables) |  |  |
-| [Get-SqlLiteTableSchema](#Get-SqlLiteTableSchema) |  |  |
-| [Get-SqlLiteViewColumnData](#Get-SqlLiteViewColumnData) |  |  |
-| [Get-SqlLiteViewData](#Get-SqlLiteViewData) |  |  |
-| [Get-SqlLiteViews](#Get-SqlLiteViews) |  |  |
-| [Get-SqlLiteViewSchema](#Get-SqlLiteViewSchema) |  |  |
-| [Invoke-SqlLiteQuery](#Invoke-SqlLiteQuery) |  | Execute a query against a SQLite database with support for parameters and with aconfigurable transaction isolation level.All queries are executed within the same transaction.If an error occurs, the transaction is rollbacked and the error is thrown. |
-| [Invoke-SqlLiteStudio](#Invoke-SqlLiteStudio) |  |  |
+| [AssureSQLiteStudioInstalled](#AssureSQLiteStudioInstalled) |  | This function checks if SQLiteStudio is installed and available in the system PATH.If not found, it attempts to install it using WinGet and configures the PATHenvironment variable accordingly. |
+| [Get-SQLiteSchema](#Get-SQLiteSchema) |  | Get the schema of a SQLite database. |
+| [Get-SQLiteTableColumnData](#Get-SQLiteTableColumnData) |  | This function queries a SQLite database and returns the values from a specifiedcolumn in a table. It supports connecting via connection string or database filepath and allows limiting the number of returned records. |
+| [Get-SQLiteTableData](#Get-SQLiteTableData) |  | This function allows you to query data from a specified SQLite database tableusing either a connection string or database file path. It supports limiting thenumber of records returned. |
+| [Get-SQLiteTables](#Get-SQLiteTables) |  | This function queries a SQLite database to return all table names defined in thesqlite_master table. It supports connecting via either a connection string or adatabase file path. |
+| [Get-SQLiteTableSchema](#Get-SQLiteTableSchema) |  | This function queries the SQLite database to get detailed schema information fora specified table using the PRAGMA table_info command. |
+| [Get-SQLiteViewColumnData](#Get-SQLiteViewColumnData) |  | This function retrieves data from a specified column in a SQLite view. It supportsconnecting via connection string or database file path and allows limiting thenumber of records returned. |
+| [Get-SQLiteViewData](#Get-SQLiteViewData) |  | Gets records from a specified view in a SQLite database, either using a connectionstring or database file path. Allows limiting the number of records returned. |
+| [Get-SQLiteViews](#Get-SQLiteViews) |  | Gets all view names from the specified SQLite database using either a connectionstring or database file path. |
+| [Get-SQLiteViewSchema](#Get-SQLiteViewSchema) |  | This function queries the SQLite system tables to retrieve the SQL definition ofa specified view. It accepts either a connection string or database file path. |
+| [Invoke-SQLiteQuery](#Invoke-SQLiteQuery) |  | Execute a query against a SQLite database with support for parameters and with aconfigurable transaction isolation level.All queries are executed within the same transaction.If an error occurs, the transaction is rollbacked and the error is thrown. |
+| [Invoke-SQLiteStudio](#Invoke-SQLiteStudio) |  | This function allows execution of SQLite queries either through a connection stringor direct database file path. It supports parameterized queries and transactionisolation levels. |
 
 <hr/>
 &nbsp;
@@ -102,10 +105,10 @@ Update-Module
 <hr/>
 &nbsp;
 
-### GenXdev.Data.SqlLite</hr>
+### GenXdev.Data.SQLite</hr>
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
-| [New-SqlLiteDatabase](#New-SqlLiteDatabase) |  | Creates a new SQLite database file if it does not already exist. |
+| [New-SQLiteDatabase](#New-SQLiteDatabase) |  | Creates a new SQLite database file if it does not already exist. |
 
 <hr/>
 &nbsp;
@@ -119,21 +122,21 @@ Update-Module
 <hr/>
 &nbsp;
 
-### GenXdev.Data.SqlLite</hr>
+### GenXdev.Data.SQLite</hr>
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
-| [Get-SqlLiteSchema](#Get-SqlLiteSchema) |  | Get the schema of a SQLite database. |
-| [Get-SqlLiteTableColumnData](#Get-SqlLiteTableColumnData) |  |  |
-| [Get-SqlLiteTableData](#Get-SqlLiteTableData) |  |  |
-| [Get-SqlLiteTables](#Get-SqlLiteTables) |  |  |
-| [Get-SqlLiteTableSchema](#Get-SqlLiteTableSchema) |  |  |
-| [Get-SqlLiteViewColumnData](#Get-SqlLiteViewColumnData) |  |  |
-| [Get-SqlLiteViewData](#Get-SqlLiteViewData) |  |  |
-| [Get-SqlLiteViews](#Get-SqlLiteViews) |  |  |
-| [Get-SqlLiteViewSchema](#Get-SqlLiteViewSchema) |  |  |
-| [Invoke-SqlLiteQuery](#Invoke-SqlLiteQuery) |  | Execute a query against a SQLite database with support for parameters and with aconfigurable transaction isolation level.All queries are executed within the same transaction.If an error occurs, the transaction is rollbacked and the error is thrown. |
-| [Invoke-SqlLiteStudio](#Invoke-SqlLiteStudio) |  |  |
-| [New-SqlLiteDatabase](#New-SqlLiteDatabase) |  | Creates a new SQLite database file if it does not already exist. |
+| [Get-SQLiteSchema](#Get-SQLiteSchema) |  | Get the schema of a SQLite database. |
+| [Get-SQLiteTableColumnData](#Get-SQLiteTableColumnData) |  | This function queries a SQLite database and returns the values from a specifiedcolumn in a table. It supports connecting via connection string or database filepath and allows limiting the number of returned records. |
+| [Get-SQLiteTableData](#Get-SQLiteTableData) |  | This function allows you to query data from a specified SQLite database tableusing either a connection string or database file path. It supports limiting thenumber of records returned. |
+| [Get-SQLiteTables](#Get-SQLiteTables) |  | This function queries a SQLite database to return all table names defined in thesqlite_master table. It supports connecting via either a connection string or adatabase file path. |
+| [Get-SQLiteTableSchema](#Get-SQLiteTableSchema) |  | This function queries the SQLite database to get detailed schema information fora specified table using the PRAGMA table_info command. |
+| [Get-SQLiteViewColumnData](#Get-SQLiteViewColumnData) |  | This function retrieves data from a specified column in a SQLite view. It supportsconnecting via connection string or database file path and allows limiting thenumber of records returned. |
+| [Get-SQLiteViewData](#Get-SQLiteViewData) |  | Gets records from a specified view in a SQLite database, either using a connectionstring or database file path. Allows limiting the number of records returned. |
+| [Get-SQLiteViews](#Get-SQLiteViews) |  | Gets all view names from the specified SQLite database using either a connectionstring or database file path. |
+| [Get-SQLiteViewSchema](#Get-SQLiteViewSchema) |  | This function queries the SQLite system tables to retrieve the SQL definition ofa specified view. It accepts either a connection string or database file path. |
+| [Invoke-SQLiteQuery](#Invoke-SQLiteQuery) |  | Execute a query against a SQLite database with support for parameters and with aconfigurable transaction isolation level.All queries are executed within the same transaction.If an error occurs, the transaction is rollbacked and the error is thrown. |
+| [Invoke-SQLiteStudio](#Invoke-SQLiteStudio) |  | This function allows execution of SQLite queries either through a connection stringor direct database file path. It supports parameterized queries and transactionisolation levels. |
+| [New-SQLiteDatabase](#New-SQLiteDatabase) |  | Creates a new SQLite database file if it does not already exist. |
 
 <hr/>
 &nbsp;
@@ -199,20 +202,32 @@ Update-Module
 # Cmdlets
 
 &nbsp;<hr/>
-###	GenXdev.Data.SqlLite<hr/>
+###	GenXdev.Data.SQLite<hr/>
 
 ##	AssureSQLiteStudioInstalled
 ````PowerShell
 AssureSQLiteStudioInstalled
 ````
 
+### SYNOPSIS
+    Ensures SQLiteStudio is installed and accessible from the command line.
+
 ### SYNTAX
 ````PowerShell
-AssureSQLiteStudioInstalled 
+AssureSQLiteStudioInstalled [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function checks if SQLiteStudio is installed and available in the system PATH.
+    If not found, it attempts to install it using WinGet and configures the PATH
+    environment variable accordingly.
+
 ### PARAMETERS
-    None
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
 
 <br/><hr/><hr/><br/>
 
@@ -349,8 +364,8 @@ Get-ValueByKeyFromStore              --> getvalue
 
 ### SYNTAX
 ````PowerShell
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] 
-[[-SynchronizationKey] <String>] [<CommonParameters>]
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] 
+<String>] [[-SynchronizationKey] <String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -440,7 +455,8 @@ Remove-KeyFromStore                  --> removekey
 
 ### SYNTAX
 ````PowerShell
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [<CommonParameters>]
+Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] 
+<String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -489,7 +505,8 @@ Remove-KeyValueStore
 
 ### SYNTAX
 ````PowerShell
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [<CommonParameters>]
+Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] 
+[<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -530,8 +547,8 @@ Set-ValueByKeyInStore                --> setvalue
 
 ### SYNTAX
 ````PowerShell
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] 
-<String>] [<CommonParameters>]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] 
+[[-SynchronizationKey] <String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -814,26 +831,38 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [<CommonParame
 <br/><hr/><hr/><br/>
 
 &nbsp;<hr/>
-###	GenXdev.Data.SqlLite<hr/>
+###	GenXdev.Data.SQLite<hr/>
 
 ##	AssureSQLiteStudioInstalled
 ````PowerShell
 AssureSQLiteStudioInstalled
 ````
 
+### SYNOPSIS
+    Ensures SQLiteStudio is installed and accessible from the command line.
+
 ### SYNTAX
 ````PowerShell
-AssureSQLiteStudioInstalled 
+AssureSQLiteStudioInstalled [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function checks if SQLiteStudio is installed and available in the system PATH.
+    If not found, it attempts to install it using WinGet and configures the PATH
+    environment variable accordingly.
+
 ### PARAMETERS
-    None
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteSchema
+##	Get-SQLiteSchema
 ````PowerShell
-Get-SqlLiteSchema
+Get-SQLiteSchema
 ````
 
 ### SYNOPSIS
@@ -841,9 +870,9 @@ Get-SqlLiteSchema
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteSchema [<CommonParameters>]
-Get-SqlLiteSchema [-ConnectionString] <String> [<CommonParameters>]
-Get-SqlLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -874,65 +903,133 @@ Get-SqlLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteTableColumnData
+##	Get-SQLiteTableColumnData
 ````PowerShell
-Get-SqlLiteTableColumnData
+Get-SQLiteTableColumnData
 ````
+
+### SYNOPSIS
+    Retrieves data from a specific column in a SQLite database table.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-Get-SqlLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function queries a SQLite database and returns the values from a specified
+    column in a table. It supports connecting via connection string or database file
+    path and allows limiting the number of returned records.
+
 ### PARAMETERS
-    -ColumnName <string>
-        The name of the column.
-        Required?                    true
-        Position?                    2
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to query.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ColumnName <String>
+        The name of the column to retrieve data from.
+        Required?                    true
+        Position?                    3
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The number of records to return. Default is 100. Use -1 to return all records.
+        Required?                    false
+        Position?                    4
+        Default value                100
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteTableData
+````PowerShell
+Get-SQLiteTableData
+````
+
+### SYNOPSIS
+    Retrieves data from a SQLite database table.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function allows you to query data from a specified SQLite database table
+    using either a connection string or database file path. It supports limiting the
+    number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to connect to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to query data from.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The maximum number of records to return. Default is 100. Use -1 to return all
+        records.
         Required?                    false
         Position?                    3
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -942,209 +1039,230 @@ Get-SqlLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteTableData
+##	Get-SQLiteTables
 ````PowerShell
-Get-SqlLiteTableData
+Get-SQLiteTables
 ````
+
+### SYNOPSIS
+    Retrieves a list of table names from a SQLite database.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function queries a SQLite database to return all table names defined in the
+    sqlite_master table. It supports connecting via either a connection string or a
+    database file path.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteTableSchema
+````PowerShell
+Get-SQLiteTableSchema
+````
+
+### SYNOPSIS
+    Retrieves the schema information for a specified SQLite table.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> 
+[<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function queries the SQLite database to get detailed schema information for
+    a specified table using the PRAGMA table_info command.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to get schema information for.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewColumnData
+````PowerShell
+Get-SQLiteViewColumnData
+````
+
+### SYNOPSIS
+    Retrieves column data from a SQLite view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function retrieves data from a specified column in a SQLite view. It supports
+    connecting via connection string or database file path and allows limiting the
+    number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ViewName <String>
+        The name of the view to query.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ColumnName <String>
+        The name of the column to retrieve data from.
+        Required?                    true
+        Position?                    3
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The number of records to return. Default is 100. Use -1 to return all records.
         Required?                    false
-        Position?                    2
+        Position?                    4
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewData
+````PowerShell
+Get-SQLiteViewData
+````
+
+### SYNOPSIS
+    Retrieves data from a SQLite database view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    Gets records from a specified view in a SQLite database, either using a connection
+    string or database file path. Allows limiting the number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to connect to the SQLite database.
         Required?                    true
         Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteTables
-````PowerShell
-Get-SqlLiteTables
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteTables [<CommonParameters>]
-Get-SqlLiteTables [-ConnectionString] <string> [<CommonParameters>]
-Get-SqlLiteTables [-DatabaseFilePath] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteTableSchema
-````PowerShell
-Get-SqlLiteTableSchema
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteTableSchema [-TableName] <string> [<CommonParameters>]
-Get-SqlLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]
-Get-SqlLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
         Required?                    true
         Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteViewColumnData
-````PowerShell
-Get-SqlLiteViewColumnData
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-Get-SqlLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ColumnName <string>
-        The name of the column.
+    -ViewName <String>
+        The name of the view to query data from.
         Required?                    true
         Position?                    2
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -Count <Int32>
+        The maximum number of records to return. Use -1 to return all records.
+        Default is 100.
         Required?                    false
         Position?                    3
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1154,54 +1272,93 @@ Get-SqlLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-Co
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteViewData
+##	Get-SQLiteViews
 ````PowerShell
-Get-SqlLiteViewData
+Get-SQLiteViews
 ````
+
+### SYNOPSIS
+    Retrieves a list of views from a SQLite database.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteViewData [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    Gets all view names from the specified SQLite database using either a connection
+    string or database file path.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
-        Required?                    false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewSchema
+````PowerShell
+Get-SQLiteViewSchema
+````
+
+### SYNOPSIS
+    Retrieves the SQL schema definition for a SQLite view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function queries the SQLite system tables to retrieve the SQL definition of
+    a specified view. It accepts either a connection string or database file path.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ViewName <String>
+        The name of the view to retrieve the schema for.
+        Required?                    true
         Position?                    2
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1211,96 +1368,9 @@ Get-SqlLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] 
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteViews
+##	Invoke-SQLiteQuery
 ````PowerShell
-Get-SqlLiteViews
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViews [<CommonParameters>]
-Get-SqlLiteViews [-ConnectionString] <string> [<CommonParameters>]
-Get-SqlLiteViews [-DatabaseFilePath] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteViewSchema
-````PowerShell
-Get-SqlLiteViewSchema
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViewSchema [-ViewName] <string> [<CommonParameters>]
-Get-SqlLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]
-Get-SqlLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Invoke-SqlLiteQuery
-````PowerShell
-Invoke-SqlLiteQuery
+Invoke-SQLiteQuery
 ````
 
 ### SYNOPSIS
@@ -1308,14 +1378,15 @@ Invoke-SqlLiteQuery
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Invoke-SQLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
 Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
-Unspecified}] [<CommonParameters>]
+Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -1371,66 +1442,73 @@ Unspecified}] [<CommonParameters>]
 
 <br/><hr/><hr/><br/>
 
-##	Invoke-SqlLiteStudio
+##	Invoke-SQLiteStudio
 ````PowerShell
-Invoke-SqlLiteStudio
+Invoke-SQLiteStudio
 ````
+
+### SYNOPSIS
+    Executes SQLite queries using specified connection parameters.
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlLiteStudio [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | 
-RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteStudio [-ConnectionString] <string> [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteStudio [-DatabaseFilePath] <string> [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function allows execution of SQLite queries either through a connection string
+    or direct database file path. It supports parameterized queries and transaction
+    isolation levels.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -DatabaseFilePath <string>
+    -DatabaseFilePath <String>
         The path to the SQLite database file.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -IsolationLevel <IsolationLevel>
-        The isolation level to use. default is ReadCommitted.
+    -Queries <String[]>
+        One or more SQL queries to execute against the database.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       true (ByValue, ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+    -SqlParameters <Hashtable[]>
+        Optional parameters for the query, provided as hashtables.
+        Format: @{"Id" = 1; "Name" = "John"}
         Required?                    false
-        Position?                    Named
+        Position?                    3
+        Default value                
+        Accept pipeline input?       true (ByValue, ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+    -IsolationLevel
+        The transaction isolation level to use. Defaults to ReadCommitted.
+        Required?                    false
+        Position?                    named
+        Default value                ReadCommitted
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -Queries <string[]>
-        The query to execute.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)
-        Parameter set name           (All)
-        Aliases                      q, Value, Name, Text, Query
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -SqlParameters <hashtable[]>
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)
-        Parameter set name           (All)
-        Aliases                      parameters
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1487,11 +1565,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [<CommonParameters>]
 <br/><hr/><hr/><br/>
 
 &nbsp;<hr/>
-###	GenXdev.Data.SqlLite<hr/>
+###	GenXdev.Data.SQLite<hr/>
 
-##	New-SqlLiteDatabase
+##	New-SQLiteDatabase
 ````PowerShell
-New-SqlLiteDatabase
+New-SQLiteDatabase
 ````
 
 ### SYNOPSIS
@@ -1499,7 +1577,7 @@ New-SqlLiteDatabase
 
 ### SYNTAX
 ````PowerShell
-New-SqlLiteDatabase [-DatabaseFilePath] <String> [<CommonParameters>]
+New-SQLiteDatabase [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -1613,11 +1691,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [<CommonParame
 <br/><hr/><hr/><br/>
 
 &nbsp;<hr/>
-###	GenXdev.Data.SqlLite<hr/>
+###	GenXdev.Data.SQLite<hr/>
 
-##	Get-SqlLiteSchema
+##	Get-SQLiteSchema
 ````PowerShell
-Get-SqlLiteSchema
+Get-SQLiteSchema
 ````
 
 ### SYNOPSIS
@@ -1625,9 +1703,9 @@ Get-SqlLiteSchema
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteSchema [<CommonParameters>]
-Get-SqlLiteSchema [-ConnectionString] <String> [<CommonParameters>]
-Get-SqlLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -1658,65 +1736,133 @@ Get-SqlLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>]
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteTableColumnData
+##	Get-SQLiteTableColumnData
 ````PowerShell
-Get-SqlLiteTableColumnData
+Get-SQLiteTableColumnData
 ````
+
+### SYNOPSIS
+    Retrieves data from a specific column in a SQLite database table.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-Get-SqlLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function queries a SQLite database and returns the values from a specified
+    column in a table. It supports connecting via connection string or database file
+    path and allows limiting the number of returned records.
+
 ### PARAMETERS
-    -ColumnName <string>
-        The name of the column.
-        Required?                    true
-        Position?                    2
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to query.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ColumnName <String>
+        The name of the column to retrieve data from.
+        Required?                    true
+        Position?                    3
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The number of records to return. Default is 100. Use -1 to return all records.
+        Required?                    false
+        Position?                    4
+        Default value                100
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteTableData
+````PowerShell
+Get-SQLiteTableData
+````
+
+### SYNOPSIS
+    Retrieves data from a SQLite database table.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function allows you to query data from a specified SQLite database table
+    using either a connection string or database file path. It supports limiting the
+    number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to connect to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to query data from.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The maximum number of records to return. Default is 100. Use -1 to return all
+        records.
         Required?                    false
         Position?                    3
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1726,209 +1872,230 @@ Get-SqlLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteTableData
+##	Get-SQLiteTables
 ````PowerShell
-Get-SqlLiteTableData
+Get-SQLiteTables
 ````
+
+### SYNOPSIS
+    Retrieves a list of table names from a SQLite database.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function queries a SQLite database to return all table names defined in the
+    sqlite_master table. It supports connecting via either a connection string or a
+    database file path.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteTableSchema
+````PowerShell
+Get-SQLiteTableSchema
+````
+
+### SYNOPSIS
+    Retrieves the schema information for a specified SQLite table.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> 
+[<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function queries the SQLite database to get detailed schema information for
+    a specified table using the PRAGMA table_info command.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -TableName <String>
+        The name of the table to get schema information for.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewColumnData
+````PowerShell
+Get-SQLiteViewColumnData
+````
+
+### SYNOPSIS
+    Retrieves column data from a SQLite view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] 
+<String> [[-Count] <Int32>] [<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function retrieves data from a specified column in a SQLite view. It supports
+    connecting via connection string or database file path and allows limiting the
+    number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ViewName <String>
+        The name of the view to query.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ColumnName <String>
+        The name of the column to retrieve data from.
+        Required?                    true
+        Position?                    3
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -Count <Int32>
+        The number of records to return. Default is 100. Use -1 to return all records.
         Required?                    false
-        Position?                    2
+        Position?                    4
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewData
+````PowerShell
+Get-SQLiteViewData
+````
+
+### SYNOPSIS
+    Retrieves data from a SQLite database view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] 
+[<CommonParameters>]
+````
+
+### DESCRIPTION
+    Gets records from a specified view in a SQLite database, either using a connection
+    string or database file path. Allows limiting the number of records returned.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to connect to the SQLite database.
         Required?                    true
         Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteTables
-````PowerShell
-Get-SqlLiteTables
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteTables [<CommonParameters>]
-Get-SqlLiteTables [-ConnectionString] <string> [<CommonParameters>]
-Get-SqlLiteTables [-DatabaseFilePath] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteTableSchema
-````PowerShell
-Get-SqlLiteTableSchema
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteTableSchema [-TableName] <string> [<CommonParameters>]
-Get-SqlLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]
-Get-SqlLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -TableName <string>
-        The name of the table.
+    -DatabaseFilePath <String>
+        The file path to the SQLite database file.
         Required?                    true
         Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteViewColumnData
-````PowerShell
-Get-SqlLiteViewColumnData
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-Get-SqlLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] 
-<int>] [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ColumnName <string>
-        The name of the column.
+    -ViewName <String>
+        The name of the view to query data from.
         Required?                    true
         Position?                    2
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
+    -Count <Int32>
+        The maximum number of records to return. Use -1 to return all records.
+        Default is 100.
         Required?                    false
         Position?                    3
+        Default value                100
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1938,54 +2105,93 @@ Get-SqlLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-Co
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteViewData
+##	Get-SQLiteViews
 ````PowerShell
-Get-SqlLiteViewData
+Get-SQLiteViews
 ````
+
+### SYNOPSIS
+    Retrieves a list of views from a SQLite database.
 
 ### SYNTAX
 ````PowerShell
-Get-SqlLiteViewData [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
-Get-SqlLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    Gets all view names from the specified SQLite database using either a connection
+    string or database file path.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -Count <int>
-        The number of records to return. default is 100. -1 to return all records.
-        Required?                    false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
+
+<br/><hr/><hr/><br/>
+
+##	Get-SQLiteViewSchema
+````PowerShell
+Get-SQLiteViewSchema
+````
+
+### SYNOPSIS
+    Retrieves the SQL schema definition for a SQLite view.
+
+### SYNTAX
+````PowerShell
+Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>]
+````
+
+### DESCRIPTION
+    This function queries the SQLite system tables to retrieve the SQL definition of
+    a specified view. It accepts either a connection string or database file path.
+
+### PARAMETERS
+    -ConnectionString <String>
+        The connection string to the SQLite database.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -DatabaseFilePath <String>
+        The path to the SQLite database file.
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+    -ViewName <String>
+        The name of the view to retrieve the schema for.
+        Required?                    true
         Position?                    2
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -1995,96 +2201,9 @@ Get-SqlLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] 
 
 <br/><hr/><hr/><br/>
 
-##	Get-SqlLiteViews
+##	Invoke-SQLiteQuery
 ````PowerShell
-Get-SqlLiteViews
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViews [<CommonParameters>]
-Get-SqlLiteViews [-ConnectionString] <string> [<CommonParameters>]
-Get-SqlLiteViews [-DatabaseFilePath] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Get-SqlLiteViewSchema
-````PowerShell
-Get-SqlLiteViewSchema
-````
-
-### SYNTAX
-````PowerShell
-Get-SqlLiteViewSchema [-ViewName] <string> [<CommonParameters>]
-Get-SqlLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]
-Get-SqlLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>]
-````
-
-### PARAMETERS
-    -ConnectionString <string>
-        The connection string to the SQLite database.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -DatabaseFilePath <string>
-        The path to the SQLite database file.
-        Required?                    true
-        Position?                    0
-        Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -ViewName <string>
-        The name of the view.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    <CommonParameters>
-        This cmdlet supports the common parameters: Verbose, Debug,
-        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
-        OutBuffer, PipelineVariable, and OutVariable. For more information, see
-        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216). 
-
-<br/><hr/><hr/><br/>
-
-##	Invoke-SqlLiteQuery
-````PowerShell
-Invoke-SqlLiteQuery
+Invoke-SQLiteQuery
 ````
 
 ### SYNOPSIS
@@ -2092,14 +2211,15 @@ Invoke-SqlLiteQuery
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Invoke-SQLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
 Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
-Unspecified}] [<CommonParameters>]
+Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2155,66 +2275,73 @@ Unspecified}] [<CommonParameters>]
 
 <br/><hr/><hr/><br/>
 
-##	Invoke-SqlLiteStudio
+##	Invoke-SQLiteStudio
 ````PowerShell
-Invoke-SqlLiteStudio
+Invoke-SQLiteStudio
 ````
+
+### SYNOPSIS
+    Executes SQLite queries using specified connection parameters.
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlLiteStudio [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | 
-RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteStudio [-ConnectionString] <string> [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlLiteStudio [-DatabaseFilePath] <string> [-SqlParameters] <hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] 
+<Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
+### DESCRIPTION
+    This function allows execution of SQLite queries either through a connection string
+    or direct database file path. It supports parameterized queries and transaction
+    isolation levels.
+
 ### PARAMETERS
-    -ConnectionString <string>
+    -ConnectionString <String>
         The connection string to the SQLite database.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           ConnectionString
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -DatabaseFilePath <string>
+    -DatabaseFilePath <String>
         The path to the SQLite database file.
         Required?                    true
-        Position?                    0
+        Position?                    1
+        Default value                
         Accept pipeline input?       false
-        Parameter set name           DatabaseFilePath
-        Aliases                      None
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
-    -IsolationLevel <IsolationLevel>
-        The isolation level to use. default is ReadCommitted.
+    -Queries <String[]>
+        One or more SQL queries to execute against the database.
+        Required?                    true
+        Position?                    2
+        Default value                
+        Accept pipeline input?       true (ByValue, ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+    -SqlParameters <Hashtable[]>
+        Optional parameters for the query, provided as hashtables.
+        Format: @{"Id" = 1; "Name" = "John"}
         Required?                    false
-        Position?                    Named
+        Position?                    3
+        Default value                
+        Accept pipeline input?       true (ByValue, ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+    -IsolationLevel
+        The transaction isolation level to use. Defaults to ReadCommitted.
+        Required?                    false
+        Position?                    named
+        Default value                ReadCommitted
         Accept pipeline input?       false
-        Parameter set name           (All)
-        Aliases                      None
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -Queries <string[]>
-        The query to execute.
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)
-        Parameter set name           (All)
-        Aliases                      q, Value, Name, Text, Query
-        Dynamic?                     false
-        Accept wildcard characters?  false
-    -SqlParameters <hashtable[]>
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}
-        Required?                    true
-        Position?                    1
-        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)
-        Parameter set name           (All)
-        Aliases                      parameters
-        Dynamic?                     false
+        Aliases                      
         Accept wildcard characters?  false
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
@@ -2224,9 +2351,9 @@ ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Uns
 
 <br/><hr/><hr/><br/>
 
-##	New-SqlLiteDatabase
+##	New-SQLiteDatabase
 ````PowerShell
-New-SqlLiteDatabase
+New-SQLiteDatabase
 ````
 
 ### SYNOPSIS
@@ -2234,7 +2361,7 @@ New-SqlLiteDatabase
 
 ### SYNTAX
 ````PowerShell
-New-SqlLiteDatabase [-DatabaseFilePath] <String> [<CommonParameters>]
+New-SQLiteDatabase [-DatabaseFilePath] <String> [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2333,8 +2460,8 @@ Get-ValueByKeyFromStore              --> getvalue
 
 ### SYNTAX
 ````PowerShell
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] 
-[[-SynchronizationKey] <String>] [<CommonParameters>]
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] 
+<String>] [[-SynchronizationKey] <String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2424,7 +2551,8 @@ Remove-KeyFromStore                  --> removekey
 
 ### SYNTAX
 ````PowerShell
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [<CommonParameters>]
+Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] 
+<String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2473,7 +2601,8 @@ Remove-KeyValueStore
 
 ### SYNTAX
 ````PowerShell
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [<CommonParameters>]
+Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] 
+[<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2514,8 +2643,8 @@ Set-ValueByKeyInStore                --> setvalue
 
 ### SYNTAX
 ````PowerShell
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] 
-<String>] [<CommonParameters>]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] 
+[[-SynchronizationKey] <String>] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2609,20 +2738,22 @@ Invoke-SqlServerQuery
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
 Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
-{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
-[<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> 
-[-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
 Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
-{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
+Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] 
+<String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | 
+ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
 [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
 ### DESCRIPTION
@@ -2950,20 +3081,22 @@ Invoke-SqlServerQuery
 
 ### SYNTAX
 ````PowerShell
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | 
-ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> 
-[-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
+{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | 
 Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
-{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
-[<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> 
-[-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
 Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel 
-{Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
+Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] 
+<String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | 
+ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] 
 [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] 
+<Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | 
+Serializable | Snapshot | Unspecified}] [<CommonParameters>]
 ````
 
 ### DESCRIPTION

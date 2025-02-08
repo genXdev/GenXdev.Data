@@ -7,9 +7,9 @@ Creates a new SQLite database file if it does not already exist.
 .PARAMETER DatabaseFilePath
 Path to the SQLite database file to be created.
 .EXAMPLE
-New-SqlLiteDatabase -DatabaseFilePath "C:\temp\newdb.sqlite"
+New-SQLiteDatabase -DatabaseFilePath "C:\temp\newdb.sqlite"
 #>
-function New-SqlLiteDatabase {
+function New-SQLiteDatabase {
     [CmdletBinding()]
     param (
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The path to the SQLite database file.")]
