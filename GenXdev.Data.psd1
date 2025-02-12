@@ -6,7 +6,7 @@
   RootModule           = 'GenXdev.Data.psm1'
 
   # Version number of this module.
-  ModuleVersion        = '1.110.2025'
+  ModuleVersion        = '1.112.2025'
   # Supported PSEditions
   # CompatiblePSEditions = @()
 
@@ -38,7 +38,7 @@
   # ProcessorArchitecture = ''
 
   # Modules that must be imported into the global environment prior to importing this module
-  RequiredModules      = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.110.2025' }, @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.110.2025' });
+  RequiredModules      = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.112.2025' }, @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.112.2025' });
 
   # Assemblies that must be loaded prior to importing this module
   RequiredAssemblies   = @()
@@ -104,23 +104,6 @@
   ".\\Functions\\GenXdev.Data.SQLite\\Invoke-SQLiteStudio.ps1",
   ".\\Functions\\GenXdev.Data.SQLite\\New-SQLiteDatabase.ps1",
   ".\\Functions\\GenXdev.Data.SqlServer\\Invoke-SqlServerQuery.ps1",
-  ".\\lib\\GenXdev.Data.deps.json",
-  ".\\lib\\GenXdev.Data.dll",
-  ".\\lib\\getfilesiginforedist.dll",
-  ".\\lib\\getfilesiginforedistwrapper.dll",
-  ".\\lib\\Microsoft.ApplicationInsights.dll",
-  ".\\lib\\microsoft.management.infrastructure.dll",
-  ".\\lib\\microsoft.management.infrastructure.native.dll",
-  ".\\lib\\microsoft.management.infrastructure.native.unmanaged.dll",
-  ".\\lib\\Microsoft.PowerShell.CoreCLR.Eventing.dll",
-  ".\\lib\\Newtonsoft.Json.dll",
-  ".\\lib\\PowerShell.Core.Instrumentation.dll",
-  ".\\lib\\pwrshplugin.dll",
-  ".\\lib\\System.Configuration.ConfigurationManager.dll",
-  ".\\lib\\System.Diagnostics.EventLog.dll",
-  ".\\lib\\System.Management.Automation.dll",
-  ".\\lib\\System.Management.dll",
-  ".\\lib\\System.Security.Cryptography.Pkcs.dll",
   ".\\Tests\\GenXdev.Data.KeyValueStore\\Clear-TestData.ps1",
   ".\\Tests\\GenXdev.Data.KeyValueStore\\Get-KeyValueStoreNames.Tests.ps1",
   ".\\Tests\\GenXdev.Data.KeyValueStore\\Get-StoreKeys.Tests.ps1",

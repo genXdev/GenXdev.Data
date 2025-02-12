@@ -59,7 +59,7 @@ function Invoke-SQLiteStudio {
         [Parameter(
             Mandatory = $true,
             Position = 1,
-            ValueFromRemainingArguments = $true,
+            ValueFromRemainingArguments = $false,
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = 'The query to execute.'
@@ -71,7 +71,7 @@ function Invoke-SQLiteStudio {
         [Parameter(
             Mandatory = $false,
             Position = 2,
-            ValueFromRemainingArguments = $true,
+            ValueFromRemainingArguments = $false,
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true,
             HelpMessage = 'Optional parameters for the query.'
