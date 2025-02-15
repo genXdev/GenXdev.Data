@@ -1,21 +1,32 @@
 ################################################################################
 <#
 .SYNOPSIS
-Inserts or updates a key-value pair in the database.
+Manages key-value pairs in a SQLite database store.
+
 .DESCRIPTION
-Uses an INSERT with ON CONFLICT to set or overwrite the value.
+Provides persistent storage for key-value pairs using SQLite. Handles both
+insertion of new entries and updates to existing ones. Supports optional
+synchronization for non-local stores.
+
 .PARAMETER StoreName
-Store name for the key-value pair.
+The name of the store where the key-value pair will be saved.
+
 .PARAMETER KeyName
-Name of the key to set or update.
+The unique identifier for the value within the specified store.
+
 .PARAMETER Value
-Value to be stored.
+The data to be stored, associated with the specified key.
+
 .PARAMETER SynchronizationKey
-Optional key to identify synchronization scope, defaults to "Local".
+Identifies the synchronization scope. Use "Local" for local-only storage.
+Defaults to "Local". Non-local values trigger store synchronization.
+
 .EXAMPLE
-Set-ValueByKeyInStore -StoreName "MyStore" -KeyName "MyKey" -Value "SomeValue"
+Set-ValueByKeyInStore -StoreName "ConfigStore" -KeyName "ApiEndpoint" `
+    -Value "https://api.example.com"
+
 .EXAMPLE
-setvalue MyStore MyKey SomeValue
+setvalue ConfigStore ApiEndpoint "https://api.example.com"
 #>
 function Set-ValueByKeyInStore {
 
@@ -23,30 +34,62 @@ function Set-ValueByKeyInStore {
     [Alias("setvalue")]
 
     param (
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "Store name for the key-value pair")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = "Store name for the key-value pair"
+        )]
         [string]$StoreName,
-        [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Name of the key to set or update")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 1,
+            HelpMessage = "Name of the key to set or update"
+        )]
         [string]$KeyName,
-        [Parameter(Mandatory = $false, Position = 2, HelpMessage = "Value to be stored")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 2,
+            HelpMessage = "Value to be stored"
+        )]
         [string]$Value,
-        [Parameter(Mandatory = $false, Position = 3, HelpMessage = "Key to identify synchronization scope")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 3,
+            HelpMessage = "Key to identify synchronization scope"
+        )]
         [string]$SynchronizationKey = "Local"
+        ########################################################################
     )
 
-    # Path to your SQLite database
-    $DatabaseFilePath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" -CreateDirectory
+    begin {
 
-    # Not found?
-    if (-not (Test-Path $DatabaseFilePath)) {
+        # construct path to sqlite database file
+        $databaseFilePath = Expand-Path `
+            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            -CreateDirectory
 
-        Initialize-KeyValueStores
+        Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    # get current user info for lastModifiedBy
-    $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
+    process {
 
-    # Insert or update the key-value pair
-    $sqlQuery = @"
+        # ensure database exists
+        if (-not (Test-Path $databaseFilePath)) {
+
+            Write-Verbose "Database not found. Initializing..."
+            Initialize-KeyValueStores
+        }
+
+        # get current user identity for audit trail
+        $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
+        Write-Verbose "Setting value as user: $lastModifiedBy"
+
+        # prepare sql query for upsert operation
+        $sqlQuery = @"
 INSERT INTO KeyValueStore (
     synchronizationKey,
     storeName,
@@ -73,19 +116,29 @@ DO UPDATE SET
     deletedDate = NULL;
 "@
 
-    $params = @{
-        'syncKey' = $SynchronizationKey
-        'storeName' = $StoreName
-        'keyName' = $KeyName
-        'value' = $Value
-        'modifiedBy' = $lastModifiedBy
+        # prepare parameters for sql query
+        $params = @{
+            'syncKey'    = $SynchronizationKey
+            'storeName'  = $StoreName
+            'keyName'    = $KeyName
+            'value'      = $Value
+            'modifiedBy' = $lastModifiedBy
+        }
+
+        Write-Verbose "Executing upsert for key '$KeyName' in store '$StoreName'"
+        Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
+            -Queries $sqlQuery `
+            -SqlParameters $params
+
+        # handle synchronization for non-local stores
+        if ($SynchronizationKey -ne "Local") {
+
+            Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
+            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+        }
     }
 
-    Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
-
-    # sync if not local
-    if ($SynchronizationKey -ne "Local") {
-
-        Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+    end {
     }
 }
+################################################################################

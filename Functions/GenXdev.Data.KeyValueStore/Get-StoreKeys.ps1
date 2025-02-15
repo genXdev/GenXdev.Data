@@ -1,17 +1,27 @@
 ################################################################################
 <#
 .SYNOPSIS
-Retrieves all key names for a given store.
+Retrieves all key names for a given key-value store.
+
 .DESCRIPTION
-Runs a SELECT on the KeyValueStore table filtered by storeName.
+Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)
+keys for a specified store. Can optionally filter by synchronization scope.
+Automatically initializes the database if not found and handles synchronization
+for non-local stores.
+
 .PARAMETER StoreName
-Name of the store whose keys should be retrieved.
+The name of the key-value store to query. This identifies the logical grouping
+of keys and values in the database.
+
 .PARAMETER SynchronizationKey
-Optional key to identify synchronization scope, defaults to "Local".
+Optional scope identifier for synchronization. Use "Local" for local-only data.
+Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.
+
 .EXAMPLE
-Get-StoreKeys -StoreName "MyStore"
+Get-StoreKeys -StoreName "ApplicationSettings" -SynchronizationKey "Local"
+
 .EXAMPLE
-storekeys MyStore
+getkeys AppSettings
 #>
 function Get-StoreKeys {
 
@@ -19,33 +29,53 @@ function Get-StoreKeys {
     [Alias("getkeys")]
 
     param (
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "Name of the store whose keys should be retrieved")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = "Name of the store whose keys should be retrieved"
+        )]
         [string]$StoreName,
+        ########################################################################
         [Parameter(
             Mandatory = $false,
             Position = 1,
             HelpMessage = "Key to identify synchronization scope, defaults to all"
         )]
         [string]$SynchronizationKey = "%"
+        ########################################################################
     )
 
-    # Path to your SQLite database
-    $DatabaseFilePath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" -CreateDirectory
+    begin {
 
-    # Not found?
-    if (-not (Test-Path $DatabaseFilePath)) {
+        Write-Verbose "Initializing Get-StoreKeys for store: $StoreName"
 
-        Initialize-KeyValueStores
+        # resolve the full path to the sqlite database file
+        $databaseFilePath = Expand-Path `
+            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            -CreateDirectory
+
+        Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    # sync if not local
-    if ($SynchronizationKey -ne "Local") {
+    process {
 
-        Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
-    }
+        # ensure database exists by initializing if not found
+        if (-not (Test-Path $databaseFilePath)) {
 
-    # Grab all key names for the specified store, excluding deleted records
-    $sqlQuery = @"
+            Write-Verbose "Database not found, initializing..."
+            Initialize-KeyValueStores
+        }
+
+        # synchronize non-local stores with remote
+        if ($SynchronizationKey -ne "Local") {
+
+            Write-Verbose "Syncing non-local store with key: $SynchronizationKey"
+            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+        }
+
+        # query to get all active keys for the store
+        $sqlQuery = @"
 SELECT keyName
 FROM KeyValueStore
 WHERE storeName = @storeName
@@ -53,11 +83,23 @@ AND synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
 "@
 
-    $params = @{
-        'storeName' = $StoreName
-        'syncKey' = $SynchronizationKey
+        # parameters for the sql query
+        $params = @{
+            'storeName' = $StoreName
+            'syncKey'   = $SynchronizationKey
+        }
+
+        Write-Verbose "Querying keys from store: $StoreName"
+
+        # execute query and return key names
+        Invoke-SQLiteQuery `
+            -DatabaseFilePath $databaseFilePath `
+            -Queries $sqlQuery `
+            -SqlParameters $params |
+        ForEach-Object keyName
     }
 
-    Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params |
-    ForEach-Object keyName
+    end {
+    }
 }
+################################################################################

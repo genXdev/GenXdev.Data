@@ -5,22 +5,27 @@ Retrieves the schema information for a specified SQLite table.
 
 .DESCRIPTION
 This function queries the SQLite database to get detailed schema information for
-a specified table using the PRAGMA table_info command.
+a specified table. It uses the SQLite PRAGMA table_info command to return column
+definitions including names, types, nullable status, and default values.
 
 .PARAMETER ConnectionString
-The connection string to the SQLite database.
+Specifies the SQLite connection string in the format:
+"Data Source=path_to_database_file"
 
 .PARAMETER DatabaseFilePath
-The file path to the SQLite database file.
+Specifies the direct file path to the SQLite database file. This is converted
+internally to a connection string.
 
 .PARAMETER TableName
-The name of the table to get schema information for.
+Specifies the name of the table for which to retrieve schema information.
 
 .EXAMPLE
-Get-SQLiteTableSchema -ConnectionString "Data Source=C:\mydb.sqlite" -TableName "Users"
+Get-SQLiteTableSchema -DatabaseFilePath "C:\Databases\mydb.sqlite" `
+    -TableName "Users"
 
 .EXAMPLE
-Get-SQLiteTableSchema -DatabaseFilePath "C:\mydb.sqlite" -TableName "Users"
+Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
+    -TableName "Products"
 #>
 function Get-SQLiteTableSchema {
 
@@ -57,16 +62,20 @@ function Get-SQLiteTableSchema {
     )
 
     begin {
+
+        # log the start of schema retrieval operation
         Write-Verbose "Preparing to retrieve schema for table '$TableName'"
     }
 
     process {
-        # construct the PRAGMA query to get table information
+
+        # construct the PRAGMA query to get detailed table column information
         $PSBoundParameters["Queries"] = "PRAGMA table_info($TableName)"
 
+        # log the execution of the schema query
         Write-Verbose "Executing schema query against SQLite database"
 
-        # execute the query using Invoke-SQLiteQuery
+        # execute the query and return results using existing Invoke-SQLiteQuery
         Invoke-SQLiteQuery @PSBoundParameters
     }
 

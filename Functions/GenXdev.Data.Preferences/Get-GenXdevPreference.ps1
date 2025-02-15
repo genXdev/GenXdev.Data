@@ -4,18 +4,23 @@
 Retrieves a preference value from the GenXdev preferences store.
 
 .DESCRIPTION
-This function gets a preference value from the local store first, then falls back
-to the default store if not found. If neither store contains the value, returns
-the provided default value.
+The function implements a two-tier preference retrieval system. It first checks
+the local store for a preference value. If not found, it falls back to the
+default store. If still not found, returns the provided default value.
 
 .PARAMETER Name
-The name of the preference to retrieve.
+The name of the preference to retrieve from the preference stores.
 
 .PARAMETER DefaultValue
-The default value to return if the preference is not found in any store.
+The fallback value to return if the preference is not found in any store.
 
 .EXAMPLE
+# Retrieve theme preference with full parameter names
 Get-GenXdevPreference -Name "Theme" -DefaultValue "Dark"
+
+.EXAMPLE
+# Using alias and positional parameters
+getPreference "Theme" "Dark"
 #>
 function Get-GenXdevPreference {
 
@@ -48,14 +53,17 @@ function Get-GenXdevPreference {
     )
 
     begin {
+
         Write-Verbose "Starting preference retrieval for: $Name"
     }
 
     process {
+
+        # initialize the return value
         $value = $null
 
         try {
-            # attempt to get value from local store
+            # first attempt to retrieve from local store
             Write-Verbose "Checking local store for preference '$Name'"
             $value = Get-ValueByKeyFromStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
@@ -63,7 +71,7 @@ function Get-GenXdevPreference {
                 -SynchronizationKey "Local" `
                 -ErrorAction Stop
 
-            # if no local value found, check defaults store
+            # if local store lookup failed, try defaults store
             if ([string]::IsNullOrEmpty($value)) {
                 Write-Verbose "Preference not found locally, checking defaults store"
                 $value = Get-ValueByKeyFromStore `
@@ -77,7 +85,7 @@ function Get-GenXdevPreference {
             Write-Verbose "Error accessing preference stores: $_"
         }
 
-        # if still no value found, use provided default
+        # if no value found in either store, use provided default
         if ([string]::IsNullOrEmpty($value)) {
             Write-Verbose "Using provided default value: $DefaultValue"
             $value = $DefaultValue

@@ -4,21 +4,25 @@
 Sets a preference value in the GenXdev preferences store.
 
 .DESCRIPTION
-This function sets a preference value in the local store. The value can be
-retrieved later using Get-GenXdevPreference. If the value is null, the
-preference will be removed instead.
+This function manages preferences in the GenXdev local store. It can set new
+preferences, update existing ones, or remove them when a null/empty value is
+provided. The preferences are stored with synchronization set to "Local".
 
 .PARAMETER Name
-The name of the preference to set.
+Specifies the name (key) of the preference to set. This is required and must not
+be null or empty.
 
 .PARAMETER Value
-The value to store for the preference.
+Specifies the value to store for the preference. If null or empty, the preference
+will be removed instead of being set.
 
 .EXAMPLE
 Set-GenXdevPreference -Name "Theme" -Value "Dark"
+Sets the "Theme" preference to "Dark" in the local store.
 
 .EXAMPLE
-Set-GenXdevPreference Theme Dark
+setPreference Theme Light
+Uses the alias and positional parameters to set the Theme preference to Light.
 #>
 function Set-GenXdevPreference {
 
@@ -52,21 +56,21 @@ function Set-GenXdevPreference {
 
     begin {
 
-        Write-Verbose "Starting preference operation for '$Name'"
+        Write-Verbose "Beginning preference operation for preference name: '$Name'"
     }
 
     process {
 
-        # check if value is null or whitespace and remove preference if it is
+        # check if preference should be removed due to null/empty value
         if ([string]::IsNullOrWhiteSpace($Value)) {
-            Write-Verbose "Value is null or empty, removing preference '$Name'"
+
+            Write-Verbose "Removing preference '$Name' due to null/empty value"
             Remove-GenXdevPreference -Name $Name
             return
         }
 
-        Write-Verbose "Setting preference '$Name' to value: $Value"
-
-        # store the preference value in the local store
+        # store the preference with local synchronization
+        Write-Verbose "Storing preference '$Name' with value: '$Value'"
         Set-ValueByKeyInStore `
             -StoreName "GenXdev.PowerShell.Preferences" `
             -KeyName $Name `
@@ -79,3 +83,4 @@ function Set-GenXdevPreference {
     end {
     }
 }
+################################################################################

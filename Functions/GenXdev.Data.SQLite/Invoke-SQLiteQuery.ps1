@@ -1,32 +1,40 @@
-#######################################################################################
+################################################################################
 <#
 .SYNOPSIS
-    Execute a query against a SQLite database.
+Executes one or more SQL queries against a SQLite database with transaction support.
 
 .DESCRIPTION
-    Execute a query against a SQLite database with support for parameters and with a
-    configurable transaction isolation level.
-
-    All queries are executed within the same transaction.
-    If an error occurs, the transaction is rollbacked and the error is thrown.
+Executes SQL queries against a SQLite database with parameter support and
+configurable transaction isolation. All queries run in a single transaction that
+rolls back on error. Supports both connection strings and database file paths.
 
 .PARAMETER ConnectionString
-    The connection string to the SQLite database.
+The SQLite connection string for database access.
 
 .PARAMETER DatabaseFilePath
-    The path to the SQLite database file.
+The file path to the SQLite database. Will be converted to a connection string.
 
 .PARAMETER Queries
-    The query or queries to execute.
+One or more SQL queries to execute. Can be passed via pipeline.
+
+.PARAMETER SqlParameters
+Optional parameters for the queries as hashtables. Format: @{"param"="value"}
+
+.PARAMETER IsolationLevel
+Transaction isolation level. Defaults to ReadCommitted.
+
+.EXAMPLE
+Invoke-SQLiteQuery -DatabaseFilePath "C:\data.db" -Queries "SELECT * FROM Users"
+
+.EXAMPLE
+"SELECT * FROM Users" | isql "C:\data.db" @{"UserId"=1}
 #>
 function Invoke-SQLiteQuery {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
 
     param (
-
-        ###############################################################################
-
+        ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory,
@@ -35,8 +43,7 @@ function Invoke-SQLiteQuery {
         )]
         [string]$ConnectionString,
 
-        ###############################################################################
-
+        ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory,
@@ -45,8 +52,7 @@ function Invoke-SQLiteQuery {
         )]
         [string]$DatabaseFilePath,
 
-        ###############################################################################
-
+        ###########################################################################
         [Alias("q", "Value", "Name", "Text", "Query")]
         [parameter(
             Mandatory,
@@ -54,86 +60,118 @@ function Invoke-SQLiteQuery {
             ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
+            HelpMessage = 'The query or queries to execute.'
         )]
-        [string[]] $Queries,
+        [string[]]$Queries,
 
-        ###############################################################################
-
+        ###########################################################################
         [Alias("data", "parameters", "args")]
         [parameter(
             Position = 1,
             ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
+            HelpMessage = 'Query parameters as hashtables.'
         )]
-        [System.Collections.Hashtable[]] $SqlParameters = @(),
+        [System.Collections.Hashtable[]]$SqlParameters = @(),
 
-        ###############################################################################
-
+        ###########################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = 'The isolation level to use. default is ReadCommitted.'
+            HelpMessage = 'Transaction isolation level.'
         )]
         [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted
     )
 
-    try {
+    begin {
 
-        $ConnectionString = [String]::IsNullOrWhiteSpace($DatabaseFilePath) ? $ConnectionString : "Data Source=$((Expand-Path $DatabaseFilePath))"
-        $connection = New-Object System.Data.SQLite.SQLiteConnection($connectionString)
-        $connection.Open()
-        $transaction = $connection.BeginTransaction($IsolationLevel);
-        $SqlParameters = if ($SqlParameters) { $SqlParameters } else { @() }
+        # initialize connection string from file path if provided
+        $connString = [String]::IsNullOrWhiteSpace($DatabaseFilePath) `
+            ? $ConnectionString `
+            : "Data Source=$((Expand-Path $DatabaseFilePath))"
+
+        Write-Verbose "Opening SQLite connection..."
+    }
+
+    process {
 
         try {
-            $idx = -1;
-            $Queries | ForEach-Object {
+            # establish database connection
+            $connection = New-Object System.Data.SQLite.SQLiteConnection($connString)
+            $connection.Open()
 
-                $idx++;
+            # begin transaction with specified isolation
+            $transaction = $connection.BeginTransaction($IsolationLevel)
+            Write-Verbose "Started transaction with $IsolationLevel isolation"
 
-                # take none or the next or the last one supplied
-                $data = if ($SqlParameters.Length -gt 0) { $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)] } else { $null }
+            # ensure parameters array exists
+            $SqlParameters = if ($SqlParameters) { $SqlParameters } else { @() }
 
-                $command = $connection.CreateCommand()
-                $command.CommandText = $PSItem
+            try {
+                $idx = -1
 
-                if ($null -ne $data) {
+                # process each query
+                $Queries | ForEach-Object {
 
-                    $data.GetEnumerator() | ForEach-Object {
+                    $idx++
+                    Write-Verbose "Executing query $($idx + 1) of $($Queries.Count)"
 
-                        $command.Parameters.AddWithValue("@" + $PSItem.Key, $PSItem.Value) | Out-Null
+                    # get parameter set for current query
+                    $data = if ($SqlParameters.Length -gt 0) {
+                        $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
+                    }
+                    else {
+                        $null
+                    }
+
+                    # prepare command
+                    $command = $connection.CreateCommand()
+                    $command.CommandText = $PSItem
+
+                    # add parameters if provided
+                    if ($null -ne $data) {
+                        $data.GetEnumerator() | ForEach-Object {
+                            $null = $command.Parameters.AddWithValue(
+                                "@" + $PSItem.Key,
+                                $PSItem.Value
+                            )
+                        }
+                    }
+
+                    # execute and read results
+                    $reader = $command.ExecuteReader()
+
+                    while ($reader.Read()) {
+                        $record = @{}
+                        for ($i = 0; $i -lt $reader.FieldCount; $i++) {
+                            $record[$reader.GetName($i)] = $reader.GetValue($i)
+                        }
+                        Write-Output $record
                     }
                 }
 
-                $reader = $command.ExecuteReader()
-
-                while ($reader.Read()) {
-
-                    $record = @{}
-
-                    for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-
-                        $record[$reader.GetName($i)] = $reader.GetValue($i)
-                    }
-
-                    Write-Output $record
-                }
+                # commit if successful
+                $transaction.Commit()
+                Write-Verbose "Transaction committed successfully"
             }
-
-            $transaction.Commit();
+            catch {
+                # rollback on error
+                $transaction.Rollback()
+                Write-Verbose "Transaction rolled back due to error"
+                throw $_
+            }
+            finally {
+                if ($null -ne $reader) { $reader.Close() }
+                $connection.Close()
+                Write-Verbose "Connection closed"
+            }
         }
         catch {
-            $transaction.Rollback()
             throw $_
         }
-        finally {
-            if ($null -ne $reader) { $reader.Close() }
-            $connection.Close()
-        }
     }
-    catch {
-        throw $_
+
+    end {
     }
 }
+################################################################################

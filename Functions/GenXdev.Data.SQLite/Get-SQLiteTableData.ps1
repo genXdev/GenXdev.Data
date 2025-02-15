@@ -1,31 +1,33 @@
 ################################################################################
 <#
 .SYNOPSIS
-Retrieves data from a SQLite database table.
+Retrieves data from a SQLite database table with optional record limiting.
 
 .DESCRIPTION
-This function allows you to query data from a specified SQLite database table
-using either a connection string or database file path. It supports limiting the
-number of records returned.
+This function queries data from a SQLite database table using either a connection
+string or database file path. It provides flexibility in connecting to the
+database and controlling the amount of data retrieved through the Count parameter.
 
 .PARAMETER ConnectionString
-The connection string to connect to the SQLite database.
+Specifies the SQLite connection string in the format:
+"Data Source=path_to_database_file"
 
 .PARAMETER DatabaseFilePath
-The file path to the SQLite database file.
+Specifies the full file system path to the SQLite database file.
 
 .PARAMETER TableName
-The name of the table to query data from.
+Specifies the name of the table to query data from. The table must exist in the
+database.
 
 .PARAMETER Count
-The maximum number of records to return. Default is 100. Use -1 to return all
-records.
+Specifies the maximum number of records to return. Default is 100.
+Use -1 to return all records. Must be -1 or a positive integer.
 
 .EXAMPLE
-Get-SQLiteTableData -DatabaseFilePath "C:\mydb.sqlite" -TableName "Users" -Count 10
+Get-SQLiteTableData -DatabaseFilePath "C:\data\users.db" -TableName "Employees" -Count 50
 
 .EXAMPLE
-Get-SQLiteTableData -ConnectionString "Data Source=mydb.sqlite" -TableName "Users"
+Get-SQLiteTableData "C:\data\users.db" "Employees"
 #>
 function Get-SQLiteTableData {
 
@@ -55,7 +57,7 @@ function Get-SQLiteTableData {
         [Parameter(
             Position = 1,
             Mandatory = $true,
-            HelpMessage = 'The name of the table.'
+            HelpMessage = 'The name of the table to query data from.'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$TableName,
@@ -64,18 +66,21 @@ function Get-SQLiteTableData {
         [Parameter(
             Position = 2,
             Mandatory = $false,
-            HelpMessage = 'The number of records to return. Default is 100. -1 for all.'
+            HelpMessage = 'The maximum number of records to return. -1 for all.'
         )]
         [ValidateRange(-1, [int]::MaxValue)]
         [int]$Count = 100
     )
 
     begin {
+
         Write-Verbose "Starting Get-SQLiteTableData for table: $TableName"
+        Write-Verbose "Record limit set to: $(if($Count -eq -1){'unlimited'}else{$Count})"
     }
 
     process {
-        # construct the query based on count parameter
+
+        # construct query based on whether we want all records or a limited set
         $query = if ($Count -eq -1) {
             "SELECT * FROM $TableName"
         }
@@ -85,14 +90,15 @@ function Get-SQLiteTableData {
 
         Write-Verbose "Executing query: $query"
 
-        # set the query parameter
+        # add the constructed query to the parameter set for Invoke-SQLiteQuery
         $PSBoundParameters["Queries"] = $query
 
-        # invoke the query and return results
+        # execute the query and return results through the SQLite provider
         Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
+
         Write-Verbose "Completed querying table: $TableName"
     }
 }

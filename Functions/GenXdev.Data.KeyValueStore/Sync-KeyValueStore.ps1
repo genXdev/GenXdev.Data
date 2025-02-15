@@ -1,17 +1,24 @@
 ################################################################################
 <#
 .SYNOPSIS
-Synchronizes local and OneDrive shadow databases.
+Synchronizes local and OneDrive key-value store databases.
 
 .DESCRIPTION
-Performs two-way sync between local and shadow databases, with last-modified
-winning strategy.
+Performs two-way synchronization between local and OneDrive shadow databases using
+a last-modified timestamp strategy. Records are merged based on their last
+modification time, with newer versions taking precedence.
 
 .PARAMETER SynchronizationKey
-Optional key to identify sync scope, defaults to "Local".
+Identifies the synchronization scope for the operation. Using "Local" will skip
+synchronization as it indicates local-only records.
 
 .EXAMPLE
+# Synchronize using default local scope
 Sync-KeyValueStore
+
+.EXAMPLE
+# Synchronize specific scope
+Sync-KeyValueStore -SynchronizationKey "UserSettings"
 #>
 function Sync-KeyValueStore {
 
@@ -27,24 +34,37 @@ function Sync-KeyValueStore {
         #######################################################################
     )
 
-    # skip sync for local-only records
-    if ($SynchronizationKey -eq "Local") {
+    begin {
 
-        return
+        Write-Verbose "Starting key-value store sync with key: $SynchronizationKey"
     }
 
-    # get database paths
-    $localDb = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
-    $shadowDb = Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
+    process {
 
-    # ensure both databases exist
-    if (-not ([System.IO.File]::Exists($localDb) -and [System.IO.File]::Exists($shadowDb))) {
+        # skip synchronization for local-only records
+        if ($SynchronizationKey -eq "Local") {
 
-        Initialize-KeyValueStores
-    }
+            Write-Verbose "Skipping sync for local-only key"
+            return
+        }
 
-    # sync query to merge changes based on last modified timestamp
-    $syncQuery = @"
+        # resolve database file paths for local and shadow copies
+        $localDb = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
+        $shadowDb = Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
+
+        Write-Verbose "Local DB: $localDb"
+        Write-Verbose "Shadow DB: $shadowDb"
+
+        # ensure database files exist by initializing if needed
+        if (-not ([System.IO.File]::Exists($localDb) -and
+                [System.IO.File]::Exists($shadowDb))) {
+
+            Write-Verbose "Initializing missing database files"
+            Initialize-KeyValueStores
+        }
+
+        # sql query to perform bidirectional sync based on last modified timestamp
+        $syncQuery = @"
 ATTACH DATABASE @shadowDb AS shadow;
 
 -- sync from shadow to local
@@ -76,10 +96,19 @@ AND (
 );
 "@
 
-    $params = @{
-        'shadowDb' = $shadowDb
-        'syncKey' = $SynchronizationKey
+        # prepare parameters for sql query execution
+        $params = @{
+            'shadowDb' = $shadowDb
+            'syncKey'  = $SynchronizationKey
+        }
+
+        Write-Verbose "Executing sync query with parameters"
+        Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
     }
 
-    Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
+    end {
+
+        Write-Verbose "Sync operation completed"
+    }
 }
+################################################################################

@@ -1,53 +1,82 @@
 ################################################################################
 <#
 .SYNOPSIS
-Removes an entire store from the database.
+Removes a key-value store from the database.
+
 .DESCRIPTION
-Executes a DELETE statement to remove all entries for the given store.
+Removes all entries for a specified store from the database. For local stores,
+performs a physical delete. For synchronized stores, marks entries as deleted and
+triggers synchronization.
+
 .PARAMETER StoreName
-Name of the store to delete.
+The name of the key-value store to remove.
+
 .PARAMETER SynchronizationKey
-Optional key to identify synchronization scope, defaults to "Local".
+The synchronization scope identifier. Defaults to "Local" for non-synchronized
+stores.
+
 .EXAMPLE
-Remove-KeyValueStore -StoreName "YourStoreName"
-.EXAMPLE
-Remove-KeyValueStore YourStoreName
+Remove-KeyValueStore -StoreName "ConfigurationStore" -SynchronizationKey "Cloud"
 #>
 function Remove-KeyValueStore {
 
     [CmdletBinding()]
 
     param (
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "Name of the store to delete")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = "Name of the store to delete"
+        )]
         [string]$StoreName,
-        [Parameter(Mandatory = $false, Position = 1, HelpMessage = "Key to identify synchronization scope")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 1,
+            HelpMessage = "Key to identify synchronization scope"
+        )]
         [string]$SynchronizationKey = "Local"
+        ########################################################################
     )
 
-    # Path to your SQLite database
-    $DatabaseFilePath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" -CreateDirectory
+    begin {
 
-    # Not found?
-    if (-not (Test-Path $DatabaseFilePath)) {
+        # get the full path to the sqlite database file
+        $databaseFilePath = Expand-Path `
+            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            -CreateDirectory
 
-        Initialize-KeyValueStores
+        Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    # get current user info for lastModifiedBy
-    $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
+    process {
 
-    # for Local records, perform actual delete
-    if ($SynchronizationKey -eq "Local") {
+        # ensure database exists, create if not
+        if (-not (Test-Path $databaseFilePath)) {
 
-        $sqlQuery = @"
+            Write-Verbose "Database not found, initializing new database"
+            Initialize-KeyValueStores
+        }
+
+        # get current user identity for audit trail
+        $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
+        Write-Verbose "Operation performed by: $lastModifiedBy"
+
+        # determine sql operation based on synchronization mode
+        if ($SynchronizationKey -eq "Local") {
+
+            Write-Verbose "Local store: performing physical delete"
+            $sqlQuery = @"
 DELETE FROM KeyValueStore
 WHERE storeName = @storeName
 AND synchronizationKey = @syncKey;
 "@
-    }
-    else {
-        # for sync records, set deletedDate and lastModifiedBy
-        $sqlQuery = @"
+        }
+        else {
+
+            Write-Verbose "Sync store: marking entries as deleted"
+            $sqlQuery = @"
 UPDATE KeyValueStore
 SET deletedDate = CURRENT_TIMESTAMP,
     lastModified = CURRENT_TIMESTAMP,
@@ -55,19 +84,31 @@ SET deletedDate = CURRENT_TIMESTAMP,
 WHERE storeName = @storeName
 AND synchronizationKey = @syncKey;
 "@
+        }
+
+        # prepare parameters for sql query
+        $params = @{
+            'storeName'  = $StoreName
+            'syncKey'    = $SynchronizationKey
+            'modifiedBy' = $lastModifiedBy
+        }
+
+        # execute the database operation
+        Write-Verbose "Executing database operation for store: $StoreName"
+        Invoke-SQLiteQuery `
+            -DatabaseFilePath $databaseFilePath `
+            -Queries $sqlQuery `
+            -SqlParameters $params
+
+        # trigger synchronization for non-local stores
+        if ($SynchronizationKey -ne "Local") {
+
+            Write-Verbose "Triggering synchronization for key: $SynchronizationKey"
+            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+        }
     }
 
-    $params = @{
-        'storeName' = $StoreName
-        'syncKey' = $SynchronizationKey
-        'modifiedBy' = $lastModifiedBy
-    }
-
-    Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
-
-    # sync if not local
-    if ($SynchronizationKey -ne "Local") {
-
-        Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+    end {
     }
 }
+################################################################################

@@ -1,35 +1,75 @@
-#######################################################################################
+################################################################################
 <#
 .SYNOPSIS
-Creates a new SQLite database.
+Creates a new SQLite database file.
+
 .DESCRIPTION
-Creates a new SQLite database file if it does not already exist.
+Creates a new SQLite database file at the specified path if it does not already
+exist. The function ensures the target directory exists and creates a valid
+SQLite database by establishing and closing a connection.
+
 .PARAMETER DatabaseFilePath
-Path to the SQLite database file to be created.
+The full path where the SQLite database file should be created. If the directory
+path does not exist, it will be created automatically.
+
 .EXAMPLE
-New-SQLiteDatabase -DatabaseFilePath "C:\temp\newdb.sqlite"
+New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite"
+
+.EXAMPLE
+nsqldb "C:\Databases\MyNewDb.sqlite"
 #>
 function New-SQLiteDatabase {
+
     [CmdletBinding()]
+    [Alias("nsqldb")]
+
     param (
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "The path to the SQLite database file.")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = "The path to the SQLite database file"
+        )]
         [string]$DatabaseFilePath
+        ########################################################################
     )
 
-    $DatabaseFilePath = Expand-Path $DatabaseFilePath -CreateDirectory
+    begin {
 
-    if (-not (Test-Path $DatabaseFilePath)) {
-        try {
-            $connectionString = "Data Source=$DatabaseFilePath"
-            $connection = New-Object System.Data.SQLite.SQLiteConnection($connectionString)
-            $connection.Open()
-            $connection.Close()
+        # expand the path and create directory if needed
+        $DatabaseFilePath = Expand-Path $DatabaseFilePath -CreateDirectory
+    }
+
+    process {
+
+        # check if database file already exists
+        if (-not (Test-Path $DatabaseFilePath)) {
+
+            try {
+                # construct the connection string
+                $connectionString = "Data Source=$DatabaseFilePath"
+
+                # create a new database connection
+                $connection = New-Object System.Data.SQLite.SQLiteConnection(
+                    $connectionString)
+
+                # open and immediately close to create empty database
+                $connection.Open()
+                $connection.Close()
+
+                Write-Verbose "Successfully created database at $DatabaseFilePath"
+            }
+            catch {
+                throw "Failed to create database at $DatabaseFilePath. Error: `
+$($_.Exception.Message)"
+            }
         }
-        catch {
-            throw "Failed to create database at $DatabaseFilePath. Error: $($_.Exception.Message)"
+        else {
+            Write-Verbose "Database file already exists at $DatabaseFilePath"
         }
     }
-    else {
-        Write-Verbose "Database file already exists at $DatabaseFilePath."
+
+    end {
     }
 }
+################################################################################

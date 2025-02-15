@@ -1,37 +1,41 @@
 ################################################################################
 <#
 .SYNOPSIS
-Retrieves data from a SQLite database view.
+Retrieves data from a SQLite database view with optional record limiting.
 
 .DESCRIPTION
-Gets records from a specified view in a SQLite database, either using a connection
-string or database file path. Allows limiting the number of records returned.
+Queries a SQLite database view using either a connection string or database file
+path. The function supports limiting the number of returned records and provides
+verbose output for tracking query execution.
 
 .PARAMETER ConnectionString
-The connection string to connect to the SQLite database.
+The connection string to connect to the SQLite database. This parameter is
+mutually exclusive with DatabaseFilePath.
 
 .PARAMETER DatabaseFilePath
-The file path to the SQLite database file.
+The file path to the SQLite database file. This parameter is mutually exclusive
+with ConnectionString.
 
 .PARAMETER ViewName
-The name of the view to query data from.
+The name of the view from which to retrieve data.
 
 .PARAMETER Count
 The maximum number of records to return. Use -1 to return all records.
-Default is 100.
+Defaults to 100 if not specified.
 
 .EXAMPLE
-Get-SQLiteViewData -DatabaseFilePath "C:\data\mydb.sqlite" -ViewName "UserView"
--Count 10
+Get-SQLiteViewData -DatabaseFilePath "C:\MyDb.sqlite" `
+    -ViewName "CustomerView" `
+    -Count 50
 
 .EXAMPLE
-Get-SQLiteViewData "C:\data\mydb.sqlite" "UserView"
+Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
 #>
 function Get-SQLiteViewData {
 
     [CmdletBinding(DefaultParameterSetName = "DatabaseFilePath")]
     param (
-        ###########################################################################
+        ########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
@@ -41,7 +45,7 @@ function Get-SQLiteViewData {
         [ValidateNotNullOrEmpty()]
         [string]$ConnectionString,
 
-        ###########################################################################
+        ########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
@@ -51,16 +55,16 @@ function Get-SQLiteViewData {
         [ValidateNotNullOrEmpty()]
         [string]$DatabaseFilePath,
 
-        ###########################################################################
+        ########################################################################
         [Parameter(
             Position = 1,
             Mandatory = $true,
-            HelpMessage = 'The name of the view.'
+            HelpMessage = 'The name of the view to query.'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$ViewName,
 
-        ###########################################################################
+        ########################################################################
         [Parameter(
             Position = 2,
             Mandatory = $false,
@@ -71,11 +75,13 @@ function Get-SQLiteViewData {
     )
 
     begin {
+
         Write-Verbose "Starting Get-SQLiteViewData for view: $ViewName"
     }
 
     process {
-        # construct the query based on count parameter
+
+        # construct query with optional record limit
         $query = if ($Count -eq -1) {
             "SELECT * FROM $ViewName"
         }
@@ -85,14 +91,15 @@ function Get-SQLiteViewData {
 
         Write-Verbose "Executing query: $query"
 
-        # set the query parameter
+        # prepare parameters for Invoke-SQLiteQuery
         $PSBoundParameters["Queries"] = $query
 
-        # execute the query using invoke-sqlitequery
+        # execute query and return results
         Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
+
         Write-Verbose "Completed querying view: $ViewName"
     }
 }

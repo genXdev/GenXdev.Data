@@ -1,23 +1,44 @@
-#######################################################################################
+################################################################################
 <#
 .SYNOPSIS
-    Execute a query against a SqlServer database.
+Executes SQL queries against a SQL Server database with transaction support.
 
 .DESCRIPTION
-    Execute a query against a SqlServer database with support for parameters and with a
-    configurable transaction isolation level.
-
-    All queries are executed within the same transaction.
-    If an error occurs, the transaction is rollbacked and the error is thrown.
+Executes one or more SQL queries against a SQL Server database, supporting
+parameters and configurable transaction isolation levels. All queries execute
+within a single transaction that rolls back on error.
 
 .PARAMETER ConnectionString
-    The connection string to the SqlServer database.
+The complete connection string for connecting to the SQL Server database.
 
-.PARAMETER FilePath
-    The path to the SqlServer database file.
+.PARAMETER HostName
+The SQL Server host name or IP address. Defaults to "." (local server).
+
+.PARAMETER User
+The username for SQL Server authentication.
+
+.PARAMETER Password
+The password for SQL Server authentication.
 
 .PARAMETER Queries
-    The query or queries to execute.
+One or more SQL queries to execute. Accepts pipeline input.
+
+.PARAMETER SqlParameters
+Optional hashtable of parameters for the queries. Format: @{"param"="value"}.
+
+.PARAMETER IsolationLevel
+Transaction isolation level. Defaults to ReadCommitted.
+
+.EXAMPLE
+# Execute query with explicit connection string
+Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
+    -Query "SELECT * FROM Users WHERE Id = @Id" `
+    -SqlParameters @{"Id"=1}
+
+.EXAMPLE
+# Execute query using host and credentials
+isq -HostName "dbserver" -User "sa" -Password "pwd" `
+    -q "SELECT * FROM Users" -data @{"Id"=1}
 #>
 function Invoke-SqlServerQuery {
 
@@ -56,6 +77,7 @@ function Invoke-SqlServerQuery {
             HelpMessage = 'The hostName of SqlServer'
         )]
         [string]$HostName = ".",
+
 
         ###############################################################################
 
@@ -185,60 +207,100 @@ function Invoke-SqlServerQuery {
         [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted
     )
 
-    try {
+    begin {
 
-        $connection = New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
-        $connection.Open()
-        $transaction = $connection.BeginTransaction($IsolationLevel);
-        $SqlParameters = $SqlParameters || @()
+        # prepare connection based on parameter set
+        Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
+
+        # build connection string if not provided directly
+        if ($PSCmdlet.ParameterSetName -ne "ConnectionString") {
+            $connectionString = "Server=$HostName;"
+            if ($User) {
+                $connectionString += "User Id=$User;Password=$Password;"
+            }
+            else {
+                $connectionString += "Trusted_Connection=True;"
+            }
+        }
+    }
+
+    process {
 
         try {
-            $idx = -1;
-            $Queries | ForEach-Object {
+            # establish database connection
+            Write-Verbose "Opening SQL connection"
+            $connection = New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
+            $connection.Open()
 
-                $idx++;
+            # begin transaction with specified isolation
+            Write-Verbose "Beginning transaction with $IsolationLevel isolation"
+            $transaction = $connection.BeginTransaction($IsolationLevel)
 
-                # take none or the next or the last one supplied
-                $data = $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
+            # ensure parameters array exists
+            $sqlParameters = $sqlParameters -or @()
 
-                $command = $connection.CreateCommand()
-                $command.CommandText = $PSItem
+            try {
+                $idx = -1
 
-                if ($null -ne $data) {
+                # process each query
+                $Queries | ForEach-Object {
 
-                    $data | ForEach-Object {
+                    $idx++
+                    Write-Verbose "Executing query #$($idx + 1)"
 
-                        $command.Parameters.AddWithValue($PSItem.Key, $PSItem.Value)
+                    # select appropriate parameter set for this query
+                    $data = $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
+
+                    # prepare and configure command
+                    $command = $connection.CreateCommand()
+                    $command.CommandText = $PSItem
+                    $command.Transaction = $transaction
+
+                    # add any supplied parameters
+                    if ($null -ne $data) {
+                        $data.GetEnumerator() | ForEach-Object {
+                            Write-Verbose "Adding parameter $($_.Key) = $($_.Value)"
+                            $command.Parameters.AddWithValue($_.Key, $_.Value)
+                        }
                     }
+
+                    # execute and process results
+                    $reader = $command.ExecuteReader()
+
+                    # convert each row to a hashtable
+                    while ($reader.Read()) {
+                        $record = @{}
+                        for ($i = 0; $i -lt $reader.FieldCount; $i++) {
+                            $record[$reader.GetName($i)] = $reader.GetValue($i)
+                        }
+                        Write-Output $record
+                    }
+
+                    $reader.Close()
                 }
 
-                $reader = $command.ExecuteReader()
-
-                while ($reader.Read()) {
-
-                    $record = @{}
-
-                    for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-
-                        $record[$reader.GetName($i)] = $reader.GetValue($i)
-                    }
-
-                    Write-Output $record
-                }
+                # commit if all succeeded
+                Write-Verbose "Committing transaction"
+                $transaction.Commit()
             }
-
-            $transaction.Commit();
+            catch {
+                # rollback on any error
+                Write-Verbose "Error occurred, rolling back transaction"
+                $transaction.Rollback()
+                throw $_
+            }
+            finally {
+                # ensure connections are closed
+                if ($reader) { $reader.Close() }
+                if ($connection.State -eq 'Open') { $connection.Close() }
+            }
         }
         catch {
-            $transaction.Rollback()
             throw $_
         }
-        finally {
-            $reader.Close()
-            $connection.Close()
-        }
     }
-    catch {
-        throw $_
+
+    end {
     }
 }
+################################################################################

@@ -1,21 +1,30 @@
 ################################################################################
 <#
 .SYNOPSIS
-Retrieves a value by the specified key and store from the database.
+Retrieves a value from a key-value store database.
+
 .DESCRIPTION
-Executes a SELECT statement to fetch the value for a given key in a given store.
+Retrieves a value for a specified key from a SQLite-based key-value store. The
+function supports optional default values and synchronization across different
+scopes.
+
 .PARAMETER StoreName
-Name of the store to retrieve the key from.
+The name of the key-value store to query.
+
 .PARAMETER KeyName
-Key to retrieve from the specified store.
+The key whose value should be retrieved.
+
+.PARAMETER DefaultValue
+Optional default value to return if the key is not found.
+
 .PARAMETER SynchronizationKey
-Optional key to identify synchronization scope, defaults to "Local".
+Optional key to identify synchronization scope. Defaults to "Local".
+
 .EXAMPLE
-Get-ValueByKeyFromStore -StoreName "MyStore" -KeyName "MyKey"
+Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" -DefaultValue "Dark"
+
 .EXAMPLE
-getvalue MyStore MyKey
-.EXAMPLE
-Get-ValueByKeyFromStore -StoreName "MyPreferences" -KeyName "MyKey" -DefaultValue "MyDefaultValue"
+getvalue AppSettings Theme
 #>
 function Get-ValueByKeyFromStore {
 
@@ -23,32 +32,63 @@ function Get-ValueByKeyFromStore {
     [Alias("getvalue")]
 
     param (
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = "Name of the store to retrieve the key from")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 0,
+            HelpMessage = "Name of the store to retrieve the key from"
+        )]
         [string]$StoreName,
-        [Parameter(Mandatory = $true, Position = 1, HelpMessage = "Key to retrieve from the specified store")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $true,
+            Position = 1,
+            HelpMessage = "Key to retrieve from the specified store"
+        )]
         [string]$KeyName,
-        [Parameter(Mandatory = $false, Position = 2, HelpMessage = "A optional default value")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 2,
+            HelpMessage = "A optional default value"
+        )]
         [string]$DefaultValue = $null,
-        [Parameter(Mandatory = $false, Position = 3, HelpMessage = "Key to identify synchronization scope")]
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 3,
+            HelpMessage = "Key to identify synchronization scope"
+        )]
         [string]$SynchronizationKey = "Local"
+        ########################################################################
     )
 
-    # Path to your SQLite databases
-    $databaseFilePath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" -CreateDirectory
+    begin {
 
-    # Not found?
-    if (-not (Test-Path $DatabaseFilePath)) {
+        # construct the path to the sqlite database file
+        $databaseFilePath = Expand-Path `
+            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            -CreateDirectory
 
-        Initialize-KeyValueStores
+        Write-Verbose "Database path: $databaseFilePath"
     }
 
-    if ($SynchronizationKey -ne "Local") {
+    process {
 
-        Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
-    }
+        # initialize database if it doesn't exist
+        if (-not (Test-Path $databaseFilePath)) {
+            Write-Verbose "Database not found, initializing..."
+            Initialize-KeyValueStores
+        }
 
-    # Build and execute the SELECT query
-    $sqlQuery = @"
+        # sync with external store if not using local scope
+        if ($SynchronizationKey -ne "Local") {
+            Write-Verbose "Syncing store with key: $SynchronizationKey"
+            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+        }
+
+        # prepare sql query to retrieve value
+        $sqlQuery = @"
 SELECT value
 FROM KeyValueStore
 WHERE storeName = @storeName
@@ -57,20 +97,33 @@ AND synchronizationKey = @syncKey
 AND deletedDate IS NULL;
 "@
 
-    $params = @{
-        'storeName' = $StoreName
-        'keyName' = $KeyName
-        'syncKey' = $SynchronizationKey
+        # set up query parameters
+        $params = @{
+            'storeName' = $StoreName
+            'keyName'   = $KeyName
+            'syncKey'   = $SynchronizationKey
+        }
+
+        Write-Verbose "Querying store '$StoreName' for key '$KeyName'"
+
+        # execute query and get result
+        $result = Invoke-SQLiteQuery `
+            -DatabaseFilePath $databaseFilePath `
+            -Queries $sqlQuery `
+            -SqlParameters $params
+
+        # return result or default value
+        if ($result) {
+            Write-Verbose "Value found"
+            return $result.value
+        }
+        else {
+            Write-Verbose "No value found, returning default"
+            return $DefaultValue
+        }
     }
 
-    $result = Invoke-SQLiteQuery -DatabaseFilePath $DatabaseFilePath -Queries $sqlQuery -SqlParameters $params
-
-    if ($result) {
-
-        return $result.value
-    }
-    else {
-
-        return $DefaultValue
+    end {
     }
 }
+################################################################################

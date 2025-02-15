@@ -1,14 +1,21 @@
 ################################################################################
 <#
 .SYNOPSIS
-Initializes KeyValueStore databases locally and in OneDrive for synchronization.
+Initializes and synchronizes KeyValueStore databases between local and OneDrive.
 
 .DESCRIPTION
-Creates SQLite databases with required schema both locally and in OneDrive for
-synchronization purposes if they don't exist.
+    Creates SQLite databases with required schema in two locations if they don't exist:
+1. Local machine for immediate access
+2. OneDrive folder for cloud synchronization
+The function ensures both databases have identical schema with synchronization
+support.
 
 .PARAMETER SynchronizationKey
-Optional key to identify synchronization scope, defaults to "Local".
+Specifies the synchronization scope identifier. Used to partition data for
+different synchronization contexts.
+
+.EXAMPLE
+Initialize-KeyValueStores -SynchronizationKey "ProjectA"
 
 .EXAMPLE
 Initialize-KeyValueStores
@@ -29,31 +36,36 @@ function Initialize-KeyValueStores {
 
     begin {
 
-        # get paths for both local and shadow databases
-        $databaseFilePath = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+        # determine the path for local database storage
+        $databaseFilePath = Expand-Path `
+            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
-        $shadowDbPath = Expand-Path "~\Onedrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db" `
+        # determine the path for onedrive synchronized database
+        $shadowDbPath = Expand-Path `
+            "~\Onedrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
+        # extract the directory path for the shadow database
         $shadowPath = [System.IO.Path]::GetDirectoryName($shadowDbPath)
 
-        # hide the onedrive sync folder
+        # make the onedrive sync folder hidden to prevent user interference
         $folder = [System.IO.DirectoryInfo]::new($shadowPath)
         $folder.Attributes = $folder.Attributes -bor [System.IO.FileAttributes]::Hidden
     }
 
     process {
 
-        # create databases if they don't exist
+        # iterate through both database paths to ensure they exist
         foreach ($dbPath in @($databaseFilePath, $shadowDbPath)) {
 
+            # create database if it doesn't exist
             if (-not (Test-Path $dbPath)) {
 
-                Write-Verbose "Creating database at: $dbPath"
+                Write-Verbose "Creating KeyValueStore database at: $dbPath"
                 New-SQLiteDatabase -DatabaseFilePath $dbPath
 
-                # create table with sync support
+                # create table schema with synchronization support columns
                 $sqlCreateTable = @"
 CREATE TABLE IF NOT EXISTS KeyValueStore (
     synchronizationKey TEXT NOT NULL DEFAULT 'Local',
@@ -76,3 +88,4 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
     end {
     }
 }
+################################################################################

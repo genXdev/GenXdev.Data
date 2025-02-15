@@ -4,31 +4,38 @@
 Retrieves data from a specific column in a SQLite database table.
 
 .DESCRIPTION
-This function queries a SQLite database and returns the values from a specified
-column in a table. It supports connecting via connection string or database file
-path and allows limiting the number of returned records.
+This function provides a convenient way to extract data from a single column in a
+SQLite database table. It supports two connection methods: direct database file
+path or connection string. The function includes options to limit the number of
+returned records and uses proper SQLite query construction for optimal
+performance.
 
 .PARAMETER ConnectionString
-The connection string to the SQLite database.
+The connection string to connect to the SQLite database. This parameter is
+mutually exclusive with DatabaseFilePath.
 
 .PARAMETER DatabaseFilePath
-The path to the SQLite database file.
+The file path to the SQLite database file. This parameter is mutually exclusive
+with ConnectionString.
 
 .PARAMETER TableName
-The name of the table to query.
+The name of the table from which to retrieve the column data.
 
 .PARAMETER ColumnName
-The name of the column to retrieve data from.
+The name of the column whose data should be retrieved.
 
 .PARAMETER Count
-The number of records to return. Default is 100. Use -1 to return all records.
+The maximum number of records to return. Default is 100. Use -1 to return all
+records without limit.
 
 .EXAMPLE
-Get-SQLiteTableColumnData -DatabaseFilePath "C:\data.db" -TableName "Users" `
-    -ColumnName "Name" -Count 10
+Get-SQLiteTableColumnData -DatabaseFilePath "C:\MyDb.sqlite" `
+    -TableName "Employees" `
+    -ColumnName "Email" `
+    -Count 10
 
 .EXAMPLE
-Get-SQLiteTableColumnData "C:\data.db" "Users" "Name"
+Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
 #>
 function Get-SQLiteTableColumnData {
 
@@ -58,7 +65,7 @@ function Get-SQLiteTableColumnData {
         [Parameter(
             Position = 1,
             Mandatory = $true,
-            HelpMessage = 'The name of the table'
+            HelpMessage = 'The name of the table to query'
         )]
         [ValidateNotNullOrEmpty()]
         [string] $TableName,
@@ -67,7 +74,7 @@ function Get-SQLiteTableColumnData {
         [Parameter(
             Position = 2,
             Mandatory = $true,
-            HelpMessage = 'The name of the column'
+            HelpMessage = 'The name of the column to retrieve'
         )]
         [ValidateNotNullOrEmpty()]
         [string] $ColumnName,
@@ -76,17 +83,20 @@ function Get-SQLiteTableColumnData {
         [Parameter(
             Position = 3,
             Mandatory = $false,
-            HelpMessage = 'The number of records to return. Default is 100. -1 for all'
+            HelpMessage = 'Number of records to return. Default 100. Use -1 for all'
         )]
         [int] $Count = 100
     )
 
     begin {
-        Write-Verbose "Starting query for column '$ColumnName' in table '$TableName'"
+
+        # log the start of the operation with table and column details
+        Write-Verbose "Starting data retrieval for column '$ColumnName' from table '$TableName'"
     }
 
     process {
-        # construct the query based on the count parameter
+
+        # construct the appropriate SQL query based on whether a limit is needed
         $query = if ($Count -eq -1) {
             "SELECT $ColumnName FROM $TableName"
         }
@@ -94,15 +104,18 @@ function Get-SQLiteTableColumnData {
             "SELECT $ColumnName FROM $TableName LIMIT $Count"
         }
 
-        Write-Verbose "Executing query: $query"
+        # log the constructed query for debugging
+        Write-Verbose "Executing SQL query: $query"
 
-        # set the query parameter and execute
+        # prepare parameters for Invoke-SQLiteQuery and execute the query
         $PSBoundParameters["Queries"] = $query
         Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
-        Write-Verbose "Query execution completed"
+
+        # log completion of the operation
+        Write-Verbose "Column data retrieval completed successfully"
     }
 }
 ################################################################################

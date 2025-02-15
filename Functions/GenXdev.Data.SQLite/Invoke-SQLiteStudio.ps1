@@ -1,36 +1,43 @@
 ################################################################################
 <#
 .SYNOPSIS
-Executes SQLite queries using specified connection parameters.
+Executes SQLite database queries with support for parameters and transactions.
 
 .DESCRIPTION
-This function allows execution of SQLite queries either through a connection string
-or direct database file path. It supports parameterized queries and transaction
-isolation levels.
+Provides a PowerShell interface for executing SQLite queries with support for:
+- Connection via connection string or database file path
+- Parameterized queries to prevent SQL injection
+- Transaction isolation level control
+- Multiple query execution in a single transaction
+- Pipeline input for queries and parameters
 
 .PARAMETER ConnectionString
-The connection string to the SQLite database.
+The SQLite connection string for connecting to the database.
+Format: "Data Source=mydb.sqlite"
 
 .PARAMETER DatabaseFilePath
-The path to the SQLite database file.
+The direct file system path to the SQLite database file.
 
 .PARAMETER Queries
-One or more SQL queries to execute against the database.
+One or more SQL queries to execute. Can be provided via pipeline.
+Each query can be parameterized using @parameter notation.
 
 .PARAMETER SqlParameters
-Optional parameters for the query, provided as hashtables.
-Format: @{"Id" = 1; "Name" = "John"}
+Hashtable of parameters to use in queries. Format: @{"param" = "value"}
+Multiple parameter sets can be provided for multiple queries.
 
 .PARAMETER IsolationLevel
-The transaction isolation level to use. Defaults to ReadCommitted.
+Controls the transaction isolation. Default is ReadCommitted.
+Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable
 
 .EXAMPLE
-Invoke-SQLiteStudio -DatabaseFilePath "C:\data\mydb.sqlite" -Queries "SELECT * FROM Users"
+Invoke-SQLiteStudio `
+    -DatabaseFilePath "C:\data\users.sqlite" `
+    -Queries "SELECT * FROM Users WHERE active = @status" `
+    -SqlParameters @{"status" = 1}
 
 .EXAMPLE
-Invoke-SQLiteStudio -ConnectionString "Data Source=mydb.sqlite" `
-    -q "SELECT * FROM Users WHERE Id = @Id" `
-    -SqlParameters @{"Id" = 1}
+"SELECT * FROM Users" | isql -DatabaseFilePath "C:\data\users.sqlite"
 #>
 function Invoke-SQLiteStudio {
 
@@ -87,11 +94,15 @@ function Invoke-SQLiteStudio {
     )
 
     begin {
-        Write-Verbose "Initializing SQLite connection"
+
+        # log initialization of sqlite connection handling
+        Write-Verbose "Initializing SQLite query execution environment"
     }
 
     process {
-        Write-Verbose "Processing queries"
+
+        # log the start of query processing
+        Write-Verbose "Processing $($Queries.Count) queries with isolation level: $IsolationLevel"
     }
 
     end {

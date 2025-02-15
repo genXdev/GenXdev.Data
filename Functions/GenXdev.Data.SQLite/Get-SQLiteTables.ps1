@@ -4,27 +4,31 @@
 Retrieves a list of table names from a SQLite database.
 
 .DESCRIPTION
-This function queries a SQLite database to return all table names defined in the
-sqlite_master table. It supports connecting via either a connection string or a
-database file path.
+Queries the sqlite_master system table to retrieve all user-defined table names
+from a SQLite database. Supports connecting via either a direct connection string
+or a database file path. Returns the table names as a collection of strings.
 
 .PARAMETER ConnectionString
-The connection string to the SQLite database.
+The full connection string to connect to the SQLite database. Should include the
+Data Source and Version parameters at minimum.
 
 .PARAMETER DatabaseFilePath
-The path to the SQLite database file.
+The full filesystem path to the SQLite database file. The function will create
+an appropriate connection string internally.
 
 .EXAMPLE
-Get-SQLiteTables -DatabaseFilePath "C:\MyDB.sqlite"
+Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
+# Returns all table names from the specified database file
 
 .EXAMPLE
-Get-SQLiteTables -ConnectionString "Data Source=C:\MyDB.sqlite;Version=3;"
+Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
+# Returns all table names using a custom connection string
 #>
 function Get-SQLiteTables {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
     param (
-        ###############################################################################
+        ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
@@ -33,7 +37,7 @@ function Get-SQLiteTables {
         )]
         [string]$ConnectionString,
 
-        ###############################################################################
+        ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
@@ -45,14 +49,19 @@ function Get-SQLiteTables {
     )
 
     begin {
-        Write-Verbose "Preparing to retrieve table names from SQLite database"
+
+        # log the start of table retrieval operation
+        Write-Verbose "Starting SQLite table name retrieval operation"
     }
 
     process {
-        # set the query to retrieve all table names
-        $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master WHERE type='table'"
 
-        # execute the query and return results
+        # define the query to get all table names from sqlite_master
+        $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " + `
+            "WHERE type='table'"
+
+        # execute query using the inherited connection parameters
+        Write-Verbose "Executing query to retrieve table names"
         Invoke-SQLiteQuery @PSBoundParameters
     }
 
