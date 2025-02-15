@@ -57,7 +57,7 @@ function Get-SQLiteTables {
     process {
 
         # define the query to get all table names from sqlite_master
-        $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " + `
+        $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " +
             "WHERE type='table'"
 
         # execute query using the inherited connection parameters

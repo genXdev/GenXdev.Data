@@ -19,8 +19,6 @@ Describe "Get-GenXdevPreference" {
             Set-GenXdevDefaultPreference -Name "TestPref2" -Value "DefaultValue"
         }
         catch {
-            # Restore VerbosePreference even if setup fails
-
             throw
         }
     }
