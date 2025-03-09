@@ -24,7 +24,9 @@ getPreference "Theme" "Dark"
 #>
 function Get-GenXdevPreference {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(
+        DefaultParameterSetName = 'Default'
+    )]
     [Alias("getPreference")]
     param(
         ########################################################################

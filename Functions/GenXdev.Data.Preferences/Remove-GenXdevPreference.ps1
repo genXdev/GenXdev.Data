@@ -27,7 +27,9 @@ removePreference "Theme" -RemoveDefault
 #>
 function Remove-GenXdevPreference {
 
-    [CmdletBinding(DefaultParameterSetName = 'Local')]
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
     [Alias("removePreference")]
     param(
         ########################################################################
@@ -53,34 +55,33 @@ function Remove-GenXdevPreference {
 
     begin {
 
-        # log the start of preference removal operation
         Write-Verbose "Starting preference removal for: $Name"
     }
 
     process {
 
-        # remove the specified preference from the local preferences store
-        Write-Verbose "Removing preference from local store"
-        Remove-KeyFromStore `
-            -StoreName "GenXdev.PowerShell.Preferences" `
-            -KeyName $Name `
-            -SynchronizationKey "Local"
+        if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
 
-        # if removedefault switch is present, remove from default store and sync
-        if ($RemoveDefault) {
-
-            Write-Verbose "Removing preference from default store"
+            Write-Verbose "Removing preference from local store"
             Remove-KeyFromStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
                 -KeyName $Name `
-                -SynchronizationKey "Defaults"
+                -SynchronizationKey "Local"
 
-            # synchronize changes to ensure consistency
-            Write-Verbose "Synchronizing default store changes"
-            $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+            if ($RemoveDefault) {
+
+                Write-Verbose "Removing preference from default store"
+                Remove-KeyFromStore `
+                    -StoreName "GenXdev.PowerShell.Preferences" `
+                    -KeyName $Name `
+                    -SynchronizationKey "Defaults"
+
+                Write-Verbose "Synchronizing default store changes"
+                $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+            }
+
+            Write-Verbose "Preference removal completed"
         }
-
-        Write-Verbose "Preference removal completed"
     }
 
     end {

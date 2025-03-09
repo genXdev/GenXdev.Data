@@ -84,11 +84,10 @@ function Invoke-SQLiteQuery {
     )
 
     begin {
-
         # initialize connection string from file path if provided
         $connString = [String]::IsNullOrWhiteSpace($DatabaseFilePath) `
             ? $ConnectionString `
-            : "Data Source=$((Expand-Path $DatabaseFilePath))"
+            : "Data Source=$((GenXdev.FileSystem\Expand-Path $DatabaseFilePath))"
 
         Write-Verbose "Opening SQLite connection..."
     }

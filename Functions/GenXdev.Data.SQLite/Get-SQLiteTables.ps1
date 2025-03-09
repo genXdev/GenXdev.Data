@@ -24,8 +24,9 @@ Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
 Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
 # Returns all table names using a custom connection string
 #>
-function Get-SQLiteTables {
 
+function Get-SQLiteTables {
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     [CmdletBinding(DefaultParameterSetName = "Default")]
     param (
         ###########################################################################
@@ -58,7 +59,7 @@ function Get-SQLiteTables {
 
         # define the query to get all table names from sqlite_master
         $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " +
-            "WHERE type='table'"
+        "WHERE type='table'"
 
         # execute query using the inherited connection parameters
         Write-Verbose "Executing query to retrieve table names"

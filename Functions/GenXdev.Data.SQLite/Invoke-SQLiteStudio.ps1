@@ -94,7 +94,6 @@ function Invoke-SQLiteStudio {
     )
 
     begin {
-
         # log initialization of sqlite connection handling
         Write-Verbose "Initializing SQLite query execution environment"
     }

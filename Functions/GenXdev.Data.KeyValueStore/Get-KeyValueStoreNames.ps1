@@ -21,6 +21,7 @@ getstorenames "%"
 function Get-KeyValueStoreNames {
 
     [CmdletBinding()]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     [Alias("getstorenames")]
 
     param(
@@ -36,8 +37,8 @@ function Get-KeyValueStoreNames {
 
     begin {
 
-        # construct the path to the sqlite database file
-        $databaseFilePath = Expand-Path `
+        # get the full path to the sqlite database file
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
@@ -46,21 +47,21 @@ function Get-KeyValueStoreNames {
 
     process {
 
-        # initialize database if it doesn't exist
+        # create database if it doesn't exist
         if (-not (Test-Path $databaseFilePath)) {
 
             Write-Verbose "Database not found, initializing..."
             Initialize-KeyValueStores
         }
 
-        # perform synchronization for non-local scopes
+        # sync non-local stores
         if ($SynchronizationKey -ne "Local") {
 
             Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
             Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
         }
 
-        # prepare sql query to get distinct store names
+        # query to get unique store names
         $sqlQuery = @"
 SELECT DISTINCT storeName
 FROM KeyValueStore
@@ -68,14 +69,14 @@ WHERE synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
 "@
 
-        # set up query parameters
+        # parameters for the query
         $params = @{
             'syncKey' = $SynchronizationKey
         }
 
         Write-Verbose "Querying stores with sync key: $SynchronizationKey"
 
-        # execute query and return store names
+        # execute query and return results
         Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params |

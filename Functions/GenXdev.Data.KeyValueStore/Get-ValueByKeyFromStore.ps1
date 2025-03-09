@@ -28,7 +28,8 @@ getvalue AppSettings Theme
 #>
 function Get-ValueByKeyFromStore {
 
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [OutputType([System.String])]
     [Alias("getvalue")]
 
     param (
@@ -36,6 +37,7 @@ function Get-ValueByKeyFromStore {
         [Parameter(
             Mandatory = $true,
             Position = 0,
+            ParameterSetName = "Default",
             HelpMessage = "Name of the store to retrieve the key from"
         )]
         [string]$StoreName,
@@ -43,6 +45,7 @@ function Get-ValueByKeyFromStore {
         [Parameter(
             Mandatory = $true,
             Position = 1,
+            ParameterSetName = "Default",
             HelpMessage = "Key to retrieve from the specified store"
         )]
         [string]$KeyName,
@@ -50,6 +53,7 @@ function Get-ValueByKeyFromStore {
         [Parameter(
             Mandatory = $false,
             Position = 2,
+            ParameterSetName = "Default",
             HelpMessage = "A optional default value"
         )]
         [string]$DefaultValue = $null,
@@ -57,6 +61,7 @@ function Get-ValueByKeyFromStore {
         [Parameter(
             Mandatory = $false,
             Position = 3,
+            ParameterSetName = "Default",
             HelpMessage = "Key to identify synchronization scope"
         )]
         [string]$SynchronizationKey = "Local"
@@ -66,7 +71,7 @@ function Get-ValueByKeyFromStore {
     begin {
 
         # construct the path to the sqlite database file
-        $databaseFilePath = Expand-Path `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 

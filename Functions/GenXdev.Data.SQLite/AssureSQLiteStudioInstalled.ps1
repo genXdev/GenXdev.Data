@@ -52,7 +52,7 @@ function AssureSQLiteStudioInstalled {
         if (@(Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -eq 0) {
 
             # determine the default installation directory for sqlitestudio
-            $sqliteStudioPath = (Expand-Path "${env:ProgramFiles}\SQLiteStudio")
+            $sqliteStudioPath = (GenXdev.FileSystem\Expand-Path "${env:ProgramFiles}\SQLiteStudio")
 
             # get current user path environment variable
             $currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')

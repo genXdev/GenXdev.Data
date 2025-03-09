@@ -23,6 +23,7 @@ Same as above, using the alias.
 function Get-GenXdevPreferenceNames {
 
     [CmdletBinding()]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     [Alias("getPreferenceNames")]
     param()
 

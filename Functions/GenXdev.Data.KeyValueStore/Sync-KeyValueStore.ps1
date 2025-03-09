@@ -49,8 +49,8 @@ function Sync-KeyValueStore {
         }
 
         # resolve database file paths for local and shadow copies
-        $localDb = Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
-        $shadowDb = Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
+        $localDb = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
+        $shadowDb = GenXdev.FileSystem\Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
 
         Write-Verbose "Local DB: $localDb"
         Write-Verbose "Shadow DB: $shadowDb"

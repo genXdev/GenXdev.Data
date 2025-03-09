@@ -27,7 +27,7 @@ setPreferenceDefault "EmailNotifications" "Disabled"
 #>
 function Set-GenXdevDefaultPreference {
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [Alias("setPreferenceDefault")]
     param(
         ########################################################################
@@ -56,36 +56,37 @@ function Set-GenXdevDefaultPreference {
 
     begin {
 
-        # log the starting operation with the preference name and value
-        Write-Verbose "Setting default preference '$Name' to value: $Value"
+        Write-Verbose "Starting Set-GenXdevDefaultPreference for '$Name'"
     }
 
     process {
 
-        # handle cases where the value is null or consists only of whitespace
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
-            # log the removal operation
-            Write-Verbose "Value is null or empty, removing default preference"
+            Write-Verbose "Removing default preference '$Name' as value is empty"
 
-            # remove the preference from defaults
-            Remove-GenXdevPreference -Name $Name -RemoveDefault
+            if ($PSCmdlet.ShouldProcess($Name, "Remove default preference")) {
+
+                Remove-GenXdevPreference -Name $Name -RemoveDefault
+            }
 
             return
         }
 
-        # store the preference value in the defaults store
-        Set-ValueByKeyInStore `
-            -StoreName "GenXdev.PowerShell.Preferences" `
-            -KeyName $Name `
-            -Value $Value `
-            -SynchronizationKey "Defaults"
+        Write-Verbose "Setting default preference '$Name' to: $Value"
 
-        # ensure the change is propagated across the system
-        $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+        if ($PSCmdlet.ShouldProcess($Name, "Set default preference")) {
 
-        # log successful completion
-        Write-Verbose "Successfully stored and synchronized default preference"
+            Set-ValueByKeyInStore `
+                -StoreName "GenXdev.PowerShell.Preferences" `
+                -KeyName $Name `
+                -Value $Value `
+                -SynchronizationKey "Defaults"
+
+            $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+
+            Write-Verbose "Successfully stored and synchronized preference '$Name'"
+        }
     }
 
     end {

@@ -43,7 +43,7 @@ isq -HostName "dbserver" -User "sa" -Password "pwd" `
 function Invoke-SqlServerQuery {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
-
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingPlainTextForPassword", "Password", Justification = "Common pattern for SQL authentication")]
     param (
 
         ###############################################################################
@@ -76,7 +76,7 @@ function Invoke-SqlServerQuery {
             Mandatory,
             HelpMessage = 'The hostName of SqlServer'
         )]
-        [string]$HostName = ".",
+        [string]$HostName,
 
 
         ###############################################################################
@@ -208,17 +208,27 @@ function Invoke-SqlServerQuery {
     )
 
     begin {
-
         # prepare connection based on parameter set
         Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
 
+        # set default hostname to local server if not specified but needed
+        if ($PSCmdlet.ParameterSetName -ne "ConnectionString" -and [string]::IsNullOrEmpty($HostName)) {
+
+            $hostName = "."
+            Write-Verbose "Using default local server hostname (.)"
+        }
+
         # build connection string if not provided directly
         if ($PSCmdlet.ParameterSetName -ne "ConnectionString") {
+
             $connectionString = "Server=$HostName;"
+
             if ($User) {
+
                 $connectionString += "User Id=$User;Password=$Password;"
             }
             else {
+
                 $connectionString += "Trusted_Connection=True;"
             }
         }
@@ -258,7 +268,9 @@ function Invoke-SqlServerQuery {
 
                     # add any supplied parameters
                     if ($null -ne $data) {
+
                         $data.GetEnumerator() | ForEach-Object {
+
                             Write-Verbose "Adding parameter $($_.Key) = $($_.Value)"
                             $command.Parameters.AddWithValue($_.Key, $_.Value)
                         }
@@ -269,10 +281,14 @@ function Invoke-SqlServerQuery {
 
                     # convert each row to a hashtable
                     while ($reader.Read()) {
+
                         $record = @{}
+
                         for ($i = 0; $i -lt $reader.FieldCount; $i++) {
+
                             $record[$reader.GetName($i)] = $reader.GetValue($i)
                         }
+
                         Write-Output $record
                     }
 

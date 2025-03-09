@@ -21,11 +21,12 @@ connections.
 Get-SQLiteViews -DatabaseFilePath "C:\Databases\MyDatabase.sqlite"
 
 .EXAMPLE
-Get-SQLiteViews -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
+s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
 #>
 function Get-SQLiteViews {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     param (
         ###############################################################################
         [Parameter(

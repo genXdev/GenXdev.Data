@@ -26,7 +26,9 @@ Uses the alias and positional parameters to set the Theme preference to Light.
 #>
 function Set-GenXdevPreference {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(
+        SupportsShouldProcess = $true
+    )]
     [Alias("setPreference")]
     param(
         ########################################################################
@@ -65,17 +67,21 @@ function Set-GenXdevPreference {
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
             Write-Verbose "Removing preference '$Name' due to null/empty value"
-            Remove-GenXdevPreference -Name $Name
+            if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
+                Remove-GenXdevPreference -Name $Name
+            }
             return
         }
 
         # store the preference with local synchronization
         Write-Verbose "Storing preference '$Name' with value: '$Value'"
-        Set-ValueByKeyInStore `
-            -StoreName "GenXdev.PowerShell.Preferences" `
-            -KeyName $Name `
-            -Value $Value `
-            -SynchronizationKey "Local"
+        if ($PSCmdlet.ShouldProcess($Name, "Set preference to '$Value'")) {
+            Set-ValueByKeyInStore `
+                -StoreName "GenXdev.PowerShell.Preferences" `
+                -KeyName $Name `
+                -Value $Value `
+                -SynchronizationKey "Local"
+        }
 
         Write-Verbose "Successfully stored preference '$Name'"
     }

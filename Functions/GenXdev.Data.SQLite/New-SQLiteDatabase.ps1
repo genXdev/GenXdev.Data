@@ -20,7 +20,7 @@ nsqldb "C:\Databases\MyNewDb.sqlite"
 #>
 function New-SQLiteDatabase {
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [Alias("nsqldb")]
 
     param (
@@ -37,7 +37,7 @@ function New-SQLiteDatabase {
     begin {
 
         # expand the path and create directory if needed
-        $DatabaseFilePath = Expand-Path $DatabaseFilePath -CreateDirectory
+        $DatabaseFilePath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath -CreateDirectory
     }
 
     process {
@@ -45,23 +45,30 @@ function New-SQLiteDatabase {
         # check if database file already exists
         if (-not (Test-Path $DatabaseFilePath)) {
 
-            try {
-                # construct the connection string
-                $connectionString = "Data Source=$DatabaseFilePath"
+            # build a meaningful should process message
+            $targetObject = "SQLite database"
+            $action = "Create"
 
-                # create a new database connection
-                $connection = New-Object System.Data.SQLite.SQLiteConnection(
-                    $connectionString)
+            # check if user wants to proceed with operation
+            if ($PSCmdlet.ShouldProcess($DatabaseFilePath, "$action $targetObject")) {
+                try {
+                    # construct the connection string
+                    $connectionString = "Data Source=$DatabaseFilePath"
 
-                # open and immediately close to create empty database
-                $connection.Open()
-                $connection.Close()
+                    # create a new database connection
+                    $connection = New-Object System.Data.SQLite.SQLiteConnection(
+                        $connectionString)
 
-                Write-Verbose "Successfully created database at $DatabaseFilePath"
-            }
-            catch {
-                throw "Failed to create database at $DatabaseFilePath. Error: `
+                    # open and immediately close to create empty database
+                    $connection.Open()
+                    $connection.Close()
+
+                    Write-Verbose "Successfully created database at $DatabaseFilePath"
+                }
+                catch {
+                    throw "Failed to create database at $DatabaseFilePath. Error: `
 $($_.Exception.Message)"
+                }
             }
         }
         else {

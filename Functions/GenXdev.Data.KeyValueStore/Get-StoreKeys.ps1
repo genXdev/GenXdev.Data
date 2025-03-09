@@ -26,6 +26,7 @@ getkeys AppSettings
 function Get-StoreKeys {
 
     [CmdletBinding()]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     [Alias("getkeys")]
 
     param (
@@ -51,8 +52,7 @@ function Get-StoreKeys {
         Write-Verbose "Initializing Get-StoreKeys for store: $StoreName"
 
         # resolve the full path to the sqlite database file
-        $databaseFilePath = Expand-Path `
-            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         Write-Verbose "Using database at: $databaseFilePath"

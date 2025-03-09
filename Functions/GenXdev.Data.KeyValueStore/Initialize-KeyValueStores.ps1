@@ -23,6 +23,7 @@ Initialize-KeyValueStores
 function Initialize-KeyValueStores {
 
     [CmdletBinding()]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
     param(
         #######################################################################
         [Parameter(
@@ -37,13 +38,11 @@ function Initialize-KeyValueStores {
     begin {
 
         # determine the path for local database storage
-        $databaseFilePath = Expand-Path `
-            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         # determine the path for onedrive synchronized database
-        $shadowDbPath = Expand-Path `
-            "~\Onedrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db" `
+        $shadowDbPath = GenXdev.FileSystem\Expand-Path "~\Onedrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         # extract the directory path for the shadow database

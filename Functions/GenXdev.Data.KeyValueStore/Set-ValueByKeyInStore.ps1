@@ -30,7 +30,7 @@ setvalue ConfigStore ApiEndpoint "https://api.example.com"
 #>
 function Set-ValueByKeyInStore {
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [Alias("setvalue")]
 
     param (
@@ -68,7 +68,7 @@ function Set-ValueByKeyInStore {
     begin {
 
         # construct path to sqlite database file
-        $databaseFilePath = Expand-Path `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
@@ -125,16 +125,22 @@ DO UPDATE SET
             'modifiedBy' = $lastModifiedBy
         }
 
-        Write-Verbose "Executing upsert for key '$KeyName' in store '$StoreName'"
-        Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
-            -Queries $sqlQuery `
-            -SqlParameters $params
+        # only proceed if user confirms or -WhatIf is not used
+        if ($PSCmdlet.ShouldProcess(
+                "Store: $StoreName, Key: $KeyName",
+                "Set value to: $Value")) {
 
-        # handle synchronization for non-local stores
-        if ($SynchronizationKey -ne "Local") {
+            Write-Verbose "Executing upsert for key '$KeyName' in store '$StoreName'"
+            Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
+                -Queries $sqlQuery `
+                -SqlParameters $params
 
-            Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
-            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            # handle synchronization for non-local stores
+            if ($SynchronizationKey -ne "Local") {
+
+                Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
+                Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            }
         }
     }
 

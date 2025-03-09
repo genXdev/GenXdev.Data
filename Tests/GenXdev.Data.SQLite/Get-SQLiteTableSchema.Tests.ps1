@@ -1,11 +1,11 @@
 
 ################################################################################
-Describe "Initialize-KeyValueStores" {
+Describe "Get-SQLiteTableSchema" {
 
     It "should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
-        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Initialize-KeyValueStores.ps1"
+        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.ps1"
 
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
