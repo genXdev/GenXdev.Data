@@ -11,7 +11,7 @@ AfterAll {
 }
 ###############################################################################
 Describe "Sync-KeyValueStore" {
-    It "should pass PSScriptAnalyzer rules" {
+    It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.ps1"
@@ -62,7 +62,7 @@ $message
         Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "LocalKey" -Value "LocalValue" -SynchronizationKey "Local"
         Sync-KeyValueStore -SynchronizationKey "Local"
 
-        # Local sync should not create shadow entry
+        # Local sync Should not create shadow entry
         $shadowValue = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
         $shadowValue | Should -Be "LocalValue"
     }

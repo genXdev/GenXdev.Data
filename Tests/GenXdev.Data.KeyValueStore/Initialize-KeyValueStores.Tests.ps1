@@ -2,7 +2,7 @@
 ################################################################################
 Describe "Initialize-KeyValueStores" {
 
-    It "should pass PSScriptAnalyzer rules" {
+    It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Initialize-KeyValueStores.ps1"
@@ -10,7 +10,7 @@ Describe "Initialize-KeyValueStores" {
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
-         [string] $message = ""
+        [string] $message = ""
         $analyzerResults | ForEach-Object {
 
             $message = $message + @"

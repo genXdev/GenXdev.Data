@@ -2,7 +2,7 @@
 ################################################################################
 Describe "Invoke-SqlServerQuery" {
 
-    It "should pass PSScriptAnalyzer rules" {
+    It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1"
@@ -10,7 +10,7 @@ Describe "Invoke-SqlServerQuery" {
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
-         [string] $message = ""
+        [string] $message = ""
         $analyzerResults | ForEach-Object {
 
             $message = $message + @"

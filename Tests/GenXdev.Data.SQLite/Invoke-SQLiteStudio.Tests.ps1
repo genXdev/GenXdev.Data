@@ -2,7 +2,7 @@
 ################################################################################
 Describe "Invoke-SQLiteStudio" {
 
-    It "should pass PSScriptAnalyzer rules" {
+    It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SQLite\Invoke-SQLiteStudio.ps1"
