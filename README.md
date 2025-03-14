@@ -195,8 +195,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue]   
-   <String>] [[-SynchronizationKey] <String>] [<CommonParameters>]  
+   Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -299,8 +298,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey]   
-   <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
+   Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -369,8 +367,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-WhatIf]   
-   [-Confirm] [<CommonParameters>]  
+   Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -431,8 +428,8 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>]   
-   [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
+   Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm]   
+   [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -629,8 +626,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-WhatIf] [-Confirm]   
-   [<CommonParameters>]  
+   Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-WhatIf] [-Confirm] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -693,8 +689,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm]   
-   [<CommonParameters>]  
+   Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -757,8 +752,7 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm]   
-   [<CommonParameters>]  
+   Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -903,12 +897,9 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName]   
-   <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName]   
-   <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -984,10 +975,8 @@ Update-Module
 ````PowerShell 
 
    Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1103,10 +1092,8 @@ Update-Module
 ````PowerShell 
 
    Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String>   
-   [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String>   
-   [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1162,12 +1149,9 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName]   
-   <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName]   
-   <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1240,10 +1224,8 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>]   
-   [<CommonParameters>]  
+   Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1418,15 +1400,12 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Invoke-SQLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel   
-   {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot |   
-   Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
-   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
-   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
+   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1496,15 +1475,12 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>]   
-   [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable   
-   | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
-   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
-   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
+   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1637,22 +1613,16 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]>   
-   [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable   
-   | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters]   
-   <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
+   Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
    Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters]   
-   <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String>   
-   [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos |   
-   ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}]   
-   [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters]   
-   <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel   
+   {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted |   
+   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
