@@ -1422,11 +1422,11 @@ Update-Module
    {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot |   
    Unspecified}] [<CommonParameters>]  
    Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
+   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
    Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
+   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1496,15 +1496,15 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel   
-   {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot |   
-   Unspecified}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>]   
+   [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable   
+   | Snapshot | Unspecified}] [<CommonParameters>]  
    Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
+   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
    Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters]   
-   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
-   Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
+   <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead   
+   | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
 ```` 
 
 ### DESCRIPTION 
@@ -1637,18 +1637,18 @@ Update-Module
 ### SYNTAX 
 ````PowerShell 
 
-   Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel   
-   {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot |   
-   Unspecified}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]>   
+   [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable   
+   | Snapshot | Unspecified}] [<CommonParameters>]  
    Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters]   
    <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
    Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
    Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters]   
    <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
    Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries]   
-   <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted |   
-   ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}]   
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String>   
+   [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos |   
+   ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}]   
    [<CommonParameters>]  
    Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters]   
    <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead |   
