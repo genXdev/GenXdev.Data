@@ -147,6 +147,7 @@ function Invoke-SqlServerQuery {
             ValueFromPipelineByPropertyName,
             HelpMessage = 'The query to execute.'
         )]
+        [Alias("q", "Value", "Name", "Text", "Query")]
         [string[]] $Queries,
 
         ###############################################################################
