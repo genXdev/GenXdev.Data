@@ -49,7 +49,7 @@ function Get-SQLiteViews {
     begin {
 
         # log the start of the view retrieval process
-        Write-Verbose "Preparing to retrieve SQLite views..."
+        Microsoft.PowerShell.Utility\Write-Verbose "Preparing to retrieve SQLite views..."
     }
 
     process {
@@ -58,13 +58,13 @@ function Get-SQLiteViews {
         $query = "SELECT name FROM sqlite_master WHERE type='view'"
 
         # log the query being executed for troubleshooting
-        Write-Verbose "Executing query: $query"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # execute the query using existing parameter set and store in $PSBoundParameters
         $PSBoundParameters["Queries"] = $query
 
         # invoke the query and return results using parameter splatting
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

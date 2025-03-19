@@ -52,7 +52,7 @@ function Get-SQLiteTables {
     begin {
 
         # log the start of table retrieval operation
-        Write-Verbose "Starting SQLite table name retrieval operation"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting SQLite table name retrieval operation"
     }
 
     process {
@@ -62,8 +62,8 @@ function Get-SQLiteTables {
         "WHERE type='table'"
 
         # execute query using the inherited connection parameters
-        Write-Verbose "Executing query to retrieve table names"
-        Invoke-SQLiteQuery @PSBoundParameters
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing query to retrieve table names"
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

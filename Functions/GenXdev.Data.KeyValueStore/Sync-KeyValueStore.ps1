@@ -36,7 +36,7 @@ function Sync-KeyValueStore {
 
     begin {
 
-        Write-Verbose "Starting key-value store sync with key: $SynchronizationKey"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting key-value store sync with key: $SynchronizationKey"
     }
 
     process {
@@ -44,7 +44,7 @@ function Sync-KeyValueStore {
         # skip synchronization for local-only records
         if ($SynchronizationKey -eq "Local") {
 
-            Write-Verbose "Skipping sync for local-only key"
+            Microsoft.PowerShell.Utility\Write-Verbose "Skipping sync for local-only key"
             return
         }
 
@@ -52,15 +52,15 @@ function Sync-KeyValueStore {
         $localDb = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db"
         $shadowDb = GenXdev.FileSystem\Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
 
-        Write-Verbose "Local DB: $localDb"
-        Write-Verbose "Shadow DB: $shadowDb"
+        Microsoft.PowerShell.Utility\Write-Verbose "Local DB: $localDb"
+        Microsoft.PowerShell.Utility\Write-Verbose "Shadow DB: $shadowDb"
 
         # ensure database files exist by initializing if needed
         if (-not ([System.IO.File]::Exists($localDb) -and
                 [System.IO.File]::Exists($shadowDb))) {
 
-            Write-Verbose "Initializing missing database files"
-            Initialize-KeyValueStores
+            Microsoft.PowerShell.Utility\Write-Verbose "Initializing missing database files"
+            GenXdev.Data\Initialize-KeyValueStores
         }
 
         # sql query to perform bidirectional sync based on last modified timestamp
@@ -102,13 +102,13 @@ AND (
             'syncKey'  = $SynchronizationKey
         }
 
-        Write-Verbose "Executing sync query with parameters"
-        Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing sync query with parameters"
+        GenXdev.Data\Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
     }
 
     end {
 
-        Write-Verbose "Sync operation completed"
+        Microsoft.PowerShell.Utility\Write-Verbose "Sync operation completed"
     }
 }
 ################################################################################

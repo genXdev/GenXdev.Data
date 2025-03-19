@@ -89,19 +89,19 @@ function Invoke-SQLiteQuery {
             ? $ConnectionString `
             : "Data Source=$((GenXdev.FileSystem\Expand-Path $DatabaseFilePath))"
 
-        Write-Verbose "Opening SQLite connection..."
+        Microsoft.PowerShell.Utility\Write-Verbose "Opening SQLite connection..."
     }
 
     process {
 
         try {
             # establish database connection
-            $connection = New-Object System.Data.SQLite.SQLiteConnection($connString)
+            $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
             $connection.Open()
 
             # begin transaction with specified isolation
             $transaction = $connection.BeginTransaction($IsolationLevel)
-            Write-Verbose "Started transaction with $IsolationLevel isolation"
+            Microsoft.PowerShell.Utility\Write-Verbose "Started transaction with $IsolationLevel isolation"
 
             # ensure parameters array exists
             $SqlParameters = if ($SqlParameters) { $SqlParameters } else { @() }
@@ -110,10 +110,10 @@ function Invoke-SQLiteQuery {
                 $idx = -1
 
                 # process each query
-                $Queries | ForEach-Object {
+                $Queries | Microsoft.PowerShell.Core\ForEach-Object {
 
                     $idx++
-                    Write-Verbose "Executing query $($idx + 1) of $($Queries.Count)"
+                    Microsoft.PowerShell.Utility\Write-Verbose "Executing query $($idx + 1) of $($Queries.Count)"
 
                     # get parameter set for current query
                     $data = if ($SqlParameters.Length -gt 0) {
@@ -129,7 +129,7 @@ function Invoke-SQLiteQuery {
 
                     # add parameters if provided
                     if ($null -ne $data) {
-                        $data.GetEnumerator() | ForEach-Object {
+                        $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
                             $null = $command.Parameters.AddWithValue(
                                 "@" + $PSItem.Key,
                                 $PSItem.Value
@@ -145,24 +145,24 @@ function Invoke-SQLiteQuery {
                         for ($i = 0; $i -lt $reader.FieldCount; $i++) {
                             $record[$reader.GetName($i)] = $reader.GetValue($i)
                         }
-                        Write-Output $record
+                        Microsoft.PowerShell.Utility\Write-Output $record
                     }
                 }
 
                 # commit if successful
                 $transaction.Commit()
-                Write-Verbose "Transaction committed successfully"
+                Microsoft.PowerShell.Utility\Write-Verbose "Transaction committed successfully"
             }
             catch {
                 # rollback on error
                 $transaction.Rollback()
-                Write-Verbose "Transaction rolled back due to error"
+                Microsoft.PowerShell.Utility\Write-Verbose "Transaction rolled back due to error"
                 throw $_
             }
             finally {
                 if ($null -ne $reader) { $reader.Close() }
                 $connection.Close()
-                Write-Verbose "Connection closed"
+                Microsoft.PowerShell.Utility\Write-Verbose "Connection closed"
             }
         }
         catch {

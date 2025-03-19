@@ -210,13 +210,13 @@ function Invoke-SqlServerQuery {
 
     begin {
         # prepare connection based on parameter set
-        Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
+        Microsoft.PowerShell.Utility\Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
 
         # set default hostname to local server if not specified but needed
         if ($PSCmdlet.ParameterSetName -ne "ConnectionString" -and [string]::IsNullOrEmpty($HostName)) {
 
             $hostName = "."
-            Write-Verbose "Using default local server hostname (.)"
+            Microsoft.PowerShell.Utility\Write-Verbose "Using default local server hostname (.)"
         }
 
         # build connection string if not provided directly
@@ -239,12 +239,12 @@ function Invoke-SqlServerQuery {
 
         try {
             # establish database connection
-            Write-Verbose "Opening SQL connection"
-            $connection = New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
+            Microsoft.PowerShell.Utility\Write-Verbose "Opening SQL connection"
+            $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
             $connection.Open()
 
             # begin transaction with specified isolation
-            Write-Verbose "Beginning transaction with $IsolationLevel isolation"
+            Microsoft.PowerShell.Utility\Write-Verbose "Beginning transaction with $IsolationLevel isolation"
             $transaction = $connection.BeginTransaction($IsolationLevel)
 
             # ensure parameters array exists
@@ -254,10 +254,10 @@ function Invoke-SqlServerQuery {
                 $idx = -1
 
                 # process each query
-                $Queries | ForEach-Object {
+                $Queries | Microsoft.PowerShell.Core\ForEach-Object {
 
                     $idx++
-                    Write-Verbose "Executing query #$($idx + 1)"
+                    Microsoft.PowerShell.Utility\Write-Verbose "Executing query #$($idx + 1)"
 
                     # select appropriate parameter set for this query
                     $data = $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
@@ -270,9 +270,9 @@ function Invoke-SqlServerQuery {
                     # add any supplied parameters
                     if ($null -ne $data) {
 
-                        $data.GetEnumerator() | ForEach-Object {
+                        $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
 
-                            Write-Verbose "Adding parameter $($_.Key) = $($_.Value)"
+                            Microsoft.PowerShell.Utility\Write-Verbose "Adding parameter $($_.Key) = $($_.Value)"
                             $command.Parameters.AddWithValue($_.Key, $_.Value)
                         }
                     }
@@ -290,19 +290,19 @@ function Invoke-SqlServerQuery {
                             $record[$reader.GetName($i)] = $reader.GetValue($i)
                         }
 
-                        Write-Output $record
+                        Microsoft.PowerShell.Utility\Write-Output $record
                     }
 
                     $reader.Close()
                 }
 
                 # commit if all succeeded
-                Write-Verbose "Committing transaction"
+                Microsoft.PowerShell.Utility\Write-Verbose "Committing transaction"
                 $transaction.Commit()
             }
             catch {
                 # rollback on any error
-                Write-Verbose "Error occurred, rolling back transaction"
+                Microsoft.PowerShell.Utility\Write-Verbose "Error occurred, rolling back transaction"
                 $transaction.Rollback()
                 throw $_
             }

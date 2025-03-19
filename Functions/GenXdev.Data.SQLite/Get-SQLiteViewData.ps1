@@ -76,7 +76,7 @@ function Get-SQLiteViewData {
 
     begin {
 
-        Write-Verbose "Starting Get-SQLiteViewData for view: $ViewName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteViewData for view: $ViewName"
     }
 
     process {
@@ -89,18 +89,18 @@ function Get-SQLiteViewData {
             "SELECT * FROM $ViewName LIMIT $Count"
         }
 
-        Write-Verbose "Executing query: $query"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # prepare parameters for Invoke-SQLiteQuery
         $PSBoundParameters["Queries"] = $query
 
         # execute query and return results
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
 
-        Write-Verbose "Completed querying view: $ViewName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Completed querying view: $ViewName"
     }
 }
 ################################################################################

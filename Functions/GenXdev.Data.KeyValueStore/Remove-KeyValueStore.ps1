@@ -46,21 +46,21 @@ function Remove-KeyValueStore {
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
-        Write-Verbose "Using database at: $databaseFilePath"
+        Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
     }
 
     process {
 
         # ensure database exists, create if not
-        if (-not (Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
 
-            Write-Verbose "Database not found, initializing new database"
-            Initialize-KeyValueStores
+            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing new database"
+            GenXdev.Data\Initialize-KeyValueStores
         }
 
         # get current user identity for audit trail
         $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
-        Write-Verbose "Operation performed by: $lastModifiedBy"
+        Microsoft.PowerShell.Utility\Write-Verbose "Operation performed by: $lastModifiedBy"
 
         # determine sql operation based on synchronization mode
         if ($SynchronizationKey -eq "Local") {
@@ -96,8 +96,8 @@ AND synchronizationKey = @syncKey;
             }
 
             # execute the database operation
-            Write-Verbose "Executing database operation for store: $StoreName"
-            Invoke-SQLiteQuery `
+            Microsoft.PowerShell.Utility\Write-Verbose "Executing database operation for store: $StoreName"
+            GenXdev.Data\Invoke-SQLiteQuery `
                 -DatabaseFilePath $databaseFilePath `
                 -Queries $sqlQuery `
                 -SqlParameters $params
@@ -105,8 +105,8 @@ AND synchronizationKey = @syncKey;
             # trigger synchronization for non-local stores
             if ($SynchronizationKey -ne "Local") {
 
-                Write-Verbose "Triggering synchronization for key: $SynchronizationKey"
-                Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+                Microsoft.PowerShell.Utility\Write-Verbose "Triggering synchronization for key: $SynchronizationKey"
+                GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
             }
         }
     }

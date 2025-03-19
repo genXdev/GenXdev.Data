@@ -48,7 +48,7 @@ function Get-SQLiteSchema {
     begin {
 
         # output verbose information about the selected parameter set
-        Write-Verbose "Using parameter set: $($PSCmdlet.ParameterSetName)"
+        Microsoft.PowerShell.Utility\Write-Verbose "Using parameter set: $($PSCmdlet.ParameterSetName)"
     }
 
     process {
@@ -57,7 +57,7 @@ function Get-SQLiteSchema {
         $PSBoundParameters["Queries"] = "SELECT * FROM sqlite_master"
 
         # execute the schema query using the existing Invoke-SQLiteQuery function
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

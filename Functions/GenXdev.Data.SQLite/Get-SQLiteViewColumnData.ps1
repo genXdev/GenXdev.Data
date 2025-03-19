@@ -85,7 +85,7 @@ function Get-SQLiteViewColumnData {
     begin {
 
         # log the start of the operation
-        Write-Verbose "Starting Get-SQLiteViewColumnData for view '$ViewName'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteViewColumnData for view '$ViewName'"
     }
 
     process {
@@ -94,22 +94,22 @@ function Get-SQLiteViewColumnData {
         if ($Count -eq -1) {
             # construct query to get all records
             $PSBoundParameters["Queries"] = "SELECT $ColumnName FROM $ViewName"
-            Write-Verbose "Querying all records from view '$ViewName'"
+            Microsoft.PowerShell.Utility\Write-Verbose "Querying all records from view '$ViewName'"
         }
         else {
             # construct query with LIMIT clause
             $PSBoundParameters["Queries"] = "SELECT $ColumnName FROM $ViewName LIMIT $Count"
-            Write-Verbose "Querying $Count records from view '$ViewName'"
+            Microsoft.PowerShell.Utility\Write-Verbose "Querying $Count records from view '$ViewName'"
         }
 
         # execute the query using the existing Invoke-SQLiteQuery cmdlet
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
 
         # log completion of the operation
-        Write-Verbose "Completed Get-SQLiteViewColumnData for view '$ViewName'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Completed Get-SQLiteViewColumnData for view '$ViewName'"
     }
 }
 ################################################################################

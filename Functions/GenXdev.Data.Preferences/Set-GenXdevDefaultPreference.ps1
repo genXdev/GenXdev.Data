@@ -56,36 +56,36 @@ function Set-GenXdevDefaultPreference {
 
     begin {
 
-        Write-Verbose "Starting Set-GenXdevDefaultPreference for '$Name'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Set-GenXdevDefaultPreference for '$Name'"
     }
 
     process {
 
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
-            Write-Verbose "Removing default preference '$Name' as value is empty"
+            Microsoft.PowerShell.Utility\Write-Verbose "Removing default preference '$Name' as value is empty"
 
             if ($PSCmdlet.ShouldProcess($Name, "Remove default preference")) {
 
-                Remove-GenXdevPreference -Name $Name -RemoveDefault
+                GenXdev.Data\Remove-GenXdevPreference -Name $Name -RemoveDefault
             }
 
             return
         }
 
-        Write-Verbose "Setting default preference '$Name' to: $Value"
+        Microsoft.PowerShell.Utility\Write-Verbose "Setting default preference '$Name' to: $Value"
 
         if ($PSCmdlet.ShouldProcess($Name, "Set default preference")) {
 
-            Set-ValueByKeyInStore `
+            GenXdev.Data\Set-ValueByKeyInStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
                 -KeyName $Name `
                 -Value $Value `
                 -SynchronizationKey "Defaults"
 
-            $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+            $null = GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "Defaults"
 
-            Write-Verbose "Successfully stored and synchronized preference '$Name'"
+            Microsoft.PowerShell.Utility\Write-Verbose "Successfully stored and synchronized preference '$Name'"
         }
     }
 

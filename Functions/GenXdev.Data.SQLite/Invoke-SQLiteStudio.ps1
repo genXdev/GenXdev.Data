@@ -95,13 +95,13 @@ function Invoke-SQLiteStudio {
 
     begin {
         # log initialization of sqlite connection handling
-        Write-Verbose "Initializing SQLite query execution environment"
+        Microsoft.PowerShell.Utility\Write-Verbose "Initializing SQLite query execution environment"
     }
 
     process {
 
         # log the start of query processing
-        Write-Verbose "Processing $($Queries.Count) queries with isolation level: $IsolationLevel"
+        Microsoft.PowerShell.Utility\Write-Verbose "Processing $($Queries.Count) queries with isolation level: $IsolationLevel"
     }
 
     end {

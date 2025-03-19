@@ -59,10 +59,10 @@ function Initialize-KeyValueStores {
         foreach ($dbPath in @($databaseFilePath, $shadowDbPath)) {
 
             # create database if it doesn't exist
-            if (-not (Test-Path $dbPath)) {
+            if (-not (Microsoft.PowerShell.Management\Test-Path $dbPath)) {
 
-                Write-Verbose "Creating KeyValueStore database at: $dbPath"
-                New-SQLiteDatabase -DatabaseFilePath $dbPath
+                Microsoft.PowerShell.Utility\Write-Verbose "Creating KeyValueStore database at: $dbPath"
+                GenXdev.Data\New-SQLiteDatabase -DatabaseFilePath $dbPath
 
                 # create table schema with synchronization support columns
                 $sqlCreateTable = @"
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS KeyValueStore (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
     ON KeyValueStore (synchronizationKey, storeName, keyName);
 "@
-                Invoke-SQLiteQuery -DatabaseFilePath $dbPath -Queries $sqlCreateTable
+                GenXdev.Data\Invoke-SQLiteQuery -DatabaseFilePath $dbPath -Queries $sqlCreateTable
             }
         }
     }

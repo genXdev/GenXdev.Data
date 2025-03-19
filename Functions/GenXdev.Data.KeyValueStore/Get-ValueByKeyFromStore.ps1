@@ -75,21 +75,21 @@ function Get-ValueByKeyFromStore {
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
-        Write-Verbose "Database path: $databaseFilePath"
+        Microsoft.PowerShell.Utility\Write-Verbose "Database path: $databaseFilePath"
     }
 
     process {
 
         # initialize database if it doesn't exist
-        if (-not (Test-Path $databaseFilePath)) {
-            Write-Verbose "Database not found, initializing..."
-            Initialize-KeyValueStores
+        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
+            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing..."
+            GenXdev.Data\Initialize-KeyValueStores
         }
 
         # sync with external store if not using local scope
         if ($SynchronizationKey -ne "Local") {
-            Write-Verbose "Syncing store with key: $SynchronizationKey"
-            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            Microsoft.PowerShell.Utility\Write-Verbose "Syncing store with key: $SynchronizationKey"
+            GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
         }
 
         # prepare sql query to retrieve value
@@ -109,21 +109,21 @@ AND deletedDate IS NULL;
             'syncKey'   = $SynchronizationKey
         }
 
-        Write-Verbose "Querying store '$StoreName' for key '$KeyName'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Querying store '$StoreName' for key '$KeyName'"
 
         # execute query and get result
-        $result = Invoke-SQLiteQuery `
+        $result = GenXdev.Data\Invoke-SQLiteQuery `
             -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params
 
         # return result or default value
         if ($result) {
-            Write-Verbose "Value found"
+            Microsoft.PowerShell.Utility\Write-Verbose "Value found"
             return $result.value
         }
         else {
-            Write-Verbose "No value found, returning default"
+            Microsoft.PowerShell.Utility\Write-Verbose "No value found, returning default"
             return $DefaultValue
         }
     }

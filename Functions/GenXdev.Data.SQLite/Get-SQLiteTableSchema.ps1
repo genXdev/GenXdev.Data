@@ -64,7 +64,7 @@ function Get-SQLiteTableSchema {
     begin {
 
         # log the start of schema retrieval operation
-        Write-Verbose "Preparing to retrieve schema for table '$TableName'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Preparing to retrieve schema for table '$TableName'"
     }
 
     process {
@@ -73,10 +73,10 @@ function Get-SQLiteTableSchema {
         $PSBoundParameters["Queries"] = "PRAGMA table_info($TableName)"
 
         # log the execution of the schema query
-        Write-Verbose "Executing schema query against SQLite database"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing schema query against SQLite database"
 
         # execute the query and return results using existing Invoke-SQLiteQuery
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

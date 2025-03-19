@@ -1,15 +1,15 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestDefault" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestDefault" -RemoveDefault
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestDefault" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestDefault" -RemoveDefault
 }
 ###############################################################################
-Describe "Set-GenXdevDefaultPreference" {
-    It "Should pass PSScriptAnalyzer rules" {
+Pester\Describe "Set-GenXdevDefaultPreference" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.ps1"
@@ -19,7 +19,7 @@ Describe "Set-GenXdevDefaultPreference" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -30,29 +30,29 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    It "Should store default preference value" {
-        Set-GenXdevDefaultPreference -Name "TestDefault" -Value "DefaultValue"
-        $result = Get-GenXdevPreference -Name "TestDefault"
-        $result | Should -Be "DefaultValue"
+    Pester\It "Should store default preference value" {
+        GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestDefault" -Value "DefaultValue"
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestDefault"
+        $result | Pester\Should -Be "DefaultValue"
     }
 
-    It "Should sync across instances" {
-        Set-GenXdevDefaultPreference -Name "TestDefault" -Value "SyncedValue"
+    Pester\It "Should sync across instances" {
+        GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestDefault" -Value "SyncedValue"
         # Note: In a real test environment, you might need to verify this across different PS sessions
-        $result = Get-GenXdevPreference -Name "TestDefault"
-        $result | Should -Be "SyncedValue"
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestDefault"
+        $result | Pester\Should -Be "SyncedValue"
     }
 
-    It "Should handle null value by removing preference" {
-        Set-GenXdevDefaultPreference -Name "TestDefault" -Value "DefaultValue"
-        Set-GenXdevDefaultPreference -Name "TestDefault" -Value $null
-        $result = Get-GenXdevPreference -Name "TestDefault"
-        $result | Should -BeNullOrEmpty
+    Pester\It "Should handle null value by removing preference" {
+        GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestDefault" -Value "DefaultValue"
+        GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestDefault" -Value $null
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestDefault"
+        $result | Pester\Should -BeNullOrEmpty
     }
 }

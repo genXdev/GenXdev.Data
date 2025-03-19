@@ -1,15 +1,15 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
 }
 ###############################################################################
-Describe "Set-ValueByKeyInStore" {
-    It "Should pass PSScriptAnalyzer rules" {
+Pester\Describe "Set-ValueByKeyInStore" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.ps1"
@@ -19,7 +19,7 @@ Describe "Set-ValueByKeyInStore" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -30,38 +30,38 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    BeforeAll {
+    Pester\BeforeAll {
         try {
-            Write-Verbose "Setting up test environment"
-            Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+            Microsoft.PowerShell.Utility\Write-Verbose "Setting up test environment"
+            GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
         }
         catch {
             throw
         }
     }
 
-    It "Should store a value successfully" {
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "TestValue"
-        $result = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-        $result | Should -Be "TestValue"
+    Pester\It "Should store a value successfully" {
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "TestValue"
+        $result = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+        $result | Pester\Should -Be "TestValue"
     }
 
-    It "Should update existing value" {
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "Value1"
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "Value2"
-        $result = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-        $result | Should -Be "Value2"
+    Pester\It "Should update existing value" {
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "Value1"
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value "Value2"
+        $result = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+        $result | Pester\Should -Be "Value2"
     }
 
-    It "Should handle null values" {
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value $null
-        $result = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-        $result | Should -BeNullOrEmpty
+    Pester\It "Should handle null values" {
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "TestKey" -Value $null
+        $result = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+        $result | Pester\Should -BeNullOrEmpty
     }
 }

@@ -1,15 +1,15 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
 }
 ###############################################################################
-Describe "Remove-GenXdevPreference" {
-    It "Should pass PSScriptAnalyzer rules" {
+Pester\Describe "Remove-GenXdevPreference" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.ps1"
@@ -19,7 +19,7 @@ Describe "Remove-GenXdevPreference" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -30,32 +30,32 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    BeforeEach {
-        Write-Verbose "Setting up test data"
-        Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
-        Set-GenXdevPreference -Name "TestPref1" -Value "LocalValue"
-        Set-GenXdevDefaultPreference -Name "TestPref1" -Value "DefaultValue"
+    Pester\BeforeEach {
+        Microsoft.PowerShell.Utility\Write-Verbose "Setting up test data"
+        GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+        GenXdev.Data\Set-GenXdevPreference -Name "TestPref1" -Value "LocalValue"
+        GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestPref1" -Value "DefaultValue"
     }
 
-    It "Should remove local preference" {
-        Remove-GenXdevPreference -Name "TestPref1"
-        $result = Get-GenXdevPreference -Name "TestPref1"
-        $result | Should -Be "DefaultValue" # Falls back to default
+    Pester\It "Should remove local preference" {
+        GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1"
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestPref1"
+        $result | Pester\Should -Be "DefaultValue" # Falls back to default
     }
 
-    It "Should remove both local and default preferences with -RemoveDefault" {
-        Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
-        $result = Get-GenXdevPreference -Name "TestPref1"
-        $result | Should -BeNullOrEmpty
+    Pester\It "Should remove both local and default preferences with -RemoveDefault" {
+        GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestPref1"
+        $result | Pester\Should -BeNullOrEmpty
     }
 
-    It "Should not error when removing non-existent preference" {
-        { Remove-GenXdevPreference -Name "NonExistent" } | Should -Not -Throw
+    Pester\It "Should not error when removing non-existent preference" {
+        { GenXdev.Data\Remove-GenXdevPreference -Name "NonExistent" } | Pester\Should -Not -Throw
     }
 }

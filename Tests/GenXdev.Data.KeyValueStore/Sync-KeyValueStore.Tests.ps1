@@ -1,17 +1,17 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
-    Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
+    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
 }
 ###############################################################################
-Describe "Sync-KeyValueStore" {
-    It "Should pass PSScriptAnalyzer rules" {
+Pester\Describe "Sync-KeyValueStore" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.ps1"
@@ -21,7 +21,7 @@ Describe "Sync-KeyValueStore" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -32,38 +32,38 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    BeforeAll {
+    Pester\BeforeAll {
         try {
-            Write-Verbose "Setting up test environment"
-            Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
-            Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
+            Microsoft.PowerShell.Utility\Write-Verbose "Setting up test environment"
+            GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
+            GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
         }
         catch {
             throw
         }
     }
 
-    It "Should sync between local and shadow databases" {
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "SyncKey" -Value "SyncValue" -SynchronizationKey "TestSync"
-        Sync-KeyValueStore -SynchronizationKey "TestSync"
+    Pester\It "Should sync between local and shadow databases" {
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "SyncKey" -Value "SyncValue" -SynchronizationKey "TestSync"
+        GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "TestSync"
 
         # Check shadow database
-        $shadowValue = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
-        $shadowValue | Should -Be "SyncValue"
+        $shadowValue = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
+        $shadowValue | Pester\Should -Be "SyncValue"
     }
 
-    It "Should not sync Local synchronization key" {
-        Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "LocalKey" -Value "LocalValue" -SynchronizationKey "Local"
-        Sync-KeyValueStore -SynchronizationKey "Local"
+    Pester\It "Should not sync Local synchronization key" {
+        GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "LocalKey" -Value "LocalValue" -SynchronizationKey "Local"
+        GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "Local"
 
         # Local sync Should not create shadow entry
-        $shadowValue = Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
-        $shadowValue | Should -Be "LocalValue"
+        $shadowValue = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
+        $shadowValue | Pester\Should -Be "LocalValue"
     }
 }

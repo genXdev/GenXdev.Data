@@ -58,7 +58,7 @@ function Set-GenXdevPreference {
 
     begin {
 
-        Write-Verbose "Beginning preference operation for preference name: '$Name'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Beginning preference operation for preference name: '$Name'"
     }
 
     process {
@@ -66,24 +66,24 @@ function Set-GenXdevPreference {
         # check if preference should be removed due to null/empty value
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
-            Write-Verbose "Removing preference '$Name' due to null/empty value"
+            Microsoft.PowerShell.Utility\Write-Verbose "Removing preference '$Name' due to null/empty value"
             if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
-                Remove-GenXdevPreference -Name $Name
+                GenXdev.Data\Remove-GenXdevPreference -Name $Name
             }
             return
         }
 
         # store the preference with local synchronization
-        Write-Verbose "Storing preference '$Name' with value: '$Value'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Storing preference '$Name' with value: '$Value'"
         if ($PSCmdlet.ShouldProcess($Name, "Set preference to '$Value'")) {
-            Set-ValueByKeyInStore `
+            GenXdev.Data\Set-ValueByKeyInStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
                 -KeyName $Name `
                 -Value $Value `
                 -SynchronizationKey "Local"
         }
 
-        Write-Verbose "Successfully stored preference '$Name'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Successfully stored preference '$Name'"
     }
 
     end {

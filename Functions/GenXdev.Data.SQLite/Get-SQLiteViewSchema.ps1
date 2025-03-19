@@ -57,7 +57,7 @@ function Get-SQLiteViewSchema {
     begin {
 
         # log the start of view schema retrieval
-        Write-Verbose "Retrieving schema for view: $ViewName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Retrieving schema for view: $ViewName"
     }
 
     process {
@@ -66,11 +66,11 @@ function Get-SQLiteViewSchema {
         $query = "SELECT sql FROM sqlite_master WHERE name = '$ViewName'"
 
         # log the query being executed
-        Write-Verbose "Executing query: $query"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # add the query to parameters and execute it using Invoke-SQLiteQuery
         $PSBoundParameters["Queries"] = $query
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

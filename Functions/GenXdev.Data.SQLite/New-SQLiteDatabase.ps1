@@ -43,7 +43,7 @@ function New-SQLiteDatabase {
     process {
 
         # check if database file already exists
-        if (-not (Test-Path $DatabaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path $DatabaseFilePath)) {
 
             # build a meaningful should process message
             $targetObject = "SQLite database"
@@ -56,14 +56,14 @@ function New-SQLiteDatabase {
                     $connectionString = "Data Source=$DatabaseFilePath"
 
                     # create a new database connection
-                    $connection = New-Object System.Data.SQLite.SQLiteConnection(
+                    $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection(
                         $connectionString)
 
                     # open and immediately close to create empty database
                     $connection.Open()
                     $connection.Close()
 
-                    Write-Verbose "Successfully created database at $DatabaseFilePath"
+                    Microsoft.PowerShell.Utility\Write-Verbose "Successfully created database at $DatabaseFilePath"
                 }
                 catch {
                     throw "Failed to create database at $DatabaseFilePath. Error: `
@@ -72,7 +72,7 @@ $($_.Exception.Message)"
             }
         }
         else {
-            Write-Verbose "Database file already exists at $DatabaseFilePath"
+            Microsoft.PowerShell.Utility\Write-Verbose "Database file already exists at $DatabaseFilePath"
         }
     }
 

@@ -42,23 +42,23 @@ function Get-KeyValueStoreNames {
             "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
-        Write-Verbose "Using database: $databaseFilePath"
+        Microsoft.PowerShell.Utility\Write-Verbose "Using database: $databaseFilePath"
     }
 
     process {
 
         # create database if it doesn't exist
-        if (-not (Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
 
-            Write-Verbose "Database not found, initializing..."
-            Initialize-KeyValueStores
+            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing..."
+            GenXdev.Data\Initialize-KeyValueStores
         }
 
         # sync non-local stores
         if ($SynchronizationKey -ne "Local") {
 
-            Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
-            Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            Microsoft.PowerShell.Utility\Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
+            GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
         }
 
         # query to get unique store names
@@ -74,13 +74,13 @@ AND deletedDate IS NULL;
             'syncKey' = $SynchronizationKey
         }
 
-        Write-Verbose "Querying stores with sync key: $SynchronizationKey"
+        Microsoft.PowerShell.Utility\Write-Verbose "Querying stores with sync key: $SynchronizationKey"
 
         # execute query and return results
-        Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
+        GenXdev.Data\Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params |
-        ForEach-Object storeName
+        Microsoft.PowerShell.Core\ForEach-Object storeName
     }
 
     end {

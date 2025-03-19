@@ -55,32 +55,32 @@ function Remove-GenXdevPreference {
 
     begin {
 
-        Write-Verbose "Starting preference removal for: $Name"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting preference removal for: $Name"
     }
 
     process {
 
         if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
 
-            Write-Verbose "Removing preference from local store"
-            Remove-KeyFromStore `
+            Microsoft.PowerShell.Utility\Write-Verbose "Removing preference from local store"
+            GenXdev.Data\Remove-KeyFromStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
                 -KeyName $Name `
                 -SynchronizationKey "Local"
 
             if ($RemoveDefault) {
 
-                Write-Verbose "Removing preference from default store"
-                Remove-KeyFromStore `
+                Microsoft.PowerShell.Utility\Write-Verbose "Removing preference from default store"
+                GenXdev.Data\Remove-KeyFromStore `
                     -StoreName "GenXdev.PowerShell.Preferences" `
                     -KeyName $Name `
                     -SynchronizationKey "Defaults"
 
-                Write-Verbose "Synchronizing default store changes"
-                $null = Sync-KeyValueStore -SynchronizationKey "Defaults"
+                Microsoft.PowerShell.Utility\Write-Verbose "Synchronizing default store changes"
+                $null = GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "Defaults"
             }
 
-            Write-Verbose "Preference removal completed"
+            Microsoft.PowerShell.Utility\Write-Verbose "Preference removal completed"
         }
     }
 

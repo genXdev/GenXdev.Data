@@ -27,8 +27,8 @@ function AssureSQLiteStudioInstalled {
         #>
         function IsWinGetInstalled {
 
-            Import-Module "Microsoft.WinGet.Client" -ErrorAction SilentlyContinue
-            $module = Get-Module "Microsoft.WinGet.Client" -ErrorAction SilentlyContinue
+            Microsoft.PowerShell.Core\Import-Module "Microsoft.WinGet.Client" -ErrorAction SilentlyContinue
+            $module = Microsoft.PowerShell.Core\Get-Module "Microsoft.WinGet.Client" -ErrorAction SilentlyContinue
 
             return $null -ne $module
         }
@@ -40,16 +40,16 @@ function AssureSQLiteStudioInstalled {
         #>
         function InstallWinGet {
 
-            Write-Verbose "Installing WinGet PowerShell client..."
-            Install-Module "Microsoft.WinGet.Client" -Force -AllowClobber
-            Import-Module "Microsoft.WinGet.Client"
+            Microsoft.PowerShell.Utility\Write-Verbose "Installing WinGet PowerShell client..."
+            PowerShellGet\Install-Module "Microsoft.WinGet.Client" -Force -AllowClobber
+            Microsoft.PowerShell.Core\Import-Module "Microsoft.WinGet.Client"
         }
     }
 
     process {
 
         # check if sqlitestudio executable is available in the system path
-        if (@(Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -eq 0) {
+        if (@(Microsoft.PowerShell.Core\Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -eq 0) {
 
             # determine the default installation directory for sqlitestudio
             $sqliteStudioPath = (GenXdev.FileSystem\Expand-Path "${env:ProgramFiles}\SQLiteStudio")
@@ -60,7 +60,7 @@ function AssureSQLiteStudioInstalled {
             # add sqlitestudio to path if not already present
             if ($currentPath -notlike "*$sqliteStudioPath*") {
 
-                Write-Verbose "Adding SQLiteStudio directory to user PATH..."
+                Microsoft.PowerShell.Utility\Write-Verbose "Adding SQLiteStudio directory to user PATH..."
                 [Environment]::SetEnvironmentVariable(
                     'PATH',
                     "$currentPath;$sqliteStudioPath",
@@ -71,12 +71,12 @@ function AssureSQLiteStudioInstalled {
             }
 
             # verify if path update resolved the missing executable
-            if (@(Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -gt 0) {
+            if (@(Microsoft.PowerShell.Core\Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -gt 0) {
 
                 return
             }
 
-            Write-Host "SQLiteStudio not found. Installing SQLiteStudio..."
+            Microsoft.PowerShell.Utility\Write-Host "SQLiteStudio not found. Installing SQLiteStudio..."
 
             # ensure winget package manager is available
             if (-not (IsWinGetInstalled)) {
@@ -85,13 +85,13 @@ function AssureSQLiteStudioInstalled {
             }
 
             # attempt installation using winget
-            Write-Verbose "Installing SQLiteStudio using WinGet..."
-            Install-WinGetPackage -Id 'PawelSalawa.SQLiteStudio' -Force
+            Microsoft.PowerShell.Utility\Write-Verbose "Installing SQLiteStudio using WinGet..."
+            Microsoft.WinGet.Client\Install-WinGetPackage -Id 'PawelSalawa.SQLiteStudio' -Force
 
             # verify successful installation
-            if (-not (Get-Command 'SQLiteStudioU.exe' -ErrorAction SilentlyContinue)) {
+            if (-not (Microsoft.PowerShell.Core\Get-Command 'SQLiteStudioU.exe' -ErrorAction SilentlyContinue)) {
 
-                Write-Error "SQLiteStudio installation failed."
+                Microsoft.PowerShell.Utility\Write-Error "SQLiteStudio installation failed."
                 return
             }
         }

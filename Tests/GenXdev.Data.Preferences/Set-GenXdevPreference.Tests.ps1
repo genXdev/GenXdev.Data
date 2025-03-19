@@ -1,16 +1,16 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "Theme" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "Theme" -RemoveDefault
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "Theme" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "Theme" -RemoveDefault
 }
 ###############################################################################
-Describe "Set-GenXdevPreference" {
+Pester\Describe "Set-GenXdevPreference" {
 
-    It "Should pass PSScriptAnalyzer rules" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.ps1"
@@ -20,7 +20,7 @@ Describe "Set-GenXdevPreference" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -31,29 +31,29 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    It "Should store preference value locally" {
-        Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        $result = Get-GenXdevPreference -Name "Theme"
-        $result | Should -Be "Dark"
+    Pester\It "Should store preference value locally" {
+        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme"
+        $result | Pester\Should -Be "Dark"
     }
 
-    It "Should update existing preference" {
-        Set-GenXdevPreference -Name "Theme" -Value "Light"
-        Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        $result = Get-GenXdevPreference -Name "Theme"
-        $result | Should -Be "Dark"
+    Pester\It "Should update existing preference" {
+        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Light"
+        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme"
+        $result | Pester\Should -Be "Dark"
     }
 
-    It "Should remove preference when value is null" {
-        Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        Set-GenXdevPreference -Name "Theme" -Value $null
-        $result = Get-GenXdevPreference -Name "Theme" -DefaultValue "Default"
-        $result | Should -Be "Default"
+    Pester\It "Should remove preference when value is null" {
+        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
+        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value $null
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme" -DefaultValue "Default"
+        $result | Pester\Should -Be "Default"
     }
 }

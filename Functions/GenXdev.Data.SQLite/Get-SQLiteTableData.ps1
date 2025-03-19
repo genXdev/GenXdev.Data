@@ -74,8 +74,8 @@ function Get-SQLiteTableData {
 
     begin {
 
-        Write-Verbose "Starting Get-SQLiteTableData for table: $TableName"
-        Write-Verbose "Record limit set to: $(if($Count -eq -1){'unlimited'}else{$Count})"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteTableData for table: $TableName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Record limit set to: $(if($Count -eq -1){'unlimited'}else{$Count})"
     }
 
     process {
@@ -88,18 +88,18 @@ function Get-SQLiteTableData {
             "SELECT * FROM $TableName LIMIT $Count"
         }
 
-        Write-Verbose "Executing query: $query"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # add the constructed query to the parameter set for Invoke-SQLiteQuery
         $PSBoundParameters["Queries"] = $query
 
         # execute the query and return results through the SQLite provider
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
 
-        Write-Verbose "Completed querying table: $TableName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Completed querying table: $TableName"
     }
 }
 ################################################################################

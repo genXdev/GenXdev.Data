@@ -1,32 +1,32 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
-    Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
-    Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+    GenXdev.Data\Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
 }
 ###############################################################################
-Describe "Get-GenXdevPreference" {
+Pester\Describe "Get-GenXdevPreference" {
 
-    BeforeAll {
+    Pester\BeforeAll {
         # Setup test environment
         try {
-            Write-Verbose "Setting up test environment"
-            Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
-            Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
-            Set-GenXdevPreference -Name "TestPref1" -Value "LocalValue"
-            Set-GenXdevDefaultPreference -Name "TestPref2" -Value "DefaultValue"
+            Microsoft.PowerShell.Utility\Write-Verbose "Setting up test environment"
+            GenXdev.Data\Remove-GenXdevPreference -Name "TestPref1" -RemoveDefault
+            GenXdev.Data\Remove-GenXdevPreference -Name "TestPref2" -RemoveDefault
+            GenXdev.Data\Set-GenXdevPreference -Name "TestPref1" -Value "LocalValue"
+            GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestPref2" -Value "DefaultValue"
         }
         catch {
             throw
         }
     }
 
-    It "Should pass PSScriptAnalyzer rules" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1"
@@ -36,7 +36,7 @@ Describe "Get-GenXdevPreference" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -47,29 +47,29 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    It "Should retrieve local preference value" {
-        $result = Get-GenXdevPreference -Name "TestPref1"
-        $result | Should -Be "LocalValue"
+    Pester\It "Should retrieve local preference value" {
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestPref1"
+        $result | Pester\Should -Be "LocalValue"
     }
 
-    It "Should fall back to default value when local not found" {
-        $result = Get-GenXdevPreference -Name "TestPref2"
-        $result | Should -Be "DefaultValue"
+    Pester\It "Should fall back to default value when local not found" {
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "TestPref2"
+        $result | Pester\Should -Be "DefaultValue"
     }
 
-    It "Should return specified default when preference not found" {
-        $result = Get-GenXdevPreference -Name "NonExistent" -DefaultValue "Fallback"
-        $result | Should -Be "Fallback"
+    Pester\It "Should return specified default when preference not found" {
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "NonExistent" -DefaultValue "Fallback"
+        $result | Pester\Should -Be "Fallback"
     }
 
-    It "Should handle null default value" {
-        $result = Get-GenXdevPreference -Name "NonExistent"
-        $result | Should -BeNullOrEmpty
+    Pester\It "Should handle null default value" {
+        $result = GenXdev.Data\Get-GenXdevPreference -Name "NonExistent"
+        $result | Pester\Should -BeNullOrEmpty
     }
 }

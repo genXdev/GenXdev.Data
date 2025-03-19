@@ -91,7 +91,7 @@ function Get-SQLiteTableColumnData {
     begin {
 
         # log the start of the operation with table and column details
-        Write-Verbose "Starting data retrieval for column '$ColumnName' from table '$TableName'"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting data retrieval for column '$ColumnName' from table '$TableName'"
     }
 
     process {
@@ -105,17 +105,17 @@ function Get-SQLiteTableColumnData {
         }
 
         # log the constructed query for debugging
-        Write-Verbose "Executing SQL query: $query"
+        Microsoft.PowerShell.Utility\Write-Verbose "Executing SQL query: $query"
 
         # prepare parameters for Invoke-SQLiteQuery and execute the query
         $PSBoundParameters["Queries"] = $query
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
 
         # log completion of the operation
-        Write-Verbose "Column data retrieval completed successfully"
+        Microsoft.PowerShell.Utility\Write-Verbose "Column data retrieval completed successfully"
     }
 }
 ################################################################################

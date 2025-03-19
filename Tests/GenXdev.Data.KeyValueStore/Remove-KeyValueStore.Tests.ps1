@@ -1,15 +1,15 @@
 ###############################################################################
-BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-KeyValueStore -StoreName "TestStore"
+    GenXdev.Data\Remove-KeyValueStore -StoreName "TestStore"
 }
-AfterAll {
+Pester\AfterAll {
     # Clean-up
-    Remove-KeyValueStore -StoreName "TestStore"
+    GenXdev.Data\Remove-KeyValueStore -StoreName "TestStore"
 }
 ###############################################################################
-Describe "Remove-KeyValueStore" {
-    It "Should pass PSScriptAnalyzer rules" {
+Pester\Describe "Remove-KeyValueStore" {
+    Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.ps1"
@@ -19,7 +19,7 @@ Describe "Remove-KeyValueStore" {
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | ForEach-Object {
+        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -30,25 +30,25 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Should -Be 0 -Because @"
+        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;
     }
 
-    BeforeAll {
+    Pester\BeforeAll {
         try {
-            Write-Verbose "Setting up test environment"
-            Remove-KeyValueStore -StoreName "TestStore"
+            Microsoft.PowerShell.Utility\Write-Verbose "Setting up test environment"
+            GenXdev.Data\Remove-KeyValueStore -StoreName "TestStore"
         }
         catch {
             throw
         }
     }
 
-    It "Should remove entire store" {
-        Remove-KeyValueStore -StoreName "TestStore"
-        $keys = Get-StoreKeys -StoreName "TestStore"
-        $keys | Should -BeNullOrEmpty
+    Pester\It "Should remove entire store" {
+        GenXdev.Data\Remove-KeyValueStore -StoreName "TestStore"
+        $keys = GenXdev.Data\Get-StoreKeys -StoreName "TestStore"
+        $keys | Pester\Should -BeNullOrEmpty
     }
 }

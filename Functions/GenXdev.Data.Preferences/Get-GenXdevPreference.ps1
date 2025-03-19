@@ -56,7 +56,7 @@ function Get-GenXdevPreference {
 
     begin {
 
-        Write-Verbose "Starting preference retrieval for: $Name"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting preference retrieval for: $Name"
     }
 
     process {
@@ -66,8 +66,8 @@ function Get-GenXdevPreference {
 
         try {
             # first attempt to retrieve from local store
-            Write-Verbose "Checking local store for preference '$Name'"
-            $value = Get-ValueByKeyFromStore `
+            Microsoft.PowerShell.Utility\Write-Verbose "Checking local store for preference '$Name'"
+            $value = GenXdev.Data\Get-ValueByKeyFromStore `
                 -StoreName "GenXdev.PowerShell.Preferences" `
                 -KeyName $Name `
                 -SynchronizationKey "Local" `
@@ -75,8 +75,8 @@ function Get-GenXdevPreference {
 
             # if local store lookup failed, try defaults store
             if ([string]::IsNullOrEmpty($value)) {
-                Write-Verbose "Preference not found locally, checking defaults store"
-                $value = Get-ValueByKeyFromStore `
+                Microsoft.PowerShell.Utility\Write-Verbose "Preference not found locally, checking defaults store"
+                $value = GenXdev.Data\Get-ValueByKeyFromStore `
                     -StoreName "GenXdev.PowerShell.Preferences" `
                     -KeyName $Name `
                     -SynchronizationKey "Defaults" `
@@ -84,16 +84,16 @@ function Get-GenXdevPreference {
             }
         }
         catch {
-            Write-Verbose "Error accessing preference stores: $_"
+            Microsoft.PowerShell.Utility\Write-Verbose "Error accessing preference stores: $_"
         }
 
         # if no value found in either store, use provided default
         if ([string]::IsNullOrEmpty($value)) {
-            Write-Verbose "Using provided default value: $DefaultValue"
+            Microsoft.PowerShell.Utility\Write-Verbose "Using provided default value: $DefaultValue"
             $value = $DefaultValue
         }
 
-        Write-Verbose "Returning value: $value"
+        Microsoft.PowerShell.Utility\Write-Verbose "Returning value: $value"
         return $value
     }
 
