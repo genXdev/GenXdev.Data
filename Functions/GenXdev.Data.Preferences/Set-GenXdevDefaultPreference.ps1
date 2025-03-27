@@ -59,7 +59,8 @@ function Set-GenXdevDefaultPreference {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting Set-GenXdevDefaultPreference for '$Name'"
     }
 
-    process {
+
+process {
 
         if ([string]::IsNullOrWhiteSpace($Value)) {
 

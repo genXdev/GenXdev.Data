@@ -58,7 +58,8 @@ function Remove-GenXdevPreference {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting preference removal for: $Name"
     }
 
-    process {
+
+process {
 
         if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
 

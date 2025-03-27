@@ -51,7 +51,8 @@ function Get-SQLiteSchema {
         Microsoft.PowerShell.Utility\Write-Verbose "Using parameter set: $($PSCmdlet.ParameterSetName)"
     }
 
-    process {
+
+process {
 
         # prepare the query to retrieve the complete database schema
         $PSBoundParameters["Queries"] = "SELECT * FROM sqlite_master"

@@ -74,7 +74,8 @@ function Remove-KeyFromStore {
         $lastModifiedBy = "$env:COMPUTERNAME\$env:USERNAME"
     }
 
-    process {
+
+process {
 
         Microsoft.PowerShell.Utility\Write-Verbose "Processing delete operation with sync key: $SynchronizationKey"
 

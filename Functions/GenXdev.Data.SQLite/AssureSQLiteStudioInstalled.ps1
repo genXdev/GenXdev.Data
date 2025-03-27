@@ -46,7 +46,8 @@ function AssureSQLiteStudioInstalled {
         }
     }
 
-    process {
+
+process {
 
         # check if sqlitestudio executable is available in the system path
         if (@(Microsoft.PowerShell.Core\Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -eq 0) {

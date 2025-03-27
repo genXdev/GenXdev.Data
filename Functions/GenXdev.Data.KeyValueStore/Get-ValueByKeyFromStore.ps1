@@ -78,7 +78,8 @@ function Get-ValueByKeyFromStore {
         Microsoft.PowerShell.Utility\Write-Verbose "Database path: $databaseFilePath"
     }
 
-    process {
+
+process {
 
         # initialize database if it doesn't exist
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {

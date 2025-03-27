@@ -59,7 +59,8 @@ function Get-GenXdevPreference {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting preference retrieval for: $Name"
     }
 
-    process {
+
+process {
 
         # initialize the return value
         $value = $null

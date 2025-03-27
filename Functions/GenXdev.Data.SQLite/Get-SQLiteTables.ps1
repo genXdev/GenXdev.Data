@@ -55,7 +55,8 @@ function Get-SQLiteTables {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting SQLite table name retrieval operation"
     }
 
-    process {
+
+process {
 
         # define the query to get all table names from sqlite_master
         $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " +

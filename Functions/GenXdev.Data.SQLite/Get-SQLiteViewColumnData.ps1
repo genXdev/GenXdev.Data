@@ -88,7 +88,8 @@ function Get-SQLiteViewColumnData {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteViewColumnData for view '$ViewName'"
     }
 
-    process {
+
+process {
 
         # determine if we need to limit the results or get all records
         if ($Count -eq -1) {

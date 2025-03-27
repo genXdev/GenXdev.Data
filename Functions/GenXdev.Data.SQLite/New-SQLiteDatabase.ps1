@@ -40,7 +40,8 @@ function New-SQLiteDatabase {
         $DatabaseFilePath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath -CreateDirectory
     }
 
-    process {
+
+process {
 
         # check if database file already exists
         if (-not (Microsoft.PowerShell.Management\Test-Path $DatabaseFilePath)) {

@@ -58,7 +58,8 @@ function Get-StoreKeys {
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    process {
+
+process {
 
         # ensure database exists by initializing if not found
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {

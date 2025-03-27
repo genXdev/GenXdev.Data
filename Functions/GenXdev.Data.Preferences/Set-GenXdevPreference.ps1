@@ -61,7 +61,8 @@ function Set-GenXdevPreference {
         Microsoft.PowerShell.Utility\Write-Verbose "Beginning preference operation for preference name: '$Name'"
     }
 
-    process {
+
+process {
 
         # check if preference should be removed due to null/empty value
         if ([string]::IsNullOrWhiteSpace($Value)) {

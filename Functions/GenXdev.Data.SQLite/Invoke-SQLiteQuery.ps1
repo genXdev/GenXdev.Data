@@ -92,7 +92,8 @@ function Invoke-SQLiteQuery {
         Microsoft.PowerShell.Utility\Write-Verbose "Opening SQLite connection..."
     }
 
-    process {
+
+process {
 
         try {
             # establish database connection

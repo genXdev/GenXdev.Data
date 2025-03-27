@@ -60,7 +60,8 @@ function Get-SQLiteViewSchema {
         Microsoft.PowerShell.Utility\Write-Verbose "Retrieving schema for view: $ViewName"
     }
 
-    process {
+
+process {
 
         # construct query to fetch the view definition from sqlite_master table
         $query = "SELECT sql FROM sqlite_master WHERE name = '$ViewName'"

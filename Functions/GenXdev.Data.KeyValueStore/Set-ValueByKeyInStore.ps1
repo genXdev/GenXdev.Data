@@ -75,7 +75,8 @@ function Set-ValueByKeyInStore {
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    process {
+
+process {
 
         # ensure database exists
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {

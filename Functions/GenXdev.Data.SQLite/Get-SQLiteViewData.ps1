@@ -79,7 +79,8 @@ function Get-SQLiteViewData {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteViewData for view: $ViewName"
     }
 
-    process {
+
+process {
 
         # construct query with optional record limit
         $query = if ($Count -eq -1) {

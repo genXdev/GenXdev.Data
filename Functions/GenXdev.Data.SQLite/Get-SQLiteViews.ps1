@@ -52,7 +52,8 @@ function Get-SQLiteViews {
         Microsoft.PowerShell.Utility\Write-Verbose "Preparing to retrieve SQLite views..."
     }
 
-    process {
+
+process {
 
         # define the SQL query to retrieve all view names from sqlite_master
         $query = "SELECT name FROM sqlite_master WHERE type='view'"

@@ -78,7 +78,8 @@ function Get-SQLiteTableData {
         Microsoft.PowerShell.Utility\Write-Verbose "Record limit set to: $(if($Count -eq -1){'unlimited'}else{$Count})"
     }
 
-    process {
+
+process {
 
         # construct query based on whether we want all records or a limited set
         $query = if ($Count -eq -1) {

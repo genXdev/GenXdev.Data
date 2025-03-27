@@ -33,7 +33,8 @@ function Get-GenXdevPreferenceNames {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting retrieval of preference names from all stores"
     }
 
-    process {
+
+process {
 
         # retrieve all preference keys from the local preferences store
         Microsoft.PowerShell.Utility\Write-Verbose "Retrieving keys from local preferences store"

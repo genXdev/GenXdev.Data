@@ -94,7 +94,8 @@ function Get-SQLiteTableColumnData {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting data retrieval for column '$ColumnName' from table '$TableName'"
     }
 
-    process {
+
+process {
 
         # construct the appropriate SQL query based on whether a limit is needed
         $query = if ($Count -eq -1) {

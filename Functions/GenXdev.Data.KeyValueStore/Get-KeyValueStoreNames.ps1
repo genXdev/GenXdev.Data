@@ -45,7 +45,8 @@ function Get-KeyValueStoreNames {
         Microsoft.PowerShell.Utility\Write-Verbose "Using database: $databaseFilePath"
     }
 
-    process {
+
+process {
 
         # create database if it doesn't exist
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {

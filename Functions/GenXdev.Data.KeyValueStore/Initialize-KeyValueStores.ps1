@@ -53,7 +53,8 @@ function Initialize-KeyValueStores {
         $folder.Attributes = $folder.Attributes -bor [System.IO.FileAttributes]::Hidden
     }
 
-    process {
+
+process {
 
         # iterate through both database paths to ensure they exist
         foreach ($dbPath in @($databaseFilePath, $shadowDbPath)) {

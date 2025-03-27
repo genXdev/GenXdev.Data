@@ -49,7 +49,8 @@ function Remove-KeyValueStore {
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
     }
 
-    process {
+
+process {
 
         # ensure database exists, create if not
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {

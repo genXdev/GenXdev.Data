@@ -39,7 +39,8 @@ function Sync-KeyValueStore {
         Microsoft.PowerShell.Utility\Write-Verbose "Starting key-value store sync with key: $SynchronizationKey"
     }
 
-    process {
+
+process {
 
         # skip synchronization for local-only records
         if ($SynchronizationKey -eq "Local") {

@@ -67,7 +67,8 @@ function Get-SQLiteTableSchema {
         Microsoft.PowerShell.Utility\Write-Verbose "Preparing to retrieve schema for table '$TableName'"
     }
 
-    process {
+
+process {
 
         # construct the PRAGMA query to get detailed table column information
         $PSBoundParameters["Queries"] = "PRAGMA table_info($TableName)"
