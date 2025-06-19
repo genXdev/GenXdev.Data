@@ -65,7 +65,7 @@ Update-Module
 ### GenXdev.Data.SQLite</hr>
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
-| [AssureSQLiteStudioInstalled](#AssureSQLiteStudioInstalled) |  | Ensures SQLiteStudio is installed and accessible from the command line. |
+| [EnsureSQLiteStudioInstalled](#EnsureSQLiteStudioInstalled) |  | Ensures SQLiteStudio is installed and accessible from the command line. |
 | [Get-SQLiteSchema](#Get-SQLiteSchema) |  | Retrieves the complete schema information from a SQLite database. |
 | [Get-SQLiteTableColumnData](#Get-SQLiteTableColumnData) |  | Retrieves data from a specific column in a SQLite database table. |
 | [Get-SQLiteTableData](#Get-SQLiteTableData) |  | Retrieves data from a SQLite database table with optional record limiting. |
@@ -1161,14 +1161,14 @@ RELATED LINKS
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 NAME
-    AssureSQLiteStudioInstalled
+    EnsureSQLiteStudioInstalled
     
 SYNOPSIS
     Ensures SQLiteStudio is installed and accessible from the command line.
     
     
 SYNTAX
-    AssureSQLiteStudioInstalled [<CommonParameters>]
+    EnsureSQLiteStudioInstalled [<CommonParameters>]
     
     
 DESCRIPTION
@@ -1191,7 +1191,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > AssureSQLiteStudioInstalled
+    PS > EnsureSQLiteStudioInstalled
     Checks and ensures SQLiteStudio is installed and accessible.
     
     

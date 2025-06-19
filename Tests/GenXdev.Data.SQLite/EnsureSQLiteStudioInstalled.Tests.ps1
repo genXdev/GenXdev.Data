@@ -1,10 +1,10 @@
 ################################################################################
-Pester\Describe "AssureSQLiteStudioInstalled" {
+Pester\Describe "EnsureSQLiteStudioInstalled" {
 
     Pester\It "Should pass PSScriptAnalyzer rules" {
 
         # get the script path for analysis
-        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SQLite\AssureSQLiteStudioInstalled.ps1"
+        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1"
 
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath

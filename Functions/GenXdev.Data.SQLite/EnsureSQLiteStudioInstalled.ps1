@@ -10,10 +10,10 @@ doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures
 the PATH environment variable.
 
 .EXAMPLE
-AssureSQLiteStudioInstalled
+EnsureSQLiteStudioInstalled
 Checks and ensures SQLiteStudio is installed and accessible.
 #>
-function AssureSQLiteStudioInstalled {
+function EnsureSQLiteStudioInstalled {
 
     [CmdletBinding()]
     param()
