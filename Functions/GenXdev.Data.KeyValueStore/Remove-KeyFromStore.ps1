@@ -60,7 +60,7 @@ function Remove-KeyFromStore {
 
         # expand the database path and ensure directory exists
         $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         # initialize database if it doesn't exist

@@ -43,7 +43,7 @@ function Remove-KeyValueStore {
 
         # get the full path to the sqlite database file
         $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$PSScriptRoot\..\..\..\..\GenXdev.Local\KeyValueStores.sqllite.db" `
+            "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
