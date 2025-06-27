@@ -4,6 +4,7 @@
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteTableData.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteTables.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteTransaction.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteViewColumnData.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteViewData.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteViews.ps1"

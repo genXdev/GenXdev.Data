@@ -71,6 +71,7 @@ Update-Module
 | [Get-SQLiteTableData](#Get-SQLiteTableData) |  | Retrieves data from a SQLite database table with optional record limiting. |
 | [Get-SQLiteTables](#Get-SQLiteTables) |  | Retrieves a list of table names from a SQLite database. |
 | [Get-SQLiteTableSchema](#Get-SQLiteTableSchema) |  | Retrieves the schema information for a specified SQLite table. |
+| [Get-SQLiteTransaction](#Get-SQLiteTransaction) | getsqltx, newsqltx | Creates and returns a SQLite transaction object for batch operations. |
 | [Get-SQLiteViewColumnData](#Get-SQLiteViewColumnData) |  | Retrieves column data from a SQLite view with optional record limiting. |
 | [Get-SQLiteViewData](#Get-SQLiteViewData) |  | Retrieves data from a SQLite database view with optional record limiting. |
 | [Get-SQLiteViews](#Get-SQLiteViews) |  | Retrieves a list of views from a SQLite database. |
@@ -1660,6 +1661,110 @@ RELATED LINKS
 <br/><hr/><hr/><br/>
  
 NAME
+    Get-SQLiteTransaction
+    
+SYNOPSIS
+    Creates and returns a SQLite transaction object for batch operations.
+    
+    
+SYNTAX
+    Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]
+    
+    Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    Creates a SQLite database connection and transaction object that can be used
+    for batch operations. The caller is responsible for committing or rolling back
+    the transaction. The connection will be automatically created if the database
+    file doesn't exist.
+    
+
+PARAMETERS
+    -ConnectionString <String>
+        The SQLite connection string for database access.
+        
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabaseFilePath <String>
+        The file path to the SQLite database. Will be converted to a connection string.
+        
+        Required?                    true
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -IsolationLevel
+        Transaction isolation level. Defaults to ReadCommitted.
+        
+        Required?                    false
+        Position?                    named
+        Default value                ReadCommitted
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -CreateDatabaseIfNotExists <Boolean>
+        Whether to create the database file if it doesn't exist. Defaults to true.
+        
+        Required?                    false
+        Position?                    named
+        Default value                True
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > $transaction = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
+    try {
+        Invoke-SQLiteQuery -Transaction $transaction -Queries "INSERT INTO Users..."
+        Invoke-SQLiteQuery -Transaction $transaction -Queries "UPDATE Users..."
+        $transaction.Commit()
+    } catch {
+        $transaction.Rollback()
+        throw
+    } finally {
+        $transaction.Connection.Close()
+    }
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > $transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS 
+
+<br/><hr/><hr/><br/>
+ 
+NAME
     Get-SQLiteViewColumnData
     
 SYNOPSIS
@@ -2034,24 +2139,22 @@ SYNOPSIS
     
     
 SYNTAX
-    Invoke-SQLiteQuery [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-    
-    Invoke-SQLiteQuery [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
-    
-    Invoke-SQLiteQuery [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
+    Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]
     
     
 DESCRIPTION
     Executes SQL queries against a SQLite database with parameter support and
-    configurable transaction isolation. All queries run in a single transaction that
-    rolls back on error. Supports both connection strings and database file paths.
+    configurable transaction isolation. Can use an external transaction for batch
+    operations or create its own internal transaction. When using an external
+    transaction, the caller is responsible for committing/rolling back.
+    Connection priority: Transaction > ConnectionString > DatabaseFilePath.
     
 
 PARAMETERS
     -ConnectionString <String>
-        The SQLite connection string for database access.
+        The SQLite connection string for database access. Used if no Transaction is provided.
         
-        Required?                    true
+        Required?                    false
         Position?                    1
         Default value                
         Accept pipeline input?       false
@@ -2060,9 +2163,22 @@ PARAMETERS
         
     -DatabaseFilePath <String>
         The file path to the SQLite database. Will be converted to a connection string.
+        Used if no Transaction or ConnectionString is provided.
         
-        Required?                    true
-        Position?                    1
+        Required?                    false
+        Position?                    2
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -Transaction <SQLiteTransaction>
+        An existing SQLite transaction to use. When provided, the function will not
+        commit or rollback the transaction - that's the caller's responsibility.
+        Takes priority over ConnectionString and DatabaseFilePath.
+        
+        Required?                    false
+        Position?                    3
         Default value                
         Accept pipeline input?       false
         Aliases                      
@@ -2072,7 +2188,7 @@ PARAMETERS
         One or more SQL queries to execute. Can be passed via pipeline.
         
         Required?                    true
-        Position?                    2
+        Position?                    4
         Default value                
         Accept pipeline input?       true (ByValue, ByPropertyName)
         Aliases                      
@@ -2082,14 +2198,15 @@ PARAMETERS
         Optional parameters for the queries as hashtables. Format: @{"param"="value"}
         
         Required?                    false
-        Position?                    2
+        Position?                    5
         Default value                @()
         Accept pipeline input?       true (ByValue, ByPropertyName)
         Aliases                      
         Accept wildcard characters?  false
         
     -IsolationLevel
-        Transaction isolation level. Defaults to ReadCommitted.
+        Transaction isolation level. Defaults to ReadCommitted. Only used when creating
+        an internal transaction.
         
         Required?                    false
         Position?                    named
@@ -2120,6 +2237,26 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > "SELECT * FROM Users" | isql "C:\data.db" @{"UserId"=1}
+    
+    
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > # Batch operations using external transaction
+    $tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
+    try {
+        Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
+        Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
+        $tx.Commit()
+    } catch {
+        $tx.Rollback()
+        throw
+    } finally {
+        $tx.Connection.Close()
+    }
     
     
     

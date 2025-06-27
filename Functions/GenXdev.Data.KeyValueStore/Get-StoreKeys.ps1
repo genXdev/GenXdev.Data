@@ -52,7 +52,7 @@ function Get-StoreKeys {
         Microsoft.PowerShell.Utility\Write-Verbose "Initializing Get-StoreKeys for store: $StoreName"
 
         # resolve the full path to the sqlite database file
-        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"

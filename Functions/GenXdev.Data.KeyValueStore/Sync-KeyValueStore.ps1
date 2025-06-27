@@ -50,7 +50,7 @@ process {
         }
 
         # resolve database file paths for local and shadow copies
-        $localDb = GenXdev.FileSystem\Expand-Path "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db"
+        $localDb = GenXdev.FileSystem\Expand-Path "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db"
         $shadowDb = GenXdev.FileSystem\Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
 
         Microsoft.PowerShell.Utility\Write-Verbose "Local DB: $localDb"

@@ -72,7 +72,7 @@ function Get-ValueByKeyFromStore {
 
         # construct the path to the sqlite database file
         $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
+            "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         Microsoft.PowerShell.Utility\Write-Verbose "Database path: $databaseFilePath"

@@ -5,14 +5,22 @@ Executes one or more SQL queries against a SQLite database with transaction supp
 
 .DESCRIPTION
 Executes SQL queries against a SQLite database with parameter support and
-configurable transaction isolation. All queries run in a single transaction that
-rolls back on error. Supports both connection strings and database file paths.
+configurable transaction isolation. Can use an external transaction for batch
+operations or create its own internal transaction. When using an external
+transaction, the caller is responsible for committing/rolling back.
+Connection priority: Transaction > ConnectionString > DatabaseFilePath.
 
 .PARAMETER ConnectionString
-The SQLite connection string for database access.
+The SQLite connection string for database access. Used if no Transaction is provided.
 
 .PARAMETER DatabaseFilePath
 The file path to the SQLite database. Will be converted to a connection string.
+Used if no Transaction or ConnectionString is provided.
+
+.PARAMETER Transaction
+An existing SQLite transaction to use. When provided, the function will not
+commit or rollback the transaction - that's the caller's responsibility.
+Takes priority over ConnectionString and DatabaseFilePath.
 
 .PARAMETER Queries
 One or more SQL queries to execute. Can be passed via pipeline.
@@ -21,42 +29,62 @@ One or more SQL queries to execute. Can be passed via pipeline.
 Optional parameters for the queries as hashtables. Format: @{"param"="value"}
 
 .PARAMETER IsolationLevel
-Transaction isolation level. Defaults to ReadCommitted.
+Transaction isolation level. Defaults to ReadCommitted. Only used when creating
+an internal transaction.
 
 .EXAMPLE
 Invoke-SQLiteQuery -DatabaseFilePath "C:\data.db" -Queries "SELECT * FROM Users"
 
 .EXAMPLE
 "SELECT * FROM Users" | isql "C:\data.db" @{"UserId"=1}
+
+.EXAMPLE
+# Batch operations using external transaction
+$tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
+try {
+    Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
+    Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
+    $tx.Commit()
+} catch {
+    $tx.Rollback()
+    throw
+} finally {
+    $tx.Connection.Close()
+}
 #>
 function Invoke-SQLiteQuery {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding()]
 
     param (
         ###########################################################################
         [Parameter(
             Position = 0,
-            Mandatory,
-            ParameterSetName = 'ConnectionString',
+            Mandatory = $false,
             HelpMessage = 'The connection string to the SQLite database.'
         )]
         [string]$ConnectionString,
 
         ###########################################################################
         [Parameter(
-            Position = 0,
-            Mandatory,
-            ParameterSetName = 'DatabaseFilePath',
+            Position = 1,
+            Mandatory = $false,
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [string]$DatabaseFilePath,
 
         ###########################################################################
-        [Alias("q", "Value", "Name", "Text", "Query")]
+        [Parameter(
+            Position = 2,
+            Mandatory = $false,
+            HelpMessage = 'An existing SQLite transaction to use for the queries.'
+        )]
+        [System.Data.SQLite.SQLiteTransaction]$Transaction,
+
+        ###########################################################################        [Alias("q", "Value", "Name", "Text", "Query")]
         [parameter(
             Mandatory,
-            Position = 1,
+            Position = 3,
             ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
@@ -67,7 +95,7 @@ function Invoke-SQLiteQuery {
         ###########################################################################
         [Alias("data", "parameters", "args")]
         [parameter(
-            Position = 1,
+            Position = 4,
             ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
@@ -84,25 +112,36 @@ function Invoke-SQLiteQuery {
     )
 
     begin {
-        # initialize connection string from file path if provided
-        $connString = [String]::IsNullOrWhiteSpace($DatabaseFilePath) `
-            ? $ConnectionString `
-            : "Data Source=$((GenXdev.FileSystem\Expand-Path $DatabaseFilePath))"
-
-        Microsoft.PowerShell.Utility\Write-Verbose "Opening SQLite connection..."
+        # determine connection source priority: Transaction > ConnectionString > DatabaseFilePath
+        if ($null -ne $Transaction) {
+            $connection = $Transaction.Connection
+            $transaction = $Transaction
+            $isExternalTransaction = $true
+            Microsoft.PowerShell.Utility\Write-Verbose "Using external transaction"
+        } elseif (-not [String]::IsNullOrWhiteSpace($ConnectionString)) {
+            $connString = $ConnectionString
+            $isExternalTransaction = $false
+            Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with connection string: $connString"
+        } elseif (-not [String]::IsNullOrWhiteSpace($DatabaseFilePath)) {
+            $connString = "Data Source=$((GenXdev.FileSystem\Expand-Path $DatabaseFilePath))"
+            $isExternalTransaction = $false
+            Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with database file: $DatabaseFilePath"
+        } else {
+            throw "You must provide either a Transaction, ConnectionString, or DatabaseFilePath parameter."
+        }
     }
 
-
-process {
-
+    process {
         try {
-            # establish database connection
-            $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
-            $connection.Open()
+            # establish database connection and transaction if not using external
+            if (-not $isExternalTransaction) {
+                $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
+                $connection.Open()
 
-            # begin transaction with specified isolation
-            $transaction = $connection.BeginTransaction($IsolationLevel)
-            Microsoft.PowerShell.Utility\Write-Verbose "Started transaction with $IsolationLevel isolation"
+                # begin transaction with specified isolation
+                $transaction = $connection.BeginTransaction($IsolationLevel)
+                Microsoft.PowerShell.Utility\Write-Verbose "Started internal transaction with $IsolationLevel isolation"
+            }
 
             # ensure parameters array exists
             $SqlParameters = if ($SqlParameters) { $SqlParameters } else { @() }
@@ -117,7 +156,7 @@ process {
                     Microsoft.PowerShell.Utility\Write-Verbose "Executing query $($idx + 1) of $($Queries.Count)"
 
                     # get parameter set for current query
-                    $data = if ($SqlParameters.Length -gt 0) {
+                    [System.Collections.Hashtable] $data = if ($SqlParameters.Length -gt $idx) {
                         $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
                     }
                     else {
@@ -127,6 +166,7 @@ process {
                     # prepare command
                     $command = $connection.CreateCommand()
                     $command.CommandText = $PSItem
+                    $command.Transaction = $transaction
 
                     # add parameters if provided
                     if ($null -ne $data) {
@@ -148,22 +188,32 @@ process {
                         }
                         Microsoft.PowerShell.Utility\Write-Output $record
                     }
+
+                    $reader.Close()
                 }
 
-                # commit if successful
-                $transaction.Commit()
-                Microsoft.PowerShell.Utility\Write-Verbose "Transaction committed successfully"
+                # only commit if we created the transaction internally
+                if (-not $isExternalTransaction) {
+                    $transaction.Commit()
+                    Microsoft.PowerShell.Utility\Write-Verbose "Internal transaction committed successfully"
+                }
             }
             catch {
-                # rollback on error
-                $transaction.Rollback()
-                Microsoft.PowerShell.Utility\Write-Verbose "Transaction rolled back due to error"
+                # only rollback if we created the transaction internally
+                if (-not $isExternalTransaction) {
+                    $transaction.Rollback()
+                    Microsoft.PowerShell.Utility\Write-Verbose "Internal transaction rolled back due to error"
+                }
                 throw $_
             }
             finally {
                 if ($null -ne $reader) { $reader.Close() }
-                $connection.Close()
-                Microsoft.PowerShell.Utility\Write-Verbose "Connection closed"
+
+                # only close connection if we created it internally
+                if (-not $isExternalTransaction) {
+                    $connection.Close()
+                    Microsoft.PowerShell.Utility\Write-Verbose "Internal connection closed"
+                }
             }
         }
         catch {

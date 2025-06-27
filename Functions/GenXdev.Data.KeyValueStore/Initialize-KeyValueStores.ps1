@@ -38,7 +38,7 @@ function Initialize-KeyValueStores {
     begin {
 
         # determine the path for local database storage
-        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
+        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
         -CreateDirectory
 
         # determine the path for onedrive synchronized database

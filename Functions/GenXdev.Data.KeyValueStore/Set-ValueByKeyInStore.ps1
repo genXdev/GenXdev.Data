@@ -69,7 +69,7 @@ function Set-ValueByKeyInStore {
 
         # construct path to sqlite database file
         $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$($Env:APPDATA)\GenXdev\KeyValueStores.sqllite.db" `
+            "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
             -CreateDirectory
 
         Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
