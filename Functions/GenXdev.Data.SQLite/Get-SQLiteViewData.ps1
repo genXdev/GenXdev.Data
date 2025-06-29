@@ -53,6 +53,7 @@ function Get-SQLiteViewData {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
+        [Alias("dbpath", "indexpath")]
         [string]$DatabaseFilePath,
 
         ########################################################################

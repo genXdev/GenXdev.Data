@@ -59,6 +59,8 @@ function Invoke-SQLiteStudio {
             ParameterSetName = 'DatabaseFilePath',
             HelpMessage = 'The path to the SQLite database file.'
         )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("dbpath", "indexpath")]
         [string]$DatabaseFilePath,
 
         ###########################################################################

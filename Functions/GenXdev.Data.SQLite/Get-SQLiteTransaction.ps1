@@ -58,6 +58,8 @@ function Get-SQLiteTransaction {
             ParameterSetName = 'DatabaseFilePath',
             HelpMessage = 'The path to the SQLite database file.'
         )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("dbpath", "indexpath")]
         [string]$DatabaseFilePath,
 
         ###########################################################################
@@ -87,7 +89,7 @@ function Get-SQLiteTransaction {
                 # use Copy-IdenticalParamValues to pass compatible parameters to New-SQLiteDatabase
                 $params = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "New-SQLiteDatabase" `
+                    -FunctionName "GenXdev.Data\New-SQLiteDatabase" `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable -Scope Local -ErrorAction SilentlyContinue)
 
                 GenXdev.Data\New-SQLiteDatabase @params

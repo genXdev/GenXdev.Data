@@ -71,6 +71,8 @@ function Invoke-SQLiteQuery {
             Mandatory = $false,
             HelpMessage = 'The path to the SQLite database file.'
         )]
+        [ValidateNotNullOrEmpty()]
+        [Alias("dbpath", "indexpath")]
         [string]$DatabaseFilePath,
 
         ###########################################################################
