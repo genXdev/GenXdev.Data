@@ -67,8 +67,10 @@ process {
                     "$currentPath;$sqliteStudioPath",
                     'User')
 
-                # ensure current session has updated path
-                $env:PATH = [Environment]::GetEnvironmentVariable('PATH', 'User')
+                # ensure current session has updated path only if not already present
+                if ($env:PATH -notlike "*$sqliteStudioPath*") {
+                    $env:PATH = "$env:PATH;$sqliteStudioPath"
+                }
             }
 
             # verify if path update resolved the missing executable
