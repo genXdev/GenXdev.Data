@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves all key names for a given key-value store.
@@ -17,6 +17,20 @@ of keys and values in the database.
 Optional scope identifier for synchronization. Use "Local" for local-only data.
 Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.
 
+.PARAMETER DatabasePath
+Directory path for keyvalue database files.
+
+.PARAMETER SessionOnly
+Use alternative settings stored in session for Data preferences like Language,
+Database paths, etc.
+
+.PARAMETER ClearSession
+Clear the session setting (Global variable) before retrieving.
+
+.PARAMETER SkipSession
+Do not use alternative settings stored in session for Data preferences like
+Language, Database paths, etc.
+
 .EXAMPLE
 Get-StoreKeys -StoreName "ApplicationSettings" -SynchronizationKey "Local"
 
@@ -30,52 +44,120 @@ function Get-StoreKeys {
     [Alias("getkeys")]
 
     param (
-        ########################################################################
+        ###############################################################################
         [Parameter(
-            Mandatory = $true,
             Position = 0,
+            Mandatory = $true,
             HelpMessage = "Name of the store whose keys should be retrieved"
         )]
         [string]$StoreName,
-        ########################################################################
+        ###############################################################################
         [Parameter(
-            Mandatory = $false,
             Position = 1,
+            Mandatory = $false,
             HelpMessage = "Key to identify synchronization scope, defaults to all"
         )]
-        [string]$SynchronizationKey = "%"
-        ########################################################################
+        [string]$SynchronizationKey = "%",
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Database path for key-value store data files"
+        )]
+        [string]$DatabasePath,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+        )]
+        [switch]$SessionOnly,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+        )]
+        [switch]$ClearSession,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+        )]
+        [Alias("FromPreferences")]
+        [switch]$SkipSession
+        ###############################################################################
     )
 
     begin {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Initializing Get-StoreKeys for store: $StoreName"
+        # use provided database path or default to local app data
+        if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-        # resolve the full path to the sqlite database file
-        $databaseFilePath = GenXdev.FileSystem\Expand-Path "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
-            -CreateDirectory
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
+                "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
+                -CreateDirectory
+        }
+        else {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Using database at: $databaseFilePath"
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
+                -CreateDirectory
+        }
+
+        # output verbose message for database file path
+        Microsoft.PowerShell.Utility\Write-Verbose (
+            "Using database at: $databaseFilePath"
+        )
+
+        # output verbose message for store initialization
+        Microsoft.PowerShell.Utility\Write-Verbose (
+            "Initializing Get-StoreKeys for store: $StoreName"
+        )
     }
 
+    process {
 
-process {
-
-        # ensure database exists by initializing if not found
+        # check if the database file exists, initialize if not found
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing..."
-            GenXdev.Data\Initialize-KeyValueStores
+            # output verbose message for database initialization
+            Microsoft.PowerShell.Utility\Write-Verbose (
+                "Database not found, initializing..."
+            )
+
+            # copy identical parameter values for Initialize-KeyValueStores
+            $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # initialize the key-value stores database
+            $null = GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
-        # synchronize non-local stores with remote
+        # synchronize non-local stores with remote if needed
         if ($SynchronizationKey -ne "Local") {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Syncing non-local store with key: $SynchronizationKey"
-            GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            # output verbose message for synchronization
+            Microsoft.PowerShell.Utility\Write-Verbose (
+                "Syncing non-local store with key: $SynchronizationKey"
+            )
+
+            # copy identical parameter values for Sync-KeyValueStore
+            $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # assign specific parameters for synchronization
+            $syncParams.SynchronizationKey = $SynchronizationKey
+
+            # synchronize the key-value store for the given key
+            $null = GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
-        # query to get all active keys for the store
+        # build the SQL query to get all active keys for the store
         $sqlQuery = @"
 SELECT keyName
 FROM KeyValueStore
@@ -84,15 +166,18 @@ AND synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
 "@
 
-        # parameters for the sql query
+        # build the parameters for the SQL query
         $params = @{
             'storeName' = $StoreName
             'syncKey'   = $SynchronizationKey
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Querying keys from store: $StoreName"
+        # output verbose message for querying keys
+        Microsoft.PowerShell.Utility\Write-Verbose (
+            "Querying keys from store: $StoreName"
+        )
 
-        # execute query and return key names
+        # execute the query and return key names
         GenXdev.Data\Invoke-SQLiteQuery `
             -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
@@ -103,4 +188,4 @@ AND deletedDate IS NULL;
     end {
     }
 }
-################################################################################
+###############################################################################

@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves a list of all available key-value store names from the database.
@@ -6,18 +6,39 @@ Retrieves a list of all available key-value store names from the database.
 .DESCRIPTION
 Queries the SQLite database to get unique store names based on the provided
 synchronization key. The function handles database initialization if needed and
-performs synchronization for non-local scopes.
+performs synchronization for non-local scopes. Returns store names that are
+not marked as deleted and match the specified synchronization scope.
 
 .PARAMETER SynchronizationKey
-Filters stores by synchronization scope. Use '%' for all stores, 'Local' for
-local stores only. Synchronization occurs for non-local scopes.
+Key to identify synchronization scope. Use '%' for all stores, 'Local' for
+local stores only. Synchronization occurs for non-local scopes. Supports SQL
+LIKE pattern matching for flexible store filtering.
+
+.PARAMETER DatabasePath
+Directory path for preferences database files. When specified, overrides the
+default database location for storing key-value store configurations.
+
+.PARAMETER SessionOnly
+Use alternative settings stored in session for Data preferences like Language,
+Database paths, etc. When enabled, retrieves settings from session variables
+instead of persistent storage.
+
+.PARAMETER ClearSession
+Clear the session setting (Global variable) before retrieving. Forces a fresh
+retrieval of settings by clearing any cached session data before processing.
+
+.PARAMETER SkipSession
+Dont use alternative settings stored in session for Data preferences like
+Language, Database paths, etc. Forces retrieval from persistent storage,
+bypassing any session-cached settings.
 
 .EXAMPLE
-Get-KeyValueStoreNames -SynchronizationKey "Local"
+Get-KeyValueStoreNames -SynchronizationKey "Local" -DatabasePath "C:\Data"
 
 .EXAMPLE
 getstorenames "%"
 #>
+###############################################################################
 function Get-KeyValueStoreNames {
 
     [CmdletBinding()]
@@ -25,44 +46,109 @@ function Get-KeyValueStoreNames {
     [Alias("getstorenames")]
 
     param(
-        ########################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 0,
             HelpMessage = "Key to identify synchronization scope, defaults to all"
         )]
-        [string]$SynchronizationKey = "%"
-        ########################################################################
+        [string] $SynchronizationKey = "%",
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Database path for key-value store data files"
+        )]
+        [string] $DatabasePath,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+        )]
+        [switch] $SessionOnly,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+        )]
+        [switch] $ClearSession,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+        )]
+        [Alias("FromPreferences")]
+        [switch] $SkipSession
+        ###############################################################################
     )
 
     begin {
 
-        # get the full path to the sqlite database file
-        $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
-            -CreateDirectory
+        # use provided database path or default to local app data
+        if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Using database: $databaseFilePath"
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
+                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                "KeyValueStores.sqllite.db") `
+                -CreateDirectory
+        }
+        else {
+
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
+                -CreateDirectory
+        }
+
+        # output verbose message for database file path
+        Microsoft.PowerShell.Utility\Write-Verbose (
+            "Using database at: $databaseFilePath"
+        )
     }
 
+    process {
 
-process {
-
-        # create database if it doesn't exist
+        # check if database file exists and create if needed
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing..."
-            GenXdev.Data\Initialize-KeyValueStores
+            # output verbose information about database initialization
+            Microsoft.PowerShell.Utility\Write-Verbose (
+                "Database not found, initializing..."
+            )
+
+            # copy identical parameter values for Initialize-KeyValueStores
+            $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # initialize the key value stores database
+            GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
-        # sync non-local stores
+        # perform synchronization for non-local stores
         if ($SynchronizationKey -ne "Local") {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Synchronizing non-local store: $SynchronizationKey"
-            GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+            # output verbose information about synchronization
+            Microsoft.PowerShell.Utility\Write-Verbose (
+                "Synchronizing non-local store: $SynchronizationKey"
+            )
+
+            # copy identical parameter values for Sync-KeyValueStore
+            $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # assign specific parameters for synchronization
+            $syncParams.SynchronizationKey = $SynchronizationKey
+
+            # synchronize the key value store with remote sources
+            GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
-        # query to get unique store names
+        # construct sql query to get unique store names
         $sqlQuery = @"
 SELECT DISTINCT storeName
 FROM KeyValueStore
@@ -70,15 +156,19 @@ WHERE synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
 "@
 
-        # parameters for the query
+        # create parameters hashtable for the sql query
         $params = @{
             'syncKey' = $SynchronizationKey
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Querying stores with sync key: $SynchronizationKey"
+        # output verbose information about the query parameters
+        Microsoft.PowerShell.Utility\Write-Verbose (
+            "Querying stores with sync key: $SynchronizationKey"
+        )
 
-        # execute query and return results
-        GenXdev.Data\Invoke-SQLiteQuery -DatabaseFilePath $databaseFilePath `
+        # execute the sql query and extract store names from results
+        GenXdev.Data\Invoke-SQLiteQuery `
+            -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params |
         Microsoft.PowerShell.Core\ForEach-Object storeName
@@ -87,4 +177,4 @@ AND deletedDate IS NULL;
     end {
     }
 }
-################################################################################
+###############################################################################

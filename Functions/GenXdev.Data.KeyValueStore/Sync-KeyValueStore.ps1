@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Synchronizes local and OneDrive key-value store databases.
@@ -12,59 +12,137 @@ modification time, with newer versions taking precedence.
 Identifies the synchronization scope for the operation. Using "Local" will skip
 synchronization as it indicates local-only records.
 
+.PARAMETER DatabasePath
+Database path for key-value store data files.
+
+.PARAMETER SessionOnly
+Use alternative settings stored in session for Data preferences like Language,
+Database paths, etc.
+
+.PARAMETER ClearSession
+Clear the session setting (Global variable) before retrieving.
+
+.PARAMETER SkipSession
+Dont use alternative settings stored in session for Data preferences like
+Language, Database paths, etc.
+
 .EXAMPLE
-# Synchronize using default local scope
 Sync-KeyValueStore
 
 .EXAMPLE
-# Synchronize specific scope
 Sync-KeyValueStore -SynchronizationKey "UserSettings"
 #>
 function Sync-KeyValueStore {
 
     [CmdletBinding()]
     param(
-        #######################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 0,
             HelpMessage = "Key to identify synchronization scope"
         )]
-        [string]$SynchronizationKey = "Local"
-        #######################################################################
+        [string] $SynchronizationKey = "Local",
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Database path for key-value store data files"
+        )]
+        [string] $DatabasePath,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Use alternative settings stored in session for Data " +
+                           "preferences like Language, Database paths, etc")
+        )]
+        [switch] $SessionOnly,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Clear the session setting (Global variable) " +
+                           "before retrieving")
+        )]
+        [switch] $ClearSession,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Dont use alternative settings stored in session " +
+                           "for Data preferences like Language, Database " +
+                           "paths, etc")
+        )]
+        [Alias("FromPreferences")]
+        [switch] $SkipSession
+        ###############################################################################
     )
 
     begin {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Starting key-value store sync with key: $SynchronizationKey"
+        # check if custom database path was provided or use default location
+        if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
+
+            # construct default database path in local app data folder
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
+                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                 "KeyValueStores.sqllite.db") `
+                -CreateDirectory
+        }
+        else {
+
+            # use the provided database path and ensure directory exists
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
+                -CreateDirectory
+        }
+
+        # log the beginning of sync operation for troubleshooting
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Starting key-value store sync with key: $SynchronizationKey"
     }
 
+    process {
 
-process {
-
-        # skip synchronization for local-only records
+        # skip synchronization for local-only records to avoid unnecessary work
         if ($SynchronizationKey -eq "Local") {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Skipping sync for local-only key"
+            # inform user that local-only sync is being skipped
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Skipping sync for local-only key"
             return
         }
 
-        # resolve database file paths for local and shadow copies
-        $localDb = GenXdev.FileSystem\Expand-Path "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db"
-        $shadowDb = GenXdev.FileSystem\Expand-Path "~\OneDrive\GenXdev.PowerShell.SyncObjects\KeyValueStores.sqllite.db"
+        # assign local database path for clarity in sync operations
+        $localDb = $databaseFilePath
 
+        # construct path to onedrive shadow database for synchronization
+        $shadowDb = GenXdev.FileSystem\Expand-Path `
+            ("~\OneDrive\GenXdev.PowerShell.SyncObjects\" +
+             "KeyValueStores.sqllite.db")
+
+        # log database paths for debugging and verification purposes
         Microsoft.PowerShell.Utility\Write-Verbose "Local DB: $localDb"
+
         Microsoft.PowerShell.Utility\Write-Verbose "Shadow DB: $shadowDb"
 
-        # ensure database files exist by initializing if needed
+        # verify both database files exist before attempting synchronization
         if (-not ([System.IO.File]::Exists($localDb) -and
                 [System.IO.File]::Exists($shadowDb))) {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Initializing missing database files"
-            GenXdev.Data\Initialize-KeyValueStores
+            # inform user that missing database files are being initialized
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Initializing missing database files"
+
+            # copy compatible parameters for the initialization function call
+            $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # initialize the key-value store databases if they don't exist
+            GenXdev.Data\Initialize-KeyValueStores @params
         }
 
-        # sql query to perform bidirectional sync based on last modified timestamp
+        # define sql query for bidirectional synchronization between databases
         $syncQuery = @"
 ATTACH DATABASE @shadowDb AS shadow;
 
@@ -97,19 +175,27 @@ AND (
 );
 "@
 
-        # prepare parameters for sql query execution
+        # create parameter hashtable for sql query parameter substitution
         $params = @{
             'shadowDb' = $shadowDb
             'syncKey'  = $SynchronizationKey
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Executing sync query with parameters"
-        GenXdev.Data\Invoke-SQLiteQuery -DatabaseFilePath $localDb -Queries $syncQuery -SqlParameters $params
+        # log query execution for debugging and performance monitoring
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Executing sync query with parameters"
+
+        # execute the synchronization query with prepared parameters
+        GenXdev.Data\Invoke-SQLiteQuery `
+            -DatabaseFilePath $localDb `
+            -Queries $syncQuery `
+            -SqlParameters $params
     }
 
     end {
 
+        # log completion of sync operation for audit and troubleshooting
         Microsoft.PowerShell.Utility\Write-Verbose "Sync operation completed"
     }
 }
-################################################################################
+###############################################################################

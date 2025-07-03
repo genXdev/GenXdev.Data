@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves a list of views from a SQLite database.
@@ -22,7 +22,7 @@ Get-SQLiteViews -DatabaseFilePath "C:\Databases\MyDatabase.sqlite"
 
 .EXAMPLE
 s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
-#>
+        ###############################################################################>
 function Get-SQLiteViews {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -71,4 +71,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

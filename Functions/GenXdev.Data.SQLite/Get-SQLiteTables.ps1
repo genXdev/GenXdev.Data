@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves a list of table names from a SQLite database.
@@ -18,12 +18,12 @@ an appropriate connection string internally.
 
 .EXAMPLE
 Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
-# Returns all table names from the specified database file
+        ###############################################################################Returns all table names from the specified database file
 
 .EXAMPLE
 Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
-# Returns all table names using a custom connection string
-#>
+        ###############################################################################Returns all table names using a custom connection string
+        ###############################################################################>
 
 function Get-SQLiteTables {
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
@@ -70,4 +70,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

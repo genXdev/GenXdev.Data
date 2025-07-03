@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Executes SQL queries against a SQL Server database with transaction support.
@@ -30,16 +30,16 @@ Optional hashtable of parameters for the queries. Format: @{"param"="value"}.
 Transaction isolation level. Defaults to ReadCommitted.
 
 .EXAMPLE
-# Execute query with explicit connection string
+        ###############################################################################Execute query with explicit connection string
 Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
     -Query "SELECT * FROM Users WHERE Id = @Id" `
     -SqlParameters @{"Id"=1}
 
 .EXAMPLE
-# Execute query using host and credentials
+        ###############################################################################Execute query using host and credentials
 isq -HostName "dbserver" -User "sa" -Password "pwd" `
     -q "SELECT * FROM Users" -data @{"Id"=1}
-#>
+        ###############################################################################>
 function Invoke-SqlServerQuery {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -320,4 +320,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

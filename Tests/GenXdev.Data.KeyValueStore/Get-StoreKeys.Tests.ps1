@@ -12,10 +12,10 @@ Pester\AfterAll {
 ###############################################################################
 Pester\Describe "Get-StoreKeys" {
     Pester\It "Should pass PSScriptAnalyzer rules" {
-        # get the script path for analysis
+# get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Get-StoreKeys.ps1"
 
-        # run analyzer with explicit settings
+# run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
@@ -42,7 +42,7 @@ $message
             GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "Key1"
             GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "Key2"
 
-            # Setup test keys
+    # Setup test keys
             GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "Key1" -Value "Value1"
             GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "Key2" -Value "Value2"
         }

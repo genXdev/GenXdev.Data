@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a SQLite database table with optional record limiting.
@@ -28,7 +28,7 @@ Get-SQLiteTableData -DatabaseFilePath "C:\data\users.db" -TableName "Employees" 
 
 .EXAMPLE
 Get-SQLiteTableData "C:\data\users.db" "Employees"
-#>
+        ###############################################################################>
 function Get-SQLiteTableData {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -104,4 +104,4 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed querying table: $TableName"
     }
 }
-################################################################################
+        ###############################################################################

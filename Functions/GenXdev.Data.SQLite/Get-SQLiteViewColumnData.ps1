@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves column data from a SQLite view with optional record limiting.
@@ -34,7 +34,7 @@ Get-SQLiteViewColumnData -DatabaseFilePath "C:\MyDB.sqlite" `
 
 .EXAMPLE
 Get-SQLiteViewColumnData "C:\MyDB.sqlite" "CustomersView" "Email"
-#>
+        ###############################################################################>
 function Get-SQLiteViewColumnData {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -115,4 +115,4 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed Get-SQLiteViewColumnData for view '$ViewName'"
     }
 }
-################################################################################
+        ###############################################################################

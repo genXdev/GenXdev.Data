@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Creates a new SQLite database file.
@@ -17,7 +17,7 @@ New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite"
 
 .EXAMPLE
 nsqldb "C:\Databases\MyNewDb.sqlite"
-#>
+        ###############################################################################>
 function New-SQLiteDatabase {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -80,4 +80,4 @@ $($_.Exception.Message)"
     end {
     }
 }
-################################################################################
+        ###############################################################################

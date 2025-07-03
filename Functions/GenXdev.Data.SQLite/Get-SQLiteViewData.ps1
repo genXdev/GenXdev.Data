@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a SQLite database view with optional record limiting.
@@ -30,7 +30,7 @@ Get-SQLiteViewData -DatabaseFilePath "C:\MyDb.sqlite" `
 
 .EXAMPLE
 Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
-#>
+        ###############################################################################>
 function Get-SQLiteViewData {
 
     [CmdletBinding(DefaultParameterSetName = "DatabaseFilePath")]
@@ -105,4 +105,4 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed querying view: $ViewName"
     }
 }
-################################################################################
+        ###############################################################################

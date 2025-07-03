@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves a value from a key-value store database.
@@ -6,7 +6,8 @@ Retrieves a value from a key-value store database.
 .DESCRIPTION
 Retrieves a value for a specified key from a SQLite-based key-value store. The
 function supports optional default values and synchronization across different
-scopes.
+scopes. It can use session-based settings or direct database access and
+provides automatic database initialization and synchronization capabilities.
 
 .PARAMETER StoreName
 The name of the key-value store to query.
@@ -20,8 +21,23 @@ Optional default value to return if the key is not found.
 .PARAMETER SynchronizationKey
 Optional key to identify synchronization scope. Defaults to "Local".
 
+.PARAMETER SessionOnly
+Use alternative settings stored in session for Data preferences like Language,
+Database paths, etc.
+
+.PARAMETER ClearSession
+Clear the session setting (Global variable) before retrieving.
+
+.PARAMETER DatabasePath
+Database path for key-value store data files.
+
+.PARAMETER SkipSession
+Dont use alternative settings stored in session for Data preferences like
+Language, Database paths, etc.
+
 .EXAMPLE
-Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" -DefaultValue "Dark"
+Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" `
+    -DefaultValue "Dark"
 
 .EXAMPLE
 getvalue AppSettings Theme
@@ -33,7 +49,7 @@ function Get-ValueByKeyFromStore {
     [Alias("getvalue")]
 
     param (
-        ########################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $true,
             Position = 0,
@@ -41,7 +57,7 @@ function Get-ValueByKeyFromStore {
             HelpMessage = "Name of the store to retrieve the key from"
         )]
         [string]$StoreName,
-        ########################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $true,
             Position = 1,
@@ -49,7 +65,7 @@ function Get-ValueByKeyFromStore {
             HelpMessage = "Key to retrieve from the specified store"
         )]
         [string]$KeyName,
-        ########################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 2,
@@ -57,43 +73,113 @@ function Get-ValueByKeyFromStore {
             HelpMessage = "A optional default value"
         )]
         [string]$DefaultValue = $null,
-        ########################################################################
+        ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 3,
             ParameterSetName = "Default",
             HelpMessage = "Key to identify synchronization scope"
         )]
-        [string]$SynchronizationKey = "Local"
-        ########################################################################
+        [string]$SynchronizationKey = "Local",
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = "Database path for key-value store data files"
+        )]
+        [string]$DatabasePath,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Use alternative settings stored in session for Data " +
+                          "preferences like Language, Database paths, etc")
+        )]
+        [switch]$SessionOnly,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Clear the session setting (Global variable) before " +
+                          "retrieving")
+        )]
+        [switch]$ClearSession,
+        ###############################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Dont use alternative settings stored in session for " +
+                          "Data preferences like Language, Database paths, etc")
+        )]
+        [Alias("FromPreferences")]
+        [switch]$SkipSession
+        ###############################################################################
     )
 
     begin {
 
-        # construct the path to the sqlite database file
-        $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
-            -CreateDirectory
+        # check if custom database path was provided
+        if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Database path: $databaseFilePath"
+            # use default database path in local app data folder
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
+                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                 "KeyValueStores.sqllite.db") `
+                -CreateDirectory
+        }
+        else {
+
+            # expand provided database path and ensure directory exists
+            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
+                -CreateDirectory
+        }
+
+        # output database location for debugging purposes
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Using database at: $databaseFilePath"
     }
 
 
-process {
+    process {
 
-        # initialize database if it doesn't exist
+        # check if database file exists and initialize if needed
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
-            Microsoft.PowerShell.Utility\Write-Verbose "Database not found, initializing..."
-            GenXdev.Data\Initialize-KeyValueStores
+
+            # log database initialization activity
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Database not found, initializing..."
+
+            # copy identical parameter values for initialize function
+            $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # initialize the key-value store database
+            GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
-        # sync with external store if not using local scope
+        # synchronize with external store when not using local scope
         if ($SynchronizationKey -ne "Local") {
-            Microsoft.PowerShell.Utility\Write-Verbose "Syncing store with key: $SynchronizationKey"
-            GenXdev.Data\Sync-KeyValueStore -SynchronizationKey $SynchronizationKey
+
+            # log synchronization activity
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Syncing store with key: $SynchronizationKey"
+
+            # copy identical parameter values for sync function
+            $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # assign synchronization key for external store sync
+            $syncParams.SynchronizationKey = $SynchronizationKey
+
+            # execute synchronization to align with external store
+            GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
-        # prepare sql query to retrieve value
+        # define sql query to retrieve value from key-value store
         $sqlQuery = @"
 SELECT value
 FROM KeyValueStore
@@ -103,28 +189,53 @@ AND synchronizationKey = @syncKey
 AND deletedDate IS NULL;
 "@
 
-        # set up query parameters
+        # prepare parameters for database query
         $params = @{
             'storeName' = $StoreName
             'keyName'   = $KeyName
             'syncKey'   = $SynchronizationKey
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Querying store '$StoreName' for key '$KeyName'"
+        # log the query operation details
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Querying store '$StoreName' for key '$KeyName'"
 
-        # execute query and get result
-        $result = GenXdev.Data\Invoke-SQLiteQuery `
-            -DatabaseFilePath $databaseFilePath `
-            -Queries $sqlQuery `
-            -SqlParameters $params
+        # copy identical parameter values for query function
+        $queryParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName "GenXdev.Data\Invoke-SQLiteQuery" `
+            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                -Scope Local `
+                -ErrorAction SilentlyContinue)
 
-        # return result or default value
+        # set database file path for query execution
+        $queryParams.DatabaseFilePath = $databaseFilePath
+
+        # set sql query text for execution
+        $queryParams.Queries = $sqlQuery
+
+        # set parameters for sql query placeholders
+        $queryParams.SqlParameters = $params
+
+        # execute database query to retrieve the value
+        $result = GenXdev.Data\Invoke-SQLiteQuery @queryParams
+
+        # determine return value based on query result
         if ($result) {
+
+            # log successful value retrieval
             Microsoft.PowerShell.Utility\Write-Verbose "Value found"
+
+            # return the retrieved value from database
             return $result.value
         }
         else {
-            Microsoft.PowerShell.Utility\Write-Verbose "No value found, returning default"
+
+            # log fallback to default value
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "No value found, returning default"
+
+            # return the specified default value
             return $DefaultValue
         }
     }
@@ -132,4 +243,4 @@ AND deletedDate IS NULL;
     end {
     }
 }
-################################################################################
+###############################################################################

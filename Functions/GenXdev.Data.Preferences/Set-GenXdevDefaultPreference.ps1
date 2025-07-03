@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Sets a default preference value in the GenXdev preferences store.
@@ -7,7 +7,8 @@ Sets a default preference value in the GenXdev preferences store.
 This function manages default preferences in the GenXdev preference system. It
 handles storing values, removing preferences when values are empty, and ensures
 changes are synchronized across the system. The function supports null values by
-removing the preference entirely in such cases.
+removing the preference entirely in such cases. When a value is provided, it is
+stored in the key-value store and synchronized across all consumers.
 
 .PARAMETER Name
 Specifies the name (key) of the preference to set in the default store. This
@@ -17,20 +18,35 @@ parameter is required and cannot be null or empty.
 Specifies the value to store for the preference. Can be null or empty, which
 will result in removing the preference from the store.
 
+.PARAMETER SessionOnly
+Use alternative settings stored in session for Data preferences like Language,
+Database paths, etc.
+
+.PARAMETER ClearSession
+Clear the session setting (Global variable) before retrieving.
+
+.PARAMETER PreferencesDatabasePath
+Database path for preference data files.
+
+.PARAMETER SkipSession
+Dont use alternative settings stored in session for Data preferences like
+Language, Database paths, etc.
+
 .EXAMPLE
 Set-GenXdevDefaultPreference -Name "Theme" -Value "Dark"
-# Sets the default theme preference to "Dark"
+Sets the default theme preference to "Dark"
 
 .EXAMPLE
 setPreferenceDefault "EmailNotifications" "Disabled"
-# Uses the alias to disable email notifications in defaults
+Uses the alias to disable email notifications in defaults
 #>
+###############################################################################
 function Set-GenXdevDefaultPreference {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
     [Alias("setPreferenceDefault")]
     param(
-        ########################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $true,
             Position = 0,
@@ -40,7 +56,7 @@ function Set-GenXdevDefaultPreference {
         [ValidateNotNullOrEmpty()]
         [Alias("PreferenceName")]
         [string]$Name,
-        ########################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $false,
             Position = 1,
@@ -50,47 +66,142 @@ function Set-GenXdevDefaultPreference {
         [AllowNull()]
         [AllowEmptyString()]
         [Alias("PreferenceValue")]
-        [string]$Value
-        ########################################################################
+        [string]$Value,
+        #######################################################################
+        [Parameter(
+            Mandatory = $false,
+            Position = 2,
+            HelpMessage = ("Database path for preference data files")
+        )]
+        [string]$PreferencesDatabasePath,
+        #######################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Use alternative settings stored in session for " +
+                          "Data preferences like Language, Database paths, etc")
+        )]
+        [switch]$SessionOnly,
+        #######################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Clear the session setting (Global variable) " +
+                          "before retrieving")
+        )]
+        [switch]$ClearSession,
+        #######################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = ("Dont use alternative settings stored in session " +
+                          "for Data preferences like Language, Database " +
+                          "paths, etc")
+        )]
+        [Alias("FromPreferences")]
+        [switch]$SkipSession
+        #######################################################################
     )
 
     begin {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Starting Set-GenXdevDefaultPreference for '$Name'"
+        # copy identical parameter values to prepare for database path lookup
+        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
+            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                -Scope Local `
+                -ErrorAction SilentlyContinue)
+
+        # resolve the actual database path using the helper function
+        $PreferencesDatabasePath = `
+            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
+
+        # output verbose information about the database path being used
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Using database path: $PreferencesDatabasePath"
+
+        # output verbose information about the operation start
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Starting Set-GenXdevDefaultPreference for '$Name'"
     }
 
+    process {
 
-process {
-
+        # check if the value is null, empty, or whitespace only
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Removing default preference '$Name' as value is empty"
+            # output verbose information about preference removal
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Removing default preference '$Name' as value is empty"
 
+            # check if we should proceed with the removal operation
             if ($PSCmdlet.ShouldProcess($Name, "Remove default preference")) {
 
-                GenXdev.Data\Remove-GenXdevPreference -Name $Name -RemoveDefault
+                # copy identical parameter values for Remove-GenXdevPreference
+                $removeParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                    -BoundParameters $PSBoundParameters `
+                    -FunctionName "GenXdev.Data\Remove-GenXdevPreference" `
+                    -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                        -Scope Local `
+                        -ErrorAction SilentlyContinue)
+
+                # assign specific parameters for the removal operation
+                $removeParams.Name = $Name
+                $removeParams.RemoveDefault = $true
+
+                # remove the preference from the default store
+                GenXdev.Data\Remove-GenXdevPreference @removeParams
             }
 
+            # exit early as removal is complete
             return
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Setting default preference '$Name' to: $Value"
+        # output verbose information about preference setting
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Setting default preference '$Name' to: $Value"
 
+        # check if we should proceed with the setting operation
         if ($PSCmdlet.ShouldProcess($Name, "Set default preference")) {
 
-            GenXdev.Data\Set-ValueByKeyInStore `
-                -StoreName "GenXdev.PowerShell.Preferences" `
-                -KeyName $Name `
-                -Value $Value `
-                -SynchronizationKey "Defaults"
+            # copy identical parameter values for Set-ValueByKeyInStore
+            $setParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Set-ValueByKeyInStore" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
 
-            $null = GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "Defaults"
+            # assign specific parameters for the set operation
+            $setParams.StoreName = "GenXdev.PowerShell.Preferences"
+            $setParams.KeyName = $Name
+            $setParams.Value = $Value
+            $setParams.SynchronizationKey = "Defaults"
+            $setParams.DatabasePath = $PreferencesDatabasePath
 
-            Microsoft.PowerShell.Utility\Write-Verbose "Successfully stored and synchronized preference '$Name'"
+            # store the preference value in the key-value store
+            GenXdev.Data\Set-ValueByKeyInStore @setParams
+
+            # copy identical parameter values for Sync-KeyValueStore
+            $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # assign specific parameters for the sync operation
+            $syncParams.SynchronizationKey = "Defaults"
+            $syncParams.DatabasePath = $PreferencesDatabasePath
+
+            # synchronize the key-value store to ensure consistency
+            $null = GenXdev.Data\Sync-KeyValueStore @syncParams
+
+            # output verbose information about successful operation
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                ("Successfully stored and synchronized preference '$Name'")
         }
     }
 
     end {
     }
 }
-################################################################################
+###############################################################################

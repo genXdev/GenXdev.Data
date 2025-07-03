@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves the schema information for a specified SQLite table.
@@ -26,7 +26,7 @@ Get-SQLiteTableSchema -DatabaseFilePath "C:\Databases\mydb.sqlite" `
 .EXAMPLE
 Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
     -TableName "Products"
-#>
+        ###############################################################################>
 function Get-SQLiteTableSchema {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -84,4 +84,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

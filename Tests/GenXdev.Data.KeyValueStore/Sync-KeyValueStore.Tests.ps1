@@ -13,10 +13,10 @@ Pester\AfterAll {
 Pester\Describe "Sync-KeyValueStore" {
     Pester\It "Should pass PSScriptAnalyzer rules" {
 
-        # get the script path for analysis
+# get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.ps1"
 
-        # run analyzer with explicit settings
+# run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
@@ -53,7 +53,7 @@ $message
         GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "SyncKey" -Value "SyncValue" -SynchronizationKey "TestSync"
         GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "TestSync"
 
-        # Check shadow database
+# Check shadow database
         $shadowValue = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "SyncKey" -SynchronizationKey "TestSync"
         $shadowValue | Pester\Should -Be "SyncValue"
     }
@@ -62,7 +62,7 @@ $message
         GenXdev.Data\Set-ValueByKeyInStore -StoreName "TestStore" -KeyName "LocalKey" -Value "LocalValue" -SynchronizationKey "Local"
         GenXdev.Data\Sync-KeyValueStore -SynchronizationKey "Local"
 
-        # Local sync Should not create shadow entry
+# Local sync Should not create shadow entry
         $shadowValue = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "LocalKey" -SynchronizationKey "Local"
         $shadowValue | Pester\Should -Be "LocalValue"
     }

@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Creates and returns a SQLite transaction object for batch operations.
@@ -36,7 +36,7 @@ try {
 
 .EXAMPLE
 $transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
-#>
+        ###############################################################################>
 function Get-SQLiteTransaction {
 
     [CmdletBinding(DefaultParameterSetName = "DatabaseFilePath")]
@@ -128,4 +128,4 @@ function Get-SQLiteTransaction {
     end {
     }
 }
-################################################################################
+        ###############################################################################

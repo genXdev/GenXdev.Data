@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves the SQL schema definition for a SQLite view.
@@ -24,7 +24,7 @@ The name of the view whose schema definition should be retrieved.
 Get-SQLiteViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
                     -ViewName "CustomerOrders"
 
-#>
+        ###############################################################################>
 function Get-SQLiteViewSchema {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -79,4 +79,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

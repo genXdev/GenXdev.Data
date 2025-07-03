@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Ensures SQLiteStudio is installed and accessible from the command line.
@@ -12,7 +12,7 @@ the PATH environment variable.
 .EXAMPLE
 EnsureSQLiteStudioInstalled
 Checks and ensures SQLiteStudio is installed and accessible.
-#>
+        ###############################################################################>
 function EnsureSQLiteStudioInstalled {
 
     [CmdletBinding()]
@@ -102,4 +102,4 @@ process {
 
     end {}
 }
-################################################################################
+        ###############################################################################

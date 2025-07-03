@@ -11,10 +11,10 @@ Pester\AfterAll {
 Pester\Describe "Set-GenXdevDefaultPreference" {
     Pester\It "Should pass PSScriptAnalyzer rules" {
 
-        # get the script path for analysis
+# get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.ps1"
 
-        # run analyzer with explicit settings
+# run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
@@ -44,7 +44,7 @@ $message
 
     Pester\It "Should sync across instances" {
         GenXdev.Data\Set-GenXdevDefaultPreference -Name "TestDefault" -Value "SyncedValue"
-        # Note: In a real test environment, you might need to verify this across different PS sessions
+# Note: In a real test environment, you might need to verify this across different PS sessions
         $result = GenXdev.Data\Get-GenXdevPreference -Name "TestDefault"
         $result | Pester\Should -Be "SyncedValue"
     }

@@ -1,16 +1,17 @@
 ###############################################################################
-Pester\Describe "Get-SQLiteTables" {
+Describe "Get-GenXdevPreferencesDatabasePath" {
 
-    Pester\It "Should pass PSScriptAnalyzer rules" {
+    It "should pass PSScriptAnalyzer rules" {
 
 # get the script path for analysis
-        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.SQLite\Get-SQLiteTables.ps1"
+        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.ps1"
 
+# run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
         [string] $message = ""
-        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
+        $analyzerResults | ForEach-Object {
 
             $message = $message + @"
 --------------------------------------------------
@@ -21,7 +22,7 @@ Message: $($_.Message)
 "@
         }
 
-        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
+        $analyzerResults.Count | Should -Be 0 -Because @"
 The following PSScriptAnalyzer rules are being violated:
 $message
 "@;

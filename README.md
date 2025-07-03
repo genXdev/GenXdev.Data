@@ -54,10 +54,12 @@ Update-Module
 | Command&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | aliases&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Description |
 | --- | --- | --- |
 | [Get-GenXdevPreference](#Get-GenXdevPreference) | getpreference | Retrieves a preference value from the GenXdev preferences store. |
-| [Get-GenXdevPreferenceNames](#Get-GenXdevPreferenceNames) | getpreferencenames | Gets all preference names from both local and default stores. |
+| [Get-GenXdevPreferenceNames](#Get-GenXdevPreferenceNames) | getpreferencenames | Gets all preference names from session storage and database stores. |
+| [Get-GenXdevPreferencesDatabasePath](#Get-GenXdevPreferencesDatabasePath) |  | Gets the configured database path for preference data files used in GenXdev.Data operations. |
 | [Remove-GenXdevPreference](#Remove-GenXdevPreference) | removepreference | Removes a preference value from the GenXdev preferences store. |
 | [Set-GenXdevDefaultPreference](#Set-GenXdevDefaultPreference) | setpreferencedefault | Sets a default preference value in the GenXdev preferences store. |
 | [Set-GenXdevPreference](#Set-GenXdevPreference) | setpreference | Sets a preference value in the GenXdev preferences store. |
+| [Set-GenXdevPreferencesDatabasePath](#Set-GenXdevPreferencesDatabasePath) |  | Sets the database path for preferences used in GenXdev.Data operations. |
 
 <hr/>
 &nbsp;
@@ -103,23 +105,71 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [<CommonParameters>]
+    Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
     Queries the SQLite database to get unique store names based on the provided
     synchronization key. The function handles database initialization if needed and
-    performs synchronization for non-local scopes.
+    performs synchronization for non-local scopes. Returns store names that are
+    not marked as deleted and match the specified synchronization scope.
     
 
 PARAMETERS
     -SynchronizationKey <String>
-        Filters stores by synchronization scope. Use '%' for all stores, 'Local' for
-        local stores only. Synchronization occurs for non-local scopes.
+        Key to identify synchronization scope. Use '%' for all stores, 'Local' for
+        local stores only. Synchronization occurs for non-local scopes. Supports SQL
+        LIKE pattern matching for flexible store filtering.
         
         Required?                    false
         Position?                    1
         Default value                %
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Directory path for preferences database files. When specified, overrides the
+        default database location for storing key-value store configurations.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc. When enabled, retrieves settings from session variables
+        instead of persistent storage.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving. Forces a fresh
+        retrieval of settings by clearing any cached session data before processing.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc. Forces retrieval from persistent storage,
+        bypassing any session-cached settings.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -136,7 +186,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > Get-KeyValueStoreNames -SynchronizationKey "Local"
+    PS > Get-KeyValueStoreNames -SynchronizationKey "Local" -DatabasePath "C:\Data"
     
     
     
@@ -165,7 +215,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [<CommonParameters>]
+    Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -194,6 +244,48 @@ PARAMETERS
         Required?                    false
         Position?                    2
         Default value                %
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Directory path for keyvalue database files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Do not use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -239,13 +331,14 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [<CommonParameters>]
+    Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
     Retrieves a value for a specified key from a SQLite-based key-value store. The
     function supports optional default values and synchronization across different
-    scopes.
+    scopes. It can use session-based settings or direct database access and
+    provides automatic database initialization and synchronization capabilities.
     
 
 PARAMETERS
@@ -289,6 +382,48 @@ PARAMETERS
         Aliases                      
         Accept wildcard characters?  false
         
+    -DatabasePath <String>
+        Database path for key-value store data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -303,7 +438,8 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" -DefaultValue "Dark"
+    PS > Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" `
+        -DefaultValue "Dark"
     
     
     
@@ -332,11 +468,12 @@ SYNOPSIS
     
     
 SYNTAX
-    Initialize-KeyValueStores [[-SynchronizationKey] <String>] [<CommonParameters>]
+    Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
-    Creates SQLite databases with required schema in two locations if they don't exist:
+    Creates SQLite databases with required schema in two locations if they don't
+    exist:
     1. Local machine for immediate access
     2. OneDrive folder for cloud synchronization
     The function ensures both databases have identical schema with synchronization
@@ -344,13 +481,44 @@ DESCRIPTION
     
 
 PARAMETERS
-    -SynchronizationKey <String>
-        Specifies the synchronization scope identifier. Used to partition data for
-        different synchronization contexts.
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Database path for key-value store data files.
         
         Required?                    false
         Position?                    1
-        Default value                Local
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -367,7 +535,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > Initialize-KeyValueStores -SynchronizationKey "ProjectA"
+    PS > Initialize-KeyValueStores -SessionOnly -ClearSession -DatabasePath "C:\MyDb.db"
     
     
     
@@ -376,7 +544,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > Initialize-KeyValueStores
+    PS > Initialize-KeyValueStores -SkipSession
     
     
     
@@ -396,13 +564,14 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     Removes a key-value pair from the SQLite database store. For local stores,
-    performs a hard delete. For synchronized stores, marks the record as deleted and
-    triggers synchronization.
+    performs a hard delete removing the record permanently. For synchronized stores,
+    marks the record as deleted with a timestamp and triggers synchronization to
+    propagate the deletion across all synchronized instances.
     
 
 PARAMETERS
@@ -433,6 +602,48 @@ PARAMETERS
         Required?                    false
         Position?                    3
         Default value                Local
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Database path for key-value store data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -496,13 +707,14 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     Removes all entries for a specified store from the database. For local stores,
-    performs a physical delete. For synchronized stores, marks entries as deleted and
-    triggers synchronization.
+    performs a physical delete. For synchronized stores, marks entries as deleted
+    and triggers synchronization. This function supports both local and cloud-
+    synchronized stores with proper audit trail maintenance.
     
 
 PARAMETERS
@@ -523,6 +735,48 @@ PARAMETERS
         Required?                    false
         Position?                    2
         Default value                Local
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Database path for key-value store data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -564,6 +818,15 @@ OUTPUTS
     
     
     
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Remove-KeyValueStore "ConfigurationStore" "Cloud"
+    
+    
+    
+    
+    
+    
     
 RELATED LINKS 
 
@@ -577,13 +840,15 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     Provides persistent storage for key-value pairs using SQLite. Handles both
     insertion of new entries and updates to existing ones. Supports optional
-    synchronization for non-local stores.
+    synchronization for non-local stores. This function implements an upsert
+    operation that either inserts new key-value pairs or updates existing ones
+    based on the combination of synchronization key, store name, and key name.
     
 
 PARAMETERS
@@ -624,6 +889,48 @@ PARAMETERS
         Required?                    false
         Position?                    4
         Default value                Local
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -DatabasePath <String>
+        Database path for key-value store data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
         Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
@@ -688,7 +995,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Sync-KeyValueStore [[-SynchronizationKey] <String>] [<CommonParameters>]
+    Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -709,6 +1016,48 @@ PARAMETERS
         Aliases                      
         Accept wildcard characters?  false
         
+    -DatabasePath <String>
+        Database path for key-value store data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -721,8 +1070,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > # Synchronize using default local scope
-    Sync-KeyValueStore
+    PS > Sync-KeyValueStore
     
     
     
@@ -731,8 +1079,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > # Synchronize specific scope
-    Sync-KeyValueStore -SynchronizationKey "UserSettings"
+    PS > Sync-KeyValueStore -SynchronizationKey "UserSettings"
     
     
     
@@ -755,7 +1102,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [<CommonParameters>]
+    Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -785,6 +1132,48 @@ PARAMETERS
         Aliases                      
         Accept wildcard characters?  false
         
+    -PreferencesDatabasePath <String>
+        Database path for preference data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -797,8 +1186,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > # Retrieve theme preference with full parameter names
-    Get-GenXdevPreference -Name "Theme" -DefaultValue "Dark"
+    PS > Get-GenXdevPreference -Name "Theme" -DefaultValue "Dark"
     
     
     
@@ -807,8 +1195,7 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > # Using alias and positional parameters
-    getPreference "Theme" "Dark"
+    PS > getPreference "Theme" "Dark"
     
     
     
@@ -824,23 +1211,71 @@ NAME
     Get-GenXdevPreferenceNames
     
 SYNOPSIS
-    Gets all preference names from both local and default stores.
+    Gets all preference names from session storage and database stores.
     
     
 SYNTAX
-    Get-GenXdevPreferenceNames [<CommonParameters>]
+    Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>]
     
     
 DESCRIPTION
-    Retrieves a unique list of preference names by combining keys from both the local
-    and default preference stores. The function merges the keys from both stores,
-    removes duplicates, sorts them alphabetically, and returns the combined list.
+    Retrieves a unique list of preference names by combining keys from session
+    storage (global variables) and both the local and default preference stores.
+    The function respects session management parameters to control which sources
+    are queried.
+    
+    The function first checks session storage (unless SkipSession is specified),
+    then falls back to database stores (unless SessionOnly is specified). It
+    merges all keys, removes duplicates, sorts them alphabetically, and returns
+    the combined list.
     
     This function is useful when you need to see all available preference settings,
-    regardless of whether they are stored in the local or default configuration.
+    regardless of whether they are stored in session or persistent storage.
     
 
 PARAMETERS
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -PreferencesDatabasePath <String>
+        Database path for preference data files.
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
     <CommonParameters>
         This cmdlet supports the common parameters: Verbose, Debug,
         ErrorAction, ErrorVariable, WarningAction, WarningVariable,
@@ -853,9 +1288,9 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > Get-GenXdevPreferenceNames
-    Returns: A sorted array of unique preference names from both local and default
-    stores.
+    PS > Get-GenXdevPreferenceNames -PreferencesDatabasePath "C:\Data\prefs.db"
+    Returns: A sorted array of unique preference names from session storage and
+    both local and default stores using the specified database path.
     
     
     
@@ -864,10 +1299,126 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > getPreferenceNames
-    Same as above, using the alias.
+    PS > getPreferenceNames -SessionOnly
+    Returns only preference names from session storage, ignoring database stores.
     
     
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > getPreferenceNames -SkipSession
+    Returns only preference names from database stores, ignoring session storage.
+    
+    
+    
+    
+    
+    
+    
+RELATED LINKS 
+
+<br/><hr/><hr/><br/>
+ 
+NAME
+    Get-GenXdevPreferencesDatabasePath
+    
+SYNOPSIS
+    Gets the configured database path for preference data files used in GenXdev.Data operations.
+    
+    
+SYNTAX
+    Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then falls back to a JSON configuration file, and finally uses system defaults.
+    
+
+PARAMETERS
+    -PreferencesDatabasePath <String>
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        When specified, clears the session database path setting (Global variable) before retrieving the configuration.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Get-GenXdevPreferencesDatabasePath
+    
+    Gets the currently configured database path from Global variables or preferences.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Get-GenXdevPreferencesDatabasePath -SkipSession
+    
+    Gets the configured database path only from the JSON configuration file, ignoring any session setting.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > Get-GenXdevPreferencesDatabasePath -ClearSession
+    
+    Clears the session database path setting and then gets the path from the JSON configuration file.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS > Get-GenXdevPreferencesDatabasePath "C:\MyPreferences.db"
+    
+    Returns the specified path after expanding the path.
     
     
     
@@ -885,14 +1436,14 @@ SYNOPSIS
     
     
 SYNTAX
-    Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
-    This function removes a preference value from both the local store and optionally
-    from the default store. It provides two parameter sets - one for local removal
-    only and another for removing from both local and default stores. The function
-    ensures proper synchronization when modifying the default store.
+    This function removes a preference value from both the local store and
+    optionally from the default store. It provides two parameter sets - one for
+    local removal only and another for removing from both local and default stores.
+    The function ensures proper synchronization when modifying the default store.
     
 
 PARAMETERS
@@ -913,6 +1464,48 @@ PARAMETERS
         
         Required?                    false
         Position?                    2
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -PreferencesDatabasePath <String>
+        Database path for preference data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
         Default value                False
         Accept pipeline input?       false
         Aliases                      
@@ -949,9 +1542,8 @@ OUTPUTS
     -------------------------- EXAMPLE 1 --------------------------
     
     PS > Remove-GenXdevPreference -Name "Theme"
-    # Removes the "Theme" preference from the local store only
     
-    
+    Removes the "Theme" preference from the local store only.
     
     
     
@@ -959,9 +1551,8 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > removePreference "Theme" -RemoveDefault
-    # Removes the "Theme" preference from both local and default stores
     
-    
+    Removes the "Theme" preference from both local and default stores.
     
     
     
@@ -979,14 +1570,15 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
     This function manages default preferences in the GenXdev preference system. It
     handles storing values, removing preferences when values are empty, and ensures
     changes are synchronized across the system. The function supports null values by
-    removing the preference entirely in such cases.
+    removing the preference entirely in such cases. When a value is provided, it is
+    stored in the key-value store and synchronized across all consumers.
     
 
 PARAMETERS
@@ -1009,6 +1601,48 @@ PARAMETERS
         Position?                    2
         Default value                
         Accept pipeline input?       true (ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -PreferencesDatabasePath <String>
+        Database path for preference data files.
+        
+        Required?                    false
+        Position?                    3
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
         
@@ -1043,7 +1677,7 @@ OUTPUTS
     -------------------------- EXAMPLE 1 --------------------------
     
     PS > Set-GenXdevDefaultPreference -Name "Theme" -Value "Dark"
-    # Sets the default theme preference to "Dark"
+    Sets the default theme preference to "Dark"
     
     
     
@@ -1053,7 +1687,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > setPreferenceDefault "EmailNotifications" "Disabled"
-    # Uses the alias to disable email notifications in defaults
+    Uses the alias to disable email notifications in defaults
     
     
     
@@ -1073,7 +1707,7 @@ SYNOPSIS
     
     
 SYNTAX
-    Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-WhatIf] [-Confirm] [<CommonParameters>]
+    Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>]
     
     
 DESCRIPTION
@@ -1102,6 +1736,48 @@ PARAMETERS
         Position?                    2
         Default value                
         Accept pipeline input?       true (ByPropertyName)
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        Use alternative settings stored in session for Data preferences like Language,
+        Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        Clear the session setting (Global variable) before retrieving.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -PreferencesDatabasePath <String>
+        Database path for preference data files.
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
         Aliases                      
         Accept wildcard characters?  false
         
@@ -1158,6 +1834,140 @@ RELATED LINKS
 
 <br/><hr/><hr/><br/>
  
+NAME
+    Set-GenXdevPreferencesDatabasePath
+    
+SYNOPSIS
+    Sets the database path for preferences used in GenXdev.Data operations.
+    
+    
+SYNTAX
+    Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>]
+    
+    
+DESCRIPTION
+    This function configures the global database path used by the GenXdev.Data
+    module for various preference storage and data operations. Settings can be
+    stored persistently in a JSON file (default), only in the current session
+    (using -SessionOnly), or cleared from the session (using -ClearSession).
+    
+
+PARAMETERS
+    -PreferencesDatabasePath <String>
+        A database path where preference data files are located. This path will be used
+        by GenXdev.Data functions for preference storage and processing operations.
+        
+        Required?                    false
+        Position?                    1
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SkipSession [<SwitchParameter>]
+        Dont use alternative settings stored in session for Data preferences like
+        Language, Database paths, etc.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -SessionOnly [<SwitchParameter>]
+        When specified, stores the setting only in the current session (Global
+        variable) without persisting to preferences. Setting will be lost when the
+        session ends.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -ClearSession [<SwitchParameter>]
+        When specified, clears only the session setting (Global variable) without
+        affecting persistent preferences.
+        
+        Required?                    false
+        Position?                    named
+        Default value                False
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -WhatIf [<SwitchParameter>]
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    -Confirm [<SwitchParameter>]
+        
+        Required?                    false
+        Position?                    named
+        Default value                
+        Accept pipeline input?       false
+        Aliases                      
+        Accept wildcard characters?  false
+        
+    <CommonParameters>
+        This cmdlet supports the common parameters: Verbose, Debug,
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see
+        about_CommonParameters (https://go.microsoft.com/fwlink/?LinkID=113216). 
+    
+INPUTS
+    
+OUTPUTS
+    
+    -------------------------- EXAMPLE 1 --------------------------
+    
+    PS > Set-GenXdevPreferencesDatabasePath -PreferencesDatabasePath "C:\Data\Preferences.db"
+    
+    Sets the database path persistently in a JSON file.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 2 --------------------------
+    
+    PS > Set-GenXdevPreferencesDatabasePath "C:\MyPreferences.db"
+    
+    Sets the database path persistently in a JSON file using positional parameter.
+    
+    
+    
+    
+    -------------------------- EXAMPLE 3 --------------------------
+    
+    PS > Set-GenXdevPreferencesDatabasePath -DatabasePath "C:\TempPreferences.db" -SessionOnly
+    
+    Sets the database path only for the current session (Global variable).
+    
+    
+    
+    
+    -------------------------- EXAMPLE 4 --------------------------
+    
+    PS > Set-GenXdevPreferencesDatabasePath -ClearSession
+    
+    Clears the session database path setting without affecting persistent
+    preferences.
+    
+    
+    
+    
+    
+RELATED LINKS 
+
+<br/><hr/><hr/><br/>
+ 
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
@@ -1194,6 +2004,7 @@ OUTPUTS
     
     PS > EnsureSQLiteStudioInstalled
     Checks and ensures SQLiteStudio is installed and accessible.
+            ##############################################################################
     
     
     
@@ -1270,6 +2081,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteSchema -ConnectionString "Data Source=C:\Databases\inventory.db;Version=3;"
+            ##############################################################################
     
     
     
@@ -1383,6 +2195,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
+            ##############################################################################
     
     
     
@@ -1481,6 +2294,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTableData "C:\data\users.db" "Employees"
+            ##############################################################################
     
     
     
@@ -1549,7 +2363,7 @@ OUTPUTS
     -------------------------- EXAMPLE 1 --------------------------
     
     PS > Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
-    # Returns all table names from the specified database file
+            ###############################################################################Returns all table names from the specified database file
     
     
     
@@ -1559,7 +2373,8 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
-    # Returns all table names using a custom connection string
+            ###############################################################################Returns all table names using a custom connection string
+            ##############################################################################
     
     
     
@@ -1649,6 +2464,7 @@ OUTPUTS
     
     PS > Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
         -TableName "Products"
+            ##############################################################################
     
     
     
@@ -1753,6 +2569,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > $transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
+            ##############################################################################
     
     
     
@@ -1864,6 +2681,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteViewColumnData "C:\MyDB.sqlite" "CustomersView" "Email"
+            ##############################################################################
     
     
     
@@ -1962,6 +2780,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
+            ##############################################################################
     
     
     
@@ -2040,6 +2859,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
+            ##############################################################################
     
     
     
@@ -2121,7 +2941,7 @@ OUTPUTS
     PS > Get-SQLiteViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
                         -ViewName "CustomerOrders"
     
-    
+    ##############################################################################
     
     
     
@@ -2245,18 +3065,19 @@ OUTPUTS
     
     -------------------------- EXAMPLE 3 --------------------------
     
-    PS > # Batch operations using external transaction
+    PS > ###############################################################################Batch operations using external transaction
     $tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
     try {
-        Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
-        Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
-        $tx.Commit()
+    Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
+    Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
+    $tx.Commit()
     } catch {
-        $tx.Rollback()
-        throw
+    $tx.Rollback()
+    throw
     } finally {
-        $tx.Connection.Close()
+    $tx.Connection.Close()
     }
+    ##############################################################################
     
     
     
@@ -2372,6 +3193,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > "SELECT * FROM Users" | isql -DatabaseFilePath "C:\data\users.sqlite"
+            ##############################################################################
     
     
     
@@ -2452,6 +3274,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > nsqldb "C:\Databases\MyNewDb.sqlite"
+            ##############################################################################
     
     
     
@@ -2574,10 +3397,10 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > # Execute query with explicit connection string
+    PS > ###############################################################################Execute query with explicit connection string
     Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
-        -Query "SELECT * FROM Users WHERE Id = @Id" `
-        -SqlParameters @{"Id"=1}
+    -Query "SELECT * FROM Users WHERE Id = @Id" `
+    -SqlParameters @{"Id"=1}
     
     
     
@@ -2586,9 +3409,10 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > # Execute query using host and credentials
+    PS > ###############################################################################Execute query using host and credentials
     isq -HostName "dbserver" -User "sa" -Password "pwd" `
-        -q "SELECT * FROM Users" -data @{"Id"=1}
+    -q "SELECT * FROM Users" -data @{"Id"=1}
+    ##############################################################################
     
     
     

@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Executes SQLite database queries with support for parameters and transactions.
@@ -38,7 +38,7 @@ Invoke-SQLiteStudio `
 
 .EXAMPLE
 "SELECT * FROM Users" | isql -DatabaseFilePath "C:\data\users.sqlite"
-#>
+        ###############################################################################>
 function Invoke-SQLiteStudio {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -110,4 +110,4 @@ process {
     end {
     }
 }
-################################################################################
+        ###############################################################################

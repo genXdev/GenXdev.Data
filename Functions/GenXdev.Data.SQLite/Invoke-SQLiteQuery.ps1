@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Executes one or more SQL queries against a SQLite database with transaction support.
@@ -39,7 +39,7 @@ Invoke-SQLiteQuery -DatabaseFilePath "C:\data.db" -Queries "SELECT * FROM Users"
 "SELECT * FROM Users" | isql "C:\data.db" @{"UserId"=1}
 
 .EXAMPLE
-# Batch operations using external transaction
+        ###############################################################################Batch operations using external transaction
 $tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
 try {
     Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
@@ -51,7 +51,7 @@ try {
 } finally {
     $tx.Connection.Close()
 }
-#>
+        ###############################################################################>
 function Invoke-SQLiteQuery {
 
     [CmdletBinding()]
@@ -226,4 +226,4 @@ function Invoke-SQLiteQuery {
     end {
     }
 }
-################################################################################
+        ###############################################################################

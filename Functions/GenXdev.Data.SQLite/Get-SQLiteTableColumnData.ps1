@@ -1,4 +1,4 @@
-################################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a specific column in a SQLite database table.
@@ -36,7 +36,7 @@ Get-SQLiteTableColumnData -DatabaseFilePath "C:\MyDb.sqlite" `
 
 .EXAMPLE
 Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
-#>
+        ###############################################################################>
 function Get-SQLiteTableColumnData {
 
     [CmdletBinding(DefaultParameterSetName = "Default")]
@@ -119,4 +119,4 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Column data retrieval completed successfully"
     }
 }
-################################################################################
+        ###############################################################################

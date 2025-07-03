@@ -11,10 +11,10 @@ Pester\AfterAll {
 
 Pester\Describe "Get-KeyValueStoreNames" {
     Pester\It "Should pass PSScriptAnalyzer rules" {
-        # get the script path for analysis
+# get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.ps1"
 
-        # run analyzer with explicit settings
+# run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
@@ -41,7 +41,7 @@ $message
             GenXdev.Data\Remove-KeyValueStore -StoreName "Store1"
             GenXdev.Data\Remove-KeyValueStore -StoreName "Store2"
 
-            # Setup test stores
+    # Setup test stores
             GenXdev.Data\Set-ValueByKeyInStore -StoreName "Store1" -KeyName "Key1" -Value "Value1"
             GenXdev.Data\Set-ValueByKeyInStore -StoreName "Store2" -KeyName "Key2" -Value "Value2"
         }
