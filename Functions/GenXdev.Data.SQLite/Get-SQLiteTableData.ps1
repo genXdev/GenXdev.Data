@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a SQLite database table with optional record limiting.
@@ -28,10 +28,10 @@ Get-SQLiteTableData -DatabaseFilePath "C:\data\users.db" -TableName "Employees" 
 
 .EXAMPLE
 Get-SQLiteTableData "C:\data\users.db" "Employees"
-        ###############################################################################>
+#>
 function Get-SQLiteTableData {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###########################################################################
         [Parameter(
@@ -51,7 +51,7 @@ function Get-SQLiteTableData {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###########################################################################
@@ -80,7 +80,7 @@ function Get-SQLiteTableData {
     }
 
 
-process {
+    process {
 
         # construct query based on whether we want all records or a limited set
         $query = if ($Count -eq -1) {
@@ -93,10 +93,10 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # add the constructed query to the parameter set for Invoke-SQLiteQuery
-        $PSBoundParameters["Queries"] = $query
+        $PSBoundParameters['Queries'] = $query
 
         # execute the query and return results through the SQLite provider
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
@@ -104,4 +104,3 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed querying table: $TableName"
     }
 }
-        ###############################################################################

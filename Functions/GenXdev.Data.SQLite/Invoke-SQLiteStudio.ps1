@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Executes SQLite database queries with support for parameters and transactions.
@@ -38,10 +38,10 @@ Invoke-SQLiteStudio `
 
 .EXAMPLE
 "SELECT * FROM Users" | isql -DatabaseFilePath "C:\data\users.sqlite"
-        ###############################################################################>
+#>
 function Invoke-SQLiteStudio {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###########################################################################
         [Parameter(
@@ -60,11 +60,11 @@ function Invoke-SQLiteStudio {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###########################################################################
-        [Alias("q", "Value", "Name", "Text", "Query")]
+        [Alias('q', 'Name', 'Text', 'Query')]
         [Parameter(
             Mandatory = $true,
             Position = 1,
@@ -76,7 +76,7 @@ function Invoke-SQLiteStudio {
         [string[]]$Queries,
 
         ###########################################################################
-        [Alias("parameters")]
+        [Alias('parameters')]
         [Parameter(
             Mandatory = $false,
             Position = 2,
@@ -97,11 +97,11 @@ function Invoke-SQLiteStudio {
 
     begin {
         # log initialization of sqlite connection handling
-        Microsoft.PowerShell.Utility\Write-Verbose "Initializing SQLite query execution environment"
+        Microsoft.PowerShell.Utility\Write-Verbose 'Initializing SQLite query execution environment'
     }
 
 
-process {
+    process {
 
         # log the start of query processing
         Microsoft.PowerShell.Utility\Write-Verbose "Processing $($Queries.Count) queries with isolation level: $IsolationLevel"
@@ -110,4 +110,3 @@ process {
     end {
     }
 }
-        ###############################################################################

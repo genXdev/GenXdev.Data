@@ -34,10 +34,10 @@ Get-SQLiteViewColumnData -DatabaseFilePath "C:\MyDB.sqlite" `
 
 .EXAMPLE
 Get-SQLiteViewColumnData "C:\MyDB.sqlite" "CustomersView" "Email"
-        ###############################################################################>
+#>
 function Get-SQLiteViewColumnData {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###############################################################################
         [Parameter(
@@ -56,7 +56,7 @@ function Get-SQLiteViewColumnData {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###############################################################################
@@ -91,17 +91,17 @@ function Get-SQLiteViewColumnData {
     }
 
 
-process {
+    process {
 
         # determine if we need to limit the results or get all records
         if ($Count -eq -1) {
             # construct query to get all records
-            $PSBoundParameters["Queries"] = "SELECT $ColumnName FROM $ViewName"
+            $PSBoundParameters['Queries'] = "SELECT $ColumnName FROM $ViewName"
             Microsoft.PowerShell.Utility\Write-Verbose "Querying all records from view '$ViewName'"
         }
         else {
             # construct query with LIMIT clause
-            $PSBoundParameters["Queries"] = "SELECT $ColumnName FROM $ViewName LIMIT $Count"
+            $PSBoundParameters['Queries'] = "SELECT $ColumnName FROM $ViewName LIMIT $Count"
             Microsoft.PowerShell.Utility\Write-Verbose "Querying $Count records from view '$ViewName'"
         }
 
@@ -115,4 +115,3 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed Get-SQLiteViewColumnData for view '$ViewName'"
     }
 }
-        ###############################################################################

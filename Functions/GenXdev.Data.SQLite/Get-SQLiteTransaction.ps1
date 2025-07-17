@@ -36,11 +36,11 @@ try {
 
 .EXAMPLE
 $transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
-        ###############################################################################>
+#>
 function Get-SQLiteTransaction {
 
-    [CmdletBinding(DefaultParameterSetName = "DatabaseFilePath")]
-    [Alias("getsqltx", "newsqltx")]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseFilePath')]
+    [Alias('getsqltx', 'newsqltx')]
     param (
         ###########################################################################
         [Parameter(
@@ -59,7 +59,7 @@ function Get-SQLiteTransaction {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###########################################################################
@@ -82,14 +82,14 @@ function Get-SQLiteTransaction {
         # initialize connection string from file path if provided
         if ($PSCmdlet.ParameterSetName -eq 'DatabaseFilePath') {
             $expandedPath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath
-              # create database if it doesn't exist and CreateDatabaseIfNotExists is true
+            # create database if it doesn't exist and CreateDatabaseIfNotExists is true
             if ($CreateDatabaseIfNotExists -and -not (Microsoft.PowerShell.Management\Test-Path $expandedPath)) {
                 Microsoft.PowerShell.Utility\Write-Verbose "Creating database file: $expandedPath"
 
                 # use Copy-IdenticalParamValues to pass compatible parameters to New-SQLiteDatabase
                 $params = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\New-SQLiteDatabase" `
+                    -FunctionName 'GenXdev.Data\New-SQLiteDatabase' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable -Scope Local -ErrorAction SilentlyContinue)
 
                 GenXdev.Data\New-SQLiteDatabase @params
@@ -108,7 +108,7 @@ function Get-SQLiteTransaction {
             # establish database connection
             $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
             $connection.Open()
-            Microsoft.PowerShell.Utility\Write-Verbose "SQLite connection opened successfully"
+            Microsoft.PowerShell.Utility\Write-Verbose 'SQLite connection opened successfully'
 
             # begin transaction with specified isolation
             $transaction = $connection.BeginTransaction($IsolationLevel)
@@ -128,4 +128,3 @@ function Get-SQLiteTransaction {
     end {
     }
 }
-        ###############################################################################

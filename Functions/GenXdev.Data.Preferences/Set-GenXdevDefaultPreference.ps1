@@ -18,6 +18,10 @@ parameter is required and cannot be null or empty.
 Specifies the value to store for the preference. Can be null or empty, which
 will result in removing the preference from the store.
 
+.PARAMETER PreferencesDatabasePath
+Database path for preference data files. This parameter is optional and can
+be used to override the default database path.
+
 .PARAMETER SessionOnly
 Use alternative settings stored in session for Data preferences like Language,
 Database paths, etc.
@@ -25,79 +29,73 @@ Database paths, etc.
 .PARAMETER ClearSession
 Clear the session setting (Global variable) before retrieving.
 
-.PARAMETER PreferencesDatabasePath
-Database path for preference data files.
-
 .PARAMETER SkipSession
 Dont use alternative settings stored in session for Data preferences like
 Language, Database paths, etc.
 
 .EXAMPLE
 Set-GenXdevDefaultPreference -Name "Theme" -Value "Dark"
-Sets the default theme preference to "Dark"
+Sets the default theme preference to "Dark".
 
 .EXAMPLE
 setPreferenceDefault "EmailNotifications" "Disabled"
-Uses the alias to disable email notifications in defaults
+Uses the alias to disable email notifications in defaults.
 #>
 ###############################################################################
 function Set-GenXdevDefaultPreference {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
-    [Alias("setPreferenceDefault")]
+    [Alias('setPreferenceDefault')]
+
     param(
         #######################################################################
         [Parameter(
             Mandatory = $true,
             Position = 0,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The name of the preference to set in defaults"
+            HelpMessage = 'The name of the preference to set in defaults'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("PreferenceName")]
+        [Alias('PreferenceName')]
         [string]$Name,
         #######################################################################
         [Parameter(
             Mandatory = $false,
             Position = 1,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The value to store for the preference"
+            HelpMessage = 'The value to store for the preference'
         )]
         [AllowNull()]
         [AllowEmptyString()]
-        [Alias("PreferenceValue")]
+        [Alias('PreferenceValue')]
         [string]$Value,
         #######################################################################
         [Parameter(
             Mandatory = $false,
             Position = 2,
-            HelpMessage = ("Database path for preference data files")
+            HelpMessage = 'Database path for preference data files'
         )]
+        [Alias('DatabasePath')]
         [string]$PreferencesDatabasePath,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for " +
-                          "Data preferences like Language, Database paths, etc")
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch]$SessionOnly,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) " +
-                          "before retrieving")
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch]$ClearSession,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session " +
-                          "for Data preferences like Language, Database " +
-                          "paths, etc")
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
-        #######################################################################
     )
 
     begin {
@@ -105,7 +103,7 @@ function Set-GenXdevDefaultPreference {
         # copy identical parameter values to prepare for database path lookup
         $params = GenXdev.Helpers\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
-            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
+            -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                 -Scope Local `
                 -ErrorAction SilentlyContinue)
@@ -133,12 +131,12 @@ function Set-GenXdevDefaultPreference {
                 "Removing default preference '$Name' as value is empty"
 
             # check if we should proceed with the removal operation
-            if ($PSCmdlet.ShouldProcess($Name, "Remove default preference")) {
+            if ($PSCmdlet.ShouldProcess($Name, 'Remove default preference')) {
 
                 # copy identical parameter values for Remove-GenXdevPreference
                 $removeParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Remove-GenXdevPreference" `
+                    -FunctionName 'GenXdev.Data\Remove-GenXdevPreference' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                         -Scope Local `
                         -ErrorAction SilentlyContinue)
@@ -160,21 +158,21 @@ function Set-GenXdevDefaultPreference {
             "Setting default preference '$Name' to: $Value"
 
         # check if we should proceed with the setting operation
-        if ($PSCmdlet.ShouldProcess($Name, "Set default preference")) {
+        if ($PSCmdlet.ShouldProcess($Name, 'Set default preference')) {
 
             # copy identical parameter values for Set-ValueByKeyInStore
             $setParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Set-ValueByKeyInStore" `
+                -FunctionName 'GenXdev.Data\Set-ValueByKeyInStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for the set operation
-            $setParams.StoreName = "GenXdev.PowerShell.Preferences"
+            $setParams.StoreName = 'GenXdev.PowerShell.Preferences'
             $setParams.KeyName = $Name
             $setParams.Value = $Value
-            $setParams.SynchronizationKey = "Defaults"
+            $setParams.SynchronizationKey = 'Defaults'
             $setParams.DatabasePath = $PreferencesDatabasePath
 
             # store the preference value in the key-value store
@@ -183,13 +181,13 @@ function Set-GenXdevDefaultPreference {
             # copy identical parameter values for Sync-KeyValueStore
             $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for the sync operation
-            $syncParams.SynchronizationKey = "Defaults"
+            $syncParams.SynchronizationKey = 'Defaults'
             $syncParams.DatabasePath = $PreferencesDatabasePath
 
             # synchronize the key-value store to ensure consistency
@@ -197,7 +195,7 @@ function Set-GenXdevDefaultPreference {
 
             # output verbose information about successful operation
             Microsoft.PowerShell.Utility\Write-Verbose `
-                ("Successfully stored and synchronized preference '$Name'")
+            ("Successfully stored and synchronized preference '$Name'")
         }
     }
 

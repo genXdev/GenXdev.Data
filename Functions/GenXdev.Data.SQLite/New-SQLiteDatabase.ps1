@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Creates a new SQLite database file.
@@ -17,18 +17,18 @@ New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite"
 
 .EXAMPLE
 nsqldb "C:\Databases\MyNewDb.sqlite"
-        ###############################################################################>
+#>
 function New-SQLiteDatabase {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
-    [Alias("nsqldb")]
+    [Alias('nsqldb')]
 
     param (
         ########################################################################
         [Parameter(
             Mandatory = $true,
             Position = 0,
-            HelpMessage = "The path to the SQLite database file"
+            HelpMessage = 'The path to the SQLite database file'
         )]
         [string]$DatabaseFilePath
         ########################################################################
@@ -41,14 +41,14 @@ function New-SQLiteDatabase {
     }
 
 
-process {
+    process {
 
         # check if database file already exists
         if (-not (Microsoft.PowerShell.Management\Test-Path $DatabaseFilePath)) {
 
             # build a meaningful should process message
-            $targetObject = "SQLite database"
-            $action = "Create"
+            $targetObject = 'SQLite database'
+            $action = 'Create'
 
             # check if user wants to proceed with operation
             if ($PSCmdlet.ShouldProcess($DatabaseFilePath, "$action $targetObject")) {
@@ -80,4 +80,3 @@ $($_.Exception.Message)"
     end {
     }
 }
-        ###############################################################################

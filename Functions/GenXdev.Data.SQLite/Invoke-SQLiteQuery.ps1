@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Executes one or more SQL queries against a SQLite database with transaction support.
@@ -39,7 +39,7 @@ Invoke-SQLiteQuery -DatabaseFilePath "C:\data.db" -Queries "SELECT * FROM Users"
 "SELECT * FROM Users" | isql "C:\data.db" @{"UserId"=1}
 
 .EXAMPLE
-        ###############################################################################Batch operations using external transaction
+Batch operations using external transaction
 $tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
 try {
     Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
@@ -51,7 +51,7 @@ try {
 } finally {
     $tx.Connection.Close()
 }
-        ###############################################################################>
+#>
 function Invoke-SQLiteQuery {
 
     [CmdletBinding()]
@@ -72,7 +72,7 @@ function Invoke-SQLiteQuery {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###########################################################################
@@ -95,7 +95,7 @@ function Invoke-SQLiteQuery {
         [string[]]$Queries,
 
         ###########################################################################
-        [Alias("data", "parameters", "args")]
+        [Alias('data', 'parameters', 'args')]
         [parameter(
             Position = 4,
             ValueFromRemainingArguments,
@@ -119,7 +119,7 @@ function Invoke-SQLiteQuery {
             $connection = $Transaction.Connection
             $transaction = $Transaction
             $isExternalTransaction = $true
-            Microsoft.PowerShell.Utility\Write-Verbose "Using external transaction"
+            Microsoft.PowerShell.Utility\Write-Verbose 'Using external transaction'
         } elseif (-not [String]::IsNullOrWhiteSpace($ConnectionString)) {
             $connString = $ConnectionString
             $isExternalTransaction = $false
@@ -129,7 +129,7 @@ function Invoke-SQLiteQuery {
             $isExternalTransaction = $false
             Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with database file: $DatabaseFilePath"
         } else {
-            throw "You must provide either a Transaction, ConnectionString, or DatabaseFilePath parameter."
+            throw 'You must provide either a Transaction, ConnectionString, or DatabaseFilePath parameter.'
         }
     }
 
@@ -174,7 +174,7 @@ function Invoke-SQLiteQuery {
                     if ($null -ne $data) {
                         $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
                             $null = $command.Parameters.AddWithValue(
-                                "@" + $PSItem.Key,
+                                '@' + $PSItem.Key,
                                 $PSItem.Value
                             )
                         }
@@ -197,14 +197,14 @@ function Invoke-SQLiteQuery {
                 # only commit if we created the transaction internally
                 if (-not $isExternalTransaction) {
                     $transaction.Commit()
-                    Microsoft.PowerShell.Utility\Write-Verbose "Internal transaction committed successfully"
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal transaction committed successfully'
                 }
             }
             catch {
                 # only rollback if we created the transaction internally
                 if (-not $isExternalTransaction) {
                     $transaction.Rollback()
-                    Microsoft.PowerShell.Utility\Write-Verbose "Internal transaction rolled back due to error"
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal transaction rolled back due to error'
                 }
                 throw $_
             }
@@ -214,7 +214,7 @@ function Invoke-SQLiteQuery {
                 # only close connection if we created it internally
                 if (-not $isExternalTransaction) {
                     $connection.Close()
-                    Microsoft.PowerShell.Utility\Write-Verbose "Internal connection closed"
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal connection closed'
                 }
             }
         }
@@ -226,4 +226,3 @@ function Invoke-SQLiteQuery {
     end {
     }
 }
-        ###############################################################################

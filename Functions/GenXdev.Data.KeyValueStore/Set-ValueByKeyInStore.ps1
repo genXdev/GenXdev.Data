@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Manages key-value pairs in a SQLite database store.
@@ -47,61 +47,61 @@ setvalue ConfigStore ApiEndpoint "https://api.example.com"
 function Set-ValueByKeyInStore {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
-    [Alias("setvalue")]
+    [Alias('setvalue')]
 
     param (
         ###############################################################################
         [Parameter(
             Mandatory = $true,
             Position = 0,
-            HelpMessage = "Store name for the key-value pair"
+            HelpMessage = 'Store name for the key-value pair'
         )]
         [string]$StoreName,
         ###############################################################################
         [Parameter(
             Mandatory = $true,
             Position = 1,
-            HelpMessage = "Name of the key to set or update"
+            HelpMessage = 'Name of the key to set or update'
         )]
         [string]$KeyName,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 2,
-            HelpMessage = "Value to be stored"
+            HelpMessage = 'Value to be stored'
         )]
         [string]$Value,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 3,
-            HelpMessage = "Key to identify synchronization scope"
+            HelpMessage = 'Key to identify synchronization scope'
         )]
-        [string]$SynchronizationKey = "Local",
+        [string]$SynchronizationKey = 'Local',
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for key-value store data files"
+            HelpMessage = 'Database path for key-value store data files'
         )]
         [string]$DatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch]$SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch]$ClearSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
         ###############################################################################
     )
@@ -112,8 +112,8 @@ function Set-ValueByKeyInStore {
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                "KeyValueStores.sqllite.db") `
+            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                'KeyValueStores.sqllite.db') `
                 -CreateDirectory
         }
         else {
@@ -132,17 +132,17 @@ function Set-ValueByKeyInStore {
         if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
 
             Microsoft.PowerShell.Utility\Write-Verbose (
-                "Database not found. Initializing...")
+                'Database not found. Initializing...')
 
             # copy identical parameter values for Initialize-KeyValueStores
             $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -FunctionName 'GenXdev.Data\Initialize-KeyValueStores' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
-            GenXdev.Data\Initialize-KeyValueStores @initParams
+            Initialize-KeyValueStores @initParams
         }
 
         # get current user identity for audit trail purposes
@@ -152,7 +152,7 @@ function Set-ValueByKeyInStore {
             "Setting value as user: $lastModifiedBy")
 
         # prepare sql query for upsert operation (insert or update)
-        $sqlQuery = @"
+        $sqlQuery = @'
 INSERT INTO KeyValueStore (
     synchronizationKey,
     storeName,
@@ -177,7 +177,7 @@ DO UPDATE SET
     lastModified = CURRENT_TIMESTAMP,
     lastModifiedBy = excluded.lastModifiedBy,
     deletedDate = NULL;
-"@
+'@
 
         # prepare parameters for sql query execution
         $params = @{
@@ -199,7 +199,7 @@ DO UPDATE SET
             # copy identical parameter values for Invoke-SQLiteQuery
             $queryParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Invoke-SQLiteQuery" `
+                -FunctionName 'GenXdev.Data\Invoke-SQLiteQuery' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
@@ -210,10 +210,10 @@ DO UPDATE SET
             $queryParams.SqlParameters = $params
 
             # execute the upsert operation against the database
-            GenXdev.Data\Invoke-SQLiteQuery @queryParams
+            Invoke-SQLiteQuery @queryParams
 
             # handle synchronization for non-local stores
-            if ($SynchronizationKey -ne "Local") {
+            if ($SynchronizationKey -ne 'Local') {
 
                 Microsoft.PowerShell.Utility\Write-Verbose (
                     "Synchronizing non-local store: $SynchronizationKey")
@@ -221,7 +221,7 @@ DO UPDATE SET
                 # copy identical parameter values for Sync-KeyValueStore
                 $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                    -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                         -Scope Local `
                         -ErrorAction SilentlyContinue)
@@ -230,7 +230,7 @@ DO UPDATE SET
                 $syncParams.SynchronizationKey = $SynchronizationKey
 
                 # trigger the synchronization process
-                GenXdev.Data\Sync-KeyValueStore @syncParams
+                Sync-KeyValueStore @syncParams
             }
         }
     }
@@ -238,4 +238,3 @@ DO UPDATE SET
     end {
     }
 }
-        ###############################################################################

@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves the schema information for a specified SQLite table.
@@ -26,10 +26,10 @@ Get-SQLiteTableSchema -DatabaseFilePath "C:\Databases\mydb.sqlite" `
 .EXAMPLE
 Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
     -TableName "Products"
-        ###############################################################################>
+#>
 function Get-SQLiteTableSchema {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###########################################################################
         [Parameter(
@@ -49,7 +49,7 @@ function Get-SQLiteTableSchema {
             HelpMessage = 'The path to the SQLite database file'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ###########################################################################
@@ -69,19 +69,18 @@ function Get-SQLiteTableSchema {
     }
 
 
-process {
+    process {
 
         # construct the PRAGMA query to get detailed table column information
-        $PSBoundParameters["Queries"] = "PRAGMA table_info($TableName)"
+        $PSBoundParameters['Queries'] = "PRAGMA table_info($TableName)"
 
         # log the execution of the schema query
-        Microsoft.PowerShell.Utility\Write-Verbose "Executing schema query against SQLite database"
+        Microsoft.PowerShell.Utility\Write-Verbose 'Executing schema query against SQLite database'
 
         # execute the query and return results using existing Invoke-SQLiteQuery
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
     }
 }
-        ###############################################################################

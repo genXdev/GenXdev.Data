@@ -36,10 +36,10 @@ Get-SQLiteTableColumnData -DatabaseFilePath "C:\MyDb.sqlite" `
 
 .EXAMPLE
 Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
-        ###############################################################################>
+#>
 function Get-SQLiteTableColumnData {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###############################################################################
         [Parameter(
@@ -95,7 +95,7 @@ function Get-SQLiteTableColumnData {
     }
 
 
-process {
+    process {
 
         # construct the appropriate SQL query based on whether a limit is needed
         $query = if ($Count -eq -1) {
@@ -109,14 +109,13 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Executing SQL query: $query"
 
         # prepare parameters for Invoke-SQLiteQuery and execute the query
-        $PSBoundParameters["Queries"] = $query
+        $PSBoundParameters['Queries'] = $query
         GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
 
         # log completion of the operation
-        Microsoft.PowerShell.Utility\Write-Verbose "Column data retrieval completed successfully"
+        Microsoft.PowerShell.Utility\Write-Verbose 'Column data retrieval completed successfully'
     }
 }
-        ###############################################################################

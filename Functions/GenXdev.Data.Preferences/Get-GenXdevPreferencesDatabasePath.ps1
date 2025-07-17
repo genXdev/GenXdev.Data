@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
 Gets the configured database path for preference data files used in GenXdev.Data operations.
 
@@ -43,41 +43,40 @@ function Get-GenXdevPreferencesDatabasePath {
         [Parameter(
             Mandatory = $false,
             Position = 0,
-            HelpMessage = "Database path for preference data files"
+            HelpMessage = 'Database path for preference data files'
         )]
-        [Alias("DatabasePath")]
+        [Alias('DatabasePath')]
         [string] $PreferencesDatabasePath,
         ###############################################################################
         # Use alternative settings stored in session for Data preferences like Language, Database paths, etc
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch] $SessionOnly,
         ###############################################################################
         # clear the session setting (Global variable) before retrieving
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch] $ClearSession,
         ###############################################################################
         # Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
     )
-    begin
-    {
+    begin {
 
         # handle clearing session variables first if requested
         if ($ClearSession) {
             $Global:PreferencesDatabasePath = $null
             Microsoft.PowerShell.Utility\Write-Verbose (
-                "Cleared session database path setting: PreferencesDatabasePath"
+                'Cleared session database path setting: PreferencesDatabasePath'
             )
         }
 
@@ -136,8 +135,7 @@ function Get-GenXdevPreferencesDatabasePath {
 
     }
 
-    end
-    {
+    end {
         Microsoft.PowerShell.Utility\Write-Verbose `
             "Using provided database path: $resolvedDatabasePath"
 

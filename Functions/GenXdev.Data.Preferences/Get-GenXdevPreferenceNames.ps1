@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Gets all preference names from session storage and database stores.
@@ -48,37 +48,38 @@ Returns only preference names from database stores, ignoring session storage.
 function Get-GenXdevPreferenceNames {
 
     [CmdletBinding()]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
-    [Alias("getPreferenceNames")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
+    [Alias('getPreferenceNames')]
 
     param(
-        ###############################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for Data " +
-                          "preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch] $SessionOnly,
-        ###############################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) before " +
-                          "retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) before ' +
+                'retrieving')
         )]
         [switch] $ClearSession,
-        ###############################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for preference data files"
+            HelpMessage = 'Database path for preference data files'
         )]
+        [Alias('DatabasePath')]
         [string] $PreferencesDatabasePath,
-        ###############################################################################
+        #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session for " +
-                          "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
     )
 
@@ -87,14 +88,14 @@ function Get-GenXdevPreferenceNames {
         # copy identical parameter values to prepare for database path lookup
         $params = GenXdev.Helpers\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
-            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
+            -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                 -Scope Local `
                 -ErrorAction SilentlyContinue)
 
         # resolve the actual database path using the helper function
         $PreferencesDatabasePath = `
-            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
+            Get-GenXdevPreferencesDatabasePath @params
 
         # output verbose information about the database path being used
         Microsoft.PowerShell.Utility\Write-Verbose `
@@ -102,13 +103,13 @@ function Get-GenXdevPreferenceNames {
 
         # log the start of the operation
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Starting retrieval of preference names from all stores"
+            'Starting retrieval of preference names from all stores'
 
         # handle clearing session variables first if requested
         if ($ClearSession) {
             # get all current GenXdev preference variables to clear them
             $prefVars = Microsoft.PowerShell.Utility\Get-Variable `
-                -Name "GenXdevPreference_*" `
+                -Name 'GenXdevPreference_*' `
                 -Scope Global `
                 -ErrorAction SilentlyContinue
 
@@ -134,11 +135,11 @@ function Get-GenXdevPreferenceNames {
         # check session storage first (unless SkipSession is specified)
         if (-not $SkipSession) {
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Checking session variables for preference names"
+                'Checking session variables for preference names'
 
             # get all GenXdev preference variables from global scope
             $sessionVars = Microsoft.PowerShell.Utility\Get-Variable `
-                -Name "GenXdevPreference_*" `
+                -Name 'GenXdevPreference_*' `
                 -Scope Global `
                 -ErrorAction SilentlyContinue
 
@@ -160,27 +161,27 @@ function Get-GenXdevPreferenceNames {
         # fallback to persistent preferences (unless SessionOnly is specified)
         if (-not $SessionOnly) {
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Retrieving preference names from database stores"
+                'Retrieving preference names from database stores'
 
             # retrieve all preference keys from the local preferences store
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Retrieving keys from local preferences store"
+                'Retrieving keys from local preferences store'
 
             # copy identical parameter values for Get-StoreKeys (local)
             $getLocalKeysParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Get-StoreKeys" `
+                -FunctionName 'GenXdev.Data\Get-StoreKeys' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for local store keys retrieval
-            $getLocalKeysParams.StoreName = "GenXdev.PowerShell.Preferences"
-            $getLocalKeysParams.SynchronizationKey = "Local"
+            $getLocalKeysParams.StoreName = 'GenXdev.PowerShell.Preferences'
+            $getLocalKeysParams.SynchronizationKey = 'Local'
             $getLocalKeysParams.DatabasePath = $PreferencesDatabasePath
 
             # get keys from local store
-            $localKeys = GenXdev.Data\Get-StoreKeys @getLocalKeysParams
+            $localKeys = Get-StoreKeys @getLocalKeysParams
 
             if ($localKeys.Count -gt 0) {
                 $allKeys += $localKeys
@@ -188,23 +189,23 @@ function Get-GenXdevPreferenceNames {
 
             # retrieve all preference keys from the default preferences store
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Retrieving keys from default preferences store"
+                'Retrieving keys from default preferences store'
 
             # copy identical parameter values for Get-StoreKeys (defaults)
             $getDefaultKeysParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Get-StoreKeys" `
+                -FunctionName 'GenXdev.Data\Get-StoreKeys' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for defaults store keys retrieval
-            $getDefaultKeysParams.StoreName = "GenXdev.PowerShell.Preferences"
-            $getDefaultKeysParams.SynchronizationKey = "Defaults"
+            $getDefaultKeysParams.StoreName = 'GenXdev.PowerShell.Preferences'
+            $getDefaultKeysParams.SynchronizationKey = 'Defaults'
             $getDefaultKeysParams.DatabasePath = $PreferencesDatabasePath
 
             # get keys from defaults store
-            $defaultKeys = GenXdev.Data\Get-StoreKeys @getDefaultKeysParams
+            $defaultKeys = Get-StoreKeys @getDefaultKeysParams
 
             if ($defaultKeys.Count -gt 0) {
                 $allKeys += $defaultKeys
@@ -213,7 +214,7 @@ function Get-GenXdevPreferenceNames {
 
         # combine all keys, remove duplicates, and sort alphabetically
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Merging and deduplicating keys from all sources"
+            'Merging and deduplicating keys from all sources'
 
         # create unique sorted array from all key collections
         $uniqueKeys = $allKeys |

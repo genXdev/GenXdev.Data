@@ -1,4 +1,4 @@
-################################################################################
+﻿################################################################################
 <#
 .SYNOPSIS
 Retrieves a preference value from the GenXdev preferences store.
@@ -14,15 +14,15 @@ The name of the preference to retrieve from the preference stores.
 .PARAMETER DefaultValue
 The fallback value to return if the preference is not found in any store.
 
+.PARAMETER PreferencesDatabasePath
+Database path for preference data files.
+
 .PARAMETER SessionOnly
 Use alternative settings stored in session for Data preferences like Language,
 Database paths, etc.
 
 .PARAMETER ClearSession
 Clear the session setting (Global variable) before retrieving.
-
-.PARAMETER PreferencesDatabasePath
-Database path for preference data files.
 
 .PARAMETER SkipSession
 Dont use alternative settings stored in session for Data preferences like
@@ -39,7 +39,7 @@ function Get-GenXdevPreference {
     [CmdletBinding(
         DefaultParameterSetName = 'Default'
     )]
-    [Alias("getPreference")]
+    [Alias('getPreference')]
     param(
         ###############################################################################
         [Parameter(
@@ -47,84 +47,74 @@ function Get-GenXdevPreference {
             Position = 0,
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The name of the preference to retrieve"
+            HelpMessage = 'The name of the preference to retrieve'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("PreferenceName")]
+        [Alias('PreferenceName')]
         [string] $Name,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 1,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The default value if preference is not found"
+            HelpMessage = 'The default value if preference is not found'
         )]
         [AllowNull()]
         [AllowEmptyString()]
-        [Alias("DefaultPreference")]
+        [Alias('DefaultPreference')]
         [string] $DefaultValue,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Database path for preference data files")
+            HelpMessage = 'Database path for preference data files'
         )]
+        [Alias('DatabasePath')]
         [string] $PreferencesDatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for Data " +
-                "preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch] $SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) before " +
-                "retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) before ' +
+                'retrieving')
         )]
         [switch] $ClearSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session for " +
-                "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
         ###############################################################################
     )
 
     begin {
 
-        # copy identical parameter values to prepare for database path lookup
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
-            -BoundParameters $PSBoundParameters `
-            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
-            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                -Scope Local `
-                -ErrorAction SilentlyContinue)
-
-        # resolve the actual database path using the helper function
-        $preferencesDatabasePath = `
-            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
-
         # create global variable name for this preference
         $globalVariableName = "GenXdevPreference_$Name"
 
-        # output verbose information about the database path being used
-        Microsoft.PowerShell.Utility\Write-Verbose `
-            "Using database path: $preferencesDatabasePath"
-
+        # output verbose information about starting preference retrieval
         Microsoft.PowerShell.Utility\Write-Verbose `
             "Starting preference retrieval for: $Name"
 
         # handle clearing session variables first if requested
         if ($ClearSession) {
+
+            # clear the global variable for this preference
             Microsoft.PowerShell.Utility\Set-Variable `
                 -Name $globalVariableName `
                 -Value $null `
                 -Scope Global `
                 -Force
+
+            # output verbose information about clearing session preference
             Microsoft.PowerShell.Utility\Write-Verbose `
                 "Cleared session preference setting: $globalVariableName"
         }
@@ -137,16 +127,21 @@ function Get-GenXdevPreference {
 
         # check global variable first (unless SkipSession is specified)
         if (-not $SkipSession) {
+
+            # attempt to get the preference value from global variable
             $globalValue = Microsoft.PowerShell.Utility\Get-Variable `
                 -Name $globalVariableName `
                 -Scope Global `
                 -ValueOnly `
                 -ErrorAction SilentlyContinue
 
+            # return global value if found and not empty
             if (-not ([string]::IsNullOrEmpty($globalValue))) {
-                # use global variable if available and not empty
+
+                # output verbose information about found session value
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Found session value for '$Name': $globalValue"
+
                 return $globalValue
             }
         }
@@ -154,68 +149,95 @@ function Get-GenXdevPreference {
         # fallback to persistent preferences (unless SessionOnly is specified)
         if (-not $SessionOnly) {
 
+            # copy parameters for database path resolution function
+            $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+                -BoundParameters $PSBoundParameters `
+                -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
+                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                    -Scope Local `
+                    -ErrorAction SilentlyContinue)
+
+            # resolve the actual database path using the helper function
+            $preferencesDatabasePath = `
+                Get-GenXdevPreferencesDatabasePath @params
+
+            # output verbose information about the database path being used
+            Microsoft.PowerShell.Utility\Write-Verbose `
+                "Using database path: $preferencesDatabasePath"
+
             # fallback to persistent preferences when not session only
             try {
+
+                # output verbose information about checking local store
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Checking local store for preference '$Name'"
 
-                # copy identical parameter values for Get-ValueByKeyFromStore (local)
+                # copy identical parameter values for local store retrieval
                 $getLocalParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Get-ValueByKeyFromStore" `
+                    -FunctionName 'GenXdev.Data\Get-ValueByKeyFromStore' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                         -Scope Local `
                         -ErrorAction SilentlyContinue)
 
                 # assign specific parameters for local store retrieval
-                $getLocalParams.StoreName = "GenXdev.PowerShell.Preferences"
+                $getLocalParams.StoreName = 'GenXdev.PowerShell.Preferences'
                 $getLocalParams.KeyName = $Name
-                $getLocalParams.SynchronizationKey = "Local"
+                $getLocalParams.SynchronizationKey = 'Local'
                 $getLocalParams.DatabasePath = $preferencesDatabasePath
-                $getLocalParams.ErrorAction = "Stop"
+                $getLocalParams.ErrorAction = 'Stop'
 
                 # attempt to get value from local store
-                $value = GenXdev.Data\Get-ValueByKeyFromStore @getLocalParams
+                $value = Get-ValueByKeyFromStore @getLocalParams
 
                 # if local store lookup failed, try defaults store
                 if ([string]::IsNullOrEmpty($value)) {
-                    Microsoft.PowerShell.Utility\Write-Verbose `
-                        "Preference not found locally, checking defaults store"
 
-                    # copy identical parameter values for Get-ValueByKeyFromStore (defaults)
+                    # output verbose information about checking defaults store
+                    Microsoft.PowerShell.Utility\Write-Verbose `
+                        'Preference not found locally, checking defaults store'
+
+                    # copy identical parameter values for defaults store retrieval
                     $getDefaultParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                         -BoundParameters $PSBoundParameters `
-                        -FunctionName "GenXdev.Data\Get-ValueByKeyFromStore" `
+                        -FunctionName 'GenXdev.Data\Get-ValueByKeyFromStore' `
                         -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                             -Scope Local `
                             -ErrorAction SilentlyContinue)
 
                     # assign specific parameters for defaults store retrieval
-                    $getDefaultParams.StoreName = "GenXdev.PowerShell.Preferences"
+                    $getDefaultParams.StoreName = 'GenXdev.PowerShell.Preferences'
                     $getDefaultParams.KeyName = $Name
-                    $getDefaultParams.SynchronizationKey = "Defaults"
+                    $getDefaultParams.SynchronizationKey = 'Defaults'
                     $getDefaultParams.DatabasePath = $preferencesDatabasePath
-                    $getDefaultParams.ErrorAction = "Stop"
+                    $getDefaultParams.ErrorAction = 'Stop'
 
                     # attempt to get value from defaults store
-                    $value = GenXdev.Data\Get-ValueByKeyFromStore @getDefaultParams
+                    $value = Get-ValueByKeyFromStore @getDefaultParams
                 }
 
                 # if we found a value in persistent storage, return it
                 if (-not ([string]::IsNullOrEmpty($value))) {
-                    Microsoft.PowerShell.Utility\Write-Verbose "Returning persistent value: $value"
+
+                    # output verbose information about returning persistent value
+                    Microsoft.PowerShell.Utility\Write-Verbose `
+                        "Returning persistent value: $value"
+
                     return $value
                 }
             }
             catch {
+
+                # output verbose information about error accessing stores
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Error accessing preference stores: $_"
             }
         }
 
-        # if no value found in any store, use provided default
+        # output verbose information about using default value
         Microsoft.PowerShell.Utility\Write-Verbose `
             "Using provided default value: $DefaultValue"
+
         return $DefaultValue
     }
 

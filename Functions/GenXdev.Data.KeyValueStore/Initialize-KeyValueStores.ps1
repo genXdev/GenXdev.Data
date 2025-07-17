@@ -34,35 +34,35 @@ Initialize-KeyValueStores -SkipSession
 function Initialize-KeyValueStores {
 
     [CmdletBinding()]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
 
     param(
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch] $SessionOnly,
 
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch] $ClearSession,
 
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for key-value store data files"
+            HelpMessage = 'Database path for key-value store data files'
         )]
         [string] $DatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
         ###############################################################################
     )
@@ -73,8 +73,8 @@ function Initialize-KeyValueStores {
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                "KeyValueStores.sqllite.db") `
+            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                'KeyValueStores.sqllite.db') `
                 -CreateDirectory
         }
         else {
@@ -89,8 +89,8 @@ function Initialize-KeyValueStores {
 
         # determine the path for onedrive synchronized database
         $shadowDbPath = GenXdev.FileSystem\Expand-Path `
-            ("~\Onedrive\GenXdev.PowerShell.SyncObjects\" +
-            "KeyValueStores.sqllite.db") `
+        ('~\Onedrive\GenXdev.PowerShell.SyncObjects\' +
+            'KeyValueStores.sqllite.db') `
             -CreateDirectory
 
         # extract the directory path for the shadow database
@@ -120,7 +120,7 @@ function Initialize-KeyValueStores {
                 $null = GenXdev.Data\New-SQLiteDatabase -DatabaseFilePath $dbPath
 
                 # create table schema with synchronization support columns
-                $sqlCreateTable = @"
+                $sqlCreateTable = @'
 CREATE TABLE IF NOT EXISTS KeyValueStore (
     synchronizationKey TEXT NOT NULL DEFAULT 'Local',
     storeName TEXT NOT NULL,
@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS KeyValueStore (
 );
 CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
     ON KeyValueStore (synchronizationKey, storeName, keyName);
-"@
+'@
 
                 # execute table creation sql against the database
                 $null = GenXdev.Data\Invoke-SQLiteQuery `

@@ -1,4 +1,4 @@
-################################################################################
+﻿################################################################################
 <#
 .SYNOPSIS
 Sets a preference value in the GenXdev preferences store.
@@ -45,81 +45,66 @@ function Set-GenXdevPreference {
         SupportsShouldProcess = $true
     )]
     [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '')]
-    [Alias("setPreference")]
+    [Alias('setPreference')]
     param(
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $true,
             Position = 0,
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The name of the preference to set"
+            HelpMessage = 'The name of the preference to set'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("PreferenceName")]
+        [Alias('PreferenceName')]
         [string]$Name,
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $false,
             Position = 1,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The value to store for the preference"
+            HelpMessage = 'The value to store for the preference'
         )]
         [AllowNull()]
         [AllowEmptyString()]
-        [Alias("PreferenceValue")]
+        [Alias('PreferenceValue')]
         [string]$Value,
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for Data " +
-                          "preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch]$SessionOnly,
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) before " +
-                          "retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) before ' +
+                'retrieving')
         )]
         [switch]$ClearSession,
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for preference data files"
+            HelpMessage = 'Database path for preference data files'
         )]
+        [Alias('DatabasePath')]
         [string]$PreferencesDatabasePath,
-        ################################################################################
+        #
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session for " +
-                          "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
-        ################################################################################
+        #
     )
 
     begin {
 
-        # copy identical parameter values to prepare for database path lookup
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
-            -BoundParameters $PSBoundParameters `
-            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
-            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                -Scope Local `
-                -ErrorAction SilentlyContinue)
-
-        # resolve the actual database path using the helper function
-        $PreferencesDatabasePath = `
-            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
-
         # create global variable name for this preference
         $globalVariableName = "GenXdevPreference_$Name"
-
-        # output verbose information about the database path being used
-        Microsoft.PowerShell.Utility\Write-Verbose `
-            "Using database path: $PreferencesDatabasePath"
 
         # output verbose information about starting preference operation
         Microsoft.PowerShell.Utility\Write-Verbose (
@@ -134,9 +119,9 @@ function Set-GenXdevPreference {
 
             # confirm the operation with the user before proceeding
             if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Preference Configuration",
-                "Clear session preference setting: $Name"
-            )) {
+                    'GenXdev.Data Preference Configuration',
+                    "Clear session preference setting: $Name"
+                )) {
 
                 # clear the global variable
                 Microsoft.PowerShell.Utility\Set-Variable `
@@ -157,9 +142,9 @@ function Set-GenXdevPreference {
 
             # confirm the operation with the user before proceeding
             if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Preference Configuration",
-                "Set session-only preference '$Name' to: [$Value]"
-            )) {
+                    'GenXdev.Data Preference Configuration',
+                    "Set session-only preference '$Name' to: [$Value]"
+                )) {
 
                 # set global variable for session-only storage
                 Microsoft.PowerShell.Utility\Set-Variable `
@@ -176,19 +161,35 @@ function Set-GenXdevPreference {
         }
 
         # handle persistent storage (default behavior)
+        # resolve database path only when needed for persistent operations
+        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
+            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                -Scope Local `
+                -ErrorAction SilentlyContinue)
+
+        # resolve the actual database path using the helper function
+        $PreferencesDatabasePath = `
+            Get-GenXdevPreferencesDatabasePath @params
+
+        # output verbose information about the database path being used
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Using database path: $PreferencesDatabasePath"
+
         # check if preference should be removed due to null/empty value
         if ([string]::IsNullOrWhiteSpace($Value)) {
 
             # confirm the operation with the user before proceeding with removal
             if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Preference Configuration",
-                "Remove preference '$Name' from persistent storage"
-            )) {
+                    'GenXdev.Data Preference Configuration',
+                    "Remove preference '$Name' from persistent storage"
+                )) {
 
                 # copy identical parameter values for Remove-GenXdevPreference
                 $removeParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Remove-GenXdevPreference" `
+                    -FunctionName 'GenXdev.Data\Remove-GenXdevPreference' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                         -Scope Local `
                         -ErrorAction SilentlyContinue)
@@ -198,7 +199,7 @@ function Set-GenXdevPreference {
                 $removeParams.SkipSession = $true  # we handle session separately
 
                 # remove the preference from the local store
-                GenXdev.Data\Remove-GenXdevPreference @removeParams
+                Remove-GenXdevPreference @removeParams
 
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Successfully removed preference '$Name'"
@@ -208,27 +209,27 @@ function Set-GenXdevPreference {
 
         # store the preference if user confirms the action
         if ($PSCmdlet.ShouldProcess(
-            "GenXdev.Data Preference Configuration",
-            "Set preference '$Name' to: [$Value]"
-        )) {
+                'GenXdev.Data Preference Configuration',
+                "Set preference '$Name' to: [$Value]"
+            )) {
 
             # copy identical parameter values for Set-ValueByKeyInStore
             $setParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Set-ValueByKeyInStore" `
+                -FunctionName 'GenXdev.Data\Set-ValueByKeyInStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for the set operation
-            $setParams.StoreName = "GenXdev.PowerShell.Preferences"
+            $setParams.StoreName = 'GenXdev.PowerShell.Preferences'
             $setParams.KeyName = $Name
             $setParams.Value = $Value
-            $setParams.SynchronizationKey = "Local"
+            $setParams.SynchronizationKey = 'Local'
             $setParams.DatabasePath = $PreferencesDatabasePath
 
             # store the preference value in the database store
-            GenXdev.Data\Set-ValueByKeyInStore @setParams
+            Set-ValueByKeyInStore @setParams
 
             Microsoft.PowerShell.Utility\Write-Verbose `
                 "Successfully configured preference '$Name' in GenXdev.Data module: [$Value]"

@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Executes SQL queries against a SQL Server database with transaction support.
@@ -30,20 +30,20 @@ Optional hashtable of parameters for the queries. Format: @{"param"="value"}.
 Transaction isolation level. Defaults to ReadCommitted.
 
 .EXAMPLE
-        ###############################################################################Execute query with explicit connection string
+Execute query with explicit connection string
 Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
     -Query "SELECT * FROM Users WHERE Id = @Id" `
     -SqlParameters @{"Id"=1}
 
 .EXAMPLE
-        ###############################################################################Execute query using host and credentials
+Execute query using host and credentials
 isq -HostName "dbserver" -User "sa" -Password "pwd" `
     -q "SELECT * FROM Users" -data @{"Id"=1}
-        ###############################################################################>
+#>
 function Invoke-SqlServerQuery {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSAvoidUsingPlainTextForPassword", "Password", Justification = "Common pattern for SQL authentication")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', 'Password', Justification = 'Common pattern for SQL authentication')]
     param (
 
         ###############################################################################
@@ -101,7 +101,7 @@ function Invoke-SqlServerQuery {
 
         ###############################################################################
 
-        [Alias("q", "Value", "Name", "Text", "Query")]
+        [Alias('q', 'Name', 'Text', 'Query')]
         [parameter(
             ParameterSetName = 'HostNameWithUsernameAndPassword',
             Mandatory,
@@ -195,7 +195,7 @@ function Invoke-SqlServerQuery {
             ValueFromPipelineByPropertyName,
             HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
         )]
-        [Alias("data", "parameters", "args")]
+        [Alias('data', 'parameters', 'args')]
         [System.Collections.Hashtable[]] $SqlParameters,
 
         ###############################################################################
@@ -212,14 +212,14 @@ function Invoke-SqlServerQuery {
         Microsoft.PowerShell.Utility\Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
 
         # set default hostname to local server if not specified but needed
-        if ($PSCmdlet.ParameterSetName -ne "ConnectionString" -and [string]::IsNullOrEmpty($HostName)) {
+        if ($PSCmdlet.ParameterSetName -ne 'ConnectionString' -and [string]::IsNullOrEmpty($HostName)) {
 
-            $hostName = "."
-            Microsoft.PowerShell.Utility\Write-Verbose "Using default local server hostname (.)"
+            $hostName = '.'
+            Microsoft.PowerShell.Utility\Write-Verbose 'Using default local server hostname (.)'
         }
 
         # build connection string if not provided directly
-        if ($PSCmdlet.ParameterSetName -ne "ConnectionString") {
+        if ($PSCmdlet.ParameterSetName -ne 'ConnectionString') {
 
             $connectionString = "Server=$HostName;"
 
@@ -229,17 +229,17 @@ function Invoke-SqlServerQuery {
             }
             else {
 
-                $connectionString += "Trusted_Connection=True;"
+                $connectionString += 'Trusted_Connection=True;'
             }
         }
     }
 
 
-process {
+    process {
 
         try {
             # establish database connection
-            Microsoft.PowerShell.Utility\Write-Verbose "Opening SQL connection"
+            Microsoft.PowerShell.Utility\Write-Verbose 'Opening SQL connection'
             $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
             $connection.Open()
 
@@ -297,12 +297,12 @@ process {
                 }
 
                 # commit if all succeeded
-                Microsoft.PowerShell.Utility\Write-Verbose "Committing transaction"
+                Microsoft.PowerShell.Utility\Write-Verbose 'Committing transaction'
                 $transaction.Commit()
             }
             catch {
                 # rollback on any error
-                Microsoft.PowerShell.Utility\Write-Verbose "Error occurred, rolling back transaction"
+                Microsoft.PowerShell.Utility\Write-Verbose 'Error occurred, rolling back transaction'
                 $transaction.Rollback()
                 throw $_
             }
@@ -320,4 +320,3 @@ process {
     end {
     }
 }
-        ###############################################################################

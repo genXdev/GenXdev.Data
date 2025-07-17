@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Sets the database path for preferences used in GenXdev.Data operations.
@@ -58,30 +58,30 @@ function Set-GenXdevPreferencesDatabasePath {
         [Parameter(
             Mandatory = $false,
             Position = 0,
-            HelpMessage = "Database path for preference data files"
+            HelpMessage = 'Database path for preference data files'
         )]
-        [Alias("DatabasePath")]
+        [Alias('DatabasePath')]
         [string] $PreferencesDatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session for " +
-                         "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for Data " +
-                         "preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch] $SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear alternative settings stored in session for Data " +
-                         "preferences like Language, Database paths, etc")
+            HelpMessage = ('Clear alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch] $ClearSession
         ###############################################################################
@@ -93,8 +93,8 @@ function Set-GenXdevPreferencesDatabasePath {
         if ((-not $ClearSession) -and
             [string]::IsNullOrWhiteSpace($PreferencesDatabasePath)) {
 
-            throw ("PreferencesDatabasePath parameter is required when not " +
-                   "using -ClearSession")
+            throw ('PreferencesDatabasePath parameter is required when not ' +
+                'using -ClearSession')
         }
 
         # expand path only if not clearing session
@@ -102,13 +102,13 @@ function Set-GenXdevPreferencesDatabasePath {
 
             # expand and validate the database path with directory creation
             $PreferencesDatabasePath = GenXdev.FileSystem\Expand-Path `
-                        "$PreferencesDatabasePath" `
-                        -CreateDirectory
+                "$PreferencesDatabasePath" `
+                -CreateDirectory
 
             # display verbose information about the database path being
             # configured
             Microsoft.PowerShell.Utility\Write-Verbose (
-                "Setting database path for GenXdev.Data module: " +
+                'Setting database path for GenXdev.Data module: ' +
                 "[$PreferencesDatabasePath]"
             )
         }
@@ -121,17 +121,17 @@ function Set-GenXdevPreferencesDatabasePath {
 
             # confirm the operation with the user before proceeding
             if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Module Configuration",
-                "Clear session database path setting (Global variable)"
-            )) {
+                    'GenXdev.Data Module Configuration',
+                    'Clear session database path setting (Global variable)'
+                )) {
 
                 # clear the global variable
                 $Global:PreferencesDatabasePath = $null
 
                 # output verbose confirmation of session clearing
                 Microsoft.PowerShell.Utility\Write-Verbose (
-                    "Cleared session database path setting: " +
-                    "PreferencesDatabasePath"
+                    'Cleared session database path setting: ' +
+                    'PreferencesDatabasePath'
                 )
             }
             return
@@ -142,18 +142,18 @@ function Set-GenXdevPreferencesDatabasePath {
 
             # confirm the operation with the user before proceeding
             if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Module Configuration",
-                ("Set session-only database path to: " +
-                 "[$PreferencesDatabasePath]")
-            )) {
+                    'GenXdev.Data Module Configuration',
+                ('Set session-only database path to: ' +
+                    "[$PreferencesDatabasePath]")
+                )) {
 
                 # set global variable for session-only storage
                 $Global:PreferencesDatabasePath = $PreferencesDatabasePath
 
                 # output verbose confirmation of session-only setting
                 Microsoft.PowerShell.Utility\Write-Verbose (
-                    ("Set session-only database path: " +
-                     "PreferencesDatabasePath = $PreferencesDatabasePath")
+                    ('Set session-only database path: ' +
+                    "PreferencesDatabasePath = $PreferencesDatabasePath")
                 )
             }
             return
@@ -162,13 +162,13 @@ function Set-GenXdevPreferencesDatabasePath {
         # handle persistent storage (default behavior)
         # confirm the operation with the user before proceeding with changes
         if ($PSCmdlet.ShouldProcess(
-            "GenXdev.Data Module Configuration",
-            "Set database path to: [$PreferencesDatabasePath]"
-        )) {
+                'GenXdev.Data Module Configuration',
+                "Set database path to: [$PreferencesDatabasePath]"
+            )) {
 
             # build the path for the json configuration file
             $jsonPath = GenXdev.FileSystem\Expand-Path `
-                        "$PSScriptRoot\defaultdblocation.json"
+                "$PSScriptRoot\defaultdblocation.json"
 
             # create the configuration data structure
             $jsonData = @{
@@ -177,13 +177,13 @@ function Set-GenXdevPreferencesDatabasePath {
 
             # convert to json and save to file to avoid infinite loop
             $null = $jsonData |
-                    Microsoft.PowerShell.Utility\ConvertTo-Json -Depth 20 |
-                    Microsoft.PowerShell.Management\Set-Content -Path $jsonPath -Force
+                Microsoft.PowerShell.Utility\ConvertTo-Json -Depth 20 |
+                Microsoft.PowerShell.Management\Set-Content -Path $jsonPath -Force
 
             # output confirmation message about successful configuration
             Microsoft.PowerShell.Utility\Write-Verbose (
-                ("Successfully configured database path in GenXdev.Data " +
-                 "module: [$PreferencesDatabasePath]")
+                ('Successfully configured database path in GenXdev.Data ' +
+                "module: [$PreferencesDatabasePath]")
             )
         }
     }

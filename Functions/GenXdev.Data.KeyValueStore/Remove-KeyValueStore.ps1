@@ -45,43 +45,43 @@ function Remove-KeyValueStore {
         [Parameter(
             Mandatory = $true,
             Position = 0,
-            HelpMessage = "Name of the store to delete"
+            HelpMessage = 'Name of the store to delete'
         )]
         [string]$StoreName,
         #######################################################################
         [Parameter(
             Mandatory = $false,
             Position = 1,
-            HelpMessage = "Key to identify synchronization scope"
+            HelpMessage = 'Key to identify synchronization scope'
         )]
-        [string]$SynchronizationKey = "Local",
+        [string]$SynchronizationKey = 'Local',
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Database path for key-value store data files")
+            HelpMessage = ('Database path for key-value store data files')
         )]
         [string]$DatabasePath,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for " +
-                "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
         [switch]$SessionOnly,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) " +
-                "before retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) ' +
+                'before retrieving')
         )]
         [switch]$ClearSession,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session " +
-                "for Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session ' +
+                'for Data preferences like Language, Database paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
         #######################################################################
     )
@@ -93,8 +93,8 @@ function Remove-KeyValueStore {
 
             # build default path to local application data folder
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                "KeyValueStores.sqllite.db") `
+            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                'KeyValueStores.sqllite.db') `
                 -CreateDirectory
         }
         else {
@@ -113,11 +113,11 @@ function Remove-KeyValueStore {
 
         # check if database file exists and initialize if necessary
         if (-not (Microsoft.PowerShell.Management\Test-Path `
-            $databaseFilePath)) {
+                    $databaseFilePath)) {
 
             # output verbose information about database initialization
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Database not found, initializing new database"
+                'Database not found, initializing new database'
 
             # create new database with required schema
             $null = GenXdev.Data\Initialize-KeyValueStores
@@ -131,28 +131,28 @@ function Remove-KeyValueStore {
             "Operation performed by: $lastModifiedBy"
 
         # determine appropriate sql operation based on synchronization scope
-        if ($SynchronizationKey -eq "Local") {
+        if ($SynchronizationKey -eq 'Local') {
 
             # prepare for physical deletion of local store entries
-            $operation = "Deleting local store"
-            $sqlQuery = @"
+            $operation = 'Deleting local store'
+            $sqlQuery = @'
 DELETE FROM KeyValueStore
 WHERE storeName = @storeName
 AND synchronizationKey = @syncKey;
-"@
+'@
         }
         else {
 
             # prepare for logical deletion with audit trail for sync stores
-            $operation = "Marking sync store as deleted"
-            $sqlQuery = @"
+            $operation = 'Marking sync store as deleted'
+            $sqlQuery = @'
 UPDATE KeyValueStore
 SET deletedDate = CURRENT_TIMESTAMP,
     lastModified = CURRENT_TIMESTAMP,
     lastModifiedBy = @modifiedBy
 WHERE storeName = @storeName
 AND synchronizationKey = @syncKey;
-"@
+'@
         }
 
         # verify user consent for potentially destructive operation
@@ -172,7 +172,7 @@ AND synchronizationKey = @syncKey;
             # transfer applicable parameters from current function to query function
             $queryParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Invoke-SQLiteQuery" `
+                -FunctionName 'GenXdev.Data\Invoke-SQLiteQuery' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
@@ -186,7 +186,7 @@ AND synchronizationKey = @syncKey;
             $null = GenXdev.Data\Invoke-SQLiteQuery @queryParams
 
             # initiate synchronization process for cloud-synchronized stores
-            if ($SynchronizationKey -ne "Local") {
+            if ($SynchronizationKey -ne 'Local') {
 
                 # output verbose information about synchronization trigger
                 Microsoft.PowerShell.Utility\Write-Verbose `
@@ -195,7 +195,7 @@ AND synchronizationKey = @syncKey;
                 # transfer applicable parameters to synchronization function
                 $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                    -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                         -Scope Local `
                         -ErrorAction SilentlyContinue)

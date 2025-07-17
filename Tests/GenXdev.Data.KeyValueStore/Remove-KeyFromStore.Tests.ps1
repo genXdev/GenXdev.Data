@@ -1,25 +1,25 @@
-###############################################################################
+﻿###############################################################################
 Pester\BeforeAll {
     # Clean-up
-    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "NonExistingKey"
+    Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'TestKey'
+    Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'NonExistingKey'
 }
 Pester\AfterAll {
     # Clean-up
-    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-    GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "NonExistingKey"
+    Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'TestKey'
+    Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'NonExistingKey'
 }
 ###############################################################################
-Pester\Describe "Remove-KeyFromStore" {
-    Pester\It "Should pass PSScriptAnalyzer rules" {
-# get the script path for analysis
+Pester\Describe 'Remove-KeyFromStore' {
+    Pester\It 'Should pass PSScriptAnalyzer rules' {
+        # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.ps1"
 
-# run analyzer with explicit settings
+        # run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
-        [string] $message = ""
+        [string] $message = ''
         $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
             $message = $message + @"
 --------------------------------------------------
@@ -38,22 +38,22 @@ $message
 
     Pester\BeforeAll {
         try {
-            Microsoft.PowerShell.Utility\Write-Verbose "Setting up test environment"
-            GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-            GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "NonExistingKey"
+            Microsoft.PowerShell.Utility\Write-Verbose 'Setting up test environment'
+            Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'TestKey'
+            Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'NonExistingKey'
         }
         catch {
             throw
         }
     }
 
-    Pester\It "Should remove existing key" {
-        GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "TestKey"
-        $result = GenXdev.Data\Get-ValueByKeyFromStore -StoreName "TestStore" -KeyName "TestKey"
+    Pester\It 'Should remove existing key' {
+        Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'TestKey'
+        $result = Get-ValueByKeyFromStore -StoreName 'TestStore' -KeyName 'TestKey'
         $result | Pester\Should -BeNullOrEmpty
     }
 
-    Pester\It "Should not error when removing non-existing key" {
-        { GenXdev.Data\Remove-KeyFromStore -StoreName "TestStore" -KeyName "NonExistingKey" } | Pester\Should -Not -Throw
+    Pester\It 'Should not error when removing non-existing key' {
+        { Remove-KeyFromStore -StoreName 'TestStore' -KeyName 'NonExistingKey' } | Pester\Should -Not -Throw
     }
 }

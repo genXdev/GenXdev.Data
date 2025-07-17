@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves the complete schema information from a SQLite database.
@@ -20,10 +20,10 @@ Get-SQLiteSchema -DatabaseFilePath "C:\Databases\inventory.db"
 
 .EXAMPLE
 Get-SQLiteSchema -ConnectionString "Data Source=C:\Databases\inventory.db;Version=3;"
-        ###############################################################################>
+#>
 function Get-SQLiteSchema {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
 
     param (
         ########################################################################
@@ -52,16 +52,15 @@ function Get-SQLiteSchema {
     }
 
 
-process {
+    process {
 
         # prepare the query to retrieve the complete database schema
-        $PSBoundParameters["Queries"] = "SELECT * FROM sqlite_master"
+        $PSBoundParameters['Queries'] = 'SELECT * FROM sqlite_master'
 
         # execute the schema query using the existing Invoke-SQLiteQuery function
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
     }
 }
-        ###############################################################################

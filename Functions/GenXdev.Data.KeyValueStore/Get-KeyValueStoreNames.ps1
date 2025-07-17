@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves a list of all available key-value store names from the database.
@@ -42,41 +42,41 @@ getstorenames "%"
 function Get-KeyValueStoreNames {
 
     [CmdletBinding()]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
-    [Alias("getstorenames")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
+    [Alias('getstorenames')]
 
     param(
         ###############################################################################
         [Parameter(
             Mandatory = $false,
             Position = 0,
-            HelpMessage = "Key to identify synchronization scope, defaults to all"
+            HelpMessage = 'Key to identify synchronization scope, defaults to all'
         )]
-        [string] $SynchronizationKey = "%",
+        [string] $SynchronizationKey = '%',
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for key-value store data files"
+            HelpMessage = 'Database path for key-value store data files'
         )]
         [string] $DatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch] $SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch] $ClearSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
         ###############################################################################
     )
@@ -87,8 +87,8 @@ function Get-KeyValueStoreNames {
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                "KeyValueStores.sqllite.db") `
+            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                'KeyValueStores.sqllite.db') `
                 -CreateDirectory
         }
         else {
@@ -110,23 +110,23 @@ function Get-KeyValueStoreNames {
 
             # output verbose information about database initialization
             Microsoft.PowerShell.Utility\Write-Verbose (
-                "Database not found, initializing..."
+                'Database not found, initializing...'
             )
 
             # copy identical parameter values for Initialize-KeyValueStores
             $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -FunctionName 'GenXdev.Data\Initialize-KeyValueStores' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # initialize the key value stores database
-            GenXdev.Data\Initialize-KeyValueStores @initParams
+            Initialize-KeyValueStores @initParams
         }
 
         # perform synchronization for non-local stores
-        if ($SynchronizationKey -ne "Local") {
+        if ($SynchronizationKey -ne 'Local') {
 
             # output verbose information about synchronization
             Microsoft.PowerShell.Utility\Write-Verbose (
@@ -136,7 +136,7 @@ function Get-KeyValueStoreNames {
             # copy identical parameter values for Sync-KeyValueStore
             $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
@@ -145,16 +145,16 @@ function Get-KeyValueStoreNames {
             $syncParams.SynchronizationKey = $SynchronizationKey
 
             # synchronize the key value store with remote sources
-            GenXdev.Data\Sync-KeyValueStore @syncParams
+            Sync-KeyValueStore @syncParams
         }
 
         # construct sql query to get unique store names
-        $sqlQuery = @"
+        $sqlQuery = @'
 SELECT DISTINCT storeName
 FROM KeyValueStore
 WHERE synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
-"@
+'@
 
         # create parameters hashtable for the sql query
         $params = @{
@@ -167,11 +167,11 @@ AND deletedDate IS NULL;
         )
 
         # execute the sql query and extract store names from results
-        GenXdev.Data\Invoke-SQLiteQuery `
+        Invoke-SQLiteQuery `
             -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params |
-        Microsoft.PowerShell.Core\ForEach-Object storeName
+            Microsoft.PowerShell.Core\ForEach-Object storeName
     }
 
     end {

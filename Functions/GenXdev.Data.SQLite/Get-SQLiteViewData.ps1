@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a SQLite database view with optional record limiting.
@@ -30,10 +30,10 @@ Get-SQLiteViewData -DatabaseFilePath "C:\MyDb.sqlite" `
 
 .EXAMPLE
 Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
-        ###############################################################################>
+#>
 function Get-SQLiteViewData {
 
-    [CmdletBinding(DefaultParameterSetName = "DatabaseFilePath")]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseFilePath')]
     param (
         ########################################################################
         [Parameter(
@@ -53,7 +53,7 @@ function Get-SQLiteViewData {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
 
         ########################################################################
@@ -81,7 +81,7 @@ function Get-SQLiteViewData {
     }
 
 
-process {
+    process {
 
         # construct query with optional record limit
         $query = if ($Count -eq -1) {
@@ -94,10 +94,10 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # prepare parameters for Invoke-SQLiteQuery
-        $PSBoundParameters["Queries"] = $query
+        $PSBoundParameters['Queries'] = $query
 
         # execute query and return results
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
@@ -105,4 +105,3 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Completed querying view: $ViewName"
     }
 }
-        ###############################################################################

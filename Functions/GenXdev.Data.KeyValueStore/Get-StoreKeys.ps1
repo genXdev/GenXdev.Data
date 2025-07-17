@@ -40,48 +40,48 @@ getkeys AppSettings
 function Get-StoreKeys {
 
     [CmdletBinding()]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
-    [Alias("getkeys")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
+    [Alias('getkeys')]
 
     param (
         ###############################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            HelpMessage = "Name of the store whose keys should be retrieved"
+            HelpMessage = 'Name of the store whose keys should be retrieved'
         )]
         [string]$StoreName,
         ###############################################################################
         [Parameter(
             Position = 1,
             Mandatory = $false,
-            HelpMessage = "Key to identify synchronization scope, defaults to all"
+            HelpMessage = 'Key to identify synchronization scope, defaults to all'
         )]
-        [string]$SynchronizationKey = "%",
+        [string]$SynchronizationKey = '%',
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for key-value store data files"
+            HelpMessage = 'Database path for key-value store data files'
         )]
         [string]$DatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch]$SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Clear the session setting (Global variable) before retrieving"
+            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch]$ClearSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc"
+            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
         ###############################################################################
     )
@@ -119,13 +119,13 @@ function Get-StoreKeys {
 
             # output verbose message for database initialization
             Microsoft.PowerShell.Utility\Write-Verbose (
-                "Database not found, initializing..."
+                'Database not found, initializing...'
             )
 
             # copy identical parameter values for Initialize-KeyValueStores
             $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -FunctionName 'GenXdev.Data\Initialize-KeyValueStores' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
@@ -135,7 +135,7 @@ function Get-StoreKeys {
         }
 
         # synchronize non-local stores with remote if needed
-        if ($SynchronizationKey -ne "Local") {
+        if ($SynchronizationKey -ne 'Local') {
 
             # output verbose message for synchronization
             Microsoft.PowerShell.Utility\Write-Verbose (
@@ -145,7 +145,7 @@ function Get-StoreKeys {
             # copy identical parameter values for Sync-KeyValueStore
             $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
+                -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
@@ -158,13 +158,13 @@ function Get-StoreKeys {
         }
 
         # build the SQL query to get all active keys for the store
-        $sqlQuery = @"
+        $sqlQuery = @'
 SELECT keyName
 FROM KeyValueStore
 WHERE storeName = @storeName
 AND synchronizationKey LIKE @syncKey
 AND deletedDate IS NULL;
-"@
+'@
 
         # build the parameters for the SQL query
         $params = @{
@@ -182,7 +182,7 @@ AND deletedDate IS NULL;
             -DatabaseFilePath $databaseFilePath `
             -Queries $sqlQuery `
             -SqlParameters $params |
-        Microsoft.PowerShell.Core\ForEach-Object keyName
+            Microsoft.PowerShell.Core\ForEach-Object keyName
     }
 
     end {

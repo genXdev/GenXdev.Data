@@ -22,11 +22,11 @@ Get-SQLiteViews -DatabaseFilePath "C:\Databases\MyDatabase.sqlite"
 
 .EXAMPLE
 s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
-        ###############################################################################>
+#>
 function Get-SQLiteViews {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
     param (
         ###############################################################################
         [Parameter(
@@ -49,11 +49,11 @@ function Get-SQLiteViews {
     begin {
 
         # log the start of the view retrieval process
-        Microsoft.PowerShell.Utility\Write-Verbose "Preparing to retrieve SQLite views..."
+        Microsoft.PowerShell.Utility\Write-Verbose 'Preparing to retrieve SQLite views...'
     }
 
 
-process {
+    process {
 
         # define the SQL query to retrieve all view names from sqlite_master
         $query = "SELECT name FROM sqlite_master WHERE type='view'"
@@ -62,7 +62,7 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # execute the query using existing parameter set and store in $PSBoundParameters
-        $PSBoundParameters["Queries"] = $query
+        $PSBoundParameters['Queries'] = $query
 
         # invoke the query and return results using parameter splatting
         GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
@@ -71,4 +71,3 @@ process {
     end {
     }
 }
-        ###############################################################################

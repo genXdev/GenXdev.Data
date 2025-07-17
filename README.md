@@ -1471,6 +1471,7 @@ PARAMETERS
         
     -PreferencesDatabasePath <String>
         Database path for preference data files.
+        Alias: DatabasePath
         
         Required?                    false
         Position?                    named
@@ -1605,7 +1606,8 @@ PARAMETERS
         Accept wildcard characters?  false
         
     -PreferencesDatabasePath <String>
-        Database path for preference data files.
+        Database path for preference data files. This parameter is optional and can
+        be used to override the default database path.
         
         Required?                    false
         Position?                    3
@@ -1677,7 +1679,7 @@ OUTPUTS
     -------------------------- EXAMPLE 1 --------------------------
     
     PS > Set-GenXdevDefaultPreference -Name "Theme" -Value "Dark"
-    Sets the default theme preference to "Dark"
+    Sets the default theme preference to "Dark".
     
     
     
@@ -1687,7 +1689,7 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > setPreferenceDefault "EmailNotifications" "Disabled"
-    Uses the alias to disable email notifications in defaults
+    Uses the alias to disable email notifications in defaults.
     
     
     
@@ -2004,7 +2006,6 @@ OUTPUTS
     
     PS > EnsureSQLiteStudioInstalled
     Checks and ensures SQLiteStudio is installed and accessible.
-            ##############################################################################
     
     
     
@@ -2081,7 +2082,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteSchema -ConnectionString "Data Source=C:\Databases\inventory.db;Version=3;"
-            ##############################################################################
     
     
     
@@ -2195,7 +2195,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
-            ##############################################################################
     
     
     
@@ -2294,7 +2293,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTableData "C:\data\users.db" "Employees"
-            ##############################################################################
     
     
     
@@ -2363,7 +2361,7 @@ OUTPUTS
     -------------------------- EXAMPLE 1 --------------------------
     
     PS > Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
-            ###############################################################################Returns all table names from the specified database file
+    Returns all table names from the specified database file
     
     
     
@@ -2373,8 +2371,8 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
-            ###############################################################################Returns all table names using a custom connection string
-            ##############################################################################
+    Returns all table names using a custom connection string
+    ##############################################################################
     
     
     
@@ -2464,7 +2462,6 @@ OUTPUTS
     
     PS > Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
         -TableName "Products"
-            ##############################################################################
     
     
     
@@ -2569,7 +2566,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > $transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
-            ##############################################################################
     
     
     
@@ -2681,7 +2677,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteViewColumnData "C:\MyDB.sqlite" "CustomersView" "Email"
-            ##############################################################################
     
     
     
@@ -2780,7 +2775,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
-            ##############################################################################
     
     
     
@@ -2859,7 +2853,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
-            ##############################################################################
     
     
     
@@ -2941,7 +2934,7 @@ OUTPUTS
     PS > Get-SQLiteViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
                         -ViewName "CustomerOrders"
     
-    ##############################################################################
+    
     
     
     
@@ -3065,19 +3058,18 @@ OUTPUTS
     
     -------------------------- EXAMPLE 3 --------------------------
     
-    PS > ###############################################################################Batch operations using external transaction
+    PS > Batch operations using external transaction
     $tx = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
     try {
-    Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
-    Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
-    $tx.Commit()
+        Invoke-SQLiteQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
+        Invoke-SQLiteQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
+        $tx.Commit()
     } catch {
-    $tx.Rollback()
-    throw
+        $tx.Rollback()
+        throw
     } finally {
-    $tx.Connection.Close()
+        $tx.Connection.Close()
     }
-    ##############################################################################
     
     
     
@@ -3193,7 +3185,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > "SELECT * FROM Users" | isql -DatabaseFilePath "C:\data\users.sqlite"
-            ##############################################################################
     
     
     
@@ -3274,7 +3265,6 @@ OUTPUTS
     -------------------------- EXAMPLE 2 --------------------------
     
     PS > nsqldb "C:\Databases\MyNewDb.sqlite"
-            ##############################################################################
     
     
     
@@ -3397,10 +3387,10 @@ OUTPUTS
     
     -------------------------- EXAMPLE 1 --------------------------
     
-    PS > ###############################################################################Execute query with explicit connection string
+    PS > Execute query with explicit connection string
     Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
-    -Query "SELECT * FROM Users WHERE Id = @Id" `
-    -SqlParameters @{"Id"=1}
+        -Query "SELECT * FROM Users WHERE Id = @Id" `
+        -SqlParameters @{"Id"=1}
     
     
     
@@ -3409,10 +3399,9 @@ OUTPUTS
     
     -------------------------- EXAMPLE 2 --------------------------
     
-    PS > ###############################################################################Execute query using host and credentials
+    PS > Execute query using host and credentials
     isq -HostName "dbserver" -User "sa" -Password "pwd" `
-    -q "SELECT * FROM Users" -data @{"Id"=1}
-    ##############################################################################
+        -q "SELECT * FROM Users" -data @{"Id"=1}
     
     
     

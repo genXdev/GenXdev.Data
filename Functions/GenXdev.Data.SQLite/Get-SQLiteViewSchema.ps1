@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves the SQL schema definition for a SQLite view.
@@ -24,10 +24,10 @@ The name of the view whose schema definition should be retrieved.
 Get-SQLiteViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
                     -ViewName "CustomerOrders"
 
-        ###############################################################################>
+#>
 function Get-SQLiteViewSchema {
 
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###########################################################################
         [Parameter(
@@ -45,7 +45,7 @@ function Get-SQLiteViewSchema {
             HelpMessage = 'The path to the SQLite database file.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias("dbpath", "indexpath")]
+        [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
         ###########################################################################
         [Parameter(
@@ -63,7 +63,7 @@ function Get-SQLiteViewSchema {
     }
 
 
-process {
+    process {
 
         # construct query to fetch the view definition from sqlite_master table
         $query = "SELECT sql FROM sqlite_master WHERE name = '$ViewName'"
@@ -72,11 +72,10 @@ process {
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
         # add the query to parameters and execute it using Invoke-SQLiteQuery
-        $PSBoundParameters["Queries"] = $query
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        $PSBoundParameters['Queries'] = $query
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
     }
 }
-        ###############################################################################

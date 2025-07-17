@@ -1,25 +1,25 @@
-###############################################################################
+﻿É###############################################################################
 Pester\BeforeAll {
     # Clean-up
-    GenXdev.Data\Remove-GenXdevPreference -Name "Theme" -RemoveDefault
+    Remove-GenXdevPreference -Name 'Theme' -RemoveDefault
 }
 Pester\AfterAll {
     # Clean-up
-    GenXdev.Data\Remove-GenXdevPreference -Name "Theme" -RemoveDefault
+    Remove-GenXdevPreference -Name 'Theme' -RemoveDefault
 }
 ###############################################################################
-Pester\Describe "Set-GenXdevPreference" {
+Pester\Describe 'Set-GenXdevPreference' {
 
-    Pester\It "Should pass PSScriptAnalyzer rules" {
+    Pester\It 'Should pass PSScriptAnalyzer rules' {
 
-# get the script path for analysis
+        # get the script path for analysis
         $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.ps1"
 
-# run analyzer with explicit settings
+        # run analyzer with explicit settings
         $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
             -Path $scriptPath
 
-        [string] $message = ""
+        [string] $message = ''
         $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
 
             $message = $message + @"
@@ -37,23 +37,23 @@ $message
 "@;
     }
 
-    Pester\It "Should store preference value locally" {
-        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme"
-        $result | Pester\Should -Be "Dark"
+    Pester\It 'Should store preference value locally' {
+        Set-GenXdevPreference -Name 'Theme' -Value 'Dark'
+        $result = Get-GenXdevPreference -Name 'Theme'
+        $result | Pester\Should -Be 'Dark'
     }
 
-    Pester\It "Should update existing preference" {
-        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Light"
-        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme"
-        $result | Pester\Should -Be "Dark"
+    Pester\It 'Should update existing preference' {
+        Set-GenXdevPreference -Name 'Theme' -Value 'Light'
+        Set-GenXdevPreference -Name 'Theme' -Value 'Dark'
+        $result = Get-GenXdevPreference -Name 'Theme'
+        $result | Pester\Should -Be 'Dark'
     }
 
-    Pester\It "Should remove preference when value is null" {
-        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value "Dark"
-        GenXdev.Data\Set-GenXdevPreference -Name "Theme" -Value $null
-        $result = GenXdev.Data\Get-GenXdevPreference -Name "Theme" -DefaultValue "Default"
-        $result | Pester\Should -Be "Default"
+    Pester\It 'Should remove preference when value is null' {
+        Set-GenXdevPreference -Name 'Theme' -Value 'Dark'
+        Set-GenXdevPreference -Name 'Theme' -Value $null
+        $result = Get-GenXdevPreference -Name 'Theme' -DefaultValue 'Default'
+        $result | Pester\Should -Be 'Default'
     }
 }

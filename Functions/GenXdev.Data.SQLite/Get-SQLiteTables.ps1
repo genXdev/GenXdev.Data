@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Retrieves a list of table names from a SQLite database.
@@ -18,16 +18,17 @@ an appropriate connection string internally.
 
 .EXAMPLE
 Get-SQLiteTables -DatabaseFilePath "C:\Databases\Inventory.sqlite"
-        ###############################################################################Returns all table names from the specified database file
+Returns all table names from the specified database file
 
 .EXAMPLE
 Get-SQLiteTables -ConnectionString "Data Source=C:\DB\Users.sqlite;Version=3;"
-        ###############################################################################Returns all table names using a custom connection string
-        ###############################################################################>
+Returns all table names using a custom connection string
+##############################################################################
+#>
 
 function Get-SQLiteTables {
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("PSUseSingularNouns", "")]
-    [CmdletBinding(DefaultParameterSetName = "Default")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     param (
         ###########################################################################
         [Parameter(
@@ -52,22 +53,21 @@ function Get-SQLiteTables {
     begin {
 
         # log the start of table retrieval operation
-        Microsoft.PowerShell.Utility\Write-Verbose "Starting SQLite table name retrieval operation"
+        Microsoft.PowerShell.Utility\Write-Verbose 'Starting SQLite table name retrieval operation'
     }
 
 
-process {
+    process {
 
         # define the query to get all table names from sqlite_master
-        $PSBoundParameters["Queries"] = "SELECT name FROM sqlite_master " +
+        $PSBoundParameters['Queries'] = 'SELECT name FROM sqlite_master ' +
         "WHERE type='table'"
 
         # execute query using the inherited connection parameters
-        Microsoft.PowerShell.Utility\Write-Verbose "Executing query to retrieve table names"
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        Microsoft.PowerShell.Utility\Write-Verbose 'Executing query to retrieve table names'
+        Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
     }
 }
-        ###############################################################################

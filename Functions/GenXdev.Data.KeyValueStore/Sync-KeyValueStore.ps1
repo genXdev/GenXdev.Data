@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Synchronizes local and OneDrive key-value store databases.
@@ -40,37 +40,37 @@ function Sync-KeyValueStore {
         [Parameter(
             Mandatory = $false,
             Position = 0,
-            HelpMessage = "Key to identify synchronization scope"
+            HelpMessage = 'Key to identify synchronization scope'
         )]
-        [string] $SynchronizationKey = "Local",
+        [string] $SynchronizationKey = 'Local',
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = "Database path for key-value store data files"
+            HelpMessage = 'Database path for key-value store data files'
         )]
         [string] $DatabasePath,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for Data " +
-                           "preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for Data ' +
+                'preferences like Language, Database paths, etc')
         )]
         [switch] $SessionOnly,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) " +
-                           "before retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) ' +
+                'before retrieving')
         )]
         [switch] $ClearSession,
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session " +
-                           "for Data preferences like Language, Database " +
-                           "paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session ' +
+                'for Data preferences like Language, Database ' +
+                'paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch] $SkipSession
         ###############################################################################
     )
@@ -82,8 +82,8 @@ function Sync-KeyValueStore {
 
             # construct default database path in local app data folder
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                 "KeyValueStores.sqllite.db") `
+            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
+                'KeyValueStores.sqllite.db') `
                 -CreateDirectory
         }
         else {
@@ -101,11 +101,11 @@ function Sync-KeyValueStore {
     process {
 
         # skip synchronization for local-only records to avoid unnecessary work
-        if ($SynchronizationKey -eq "Local") {
+        if ($SynchronizationKey -eq 'Local') {
 
             # inform user that local-only sync is being skipped
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Skipping sync for local-only key"
+                'Skipping sync for local-only key'
             return
         }
 
@@ -114,8 +114,8 @@ function Sync-KeyValueStore {
 
         # construct path to onedrive shadow database for synchronization
         $shadowDb = GenXdev.FileSystem\Expand-Path `
-            ("~\OneDrive\GenXdev.PowerShell.SyncObjects\" +
-             "KeyValueStores.sqllite.db")
+        ('~\OneDrive\GenXdev.PowerShell.SyncObjects\' +
+            'KeyValueStores.sqllite.db')
 
         # log database paths for debugging and verification purposes
         Microsoft.PowerShell.Utility\Write-Verbose "Local DB: $localDb"
@@ -128,22 +128,22 @@ function Sync-KeyValueStore {
 
             # inform user that missing database files are being initialized
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Initializing missing database files"
+                'Initializing missing database files'
 
             # copy compatible parameters for the initialization function call
             $params = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Initialize-KeyValueStores" `
+                -FunctionName 'GenXdev.Data\Initialize-KeyValueStores' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # initialize the key-value store databases if they don't exist
-            GenXdev.Data\Initialize-KeyValueStores @params
+            Initialize-KeyValueStores @params
         }
 
         # define sql query for bidirectional synchronization between databases
-        $syncQuery = @"
+        $syncQuery = @'
 ATTACH DATABASE @shadowDb AS shadow;
 
 -- sync from shadow to local
@@ -173,7 +173,7 @@ AND (
         AND s.lastModified > m.lastModified
     )
 );
-"@
+'@
 
         # create parameter hashtable for sql query parameter substitution
         $params = @{
@@ -183,10 +183,10 @@ AND (
 
         # log query execution for debugging and performance monitoring
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Executing sync query with parameters"
+            'Executing sync query with parameters'
 
         # execute the synchronization query with prepared parameters
-        GenXdev.Data\Invoke-SQLiteQuery `
+        Invoke-SQLiteQuery `
             -DatabaseFilePath $localDb `
             -Queries $syncQuery `
             -SqlParameters $params
@@ -195,7 +195,7 @@ AND (
     end {
 
         # log completion of sync operation for audit and troubleshooting
-        Microsoft.PowerShell.Utility\Write-Verbose "Sync operation completed"
+        Microsoft.PowerShell.Utility\Write-Verbose 'Sync operation completed'
     }
 }
 ###############################################################################

@@ -26,6 +26,7 @@ Clear the session setting (Global variable) before retrieving.
 
 .PARAMETER PreferencesDatabasePath
 Database path for preference data files.
+Alias: DatabasePath
 
 .PARAMETER SkipSession
 Dont use alternative settings stored in session for Data preferences like
@@ -46,7 +47,7 @@ function Remove-GenXdevPreference {
     [CmdletBinding(
         SupportsShouldProcess = $true
     )]
-    [Alias("removePreference")]
+    [Alias('removePreference')]
     param(
         #######################################################################
         [Parameter(
@@ -54,7 +55,7 @@ function Remove-GenXdevPreference {
             Position = 0,
             ValueFromPipeline = $true,
             ValueFromPipelineByPropertyName = $true,
-            HelpMessage = "The name of the preference to remove"
+            HelpMessage = 'The name of the preference to remove'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$Name,
@@ -63,38 +64,39 @@ function Remove-GenXdevPreference {
             Mandatory = $false,
             Position = 1,
             ParameterSetName = 'All',
-            HelpMessage = "Switch to also remove the preference from defaults"
+            HelpMessage = 'Switch to also remove the preference from defaults'
         )]
         [switch]$RemoveDefault,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for " +
-                          "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
+        [Alias('DatabasePath')]
         [string]$PreferencesDatabasePath,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Use alternative settings stored in session for " +
-                          "Data preferences like Language, Database paths, etc")
+            HelpMessage = ('Use alternative settings stored in session for ' +
+                'Data preferences like Language, Database paths, etc')
         )]
         [switch]$SessionOnly,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Clear the session setting (Global variable) " +
-                          "before retrieving")
+            HelpMessage = ('Clear the session setting (Global variable) ' +
+                'before retrieving')
         )]
         [switch]$ClearSession,
         #######################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = ("Dont use alternative settings stored in session " +
-                          "for Data preferences like Language, Database " +
-                          "paths, etc")
+            HelpMessage = ('Dont use alternative settings stored in session ' +
+                'for Data preferences like Language, Database ' +
+                'paths, etc')
         )]
-        [Alias("FromPreferences")]
+        [Alias('FromPreferences')]
         [switch]$SkipSession
         #######################################################################
     )
@@ -104,14 +106,13 @@ function Remove-GenXdevPreference {
         # copy identical parameter values to prepare for database path lookup
         $params = GenXdev.Helpers\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
-            -FunctionName "GenXdev.Data\Get-GenXdevPreferencesDatabasePath" `
+            -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                 -Scope Local `
                 -ErrorAction SilentlyContinue)
 
         # resolve the actual database path using the helper function
-        $PreferencesDatabasePath = `
-            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
+        $PreferencesDatabasePath = GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
 
         # create global variable name for this preference
         $globalVariableName = "GenXdevPreference_$Name"
@@ -121,7 +122,7 @@ function Remove-GenXdevPreference {
             "Using database path: $PreferencesDatabasePath"
 
         # output verbose information about the operation start
-        Microsoft.PowerShell.Utility\Write-Verbose ("Starting preference " +
+        Microsoft.PowerShell.Utility\Write-Verbose ('Starting preference ' +
             "removal for: $Name")
     }
 
@@ -131,131 +132,58 @@ function Remove-GenXdevPreference {
         if ($ClearSession) {
 
             # confirm the operation with the user before proceeding
-            if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Preference Configuration",
-                "Clear session preference setting: $Name"
-            )) {
+            if ($PSCmdlet.ShouldProcess($Name, 'Clear session variable')) {
 
-                # clear the global variable
-                Microsoft.PowerShell.Utility\Set-Variable `
-                    -Name $globalVariableName `
-                    -Value $null `
-                    -Scope Global `
-                    -Force
-
-                # output verbose confirmation of session clearing
-                Microsoft.PowerShell.Utility\Write-Verbose (
-                    "Cleared session preference setting: $globalVariableName")
+                # clear the session variable
+                Microsoft.PowerShell.Utility\Remove-Variable -Name $globalVariableName -Scope Global -ErrorAction SilentlyContinue
             }
-            return
         }
 
         # handle session-only removal
         if ($SessionOnly) {
 
             # confirm the operation with the user before proceeding
-            if ($PSCmdlet.ShouldProcess(
-                "GenXdev.Data Preference Configuration",
-                "Remove session-only preference: $Name"
-            )) {
+            if ($PSCmdlet.ShouldProcess($Name, 'Remove session-only preference')) {
 
-                # clear the global variable for session-only removal
-                Microsoft.PowerShell.Utility\Set-Variable `
-                    -Name $globalVariableName `
-                    -Value $null `
-                    -Scope Global `
-                    -Force
-
-                # output verbose confirmation of session-only removal
-                Microsoft.PowerShell.Utility\Write-Verbose (
-                    "Removed session-only preference: $globalVariableName")
+                # remove the preference from session-only store
+                GenXdev.Data\Remove-KeyFromStore -Name $Name -SessionOnly
             }
-            return
         }
 
         # check if the operation should proceed based on whatif/confirm
-        if ($PSCmdlet.ShouldProcess($Name, "Remove preference")) {
+        if ($PSCmdlet.ShouldProcess($Name, 'Remove preference')) {
 
             # clear session variable for this preference if not SkipSession
             if (-not $SkipSession) {
-                Microsoft.PowerShell.Utility\Set-Variable `
-                    -Name $globalVariableName `
-                    -Value $null `
-                    -Scope Global `
-                    -Force
-
-                Microsoft.PowerShell.Utility\Write-Verbose (
-                    "Cleared session variable: $globalVariableName")
+                Microsoft.PowerShell.Utility\Remove-Variable -Name $globalVariableName -Scope Global -ErrorAction SilentlyContinue
             }
 
             # output verbose information about local store removal
-            Microsoft.PowerShell.Utility\Write-Verbose ("Removing preference " +
-                "from local store")
+            Microsoft.PowerShell.Utility\Write-Verbose ('Removing preference ' +
+                $Name + ' from local store')
 
             # copy identical parameter values for Remove-KeyFromStore
             $removeLocalParams = GenXdev.Helpers\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
-                -FunctionName "GenXdev.Data\Remove-KeyFromStore" `
+                -FunctionName 'GenXdev.Data\Remove-KeyFromStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
             # assign specific parameters for local store removal
-            $removeLocalParams.StoreName = "GenXdev.PowerShell.Preferences"
+            $removeLocalParams.StoreName = 'GenXdev.PowerShell.Preferences'
             $removeLocalParams.KeyName = $Name
-            $removeLocalParams.SynchronizationKey = "Local"
+            $removeLocalParams.SynchronizationKey = 'Local'
             $removeLocalParams.DatabasePath = $PreferencesDatabasePath
 
             # remove the preference key from the local store
             GenXdev.Data\Remove-KeyFromStore @removeLocalParams
 
-            # check if removal from default store is also requested
+            # handle default store removal if requested
             if ($RemoveDefault) {
-
-                # output verbose information about default store removal
-                Microsoft.PowerShell.Utility\Write-Verbose ("Removing " +
-                    "preference from default store")
-
-                # copy identical parameter values for Remove-KeyFromStore
-                $removeDefaultParams = GenXdev.Helpers\Copy-IdenticalParamValues `
-                    -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Remove-KeyFromStore" `
-                    -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                        -Scope Local `
-                        -ErrorAction SilentlyContinue)
-
-                # assign specific parameters for default store removal
-                $removeDefaultParams.StoreName = "GenXdev.PowerShell.Preferences"
-                $removeDefaultParams.KeyName = $Name
-                $removeDefaultParams.SynchronizationKey = "Defaults"
-                $removeDefaultParams.DatabasePath = $PreferencesDatabasePath
-
-                # remove the preference key from the default store
-                GenXdev.Data\Remove-KeyFromStore @removeDefaultParams
-
-                # output verbose information about synchronization
-                Microsoft.PowerShell.Utility\Write-Verbose ("Synchronizing " +
-                    "default store changes")
-
-                # copy identical parameter values for Sync-KeyValueStore
-                $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
-                    -BoundParameters $PSBoundParameters `
-                    -FunctionName "GenXdev.Data\Sync-KeyValueStore" `
-                    -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                        -Scope Local `
-                        -ErrorAction SilentlyContinue)
-
-                # assign specific parameters for synchronization
-                $syncParams.SynchronizationKey = "Defaults"
-                $syncParams.DatabasePath = $PreferencesDatabasePath
-
-                # synchronize the changes to ensure consistency
-                $null = GenXdev.Data\Sync-KeyValueStore @syncParams
+                Microsoft.PowerShell.Utility\Write-Verbose ('Removing preference ' + $Name + ' from default store')
+                GenXdev.Data\Sync-KeyValueStore -Name $Name -RemoveDefault
             }
-
-            # output verbose information about operation completion
-            Microsoft.PowerShell.Utility\Write-Verbose ("Preference removal " +
-                "completed")
         }
     }
 
