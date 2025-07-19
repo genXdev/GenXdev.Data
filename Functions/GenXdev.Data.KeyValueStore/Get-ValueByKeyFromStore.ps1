@@ -120,7 +120,7 @@ function Get-ValueByKeyFromStore {
             # use default database path in local app data folder
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqllite.db') `
+                'KeyValueStores.sqlite.db') `
                 -CreateDirectory
         }
         else {

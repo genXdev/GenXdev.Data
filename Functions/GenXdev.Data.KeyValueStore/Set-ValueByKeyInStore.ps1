@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Manages key-value pairs in a SQLite database store.
@@ -113,7 +113,7 @@ function Set-ValueByKeyInStore {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqllite.db') `
+                'KeyValueStores.sqlite.db') `
                 -CreateDirectory
         }
         else {

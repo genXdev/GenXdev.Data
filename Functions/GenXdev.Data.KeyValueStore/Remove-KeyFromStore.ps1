@@ -105,7 +105,7 @@ function Remove-KeyFromStore {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqllite.db') `
+                'KeyValueStores.sqlite.db') `
                 -CreateDirectory
         }
         else {

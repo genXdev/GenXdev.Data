@@ -92,7 +92,7 @@ function Get-StoreKeys {
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-                "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqllite.db" `
+                "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStores.sqlite.db" `
                 -CreateDirectory
         }
         else {

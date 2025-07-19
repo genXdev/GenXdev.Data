@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Synchronizes local and OneDrive key-value store databases.
@@ -83,7 +83,7 @@ function Sync-KeyValueStore {
             # construct default database path in local app data folder
             $databaseFilePath = GenXdev.FileSystem\Expand-Path `
             ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqllite.db') `
+                'KeyValueStores.sqlite.db') `
                 -CreateDirectory
         }
         else {
@@ -115,7 +115,7 @@ function Sync-KeyValueStore {
         # construct path to onedrive shadow database for synchronization
         $shadowDb = GenXdev.FileSystem\Expand-Path `
         ('~\OneDrive\GenXdev.PowerShell.SyncObjects\' +
-            'KeyValueStores.sqllite.db')
+            'KeyValueStores.sqlite.db')
 
         # log database paths for debugging and verification purposes
         Microsoft.PowerShell.Utility\Write-Verbose "Local DB: $localDb"
