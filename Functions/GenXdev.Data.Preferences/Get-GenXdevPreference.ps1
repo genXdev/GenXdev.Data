@@ -159,7 +159,7 @@ function Get-GenXdevPreference {
 
             # resolve the actual database path using the helper function
             $preferencesDatabasePath = `
-                Get-GenXdevPreferencesDatabasePath @params
+                GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
 
             # output verbose information about the database path being used
             Microsoft.PowerShell.Utility\Write-Verbose `
@@ -188,7 +188,7 @@ function Get-GenXdevPreference {
                 $getLocalParams.ErrorAction = 'Stop'
 
                 # attempt to get value from local store
-                $value = Get-ValueByKeyFromStore @getLocalParams
+                $value = GenXdev.Data\Get-ValueByKeyFromStore @getLocalParams
 
                 # if local store lookup failed, try defaults store
                 if ([string]::IsNullOrEmpty($value)) {
@@ -213,7 +213,7 @@ function Get-GenXdevPreference {
                     $getDefaultParams.ErrorAction = 'Stop'
 
                     # attempt to get value from defaults store
-                    $value = Get-ValueByKeyFromStore @getDefaultParams
+                    $value = GenXdev.Data\Get-ValueByKeyFromStore @getDefaultParams
                 }
 
                 # if we found a value in persistent storage, return it

@@ -122,7 +122,7 @@ function Get-KeyValueStoreNames {
                     -ErrorAction SilentlyContinue)
 
             # initialize the key value stores database
-            Initialize-KeyValueStores @initParams
+                GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
         # perform synchronization for non-local stores
@@ -145,7 +145,7 @@ function Get-KeyValueStoreNames {
             $syncParams.SynchronizationKey = $SynchronizationKey
 
             # synchronize the key value store with remote sources
-            Sync-KeyValueStore @syncParams
+                GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
         # construct sql query to get unique store names
@@ -167,11 +167,11 @@ AND deletedDate IS NULL;
         )
 
         # execute the sql query and extract store names from results
-        Invoke-SQLiteQuery `
-            -DatabaseFilePath $databaseFilePath `
-            -Queries $sqlQuery `
-            -SqlParameters $params |
-            Microsoft.PowerShell.Core\ForEach-Object storeName
+            GenXdev.Data\Invoke-SQLiteQuery `
+                -DatabaseFilePath $databaseFilePath `
+                -Queries $sqlQuery `
+                -SqlParameters $params |
+                Microsoft.PowerShell.Core\ForEach-Object storeName
     }
 
     end {

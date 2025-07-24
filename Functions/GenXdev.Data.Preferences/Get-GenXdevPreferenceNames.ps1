@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Gets all preference names from session storage and database stores.
@@ -95,7 +95,7 @@ function Get-GenXdevPreferenceNames {
 
         # resolve the actual database path using the helper function
         $PreferencesDatabasePath = `
-            Get-GenXdevPreferencesDatabasePath @params
+            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
 
         # output verbose information about the database path being used
         Microsoft.PowerShell.Utility\Write-Verbose `
@@ -181,7 +181,7 @@ function Get-GenXdevPreferenceNames {
             $getLocalKeysParams.DatabasePath = $PreferencesDatabasePath
 
             # get keys from local store
-            $localKeys = Get-StoreKeys @getLocalKeysParams
+            $localKeys = GenXdev.Data\Get-StoreKeys @getLocalKeysParams
 
             if ($localKeys.Count -gt 0) {
                 $allKeys += $localKeys
@@ -205,7 +205,7 @@ function Get-GenXdevPreferenceNames {
             $getDefaultKeysParams.DatabasePath = $PreferencesDatabasePath
 
             # get keys from defaults store
-            $defaultKeys = Get-StoreKeys @getDefaultKeysParams
+            $defaultKeys = GenXdev.Data\Get-StoreKeys @getDefaultKeysParams
 
             if ($defaultKeys.Count -gt 0) {
                 $allKeys += $defaultKeys

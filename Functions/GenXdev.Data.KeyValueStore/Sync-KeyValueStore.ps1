@@ -139,7 +139,7 @@ function Sync-KeyValueStore {
                     -ErrorAction SilentlyContinue)
 
             # initialize the key-value store databases if they don't exist
-            Initialize-KeyValueStores @params
+                GenXdev.Data\Initialize-KeyValueStores @params
         }
 
         # define sql query for bidirectional synchronization between databases
@@ -186,10 +186,10 @@ AND (
             'Executing sync query with parameters'
 
         # execute the synchronization query with prepared parameters
-        Invoke-SQLiteQuery `
-            -DatabaseFilePath $localDb `
-            -Queries $syncQuery `
-            -SqlParameters $params
+            GenXdev.Data\Invoke-SQLiteQuery `
+                -DatabaseFilePath $localDb `
+                -Queries $syncQuery `
+                -SqlParameters $params
     }
 
     end {

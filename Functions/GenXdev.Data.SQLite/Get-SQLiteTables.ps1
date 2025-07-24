@@ -65,7 +65,7 @@ function Get-SQLiteTables {
 
         # execute query using the inherited connection parameters
         Microsoft.PowerShell.Utility\Write-Verbose 'Executing query to retrieve table names'
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

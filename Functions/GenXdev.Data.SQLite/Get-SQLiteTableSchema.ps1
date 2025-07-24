@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves the schema information for a specified SQLite table.
@@ -78,7 +78,7 @@ function Get-SQLiteTableSchema {
         Microsoft.PowerShell.Utility\Write-Verbose 'Executing schema query against SQLite database'
 
         # execute the query and return results using existing Invoke-SQLiteQuery
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

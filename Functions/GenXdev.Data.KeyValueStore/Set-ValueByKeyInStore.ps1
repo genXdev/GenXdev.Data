@@ -142,7 +142,7 @@ function Set-ValueByKeyInStore {
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
-            Initialize-KeyValueStores @initParams
+                GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
         # get current user identity for audit trail purposes
@@ -209,8 +209,8 @@ DO UPDATE SET
             $queryParams.Queries = $sqlQuery
             $queryParams.SqlParameters = $params
 
-            # execute the upsert operation against the database
-            Invoke-SQLiteQuery @queryParams
+                # execute the upsert operation against the database
+                GenXdev.Data\Invoke-SQLiteQuery @queryParams
 
             # handle synchronization for non-local stores
             if ($SynchronizationKey -ne 'Local') {
@@ -229,8 +229,8 @@ DO UPDATE SET
                 # assign specific parameters for synchronization
                 $syncParams.SynchronizationKey = $SynchronizationKey
 
-                # trigger the synchronization process
-                Sync-KeyValueStore @syncParams
+                    # trigger the synchronization process
+                    GenXdev.Data\Sync-KeyValueStore @syncParams
             }
         }
     }

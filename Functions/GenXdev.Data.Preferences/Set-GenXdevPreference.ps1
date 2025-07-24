@@ -1,4 +1,4 @@
-﻿################################################################################
+################################################################################
 <#
 .SYNOPSIS
 Sets a preference value in the GenXdev preferences store.
@@ -171,7 +171,7 @@ function Set-GenXdevPreference {
 
         # resolve the actual database path using the helper function
         $PreferencesDatabasePath = `
-            Get-GenXdevPreferencesDatabasePath @params
+            GenXdev.Data\Get-GenXdevPreferencesDatabasePath @params
 
         # output verbose information about the database path being used
         Microsoft.PowerShell.Utility\Write-Verbose `
@@ -199,7 +199,7 @@ function Set-GenXdevPreference {
                 $removeParams.SkipSession = $true  # we handle session separately
 
                 # remove the preference from the local store
-                Remove-GenXdevPreference @removeParams
+                GenXdev.Data\Remove-GenXdevPreference @removeParams
 
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Successfully removed preference '$Name'"
@@ -229,7 +229,7 @@ function Set-GenXdevPreference {
             $setParams.DatabasePath = $PreferencesDatabasePath
 
             # store the preference value in the database store
-            Set-ValueByKeyInStore @setParams
+            GenXdev.Data\Set-ValueByKeyInStore @setParams
 
             Microsoft.PowerShell.Utility\Write-Verbose `
                 "Successfully configured preference '$Name' in GenXdev.Data module: [$Value]"

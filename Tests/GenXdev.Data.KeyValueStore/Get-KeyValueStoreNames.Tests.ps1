@@ -1,12 +1,12 @@
-﻿Pester\BeforeAll {
+Pester\BeforeAll {
     # Clean-up
-    Remove-KeyValueStore -StoreName 'Store1'
-    Remove-KeyValueStore -StoreName 'Store2'
+    GenXdev.Data\Remove-KeyValueStore -StoreName 'Store1'
+    GenXdev.Data\Remove-KeyValueStore -StoreName 'Store2'
 }
 Pester\AfterAll {
     # Clean-up
-    Remove-KeyValueStore -StoreName 'Store1'
-    Remove-KeyValueStore -StoreName 'Store2'
+    GenXdev.Data\Remove-KeyValueStore -StoreName 'Store1'
+    GenXdev.Data\Remove-KeyValueStore -StoreName 'Store2'
 }
 
 Pester\Describe 'Get-KeyValueStoreNames' {
@@ -38,12 +38,12 @@ $message
     Pester\BeforeAll {
         try {
             Microsoft.PowerShell.Utility\Write-Verbose 'Setting up test environment'
-            Remove-KeyValueStore -StoreName 'Store1'
-            Remove-KeyValueStore -StoreName 'Store2'
+            GenXdev.Data\Remove-KeyValueStore -StoreName 'Store1'
+            GenXdev.Data\Remove-KeyValueStore -StoreName 'Store2'
 
             # Setup test stores
-            Set-ValueByKeyInStore -StoreName 'Store1' -KeyName 'Key1' -Value 'Value1'
-            Set-ValueByKeyInStore -StoreName 'Store2' -KeyName 'Key2' -Value 'Value2'
+            GenXdev.Data\Set-ValueByKeyInStore -StoreName 'Store1' -KeyName 'Key1' -Value 'Value1'
+            GenXdev.Data\Set-ValueByKeyInStore -StoreName 'Store2' -KeyName 'Key2' -Value 'Value2'
         }
         catch {
             throw
@@ -51,7 +51,7 @@ $message
     }
 
     Pester\It 'Should list all stores' {
-        $stores = Get-KeyValueStoreNames
+        $stores = GenXdev.Data\Get-KeyValueStoreNames
         $stores | Pester\Should -Contain 'Store1'
         $stores | Pester\Should -Contain 'Store2'
     }

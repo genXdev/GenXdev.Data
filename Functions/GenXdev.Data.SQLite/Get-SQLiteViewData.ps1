@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves data from a SQLite database view with optional record limiting.
@@ -97,7 +97,7 @@ function Get-SQLiteViewData {
         $PSBoundParameters['Queries'] = $query
 
         # execute query and return results
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {

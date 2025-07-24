@@ -182,7 +182,23 @@ function Remove-GenXdevPreference {
             # handle default store removal if requested
             if ($RemoveDefault) {
                 Microsoft.PowerShell.Utility\Write-Verbose ('Removing preference ' + $Name + ' from default store')
-                GenXdev.Data\Sync-KeyValueStore -Name $Name -RemoveDefault
+
+                # copy identical parameter values for Remove-KeyFromStore (defaults)
+                $removeDefaultParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                    -BoundParameters $PSBoundParameters `
+                    -FunctionName 'GenXdev.Data\Remove-KeyFromStore' `
+                    -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
+                        -Scope Local `
+                        -ErrorAction SilentlyContinue)
+
+                # assign specific parameters for default store removal
+                $removeDefaultParams.StoreName = 'GenXdev.PowerShell.Preferences'
+                $removeDefaultParams.KeyName = $Name
+                $removeDefaultParams.SynchronizationKey = 'Defaults'
+                $removeDefaultParams.DatabasePath = $PreferencesDatabasePath
+
+                # remove the preference key from the default store
+                GenXdev.Data\Remove-KeyFromStore @removeDefaultParams
             }
         }
     }

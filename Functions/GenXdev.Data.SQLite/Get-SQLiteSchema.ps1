@@ -1,4 +1,4 @@
-﻿###############################################################################
+###############################################################################
 <#
 .SYNOPSIS
 Retrieves the complete schema information from a SQLite database.
@@ -58,7 +58,7 @@ function Get-SQLiteSchema {
         $PSBoundParameters['Queries'] = 'SELECT * FROM sqlite_master'
 
         # execute the schema query using the existing Invoke-SQLiteQuery function
-        Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
     }
 
     end {
