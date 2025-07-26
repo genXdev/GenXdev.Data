@@ -1360,7 +1360,7 @@ SYNTAX
     
     
 DESCRIPTION
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then falls back to a JSON configuration file, and finally uses system defaults.
+    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.
     
 
 PARAMETERS
@@ -1426,7 +1426,7 @@ OUTPUTS
     
     PS > Get-GenXdevPreferencesDatabasePath -SkipSession
     
-    Gets the configured database path only from the JSON configuration file, ignoring any session setting.
+    Gets the configured database path using system defaults, ignoring any session setting.
     
     
     
@@ -1435,7 +1435,7 @@ OUTPUTS
     
     PS > Get-GenXdevPreferencesDatabasePath -ClearSession
     
-    Clears the session database path setting and then gets the path from the JSON configuration file.
+    Clears the session database path setting and then gets the path using system defaults.
     
     
     
@@ -1875,9 +1875,9 @@ SYNTAX
     
 DESCRIPTION
     This function configures the global database path used by the GenXdev.Data
-    module for various preference storage and data operations. Settings can be
-    stored persistently in a JSON file (default), only in the current session
-    (using -SessionOnly), or cleared from the session (using -ClearSession).
+    module for various preference storage and data operations. Settings are
+    stored in the current session (using Global variables) and can be cleared
+    from the session (using -ClearSession).
     
 
 PARAMETERS
@@ -1958,7 +1958,7 @@ OUTPUTS
     
     PS > Set-GenXdevPreferencesDatabasePath -PreferencesDatabasePath "C:\Data\Preferences.db"
     
-    Sets the database path persistently in a JSON file.
+    Sets the database path in the current session (Global variable).
     
     
     
@@ -1967,7 +1967,7 @@ OUTPUTS
     
     PS > Set-GenXdevPreferencesDatabasePath "C:\MyPreferences.db"
     
-    Sets the database path persistently in a JSON file using positional parameter.
+    Sets the database path in the current session using positional parameter.
     
     
     
@@ -1985,8 +1985,7 @@ OUTPUTS
     
     PS > Set-GenXdevPreferencesDatabasePath -ClearSession
     
-    Clears the session database path setting without affecting persistent
-    preferences.
+    Clears the session database path setting.
     
     
     

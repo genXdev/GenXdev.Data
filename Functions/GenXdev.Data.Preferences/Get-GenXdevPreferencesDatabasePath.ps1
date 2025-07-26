@@ -3,7 +3,7 @@
 Gets the configured database path for preference data files used in GenXdev.Data operations.
 
 .DESCRIPTION
-This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then falls back to a JSON configuration file, and finally uses system defaults.
+This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.
 
 .PARAMETER DatabasePath
 Optional database path override. If specified, this path will be returned instead of retrieving from configuration.
@@ -22,12 +22,12 @@ Gets the currently configured database path from Global variables or preferences
 .EXAMPLE
 Get-GenXdevPreferencesDatabasePath -SkipSession
 
-Gets the configured database path only from the JSON configuration file, ignoring any session setting.
+Gets the configured database path using system defaults, ignoring any session setting.
 
 .EXAMPLE
 Get-GenXdevPreferencesDatabasePath -ClearSession
 
-Clears the session database path setting and then gets the path from the JSON configuration file.
+Clears the session database path setting and then gets the path using system defaults.
 
 .EXAMPLE
 Get-GenXdevPreferencesDatabasePath "C:\MyPreferences.db"
@@ -89,7 +89,7 @@ function Get-GenXdevPreferencesDatabasePath {
             return
         }
 
-        # check global variable first (unless SkipSession is specified), then fall back to preferences (unless SessionOnly is specified)
+        # check global variable first (unless SkipSession is specified), then fall back to default (unless SessionOnly is specified)
         if ((-not $SkipSession) -and (-not ([string]::IsNullOrWhiteSpace($Global:PreferencesDatabasePath)))) {
 
             $resolvedDatabasePath = $Global:PreferencesDatabasePath
@@ -98,34 +98,13 @@ function Get-GenXdevPreferencesDatabasePath {
 
         if (-not $SessionOnly) {
 
-            try {
+            # use default path since no session variable or JSON file
+            $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path `
+                "$($Env:LOCALAPPDATA)\GenXdev\Preferences.db" `
+                -CreateDirectory
 
-                # read from JSON file instead of preferences to avoid infinite loop
-                $jsonPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\defaultdblocation.json"
-
-                if (Microsoft.PowerShell.Management\Test-Path $jsonPath) {
-                    $jsonContent = Microsoft.PowerShell.Management\Get-Content $jsonPath -Raw | Microsoft.PowerShell.Utility\ConvertFrom-Json
-                    $resolvedDatabasePath = $jsonContent.PreferencesDatabasePath
-                }
-                else {
-                    $resolvedDatabasePath = $null
-                }
-            }
-            catch {
-
-                $resolvedDatabasePath = $null
-            }
-
-            # use configured path or fallback to default
-            if ([string]::IsNullOrWhiteSpace($resolvedDatabasePath)) {
-
-                # fallback to default path
-                $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path `
-                    "$($Env:LOCALAPPDATA)\GenXdev\Preferences.db" `
-                    -CreateDirectory
-            }
             if (-not [string]::IsNullOrWhiteSpace($resolvedDatabasePath)) {
-                return;
+                return
             }
         }
         # SessionOnly is specified but no session variable found, use default

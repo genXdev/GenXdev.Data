@@ -5,9 +5,9 @@ Sets the database path for preferences used in GenXdev.Data operations.
 
 .DESCRIPTION
 This function configures the global database path used by the GenXdev.Data
-module for various preference storage and data operations. Settings can be
-stored persistently in a JSON file (default), only in the current session
-(using -SessionOnly), or cleared from the session (using -ClearSession).
+module for various preference storage and data operations. Settings are
+stored in the current session (using Global variables) and can be cleared
+from the session (using -ClearSession).
 
 .PARAMETER PreferencesDatabasePath
 A database path where preference data files are located. This path will be used
@@ -29,12 +29,12 @@ affecting persistent preferences.
 .EXAMPLE
 Set-GenXdevPreferencesDatabasePath -PreferencesDatabasePath "C:\Data\Preferences.db"
 
-Sets the database path persistently in a JSON file.
+Sets the database path in the current session (Global variable).
 
 .EXAMPLE
 Set-GenXdevPreferencesDatabasePath "C:\MyPreferences.db"
 
-Sets the database path persistently in a JSON file using positional parameter.
+Sets the database path in the current session using positional parameter.
 
 .EXAMPLE
 Set-GenXdevPreferencesDatabasePath -DatabasePath "C:\TempPreferences.db" -SessionOnly
@@ -44,8 +44,7 @@ Sets the database path only for the current session (Global variable).
 .EXAMPLE
 Set-GenXdevPreferencesDatabasePath -ClearSession
 
-Clears the session database path setting without affecting persistent
-preferences.
+Clears the session database path setting.
 #>
 ###############################################################################
 function Set-GenXdevPreferencesDatabasePath {
@@ -137,53 +136,20 @@ function Set-GenXdevPreferencesDatabasePath {
             return
         }
 
-        # handle session-only storage
-        if ($SessionOnly) {
-
-            # confirm the operation with the user before proceeding
-            if ($PSCmdlet.ShouldProcess(
-                    'GenXdev.Data Module Configuration',
-                ('Set session-only database path to: ' +
-                    "[$PreferencesDatabasePath]")
-                )) {
-
-                # set global variable for session-only storage
-                $Global:PreferencesDatabasePath = $PreferencesDatabasePath
-
-                # output verbose confirmation of session-only setting
-                Microsoft.PowerShell.Utility\Write-Verbose (
-                    ('Set session-only database path: ' +
-                    "PreferencesDatabasePath = $PreferencesDatabasePath")
-                )
-            }
-            return
-        }
-
-        # handle persistent storage (default behavior)
-        # confirm the operation with the user before proceeding with changes
+        # set global variable for storage (default behavior now)
+        # confirm the operation with the user before proceeding
         if ($PSCmdlet.ShouldProcess(
                 'GenXdev.Data Module Configuration',
                 "Set database path to: [$PreferencesDatabasePath]"
             )) {
 
-            # build the path for the json configuration file
-            $jsonPath = GenXdev.FileSystem\Expand-Path `
-                "$PSScriptRoot\defaultdblocation.json"
+            # set global variable for storage
+            $Global:PreferencesDatabasePath = $PreferencesDatabasePath
 
-            # create the configuration data structure
-            $jsonData = @{
-                PreferencesDatabasePath = $PreferencesDatabasePath
-            }
-
-            # convert to json and save to file to avoid infinite loop
-            $null = $jsonData |
-                Microsoft.PowerShell.Utility\ConvertTo-Json -Depth 20 |
-                Microsoft.PowerShell.Management\Set-Content -Path $jsonPath -Force
-
-            # output confirmation message about successful configuration
+            # output verbose confirmation of setting
             Microsoft.PowerShell.Utility\Write-Verbose (
-                ('Successfully configured database path in GenXdev.Data ' +
-                "module: [$PreferencesDatabasePath]")
+                ('Set database path: ' +
+                "PreferencesDatabasePath = $PreferencesDatabasePath")
             )
         }
     }
