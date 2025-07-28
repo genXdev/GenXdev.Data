@@ -61,53 +61,51 @@ Update-Module
 
 # Cmdlet Index
 ### GenXdev.Data<hr/>
+### GenXdev.Data.KeyValueStore
 | Command | Aliases | Description |
 | --- | --- | --- |
 | [Get-KeyValueStoreNames](#get-keyvaluestorenames) | getstorenames | Retrieves a list of all available key-value store names from the database. |
 | [Get-StoreKeys](#get-storekeys) | getkeys | Retrieves all key names for a given key-value store. |
 | [Get-ValueByKeyFromStore](#get-valuebykeyfromstore) | getvalue | Retrieves a value from a key-value store database. |
-| [Initialize-KeyValueStores](#initialize-keyvaluestores) |  | Initializes and synchronizes KeyValueStore databases between local and OneDrive. |
+| [Initialize-KeyValueStores](#initialize-keyvaluestores) | &nbsp; | Initializes and synchronizes KeyValueStore databases between local and OneDrive. |
 | [Remove-KeyFromStore](#remove-keyfromstore) | removekey | Deletes a key from the specified key-value store. |
-| [Remove-KeyValueStore](#remove-keyvaluestore) |  | Removes a key-value store from the database. |
+| [Remove-KeyValueStore](#remove-keyvaluestore) | &nbsp; | Removes a key-value store from the database. |
 | [Set-ValueByKeyInStore](#set-valuebykeyinstore) | setvalue | Manages key-value pairs in a SQLite database store. |
-| [Sync-KeyValueStore](#sync-keyvaluestore) |  | Synchronizes local and OneDrive key-value store databases. |
+| [Sync-KeyValueStore](#sync-keyvaluestore) | &nbsp; | Synchronizes local and OneDrive key-value store databases. |
 
 ### GenXdev.Data.Preferences
 | Command | Aliases | Description |
 | --- | --- | --- |
-
 | [Get-GenXdevPreference](#get-genxdevpreference) | getpreference | Retrieves a preference value from the GenXdev preferences store. |
 | [Get-GenXdevPreferenceNames](#get-genxdevpreferencenames) | getpreferencenames | Gets all preference names from session storage and database stores. |
-| [Get-GenXdevPreferencesDatabasePath](#get-genxdevpreferencesdatabasepath) |  | Gets the configured database path for preference data files used in GenXdev.Data operations. |
+| [Get-GenXdevPreferencesDatabasePath](#get-genxdevpreferencesdatabasepath) | &nbsp; | Gets the configured database path for preference data files used in GenXdev.Data operations. |
 | [Remove-GenXdevPreference](#remove-genxdevpreference) | removepreference | Removes a preference value from the GenXdev preferences store. |
 | [Set-GenXdevDefaultPreference](#set-genxdevdefaultpreference) | setpreferencedefault | Sets a default preference value in the GenXdev preferences store. |
 | [Set-GenXdevPreference](#set-genxdevpreference) | setpreference | Sets a preference value in the GenXdev preferences store. |
-| [Set-GenXdevPreferencesDatabasePath](#set-genxdevpreferencesdatabasepath) |  | Sets the database path for preferences used in GenXdev.Data operations. |
+| [Set-GenXdevPreferencesDatabasePath](#set-genxdevpreferencesdatabasepath) | &nbsp; | Sets the database path for preferences used in GenXdev.Data operations. |
 
 ### GenXdev.Data.SQLite
 | Command | Aliases | Description |
 | --- | --- | --- |
-
-| [EnsureSQLiteStudioInstalled](#ensuresqlitestudioinstalled) |  | Ensures SQLiteStudio is installed and accessible from the command line. |
-| [Get-SQLiteSchema](#get-sqliteschema) |  | Retrieves the complete schema information from a SQLite database. |
-| [Get-SQLiteTableColumnData](#get-sqlitetablecolumndata) |  | Retrieves data from a specific column in a SQLite database table. |
-| [Get-SQLiteTableData](#get-sqlitetabledata) |  | Retrieves data from a SQLite database table with optional record limiting. |
-| [Get-SQLiteTables](#get-sqlitetables) |  | Retrieves a list of table names from a SQLite database. |
-| [Get-SQLiteTableSchema](#get-sqlitetableschema) |  | Retrieves the schema information for a specified SQLite table. |
+| [EnsureSQLiteStudioInstalled](#ensuresqlitestudioinstalled) | &nbsp; | Ensures SQLiteStudio is installed and accessible from the command line. |
+| [Get-SQLiteSchema](#get-sqliteschema) | &nbsp; | Retrieves the complete schema information from a SQLite database. |
+| [Get-SQLiteTableColumnData](#get-sqlitetablecolumndata) | &nbsp; | Retrieves data from a specific column in a SQLite database table. |
+| [Get-SQLiteTableData](#get-sqlitetabledata) | &nbsp; | Retrieves data from a SQLite database table with optional record limiting. |
+| [Get-SQLiteTables](#get-sqlitetables) | &nbsp; | Retrieves a list of table names from a SQLite database. |
+| [Get-SQLiteTableSchema](#get-sqlitetableschema) | &nbsp; | Retrieves the schema information for a specified SQLite table. |
 | [Get-SQLiteTransaction](#get-sqlitetransaction) | getsqltx, newsqltx | Creates and returns a SQLite transaction object for batch operations. |
-| [Get-SQLiteViewColumnData](#get-sqliteviewcolumndata) |  | Retrieves column data from a SQLite view with optional record limiting. |
-| [Get-SQLiteViewData](#get-sqliteviewdata) |  | Retrieves data from a SQLite database view with optional record limiting. |
-| [Get-SQLiteViews](#get-sqliteviews) |  | Retrieves a list of views from a SQLite database. |
-| [Get-SQLiteViewSchema](#get-sqliteviewschema) |  | Retrieves the SQL schema definition for a SQLite view. |
-| [Invoke-SQLiteQuery](#invoke-sqlitequery) |  | Executes one or more SQL queries against a SQLite database with transaction support. |
-| [Invoke-SQLiteStudio](#invoke-sqlitestudio) |  | Executes SQLite database queries with support for parameters and transactions. |
+| [Get-SQLiteViewColumnData](#get-sqliteviewcolumndata) | &nbsp; | Retrieves column data from a SQLite view with optional record limiting. |
+| [Get-SQLiteViewData](#get-sqliteviewdata) | &nbsp; | Retrieves data from a SQLite database view with optional record limiting. |
+| [Get-SQLiteViews](#get-sqliteviews) | &nbsp; | Retrieves a list of views from a SQLite database. |
+| [Get-SQLiteViewSchema](#get-sqliteviewschema) | &nbsp; | Retrieves the SQL schema definition for a SQLite view. |
+| [Invoke-SQLiteQuery](#invoke-sqlitequery) | &nbsp; | Executes one or more SQL queries against a SQLite database with transaction support. |
+| [Invoke-SQLiteStudio](#invoke-sqlitestudio) | &nbsp; | Executes SQLite database queries with support for parameters and transactions. |
 | [New-SQLiteDatabase](#new-sqlitedatabase) | nsqldb | Creates a new SQLite database file. |
 
 ### GenXdev.Data.SqlServer
 | Command | Aliases | Description |
 | --- | --- | --- |
-
-| [Invoke-SqlServerQuery](#invoke-sqlserverquery) |  | Executes SQL queries against a SQL Server database with transaction support. |
+| [Invoke-SqlServerQuery](#invoke-sqlserverquery) | &nbsp; | Executes SQL queries against a SQL Server database with transaction support. |
 
 <br/><hr/><hr/><br/>
 
