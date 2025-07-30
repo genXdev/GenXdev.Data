@@ -186,7 +186,19 @@ function Invoke-SQLiteQuery {
                     while ($reader.Read()) {
                         $record = @{}
                         for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-                            $record[$reader.GetName($i)] = $reader.GetValue($i)
+                            $name = $reader.GetName($i)
+                            $value = $reader.GetValue($i)
+                            # Try to parse as DateTime if string matches expected format
+                            if ($value -is [string] -and $value -match '^[0-9]{2}/[0-9]{2}/[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2} [+-][0-9]{2}:[0-9]{2}$') {
+                                try {
+                                    $parsed = [datetime]::ParseExact($value, 'dd/MM/yyyy HH:mm:ss zzz', $null)
+                                    $record[$name] = $parsed
+                                } catch {
+                                    $record[$name] = $value
+                                }
+                            } else {
+                                $record[$name] = $value
+                            }
                         }
                         Microsoft.PowerShell.Utility\Write-Output $record
                     }
