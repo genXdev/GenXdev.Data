@@ -139,7 +139,7 @@ function Get-ValueByKeyFromStore {
     process {
 
         # check if database file exists and initialize if needed
-        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
 
             # log database initialization activity
             Microsoft.PowerShell.Utility\Write-Verbose `

@@ -83,7 +83,7 @@ function Get-SQLiteTransaction {
         if ($PSCmdlet.ParameterSetName -eq 'DatabaseFilePath') {
             $expandedPath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath
             # create database if it doesn't exist and CreateDatabaseIfNotExists is true
-            if ($CreateDatabaseIfNotExists -and -not (Microsoft.PowerShell.Management\Test-Path $expandedPath)) {
+            if ($CreateDatabaseIfNotExists -and -not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $expandedPath)) {
                 Microsoft.PowerShell.Utility\Write-Verbose "Creating database file: $expandedPath"
 
                 # use Copy-IdenticalParamValues to pass compatible parameters to New-SQLiteDatabase

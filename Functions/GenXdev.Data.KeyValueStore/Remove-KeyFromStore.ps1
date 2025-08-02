@@ -122,7 +122,7 @@ function Remove-KeyFromStore {
 
         # initialize database if it doesn't exist
         if (-not (Microsoft.PowerShell.Management\Test-Path `
-                    $databaseFilePath)) {
+                    -LiteralPath $databaseFilePath)) {
 
             Microsoft.PowerShell.Utility\Write-Verbose `
                 'Database not found, initializing...'

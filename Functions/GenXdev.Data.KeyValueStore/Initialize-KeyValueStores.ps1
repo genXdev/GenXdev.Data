@@ -110,7 +110,7 @@ function Initialize-KeyValueStores {
         foreach ($dbPath in @($databaseFilePath, $shadowDbPath)) {
 
             # create database if it doesn't exist
-            if (-not (Microsoft.PowerShell.Management\Test-Path $dbPath)) {
+            if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $dbPath)) {
 
                 # output verbose message about database creation
                 Microsoft.PowerShell.Utility\Write-Verbose `

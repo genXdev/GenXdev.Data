@@ -106,7 +106,7 @@ function Get-KeyValueStoreNames {
     process {
 
         # check if database file exists and create if needed
-        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
 
             # output verbose information about database initialization
             Microsoft.PowerShell.Utility\Write-Verbose (

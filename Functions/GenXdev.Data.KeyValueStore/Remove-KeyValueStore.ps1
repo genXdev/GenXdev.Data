@@ -113,7 +113,7 @@ function Remove-KeyValueStore {
 
         # check if database file exists and initialize if necessary
         if (-not (Microsoft.PowerShell.Management\Test-Path `
-                    $databaseFilePath)) {
+                    -LiteralPath $databaseFilePath)) {
 
             # output verbose information about database initialization
             Microsoft.PowerShell.Utility\Write-Verbose `

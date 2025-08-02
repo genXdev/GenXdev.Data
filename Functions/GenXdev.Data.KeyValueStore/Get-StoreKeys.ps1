@@ -115,7 +115,7 @@ function Get-StoreKeys {
     process {
 
         # check if the database file exists, initialize if not found
-        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
 
             # output verbose message for database initialization
             Microsoft.PowerShell.Utility\Write-Verbose (

@@ -44,7 +44,7 @@ function New-SQLiteDatabase {
     process {
 
         # check if database file already exists
-        if (-not (Microsoft.PowerShell.Management\Test-Path $DatabaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $DatabaseFilePath)) {
 
             # build a meaningful should process message
             $targetObject = 'SQLite database'

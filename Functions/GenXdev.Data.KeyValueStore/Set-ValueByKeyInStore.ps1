@@ -129,7 +129,7 @@ function Set-ValueByKeyInStore {
     process {
 
         # ensure database exists before attempting operations
-        if (-not (Microsoft.PowerShell.Management\Test-Path $databaseFilePath)) {
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
 
             Microsoft.PowerShell.Utility\Write-Verbose (
                 'Database not found. Initializing...')
