@@ -28,9 +28,9 @@ function EnsureSQLiteStudioInstalled {
         function IsWinGetInstalled {
 
             Microsoft.PowerShell.Core\Import-Module 'Microsoft.WinGet.Client' -ErrorAction SilentlyContinue
-            $module = Microsoft.PowerShell.Core\Get-Module 'Microsoft.WinGet.Client' -ErrorAction SilentlyContinue
+            $ModuleObj = Microsoft.PowerShell.Core\Get-Module 'Microsoft.WinGet.Client' -ErrorAction SilentlyContinue
 
-            return $null -ne $module
+            return $null -ne $ModuleObj
         }
 
         ########################################################################

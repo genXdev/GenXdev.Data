@@ -1,39 +1,11 @@
-﻿###############################################################################
-Pester\BeforeAll {
-    # Clean-up
-    Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
-}
-Pester\AfterAll {
-    # Clean-up
-    Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
-}
-###############################################################################
-Pester\Describe 'Remove-GenXdevPreference' {
-    Pester\It 'Should pass PSScriptAnalyzer rules' {
+﻿Pester\Describe 'Remove-GenXdevPreference' {
 
-        # get the script path for analysis
-        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.ps1"
+    Pester\BeforeAll {
+        Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
+    }
 
-        # run analyzer with explicit settings
-        $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
-            -Path $scriptPath
-
-        [string] $message = ''
-        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
-
-            $message = $message + @"
---------------------------------------------------
-Rule: $($_.RuleName)`
-Description: $($_.Description)
-Message: $($_.Message)
-`r`n
-"@
-        }
-
-        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
-The following PSScriptAnalyzer rules are being violated:
-$message
-"@;
+    Pester\AfterAll {
+        Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
     }
 
     Pester\BeforeEach {

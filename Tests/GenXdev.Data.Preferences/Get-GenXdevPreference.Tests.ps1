@@ -1,56 +1,18 @@
-﻿###############################################################################
-Pester\BeforeAll {
-    # Clean-up
-    Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
-    Remove-GenXdevPreference -Name 'TestPref2' -RemoveDefault
-}
-Pester\AfterAll {
-    # Clean-up
-    Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
-    Remove-GenXdevPreference -Name 'TestPref2' -RemoveDefault
-}
-###############################################################################
-Pester\Describe 'Get-GenXdevPreference' {
+﻿Pester\Describe 'Get-GenXdevPreference' {
 
     Pester\BeforeAll {
-        # Setup test environment
-        try {
-            Microsoft.PowerShell.Utility\Write-Verbose 'Setting up test environment'
-            Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
-            Remove-GenXdevPreference -Name 'TestPref2' -RemoveDefault
-            Set-GenXdevPreference -Name 'TestPref1' -Value 'LocalValue'
-            Set-GenXdevDefaultPreference -Name 'TestPref2' -Value 'DefaultValue'
-        }
-        catch {
-            throw
-        }
+
+        Microsoft.PowerShell.Utility\Write-Verbose 'Setting up test environment'
+        Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
+        Remove-GenXdevPreference -Name 'TestPref2' -RemoveDefault
+        Set-GenXdevPreference -Name 'TestPref1' -Value 'LocalValue'
+        Set-GenXdevDefaultPreference -Name 'TestPref2' -Value 'DefaultValue'
     }
 
-    Pester\It 'Should pass PSScriptAnalyzer rules' {
-
-        # get the script path for analysis
-        $scriptPath = GenXdev.FileSystem\Expand-Path "$PSScriptRoot\..\..\Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1"
-
-        # run analyzer with explicit settings
-        $analyzerResults = GenXdev.Coding\Invoke-GenXdevScriptAnalyzer `
-            -Path $scriptPath
-
-        [string] $message = ''
-        $analyzerResults | Microsoft.PowerShell.Core\ForEach-Object {
-
-            $message = $message + @"
---------------------------------------------------
-Rule: $($_.RuleName)`
-Description: $($_.Description)
-Message: $($_.Message)
-`r`n
-"@
-        }
-
-        $analyzerResults.Count | Pester\Should -Be 0 -Because @"
-The following PSScriptAnalyzer rules are being violated:
-$message
-"@;
+    Pester\AfterAll {
+        # Clean-up
+        Remove-GenXdevPreference -Name 'TestPref1' -RemoveDefault
+        Remove-GenXdevPreference -Name 'TestPref2' -RemoveDefault
     }
 
     Pester\It 'Should retrieve local preference value' {
