@@ -43,14 +43,12 @@ function Initialize-KeyValueStores {
             HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
         )]
         [switch] $SessionOnly,
-
         ###############################################################################
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'Clear the session setting (Global variable) before retrieving'
         )]
         [switch] $ClearSession,
-
         ###############################################################################
         [Parameter(
             Mandatory = $false,

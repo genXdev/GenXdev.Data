@@ -50,7 +50,6 @@ function Get-SQLiteTableColumnData {
         )]
         [ValidateNotNullOrEmpty()]
         [string] $ConnectionString,
-
         ###############################################################################
         [Parameter(
             Position = 0,
@@ -60,7 +59,6 @@ function Get-SQLiteTableColumnData {
         )]
         [ValidateNotNullOrEmpty()]
         [string] $DatabaseFilePath,
-
         ###############################################################################
         [Parameter(
             Position = 1,
@@ -69,7 +67,6 @@ function Get-SQLiteTableColumnData {
         )]
         [ValidateNotNullOrEmpty()]
         [string] $TableName,
-
         ###############################################################################
         [Parameter(
             Position = 2,
@@ -78,7 +75,6 @@ function Get-SQLiteTableColumnData {
         )]
         [ValidateNotNullOrEmpty()]
         [string] $ColumnName,
-
         ###############################################################################
         [Parameter(
             Position = 3,

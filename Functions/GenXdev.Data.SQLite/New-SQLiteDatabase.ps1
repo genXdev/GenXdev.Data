@@ -35,6 +35,8 @@ function New-SQLiteDatabase {
     )
 
     begin {
+        # load SQLite client assembly
+        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.Sqlite'
 
         # expand the path and create directory if needed
         $DatabaseFilePath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath -CreateDirectory
@@ -57,7 +59,7 @@ function New-SQLiteDatabase {
                     $connectionString = "Data Source=$DatabaseFilePath"
 
                     # create a new database connection
-                    $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection(
+                    $connection = Microsoft.PowerShell.Utility\New-Object System.Data.Sqlite.SQLiteConnection(
                         $connectionString)
 
                     # open and immediately close to create empty database

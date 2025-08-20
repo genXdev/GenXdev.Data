@@ -55,7 +55,6 @@ function Invoke-SqlServerQuery {
             HelpMessage = 'The connection string to the SqlServer database.'
         )]
         [string]$ConnectionString,
-
         ###############################################################################
 
         [Parameter(
@@ -88,7 +87,6 @@ function Invoke-SqlServerQuery {
             HelpMessage = 'The username for SqlServer'
         )]
         [string]$User,
-
         ###############################################################################
 
         [Parameter(
@@ -98,7 +96,6 @@ function Invoke-SqlServerQuery {
             HelpMessage = 'The password for SqlServer'
         )]
         [string]$Password,
-
         ###############################################################################
 
         [Alias('q', 'Name', 'Text', 'Query')]
@@ -148,7 +145,6 @@ function Invoke-SqlServerQuery {
             HelpMessage = 'The query to execute.'
         )]
         [string[]] $Queries,
-
         ###############################################################################
         [parameter(
             ParameterSetName = 'HostNameWithUsernameAndPassword',
@@ -197,17 +193,20 @@ function Invoke-SqlServerQuery {
         )]
         [Alias('data', 'parameters', 'args')]
         [System.Collections.Hashtable[]] $SqlParameters,
-
         ###############################################################################
 
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'The isolation level to use. default is ReadCommitted.'
         )]
-        [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted
+        [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
+        [string]$IsolationLevel = "ReadCommitted"
     )
 
     begin {
+        # load SQL client assembly
+        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
+
         # prepare connection based on parameter set
         Microsoft.PowerShell.Utility\Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
 

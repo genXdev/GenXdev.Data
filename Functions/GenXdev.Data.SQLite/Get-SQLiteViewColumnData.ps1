@@ -47,7 +47,6 @@ function Get-SQLiteViewColumnData {
             HelpMessage = 'The connection string to the SQLite database.'
         )]
         [string]$ConnectionString,
-
         ###############################################################################
         [Parameter(
             Position = 0,
@@ -58,7 +57,6 @@ function Get-SQLiteViewColumnData {
         [ValidateNotNullOrEmpty()]
         [Alias('dbpath', 'indexpath')]
         [string]$DatabaseFilePath,
-
         ###############################################################################
         [Parameter(
             Position = 1,
@@ -66,7 +64,6 @@ function Get-SQLiteViewColumnData {
             HelpMessage = 'The name of the view.'
         )]
         [string]$ViewName,
-
         ###############################################################################
         [Parameter(
             Position = 2,
@@ -74,7 +71,6 @@ function Get-SQLiteViewColumnData {
             HelpMessage = 'The name of the column.'
         )]
         [string]$ColumnName,
-
         ###############################################################################
         [Parameter(
             Position = 3,

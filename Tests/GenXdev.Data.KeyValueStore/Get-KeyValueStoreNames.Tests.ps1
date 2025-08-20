@@ -1,4 +1,4 @@
-
+﻿
 Pester\Describe 'Get-KeyValueStoreNames' {
 
     Pester\BeforeAll {
@@ -15,7 +15,7 @@ Pester\Describe 'Get-KeyValueStoreNames' {
             throw
         }
     }
-    
+
     Pester\AfterAll {
         # Clean-up
         GenXdev.Data\Remove-KeyValueStore -StoreName 'Store1'

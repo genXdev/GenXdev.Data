@@ -81,9 +81,20 @@ function Invoke-SQLiteQuery {
             Mandatory = $false,
             HelpMessage = 'An existing SQLite transaction to use for the queries.'
         )]
-        [System.Data.SQLite.SQLiteTransaction]$Transaction,
+        [ValidateScript({
+                if ($null -eq $_) { return $true }
+                try {
+                    return $_.GetType().FullName -eq 'System.Data.Sqlite.SQLiteTransaction'
+                }
+                catch {
+                    # Assembly may not be loaded yet during module import
+                    return $true
+                }
+            })]
+        [object]$Transaction,
 
-        ###########################################################################        [Alias("q", "Value", "Name", "Text", "Query")]
+        ###########################################################################
+        [Alias("q", "Value", "Name", "Text", "Query")]
         [parameter(
             Mandatory,
             Position = 3,
@@ -108,27 +119,34 @@ function Invoke-SQLiteQuery {
         ###########################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = 'Transaction isolation level.'
+            HelpMessage = 'The isolation level to use. default is ReadCommitted.'
         )]
-        [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted
+        [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
+        [string]$IsolationLevel = "ReadCommitted"
     )
 
     begin {
+        # load SQLite client assembly
+        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.Sqlite'
+
         # determine connection source priority: Transaction > ConnectionString > DatabaseFilePath
         if ($null -ne $Transaction) {
             $connection = $Transaction.Connection
             $transaction = $Transaction
             $isExternalTransaction = $true
             Microsoft.PowerShell.Utility\Write-Verbose 'Using external transaction'
-        } elseif (-not [String]::IsNullOrWhiteSpace($ConnectionString)) {
+        }
+        elseif (-not [String]::IsNullOrWhiteSpace($ConnectionString)) {
             $connString = $ConnectionString
             $isExternalTransaction = $false
             Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with connection string: $connString"
-        } elseif (-not [String]::IsNullOrWhiteSpace($DatabaseFilePath)) {
+        }
+        elseif (-not [String]::IsNullOrWhiteSpace($DatabaseFilePath)) {
             $connString = "Data Source=$((GenXdev.FileSystem\Expand-Path $DatabaseFilePath))"
             $isExternalTransaction = $false
             Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with database file: $DatabaseFilePath"
-        } else {
+        }
+        else {
             throw 'You must provide either a Transaction, ConnectionString, or DatabaseFilePath parameter.'
         }
     }
@@ -137,7 +155,7 @@ function Invoke-SQLiteQuery {
         try {
             # establish database connection and transaction if not using external
             if (-not $isExternalTransaction) {
-                $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
+                $connection = Microsoft.PowerShell.Utility\New-Object System.Data.Sqlite.SQLiteConnection($connString)
                 $connection.Open()
 
                 # begin transaction with specified isolation
@@ -172,7 +190,7 @@ function Invoke-SQLiteQuery {
 
                     # add parameters if provided
                     if ($null -ne $data) {
-                         $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
+                        $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
                             $value = $PSItem.Value
 
                             $null = $command.Parameters.AddWithValue(

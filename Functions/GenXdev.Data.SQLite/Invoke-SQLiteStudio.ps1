@@ -92,7 +92,8 @@ function Invoke-SQLiteStudio {
             Mandatory = $false,
             HelpMessage = 'The isolation level to use. Default is ReadCommitted.'
         )]
-        [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted
+        [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
+        [string]$IsolationLevel = "ReadCommitted"
     )
 
     begin {

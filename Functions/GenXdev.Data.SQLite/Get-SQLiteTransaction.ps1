@@ -1,4 +1,4 @@
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
 Creates and returns a SQLite transaction object for batch operations.
@@ -67,7 +67,8 @@ function Get-SQLiteTransaction {
             Mandatory = $false,
             HelpMessage = 'Transaction isolation level.'
         )]
-        [System.Data.IsolationLevel]$IsolationLevel = [System.Data.IsolationLevel]::ReadCommitted,
+        [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
+        [string]$IsolationLevel = "ReadCommitted",
 
         ###########################################################################
         [Parameter(
@@ -79,6 +80,9 @@ function Get-SQLiteTransaction {
     )
 
     begin {
+        # load SQLite client assembly
+        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.Sqlite'
+
         # initialize connection string from file path if provided
         if ($PSCmdlet.ParameterSetName -eq 'DatabaseFilePath') {
             $expandedPath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath
@@ -96,7 +100,8 @@ function Get-SQLiteTransaction {
             }
 
             $connString = "Data Source=$expandedPath"
-        } else {
+        }
+        else {
             $connString = $ConnectionString
         }
 
@@ -118,7 +123,7 @@ function Get-SQLiteTransaction {
             return $transaction
         }
         catch {
-            if ($null -ne $connection -and $connection.State -eq [System.Data.ConnectionState]::Open) {
+            if ($null -ne $connection -and $connection.State -eq 'Open') {
                 $connection.Close()
             }
             throw $_

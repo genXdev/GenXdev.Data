@@ -12,7 +12,7 @@
 
 ## MIT License
 
-```text
+````text
 MIT License
 
 Copyright (c) 2025 GenXdev
@@ -49,21 +49,21 @@ SOFTWARE.
 ### DEPENDENCIES
 [![WinOS - Windows-10 or later](https://img.shields.io/badge/WinOS-Windows--10--10.0.19041--SP0-brightgreen)](https://www.microsoft.com/en-us/windows/get-windows-10) [![GenXdev.Helpers](https://img.shields.io/powershellgallery/v/GenXdev.Helpers.svg?style=flat-square&label=GenXdev.Helpers)](https://www.powershellgallery.com/packages/GenXdev.Helpers/) [![GenXdev.FileSystem](https://img.shields.io/powershellgallery/v/GenXdev.Filesystem.svg?style=flat-square&label=GenXdev.FileSystem)](https://www.powershellgallery.com/packages/GenXdev.FileSystem/)
 ### INSTALLATION
-````PowerShell
+```PowerShell
 Install-Module "GenXdev.Data"
 Import-Module "GenXdev.Data"
-````
+```
 ### UPDATE
-````PowerShell
+```PowerShell
 Update-Module
-````
-<br/><hr/><hr/><br/>
+```
+
+<br/><hr/><br/>
 
 # Cmdlet Index
-### GenXdev.Data<hr/>
 ### GenXdev.Data.KeyValueStore
 | Command | Aliases | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | [Get-KeyValueStoreNames](#get-keyvaluestorenames) | getstorenames | Retrieves a list of all available key-value store names from the database. |
 | [Get-StoreKeys](#get-storekeys) | getkeys | Retrieves all key names for a given key-value store. |
 | [Get-ValueByKeyFromStore](#get-valuebykeyfromstore) | getvalue | Retrieves a value from a key-value store database. |
@@ -75,7 +75,7 @@ Update-Module
 
 ### GenXdev.Data.Preferences
 | Command | Aliases | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | [Get-GenXdevPreference](#get-genxdevpreference) | getPreference | Retrieves a preference value from the GenXdev preferences store. |
 | [Get-GenXdevPreferenceNames](#get-genxdevpreferencenames) | getPreferenceNames | Gets all preference names from session storage and database stores. |
 | [Get-GenXdevPreferencesDatabasePath](#get-genxdevpreferencesdatabasepath) | &nbsp; | Gets the configured database path for preference data files used in GenXdev.Data operations. |
@@ -86,7 +86,7 @@ Update-Module
 
 ### GenXdev.Data.SQLite
 | Command | Aliases | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | [EnsureSQLiteStudioInstalled](#ensuresqlitestudioinstalled) | &nbsp; | Ensures SQLiteStudio is installed and accessible from the command line. |
 | [Get-SQLiteSchema](#get-sqliteschema) | &nbsp; | Retrieves the complete schema information from a SQLite database. |
 | [Get-SQLiteTableColumnData](#get-sqlitetablecolumndata) | &nbsp; | Retrieves data from a specific column in a SQLite database table. |
@@ -104,10 +104,10 @@ Update-Module
 
 ### GenXdev.Data.SqlServer
 | Command | Aliases | Description |
-| --- | --- | --- |
+| :--- | :--- | :--- |
 | [Invoke-SqlServerQuery](#invoke-sqlserverquery) | &nbsp; | Executes SQL queries against a SQL Server database with transaction support. |
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
 
 
 # Cmdlets
@@ -116,7 +116,7 @@ Update-Module
 ###	GenXdev.Data.KeyValueStore<hr/> 
 
 ##	Get-KeyValueStoreNames 
-````PowerShell 
+```PowerShell 
 
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
@@ -125,7 +125,7 @@ Update-Module
     Retrieves a list of all available key-value store names from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -190,11 +190,11 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-StoreKeys 
-````PowerShell 
+```PowerShell 
 
    Get-StoreKeys                        --> getkeys  
 ```` 
@@ -203,7 +203,7 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
     Retrieves all key names for a given key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -272,11 +272,11 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-ValueByKeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
@@ -285,7 +285,7 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
     Retrieves a value from a key-value store database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -368,11 +368,11 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Initialize-KeyValueStores 
-````PowerShell 
+```PowerShell 
 
    Initialize-KeyValueStores  
 ```` 
@@ -381,7 +381,7 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
     Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -434,11 +434,11 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyFromStore                  --> removekey  
 ```` 
@@ -447,7 +447,7 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
     Deletes a key from the specified key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -537,11 +537,11 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyValueStore  
 ```` 
@@ -550,7 +550,7 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
     Removes a key-value store from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -632,11 +632,11 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-ValueByKeyInStore 
-````PowerShell 
+```PowerShell 
 
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
@@ -645,7 +645,7 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
     Manages key-value pairs in a SQLite database store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -744,11 +744,11 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Sync-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Sync-KeyValueStore  
 ```` 
@@ -757,7 +757,7 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
     Synchronizes local and OneDrive key-value store databases.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -816,14 +816,14 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.Preferences<hr/> 
 
 ##	Get-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreference                --> getPreference  
 ```` 
@@ -832,7 +832,7 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
     Retrieves a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -898,11 +898,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferenceNames 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
@@ -911,7 +911,7 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
     Gets all preference names from session storage and database stores.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -968,11 +968,11 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferencesDatabasePath  
 ```` 
@@ -981,7 +981,7 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
     Gets the configured database path for preference data files used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -1026,11 +1026,11 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Remove-GenXdevPreference             --> removePreference  
 ```` 
@@ -1039,7 +1039,7 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
     Removes a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -1123,11 +1123,11 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevDefaultPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
@@ -1136,7 +1136,7 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
     Sets a default preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -1221,11 +1221,11 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreference                --> setPreference  
 ```` 
@@ -1234,7 +1234,7 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
     Sets a preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -1316,11 +1316,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreferencesDatabasePath  
 ```` 
@@ -1329,7 +1329,7 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
     Sets the database path for preferences used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -1397,14 +1397,14 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 
 ##	EnsureSQLiteStudioInstalled 
-````PowerShell 
+```PowerShell 
 
    EnsureSQLiteStudioInstalled  
 ```` 
@@ -1413,7 +1413,7 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
     Ensures SQLiteStudio is installed and accessible from the command line.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
 
@@ -1430,11 +1430,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteSchema  
 ```` 
@@ -1443,7 +1443,7 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
     Retrieves the complete schema information from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
    Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -1478,11 +1478,11 @@ Get-SQLiteSchema [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableColumnData  
 ```` 
@@ -1491,7 +1491,7 @@ Get-SQLiteSchema [<CommonParameters>]
     Retrieves data from a specific column in a SQLite database table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -1554,11 +1554,11 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableData  
 ```` 
@@ -1567,7 +1567,7 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
     Retrieves data from a SQLite database table with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -1620,11 +1620,11 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTables 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTables  
 ```` 
@@ -1633,7 +1633,7 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
     Retrieves a list of table names from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
    Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -1669,11 +1669,11 @@ Get-SQLiteTables [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableSchema  
 ```` 
@@ -1682,7 +1682,7 @@ Get-SQLiteTables [<CommonParameters>]
     Retrieves the schema information for a specified SQLite table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
@@ -1726,11 +1726,11 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTransaction 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
@@ -1739,9 +1739,9 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
     Creates and returns a SQLite transaction object for batch operations.  
 
 ### SYNTAX 
-````PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+```PowerShell 
+Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -1767,7 +1767,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -1789,11 +1789,11 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewColumnData  
 ```` 
@@ -1802,7 +1802,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
     Retrieves column data from a SQLite view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -1863,11 +1863,11 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewData  
 ```` 
@@ -1876,7 +1876,7 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
     Retrieves data from a SQLite database view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
 ```` 
@@ -1928,11 +1928,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViews 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViews  
 ```` 
@@ -1941,7 +1941,7 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
     Retrieves a list of views from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
    Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -1978,11 +1978,11 @@ Get-SQLiteViews [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewSchema  
 ```` 
@@ -1991,7 +1991,7 @@ Get-SQLiteViews [<CommonParameters>]
     Retrieves the SQL schema definition for a SQLite view.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
@@ -2036,11 +2036,11 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteQuery  
 ```` 
@@ -2049,8 +2049,8 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
     Executes one or more SQL queries against a SQLite database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -2078,7 +2078,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -Transaction <SQLiteTransaction>  
+    -Transaction <Object>  
         An existing SQLite transaction to use. When provided, the function will not  
         commit or rollback the transaction - that's the caller's responsibility.  
         Takes priority over ConnectionString and DatabaseFilePath.  
@@ -2104,7 +2104,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
         an internal transaction.  
         Required?                    false  
@@ -2119,11 +2119,11 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteStudio 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteStudio  
 ```` 
@@ -2132,10 +2132,10 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
     Executes SQLite database queries with support for parameters and transactions.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -2182,7 +2182,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Controls the transaction isolation. Default is ReadCommitted.  
         Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
         Required?                    false  
@@ -2197,11 +2197,11 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	New-SQLiteDatabase 
-````PowerShell 
+```PowerShell 
 
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
@@ -2210,7 +2210,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
     Creates a new SQLite database file.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -2249,14 +2249,14 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
 ##	Invoke-SqlServerQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SqlServerQuery  
 ```` 
@@ -2265,12 +2265,12 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
     Executes SQL queries against a SQL Server database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -2327,7 +2327,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -2341,14 +2341,14 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.KeyValueStore<hr/> 
 
 ##	Get-KeyValueStoreNames 
-````PowerShell 
+```PowerShell 
 
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
@@ -2357,7 +2357,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
     Retrieves a list of all available key-value store names from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -2422,11 +2422,11 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-StoreKeys 
-````PowerShell 
+```PowerShell 
 
    Get-StoreKeys                        --> getkeys  
 ```` 
@@ -2435,7 +2435,7 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
     Retrieves all key names for a given key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -2504,11 +2504,11 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-ValueByKeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
@@ -2517,7 +2517,7 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
     Retrieves a value from a key-value store database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -2600,11 +2600,11 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Initialize-KeyValueStores 
-````PowerShell 
+```PowerShell 
 
    Initialize-KeyValueStores  
 ```` 
@@ -2613,7 +2613,7 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
     Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -2666,11 +2666,11 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyFromStore                  --> removekey  
 ```` 
@@ -2679,7 +2679,7 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
     Deletes a key from the specified key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -2769,11 +2769,11 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyValueStore  
 ```` 
@@ -2782,7 +2782,7 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
     Removes a key-value store from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -2864,11 +2864,11 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-ValueByKeyInStore 
-````PowerShell 
+```PowerShell 
 
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
@@ -2877,7 +2877,7 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
     Manages key-value pairs in a SQLite database store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -2976,11 +2976,11 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Sync-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Sync-KeyValueStore  
 ```` 
@@ -2989,7 +2989,7 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
     Synchronizes local and OneDrive key-value store databases.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -3048,14 +3048,14 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.Preferences<hr/> 
 
 ##	Get-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreference                --> getPreference  
 ```` 
@@ -3064,7 +3064,7 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
     Retrieves a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -3130,11 +3130,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferenceNames 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
@@ -3143,7 +3143,7 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
     Gets all preference names from session storage and database stores.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -3200,11 +3200,11 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferencesDatabasePath  
 ```` 
@@ -3213,7 +3213,7 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
     Gets the configured database path for preference data files used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -3258,11 +3258,11 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Remove-GenXdevPreference             --> removePreference  
 ```` 
@@ -3271,7 +3271,7 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
     Removes a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -3355,11 +3355,11 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevDefaultPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
@@ -3368,7 +3368,7 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
     Sets a default preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -3453,11 +3453,11 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreference                --> setPreference  
 ```` 
@@ -3466,7 +3466,7 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
     Sets a preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -3548,11 +3548,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreferencesDatabasePath  
 ```` 
@@ -3561,7 +3561,7 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
     Sets the database path for preferences used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -3629,14 +3629,14 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 
 ##	EnsureSQLiteStudioInstalled 
-````PowerShell 
+```PowerShell 
 
    EnsureSQLiteStudioInstalled  
 ```` 
@@ -3645,7 +3645,7 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
     Ensures SQLiteStudio is installed and accessible from the command line.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
 
@@ -3662,11 +3662,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteSchema  
 ```` 
@@ -3675,7 +3675,7 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
     Retrieves the complete schema information from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
    Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -3710,11 +3710,11 @@ Get-SQLiteSchema [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableColumnData  
 ```` 
@@ -3723,7 +3723,7 @@ Get-SQLiteSchema [<CommonParameters>]
     Retrieves data from a specific column in a SQLite database table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -3786,11 +3786,11 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableData  
 ```` 
@@ -3799,7 +3799,7 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
     Retrieves data from a SQLite database table with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -3852,11 +3852,11 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTables 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTables  
 ```` 
@@ -3865,7 +3865,7 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
     Retrieves a list of table names from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
    Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -3901,11 +3901,11 @@ Get-SQLiteTables [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableSchema  
 ```` 
@@ -3914,7 +3914,7 @@ Get-SQLiteTables [<CommonParameters>]
     Retrieves the schema information for a specified SQLite table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
@@ -3958,11 +3958,11 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTransaction 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
@@ -3971,9 +3971,9 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
     Creates and returns a SQLite transaction object for batch operations.  
 
 ### SYNTAX 
-````PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+```PowerShell 
+Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -3999,7 +3999,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -4021,11 +4021,11 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewColumnData  
 ```` 
@@ -4034,7 +4034,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
     Retrieves column data from a SQLite view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -4095,11 +4095,11 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewData  
 ```` 
@@ -4108,7 +4108,7 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
     Retrieves data from a SQLite database view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
 ```` 
@@ -4160,11 +4160,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViews 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViews  
 ```` 
@@ -4173,7 +4173,7 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
     Retrieves a list of views from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
    Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -4210,11 +4210,11 @@ Get-SQLiteViews [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewSchema  
 ```` 
@@ -4223,7 +4223,7 @@ Get-SQLiteViews [<CommonParameters>]
     Retrieves the SQL schema definition for a SQLite view.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
@@ -4268,11 +4268,11 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteQuery  
 ```` 
@@ -4281,8 +4281,8 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
     Executes one or more SQL queries against a SQLite database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -4310,7 +4310,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -Transaction <SQLiteTransaction>  
+    -Transaction <Object>  
         An existing SQLite transaction to use. When provided, the function will not  
         commit or rollback the transaction - that's the caller's responsibility.  
         Takes priority over ConnectionString and DatabaseFilePath.  
@@ -4336,7 +4336,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
         an internal transaction.  
         Required?                    false  
@@ -4351,11 +4351,11 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteStudio 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteStudio  
 ```` 
@@ -4364,10 +4364,10 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
     Executes SQLite database queries with support for parameters and transactions.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -4414,7 +4414,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Controls the transaction isolation. Default is ReadCommitted.  
         Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
         Required?                    false  
@@ -4429,11 +4429,11 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	New-SQLiteDatabase 
-````PowerShell 
+```PowerShell 
 
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
@@ -4442,7 +4442,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
     Creates a new SQLite database file.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -4481,14 +4481,14 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
 ##	Invoke-SqlServerQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SqlServerQuery  
 ```` 
@@ -4497,12 +4497,12 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
     Executes SQL queries against a SQL Server database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -4559,7 +4559,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -4573,14 +4573,14 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.KeyValueStore<hr/> 
 
 ##	Get-KeyValueStoreNames 
-````PowerShell 
+```PowerShell 
 
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
@@ -4589,7 +4589,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
     Retrieves a list of all available key-value store names from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -4654,11 +4654,11 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-StoreKeys 
-````PowerShell 
+```PowerShell 
 
    Get-StoreKeys                        --> getkeys  
 ```` 
@@ -4667,7 +4667,7 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
     Retrieves all key names for a given key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -4736,11 +4736,11 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-ValueByKeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
@@ -4749,7 +4749,7 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
     Retrieves a value from a key-value store database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -4832,11 +4832,11 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Initialize-KeyValueStores 
-````PowerShell 
+```PowerShell 
 
    Initialize-KeyValueStores  
 ```` 
@@ -4845,7 +4845,7 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
     Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -4898,11 +4898,11 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyFromStore                  --> removekey  
 ```` 
@@ -4911,7 +4911,7 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
     Deletes a key from the specified key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5001,11 +5001,11 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyValueStore  
 ```` 
@@ -5014,7 +5014,7 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
     Removes a key-value store from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5096,11 +5096,11 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-ValueByKeyInStore 
-````PowerShell 
+```PowerShell 
 
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
@@ -5109,7 +5109,7 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
     Manages key-value pairs in a SQLite database store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5208,11 +5208,11 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Sync-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Sync-KeyValueStore  
 ```` 
@@ -5221,7 +5221,7 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
     Synchronizes local and OneDrive key-value store databases.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -5280,14 +5280,14 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.Preferences<hr/> 
 
 ##	Get-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreference                --> getPreference  
 ```` 
@@ -5296,7 +5296,7 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
     Retrieves a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -5362,11 +5362,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferenceNames 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
@@ -5375,7 +5375,7 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
     Gets all preference names from session storage and database stores.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -5432,11 +5432,11 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferencesDatabasePath  
 ```` 
@@ -5445,7 +5445,7 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
     Gets the configured database path for preference data files used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -5490,11 +5490,11 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Remove-GenXdevPreference             --> removePreference  
 ```` 
@@ -5503,7 +5503,7 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
     Removes a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5587,11 +5587,11 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevDefaultPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
@@ -5600,7 +5600,7 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
     Sets a default preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5685,11 +5685,11 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreference                --> setPreference  
 ```` 
@@ -5698,7 +5698,7 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
     Sets a preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5780,11 +5780,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreferencesDatabasePath  
 ```` 
@@ -5793,7 +5793,7 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
     Sets the database path for preferences used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5861,14 +5861,14 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 
 ##	EnsureSQLiteStudioInstalled 
-````PowerShell 
+```PowerShell 
 
    EnsureSQLiteStudioInstalled  
 ```` 
@@ -5877,7 +5877,7 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
     Ensures SQLiteStudio is installed and accessible from the command line.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
 
@@ -5894,11 +5894,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteSchema  
 ```` 
@@ -5907,7 +5907,7 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
     Retrieves the complete schema information from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
    Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -5942,11 +5942,11 @@ Get-SQLiteSchema [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableColumnData  
 ```` 
@@ -5955,7 +5955,7 @@ Get-SQLiteSchema [<CommonParameters>]
     Retrieves data from a specific column in a SQLite database table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -6018,11 +6018,11 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableData  
 ```` 
@@ -6031,7 +6031,7 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
     Retrieves data from a SQLite database table with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -6084,11 +6084,11 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTables 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTables  
 ```` 
@@ -6097,7 +6097,7 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
     Retrieves a list of table names from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
    Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -6133,11 +6133,11 @@ Get-SQLiteTables [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableSchema  
 ```` 
@@ -6146,7 +6146,7 @@ Get-SQLiteTables [<CommonParameters>]
     Retrieves the schema information for a specified SQLite table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
@@ -6190,11 +6190,11 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTransaction 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
@@ -6203,9 +6203,9 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
     Creates and returns a SQLite transaction object for batch operations.  
 
 ### SYNTAX 
-````PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+```PowerShell 
+Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -6231,7 +6231,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -6253,11 +6253,11 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewColumnData  
 ```` 
@@ -6266,7 +6266,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
     Retrieves column data from a SQLite view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -6327,11 +6327,11 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewData  
 ```` 
@@ -6340,7 +6340,7 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
     Retrieves data from a SQLite database view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
 ```` 
@@ -6392,11 +6392,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViews 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViews  
 ```` 
@@ -6405,7 +6405,7 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
     Retrieves a list of views from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
    Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -6442,11 +6442,11 @@ Get-SQLiteViews [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewSchema  
 ```` 
@@ -6455,7 +6455,7 @@ Get-SQLiteViews [<CommonParameters>]
     Retrieves the SQL schema definition for a SQLite view.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
@@ -6500,11 +6500,11 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteQuery  
 ```` 
@@ -6513,8 +6513,8 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
     Executes one or more SQL queries against a SQLite database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -6542,7 +6542,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -Transaction <SQLiteTransaction>  
+    -Transaction <Object>  
         An existing SQLite transaction to use. When provided, the function will not  
         commit or rollback the transaction - that's the caller's responsibility.  
         Takes priority over ConnectionString and DatabaseFilePath.  
@@ -6568,7 +6568,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
         an internal transaction.  
         Required?                    false  
@@ -6583,11 +6583,11 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteStudio 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteStudio  
 ```` 
@@ -6596,10 +6596,10 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
     Executes SQLite database queries with support for parameters and transactions.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -6646,7 +6646,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Controls the transaction isolation. Default is ReadCommitted.  
         Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
         Required?                    false  
@@ -6661,11 +6661,11 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	New-SQLiteDatabase 
-````PowerShell 
+```PowerShell 
 
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
@@ -6674,7 +6674,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
     Creates a new SQLite database file.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -6713,14 +6713,14 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
 ##	Invoke-SqlServerQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SqlServerQuery  
 ```` 
@@ -6729,12 +6729,12 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
     Executes SQL queries against a SQL Server database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -6791,7 +6791,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -6805,14 +6805,14 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.KeyValueStore<hr/> 
 
 ##	Get-KeyValueStoreNames 
-````PowerShell 
+```PowerShell 
 
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
@@ -6821,7 +6821,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
     Retrieves a list of all available key-value store names from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -6886,11 +6886,11 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-StoreKeys 
-````PowerShell 
+```PowerShell 
 
    Get-StoreKeys                        --> getkeys  
 ```` 
@@ -6899,7 +6899,7 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
     Retrieves all key names for a given key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -6968,11 +6968,11 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-ValueByKeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
@@ -6981,7 +6981,7 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
     Retrieves a value from a key-value store database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7064,11 +7064,11 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Initialize-KeyValueStores 
-````PowerShell 
+```PowerShell 
 
    Initialize-KeyValueStores  
 ```` 
@@ -7077,7 +7077,7 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
     Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7130,11 +7130,11 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyFromStore                  --> removekey  
 ```` 
@@ -7143,7 +7143,7 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
     Deletes a key from the specified key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7233,11 +7233,11 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyValueStore  
 ```` 
@@ -7246,7 +7246,7 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
     Removes a key-value store from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7328,11 +7328,11 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-ValueByKeyInStore 
-````PowerShell 
+```PowerShell 
 
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
@@ -7341,7 +7341,7 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
     Manages key-value pairs in a SQLite database store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7440,11 +7440,11 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Sync-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Sync-KeyValueStore  
 ```` 
@@ -7453,7 +7453,7 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
     Synchronizes local and OneDrive key-value store databases.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7512,14 +7512,14 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.Preferences<hr/> 
 
 ##	Get-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreference                --> getPreference  
 ```` 
@@ -7528,7 +7528,7 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
     Retrieves a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7594,11 +7594,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferenceNames 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
@@ -7607,7 +7607,7 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
     Gets all preference names from session storage and database stores.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7664,11 +7664,11 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferencesDatabasePath  
 ```` 
@@ -7677,7 +7677,7 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
     Gets the configured database path for preference data files used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -7722,11 +7722,11 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Remove-GenXdevPreference             --> removePreference  
 ```` 
@@ -7735,7 +7735,7 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
     Removes a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7819,11 +7819,11 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevDefaultPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
@@ -7832,7 +7832,7 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
     Sets a default preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7917,11 +7917,11 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreference                --> setPreference  
 ```` 
@@ -7930,7 +7930,7 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
     Sets a preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -8012,11 +8012,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreferencesDatabasePath  
 ```` 
@@ -8025,7 +8025,7 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
     Sets the database path for preferences used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -8093,14 +8093,14 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 
 ##	EnsureSQLiteStudioInstalled 
-````PowerShell 
+```PowerShell 
 
    EnsureSQLiteStudioInstalled  
 ```` 
@@ -8109,7 +8109,7 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
     Ensures SQLiteStudio is installed and accessible from the command line.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
 
@@ -8126,11 +8126,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteSchema  
 ```` 
@@ -8139,7 +8139,7 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
     Retrieves the complete schema information from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
    Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -8174,11 +8174,11 @@ Get-SQLiteSchema [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableColumnData  
 ```` 
@@ -8187,7 +8187,7 @@ Get-SQLiteSchema [<CommonParameters>]
     Retrieves data from a specific column in a SQLite database table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -8250,11 +8250,11 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableData  
 ```` 
@@ -8263,7 +8263,7 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
     Retrieves data from a SQLite database table with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -8316,11 +8316,11 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTables 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTables  
 ```` 
@@ -8329,7 +8329,7 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
     Retrieves a list of table names from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
    Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -8365,11 +8365,11 @@ Get-SQLiteTables [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableSchema  
 ```` 
@@ -8378,7 +8378,7 @@ Get-SQLiteTables [<CommonParameters>]
     Retrieves the schema information for a specified SQLite table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
@@ -8422,11 +8422,11 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTransaction 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
@@ -8435,9 +8435,9 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
     Creates and returns a SQLite transaction object for batch operations.  
 
 ### SYNTAX 
-````PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+```PowerShell 
+Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -8463,7 +8463,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -8485,11 +8485,11 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewColumnData  
 ```` 
@@ -8498,7 +8498,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
     Retrieves column data from a SQLite view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -8559,11 +8559,11 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewData  
 ```` 
@@ -8572,7 +8572,7 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
     Retrieves data from a SQLite database view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
 ```` 
@@ -8624,11 +8624,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViews 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViews  
 ```` 
@@ -8637,7 +8637,7 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
     Retrieves a list of views from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
    Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -8674,11 +8674,11 @@ Get-SQLiteViews [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewSchema  
 ```` 
@@ -8687,7 +8687,7 @@ Get-SQLiteViews [<CommonParameters>]
     Retrieves the SQL schema definition for a SQLite view.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
@@ -8732,11 +8732,11 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteQuery  
 ```` 
@@ -8745,8 +8745,8 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
     Executes one or more SQL queries against a SQLite database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -8774,7 +8774,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -Transaction <SQLiteTransaction>  
+    -Transaction <Object>  
         An existing SQLite transaction to use. When provided, the function will not  
         commit or rollback the transaction - that's the caller's responsibility.  
         Takes priority over ConnectionString and DatabaseFilePath.  
@@ -8800,7 +8800,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
         an internal transaction.  
         Required?                    false  
@@ -8815,11 +8815,11 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteStudio 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteStudio  
 ```` 
@@ -8828,10 +8828,10 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
     Executes SQLite database queries with support for parameters and transactions.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -8878,7 +8878,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Controls the transaction isolation. Default is ReadCommitted.  
         Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
         Required?                    false  
@@ -8893,11 +8893,11 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	New-SQLiteDatabase 
-````PowerShell 
+```PowerShell 
 
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
@@ -8906,7 +8906,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
     Creates a new SQLite database file.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -8945,14 +8945,14 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
 ##	Invoke-SqlServerQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SqlServerQuery  
 ```` 
@@ -8961,12 +8961,12 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
     Executes SQL queries against a SQL Server database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -9023,7 +9023,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -9037,14 +9037,14 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.KeyValueStore<hr/> 
 
 ##	Get-KeyValueStoreNames 
-````PowerShell 
+```PowerShell 
 
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
@@ -9053,7 +9053,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
     Retrieves a list of all available key-value store names from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9118,11 +9118,11 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-StoreKeys 
-````PowerShell 
+```PowerShell 
 
    Get-StoreKeys                        --> getkeys  
 ```` 
@@ -9131,7 +9131,7 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
     Retrieves all key names for a given key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9200,11 +9200,11 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-ValueByKeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
@@ -9213,7 +9213,7 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
     Retrieves a value from a key-value store database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9296,11 +9296,11 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Initialize-KeyValueStores 
-````PowerShell 
+```PowerShell 
 
    Initialize-KeyValueStores  
 ```` 
@@ -9309,7 +9309,7 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
     Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9362,11 +9362,11 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyFromStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyFromStore                  --> removekey  
 ```` 
@@ -9375,7 +9375,7 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
     Deletes a key from the specified key-value store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -9465,11 +9465,11 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Remove-KeyValueStore  
 ```` 
@@ -9478,7 +9478,7 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
     Removes a key-value store from the database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -9560,11 +9560,11 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-ValueByKeyInStore 
-````PowerShell 
+```PowerShell 
 
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
@@ -9573,7 +9573,7 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
     Manages key-value pairs in a SQLite database store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -9672,11 +9672,11 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Sync-KeyValueStore 
-````PowerShell 
+```PowerShell 
 
    Sync-KeyValueStore  
 ```` 
@@ -9685,7 +9685,7 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
     Synchronizes local and OneDrive key-value store databases.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9744,14 +9744,14 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.Preferences<hr/> 
 
 ##	Get-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreference                --> getPreference  
 ```` 
@@ -9760,7 +9760,7 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
     Retrieves a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9826,11 +9826,11 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferenceNames 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
@@ -9839,7 +9839,7 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
     Gets all preference names from session storage and database stores.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9896,11 +9896,11 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Get-GenXdevPreferencesDatabasePath  
 ```` 
@@ -9909,7 +9909,7 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
     Gets the configured database path for preference data files used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
@@ -9954,11 +9954,11 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Remove-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Remove-GenXdevPreference             --> removePreference  
 ```` 
@@ -9967,7 +9967,7 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
     Removes a preference value from the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -10051,11 +10051,11 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevDefaultPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
@@ -10064,7 +10064,7 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
     Sets a default preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -10149,11 +10149,11 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreference 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreference                --> setPreference  
 ```` 
@@ -10162,7 +10162,7 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
     Sets a preference value in the GenXdev preferences store.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -10244,11 +10244,11 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Set-GenXdevPreferencesDatabasePath 
-````PowerShell 
+```PowerShell 
 
    Set-GenXdevPreferencesDatabasePath  
 ```` 
@@ -10257,7 +10257,7 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
     Sets the database path for preferences used in GenXdev.Data operations.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -10325,14 +10325,14 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SQLite<hr/> 
 
 ##	EnsureSQLiteStudioInstalled 
-````PowerShell 
+```PowerShell 
 
    EnsureSQLiteStudioInstalled  
 ```` 
@@ -10341,7 +10341,7 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
     Ensures SQLiteStudio is installed and accessible from the command line.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
 
@@ -10358,11 +10358,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteSchema  
 ```` 
@@ -10371,7 +10371,7 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
     Retrieves the complete schema information from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
    Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -10406,11 +10406,11 @@ Get-SQLiteSchema [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableColumnData  
 ```` 
@@ -10419,7 +10419,7 @@ Get-SQLiteSchema [<CommonParameters>]
     Retrieves data from a specific column in a SQLite database table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -10482,11 +10482,11 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableData  
 ```` 
@@ -10495,7 +10495,7 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
     Retrieves data from a SQLite database table with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -10548,11 +10548,11 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTables 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTables  
 ```` 
@@ -10561,7 +10561,7 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
     Retrieves a list of table names from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
    Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -10597,11 +10597,11 @@ Get-SQLiteTables [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTableSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTableSchema  
 ```` 
@@ -10610,7 +10610,7 @@ Get-SQLiteTables [<CommonParameters>]
     Retrieves the schema information for a specified SQLite table.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
    Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
@@ -10654,11 +10654,11 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteTransaction 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
@@ -10667,9 +10667,9 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
     Creates and returns a SQLite transaction object for batch operations.  
 
 ### SYNTAX 
-````PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+```PowerShell 
+Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -10695,7 +10695,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -10717,11 +10717,11 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewColumnData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewColumnData  
 ```` 
@@ -10730,7 +10730,7 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel {Chaos | Rea
     Retrieves column data from a SQLite view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
@@ -10791,11 +10791,11 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewData 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewData  
 ```` 
@@ -10804,7 +10804,7 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
     Retrieves data from a SQLite database view with optional record limiting.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
    Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
 ```` 
@@ -10856,11 +10856,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViews 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViews  
 ```` 
@@ -10869,7 +10869,7 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
     Retrieves a list of views from a SQLite database.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
    Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
    Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
@@ -10906,11 +10906,11 @@ Get-SQLiteViews [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Get-SQLiteViewSchema 
-````PowerShell 
+```PowerShell 
 
    Get-SQLiteViewSchema  
 ```` 
@@ -10919,7 +10919,7 @@ Get-SQLiteViews [<CommonParameters>]
     Retrieves the SQL schema definition for a SQLite view.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
    Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
@@ -10964,11 +10964,11 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteQuery  
 ```` 
@@ -10977,8 +10977,8 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
     Executes one or more SQL queries against a SQLite database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <SQLiteTransaction>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -11006,7 +11006,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       false  
         Aliases                        
         Accept wildcard characters?  false  
-    -Transaction <SQLiteTransaction>  
+    -Transaction <Object>  
         An existing SQLite transaction to use. When provided, the function will not  
         commit or rollback the transaction - that's the caller's responsibility.  
         Takes priority over ConnectionString and DatabaseFilePath.  
@@ -11032,7 +11032,7 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
         an internal transaction.  
         Required?                    false  
@@ -11047,11 +11047,11 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	Invoke-SQLiteStudio 
-````PowerShell 
+```PowerShell 
 
    Invoke-SQLiteStudio  
 ```` 
@@ -11060,10 +11060,10 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
     Executes SQLite database queries with support for parameters and transactions.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -11110,7 +11110,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Controls the transaction isolation. Default is ReadCommitted.  
         Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
         Required?                    false  
@@ -11125,11 +11125,11 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 ##	New-SQLiteDatabase 
-````PowerShell 
+```PowerShell 
 
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
@@ -11138,7 +11138,7 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
     Creates a new SQLite database file.  
 
 ### SYNTAX 
-````PowerShell 
+```PowerShell 
 New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -11177,14 +11177,14 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
  
 
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
 ##	Invoke-SqlServerQuery 
-````PowerShell 
+```PowerShell 
 
    Invoke-SqlServerQuery  
 ```` 
@@ -11193,12 +11193,12 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
     Executes SQL queries against a SQL Server database with transaction support.  
 
 ### SYNTAX 
-````PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel {Chaos | ReadUncommitted | ReadCommitted | RepeatableRead | Serializable | Snapshot | Unspecified}] [<CommonParameters>] 
+```PowerShell 
+Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
 ```` 
 
 ### DESCRIPTION 
@@ -11255,7 +11255,7 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         Accept pipeline input?       true (ByValue, ByPropertyName)  
         Aliases                        
         Accept wildcard characters?  false  
-    -IsolationLevel  
+    -IsolationLevel <String>  
         Transaction isolation level. Defaults to ReadCommitted.  
         Required?                    false  
         Position?                    named  
@@ -11269,4 +11269,4 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
         OutBuffer, PipelineVariable, and OutVariable. For more information, see  
         about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
 
-<br/><hr/><hr/><br/>
+<br/><hr/><br/>
