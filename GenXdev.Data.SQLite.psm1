@@ -11,6 +11,7 @@ if ($major -ne 10) {
 }
 
 
+
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.ps1"

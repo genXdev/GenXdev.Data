@@ -11,6 +11,7 @@ if ($major -ne 10) {
 }
 
 
+
 . "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.ps1"

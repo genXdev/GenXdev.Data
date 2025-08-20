@@ -11,4 +11,5 @@ if ($major -ne 10) {
 }
 
 
+
 . "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1"
