@@ -121,68 +121,56 @@ Update-Module
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of all available key-value store names from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the SQLite database to get unique store names based on the provided  
-    synchronization key. The function handles database initialization if needed and  
-    performs synchronization for non-local scopes. Returns store names that are  
-    not marked as deleted and match the specified synchronization scope.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Key to identify synchronization scope. Use '%' for all stores, 'Local' for  
-        local stores only. Synchronization occurs for non-local scopes. Supports SQL  
-        LIKE pattern matching for flexible store filtering.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                %  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for preferences database files. When specified, overrides the  
-        default database location for storing key-value store configurations.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc. When enabled, retrieves settings from session variables  
-        instead of persistent storage.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving. Forces a fresh  
-        retrieval of settings by clearing any cached session data before processing.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc. Forces retrieval from persistent storage,  
-        bypassing any session-cached settings.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -199,72 +187,65 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the database if not found and handles synchronization  
-    for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Do not use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -281,86 +262,83 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a key-value store database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a SQLite-based key-value store. The  
-    function supports optional default values and synchronization across different  
-    scopes. It can use session-based settings or direct database access and  
-    provides automatic database initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -377,56 +355,47 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates SQLite databases with required schema in two locations if they do not  
-    exist:  
-    1. Local machine for immediate access  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both databases have identical schema with synchronization  
-    support.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -443,93 +412,90 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
    Remove-KeyFromStore                  --> removekey  
 ```` 
 
-### SYNOPSIS 
-    Deletes a key from the specified key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes a key-value pair from the SQLite database store. For local stores,  
-    performs a hard delete removing the record permanently. For synchronized stores,  
-    marks the record as deleted with a timestamp and triggers synchronization to  
-    propagate the deletion across all synchronized instances.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to delete from.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to be deleted  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key to be deleted from the store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional synchronization scope identifier. Defaults to "Local". When not "Local",  
-        triggers synchronization after marking record as deleted.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -546,85 +512,81 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
    Remove-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Removes a key-value store from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes all entries for a specified store from the database. For local stores,  
-    performs a physical delete. For synchronized stores, marks entries as deleted  
-    and triggers synchronization. This function supports both local and cloud-  
-    synchronized stores with proper audit trail maintenance.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to remove.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to delete  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        The synchronization scope identifier. Defaults to "Local" for non-synchronized  
-        stores.  
+    -WhatIf  
         Required?                    false  
-        Position?                    2  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -641,102 +603,99 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a SQLite database store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using SQLite. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -753,62 +712,56 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store databases.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow databases using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -828,69 +781,65 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
    Get-GenXdevPreference                --> getPreference  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    The function implements a two-tier preference retrieval system. It first checks  
-    the local store for a preference value. If not found, it falls back to the  
-    default store. If still not found, returns the provided default value.  
-
 ### PARAMETERS 
-    -Name <String>  
-        The name of the preference to retrieve from the preference stores.  
-        Required?                    true  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        The default value if preference is not found  
+        Required?                    false  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        The fallback value to return if the preference is not found in any store.  
-        Required?                    false  
-        Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DefaultPreference  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+    -Name <string>  
+        The name of the preference to retrieve  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -907,60 +856,47 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
 
-### SYNOPSIS 
-    Gets all preference names from session storage and database stores.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a unique list of preference names by combining keys from session  
-    storage (global variables) and both the local and default preference stores.  
-    The function respects session management parameters to control which sources  
-    are queried.  
-    The function first checks session storage (unless SkipSession is specified),  
-    then falls back to database stores (unless SessionOnly is specified). It  
-    merges all keys, removes duplicates, sorts them alphabetically, and returns  
-    the combined list.  
-    This function is useful when you need to see all available preference settings,  
-    regardless of whether they are stored in session or persistent storage.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -977,48 +913,47 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
    Get-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Gets the configured database path for preference data files used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
         Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears the session database path setting (Global variable) before retrieving the configuration.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1035,87 +970,81 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
    Remove-GenXdevPreference             --> removePreference  
 ```` 
 
-### SYNOPSIS 
-    Removes a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function removes a preference value from both the local store and  
-    optionally from the default store. It provides two parameter sets - one for  
-    local removal only and another for removing from both local and default stores.  
-    The function ensures proper synchronization when modifying the default store.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name of the preference to remove. This is required and can be  
-        provided via pipeline input.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to remove  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -RemoveDefault [<SwitchParameter>]  
-        When specified, removes the preference from both the local and default stores.  
-        If not specified, only removes from the local store.  
+    -PreferencesDatabasePath <string>  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    2  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Alias: DatabasePath  
+    -RemoveDefault  
+        Switch to also remove the preference from defaults  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    1  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           All  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1132,88 +1061,81 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
 
-### SYNOPSIS 
-    Sets a default preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages default preferences in the GenXdev preference system. It  
-    handles storing values, removing preferences when values are empty, and ensures  
-    changes are synchronized across the system. The function supports null values by  
-    removing the preference entirely in such cases. When a value is provided, it is  
-    stored in the key-value store and synchronized across all consumers.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set in the default store. This  
-        parameter is required and cannot be null or empty.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. Can be null or empty, which  
-        will result in removing the preference from the store.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set in defaults  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
         Position?                    2  
-        Default value                  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files. This parameter is optional and can  
-        be used to override the default database path.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1230,85 +1152,81 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
    Set-GenXdevPreference                --> setPreference  
 ```` 
 
-### SYNOPSIS 
-    Sets a preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages preferences in the GenXdev local store. It can set new  
-    preferences, update existing ones, or remove them when a null/empty value is  
-    provided. The preferences are stored with synchronization set to "Local".  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set. This is required and must not  
-        be null or empty.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. If null or empty, the preference  
-        will be removed instead of being set.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1325,71 +1243,63 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
    Set-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Sets the database path for preferences used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function configures the global database path used by the GenXdev.Data  
-    module for various preference storage and data operations. Settings are  
-    stored in the current session (using Global variables) and can be cleared  
-    from the session (using -ClearSession).  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
-        A database path where preference data files are located. This path will be used  
-        by GenXdev.Data functions for preference storage and processing operations.  
+    -ClearSession  
+        Clear alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -Confirm  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        When specified, stores the setting only in the current session (Global  
-        variable) without persisting to preferences. Setting will be lost when the  
-        session ends.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears only the session setting (Global variable) without  
-        affecting persistent preferences.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1409,19 +1319,10 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
    EnsureSQLiteStudioInstalled  
 ```` 
 
-### SYNOPSIS 
-    Ensures SQLiteStudio is installed and accessible from the command line.  
-
 ### SYNTAX 
 ```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
-
-### DESCRIPTION 
-    Verifies if SQLiteStudio is installed and available in the system PATH. If not  
-    found, it first checks if the PATH environment variable needs updating. If that  
-    doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures  
-    the PATH environment variable.  
 
 ### PARAMETERS 
     <CommonParameters>  
@@ -1439,38 +1340,31 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
    Get-SQLiteSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the complete schema information from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the sqlite_master table to obtain the complete schema  
-    definition of a SQLite database, including tables, views, indexes and triggers.  
-    It accepts either a connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string that specifies the database location and any  
-        additional connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct filesystem path to the SQLite database file.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1487,66 +1381,58 @@ Get-SQLiteSchema [<CommonParameters>]
    Get-SQLiteTableColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a specific column in a SQLite database table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function provides a convenient way to extract data from a single column in a  
-    SQLite database table. It supports two connection methods: direct database file  
-    path or connection string. The function includes options to limit the number of  
-    returned records and uses proper SQLite query construction for optimal  
-    performance.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        The name of the table from which to retrieve the column data.  
+    -ColumnName <string>  
+        The name of the column to retrieve  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column whose data should be retrieved.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Default is 100. Use -1 to return all  
-        records without limit.  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1563,56 +1449,49 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
    Get-SQLiteTableData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database table with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries data from a SQLite database table using either a connection  
-    string or database file path. It provides flexibility in connecting to the  
-    database and controlling the amount of data retrieved through the Count parameter.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the full file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table to query data from. The table must exist in the  
-        database.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        Specifies the maximum number of records to return. Default is 100.  
-        Use -1 to return all records. Must be -1 or a positive integer.  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1629,39 +1508,31 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
    Get-SQLiteTables  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of table names from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the sqlite_master system table to retrieve all user-defined table names  
-    from a SQLite database. Supports connecting via either a direct connection string  
-    or a database file path. Returns the table names as a collection of strings.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The full connection string to connect to the SQLite database. Should include the  
-        Data Source and Version parameters at minimum.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full filesystem path to the SQLite database file. The function will create  
-        an appropriate connection string internally.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1678,47 +1549,40 @@ Get-SQLiteTables [<CommonParameters>]
    Get-SQLiteTableSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the schema information for a specified SQLite table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database to get detailed schema information for  
-    a specified table. It uses the SQLite PRAGMA table_info command to return column  
-    definitions including names, types, nullable status, and default values.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the direct file path to the SQLite database file. This is converted  
-        internally to a connection string.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table for which to retrieve schema information.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1735,53 +1599,48 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
 
-### SYNOPSIS 
-    Creates and returns a SQLite transaction object for batch operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a SQLite database connection and transaction object that can be used  
-    for batch operations. The caller is responsible for committing or rolling back  
-    the transaction. The connection will be automatically created if the database  
-    file doesn't exist.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
+    -CreateDatabaseIfNotExists <bool>  
+        Whether to create the database file if it does not exist.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -CreateDatabaseIfNotExists <Boolean>  
-        Whether to create the database file if it doesn't exist. Defaults to true.  
-        Required?                    false  
-        Position?                    named  
-        Default value                True  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1798,64 +1657,58 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-
    Get-SQLiteViewColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves column data from a SQLite view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes a SELECT query against a specified SQLite view to retrieve data from a  
-    single column. Supports connecting via either a connection string or database file  
-    path. Allows limiting the number of returned records or retrieving all records.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite database connection string. This parameter is mutually exclusive with  
-        DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the SQLite view to query data from.  
+    -ColumnName <string>  
+        The name of the column.  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column within the view to retrieve data from.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records. Defaults  
-        to 100 if not specified.  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1872,55 +1725,48 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
    Get-SQLiteViewData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries a SQLite database view using either a connection string or database file  
-    path. The function supports limiting the number of returned records and provides  
-    verbose output for tracking query execution.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view from which to retrieve data.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records.  
-        Defaults to 100 if not specified.  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1937,40 +1783,31 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
    Get-SQLiteViews  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of views from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Gets all view names from the specified SQLite database file or connection string.  
-    Returns an array of view names that can be used for further database operations.  
-    The function supports two parameter sets for flexibility: providing either a  
-    connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. Use this when you need  
-        to specify custom connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. Use this for simple file-based  
-        connections.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1987,48 +1824,40 @@ Get-SQLiteViews [<CommonParameters>]
    Get-SQLiteViewSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the SQL schema definition for a SQLite view.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database's system tables to extract the SQL  
-    definition of a specified view. It supports connecting via either a connection  
-    string or direct database file path and returns the complete SQL schema that  
-    defines the requested view.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string used to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view whose schema definition should be retrieved.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2045,73 +1874,65 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
    Invoke-SQLiteQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes one or more SQL queries against a SQLite database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes SQL queries against a SQLite database with parameter support and  
-    configurable transaction isolation. Can use an external transaction for batch  
-    operations or create its own internal transaction. When using an external  
-    transaction, the caller is responsible for committing/rolling back.  
-    Connection priority: Transaction > ConnectionString > DatabaseFilePath.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access. Used if no Transaction is provided.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
-        Used if no Transaction or ConnectionString is provided.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query or queries to execute.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     -Transaction <Object>  
-        An existing SQLite transaction to use. When provided, the function will not  
-        commit or rollback the transaction - that's the caller's responsibility.  
-        Takes priority over ConnectionString and DatabaseFilePath.  
+        An existing SQLite transaction to use for the queries.  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be passed via pipeline.  
-        Required?                    true  
-        Position?                    4  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional parameters for the queries as hashtables. Format: @{"param"="value"}  
-        Required?                    false  
-        Position?                    5  
-        Default value                @()  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
-        an internal transaction.  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2128,68 +1949,58 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
    Invoke-SQLiteStudio  
 ```` 
 
-### SYNOPSIS 
-    Executes SQLite database queries with support for parameters and transactions.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides a PowerShell interface for executing SQLite queries with support for:  
-    - Connection via connection string or database file path  
-    - Parameterized queries to prevent SQL injection  
-    - Transaction isolation level control  
-    - Multiple query execution in a single transaction  
-    - Pipeline input for queries and parameters  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for connecting to the database.  
-        Format: "Data Source=mydb.sqlite"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        The isolation level to use. Default is ReadCommitted.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
         Required?                    true  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be provided via pipeline.  
-        Each query can be parameterized using @parameter notation.  
-        Required?                    true  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query.  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Hashtable of parameters to use in queries. Format: @{"param" = "value"}  
-        Multiple parameter sets can be provided for multiple queries.  
-        Required?                    false  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Controls the transaction isolation. Default is ReadCommitted.  
-        Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      parameters  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2206,42 +2017,36 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
 
-### SYNOPSIS 
-    Creates a new SQLite database file.  
-
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a new SQLite database file at the specified path if it does not already  
-    exist. The function ensures the target directory exists and creates a valid  
-    SQLite database by establishing and closing a connection.  
-
 ### PARAMETERS 
-    -DatabaseFilePath <String>  
-        The full path where the SQLite database file should be created. If the directory  
-        path does not exist, it will be created automatically.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2261,79 +2066,78 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
    Invoke-SqlServerQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes SQL queries against a SQL Server database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes one or more SQL queries against a SQL Server database, supporting  
-    parameters and configurable transaction isolation levels. All queries execute  
-    within a single transaction that rolls back on error.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The complete connection string for connecting to the SQL Server database.  
+    -ConnectionString <string>  
+        The connection string to the SqlServer database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <String>  
-        The SQL Server host name or IP address. Defaults to "." (local server).  
+    -HostName <string>  
+        The hostName of SqlServer  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <String>  
-        The username for SQL Server authentication.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Password <String>  
-        The password for SQL Server authentication.  
-        Required?                    true  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Accepts pipeline input.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional hashtable of parameters for the queries. Format: @{"param"="value"}.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Password <string>  
+        The password for SqlServer  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -User <string>  
+        The username for SqlServer  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2353,68 +2157,56 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of all available key-value store names from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the SQLite database to get unique store names based on the provided  
-    synchronization key. The function handles database initialization if needed and  
-    performs synchronization for non-local scopes. Returns store names that are  
-    not marked as deleted and match the specified synchronization scope.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Key to identify synchronization scope. Use '%' for all stores, 'Local' for  
-        local stores only. Synchronization occurs for non-local scopes. Supports SQL  
-        LIKE pattern matching for flexible store filtering.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                %  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for preferences database files. When specified, overrides the  
-        default database location for storing key-value store configurations.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc. When enabled, retrieves settings from session variables  
-        instead of persistent storage.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving. Forces a fresh  
-        retrieval of settings by clearing any cached session data before processing.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc. Forces retrieval from persistent storage,  
-        bypassing any session-cached settings.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2431,72 +2223,65 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the database if not found and handles synchronization  
-    for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Do not use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2513,86 +2298,83 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a key-value store database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a SQLite-based key-value store. The  
-    function supports optional default values and synchronization across different  
-    scopes. It can use session-based settings or direct database access and  
-    provides automatic database initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2609,56 +2391,47 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates SQLite databases with required schema in two locations if they do not  
-    exist:  
-    1. Local machine for immediate access  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both databases have identical schema with synchronization  
-    support.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2675,93 +2448,90 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
    Remove-KeyFromStore                  --> removekey  
 ```` 
 
-### SYNOPSIS 
-    Deletes a key from the specified key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes a key-value pair from the SQLite database store. For local stores,  
-    performs a hard delete removing the record permanently. For synchronized stores,  
-    marks the record as deleted with a timestamp and triggers synchronization to  
-    propagate the deletion across all synchronized instances.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to delete from.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to be deleted  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key to be deleted from the store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional synchronization scope identifier. Defaults to "Local". When not "Local",  
-        triggers synchronization after marking record as deleted.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2778,85 +2548,81 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
    Remove-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Removes a key-value store from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes all entries for a specified store from the database. For local stores,  
-    performs a physical delete. For synchronized stores, marks entries as deleted  
-    and triggers synchronization. This function supports both local and cloud-  
-    synchronized stores with proper audit trail maintenance.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to remove.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to delete  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        The synchronization scope identifier. Defaults to "Local" for non-synchronized  
-        stores.  
+    -WhatIf  
         Required?                    false  
-        Position?                    2  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2873,102 +2639,99 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a SQLite database store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using SQLite. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -2985,62 +2748,56 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store databases.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow databases using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3060,69 +2817,65 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
    Get-GenXdevPreference                --> getPreference  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    The function implements a two-tier preference retrieval system. It first checks  
-    the local store for a preference value. If not found, it falls back to the  
-    default store. If still not found, returns the provided default value.  
-
 ### PARAMETERS 
-    -Name <String>  
-        The name of the preference to retrieve from the preference stores.  
-        Required?                    true  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        The default value if preference is not found  
+        Required?                    false  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        The fallback value to return if the preference is not found in any store.  
-        Required?                    false  
-        Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DefaultPreference  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+    -Name <string>  
+        The name of the preference to retrieve  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3139,60 +2892,47 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
 
-### SYNOPSIS 
-    Gets all preference names from session storage and database stores.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a unique list of preference names by combining keys from session  
-    storage (global variables) and both the local and default preference stores.  
-    The function respects session management parameters to control which sources  
-    are queried.  
-    The function first checks session storage (unless SkipSession is specified),  
-    then falls back to database stores (unless SessionOnly is specified). It  
-    merges all keys, removes duplicates, sorts them alphabetically, and returns  
-    the combined list.  
-    This function is useful when you need to see all available preference settings,  
-    regardless of whether they are stored in session or persistent storage.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3209,48 +2949,47 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
    Get-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Gets the configured database path for preference data files used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
         Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears the session database path setting (Global variable) before retrieving the configuration.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3267,87 +3006,81 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
    Remove-GenXdevPreference             --> removePreference  
 ```` 
 
-### SYNOPSIS 
-    Removes a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function removes a preference value from both the local store and  
-    optionally from the default store. It provides two parameter sets - one for  
-    local removal only and another for removing from both local and default stores.  
-    The function ensures proper synchronization when modifying the default store.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name of the preference to remove. This is required and can be  
-        provided via pipeline input.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to remove  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -RemoveDefault [<SwitchParameter>]  
-        When specified, removes the preference from both the local and default stores.  
-        If not specified, only removes from the local store.  
+    -PreferencesDatabasePath <string>  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    2  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Alias: DatabasePath  
+    -RemoveDefault  
+        Switch to also remove the preference from defaults  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    1  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           All  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3364,88 +3097,81 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
 
-### SYNOPSIS 
-    Sets a default preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages default preferences in the GenXdev preference system. It  
-    handles storing values, removing preferences when values are empty, and ensures  
-    changes are synchronized across the system. The function supports null values by  
-    removing the preference entirely in such cases. When a value is provided, it is  
-    stored in the key-value store and synchronized across all consumers.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set in the default store. This  
-        parameter is required and cannot be null or empty.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. Can be null or empty, which  
-        will result in removing the preference from the store.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set in defaults  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
         Position?                    2  
-        Default value                  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files. This parameter is optional and can  
-        be used to override the default database path.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3462,85 +3188,81 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
    Set-GenXdevPreference                --> setPreference  
 ```` 
 
-### SYNOPSIS 
-    Sets a preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages preferences in the GenXdev local store. It can set new  
-    preferences, update existing ones, or remove them when a null/empty value is  
-    provided. The preferences are stored with synchronization set to "Local".  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set. This is required and must not  
-        be null or empty.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. If null or empty, the preference  
-        will be removed instead of being set.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3557,71 +3279,63 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
    Set-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Sets the database path for preferences used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function configures the global database path used by the GenXdev.Data  
-    module for various preference storage and data operations. Settings are  
-    stored in the current session (using Global variables) and can be cleared  
-    from the session (using -ClearSession).  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
-        A database path where preference data files are located. This path will be used  
-        by GenXdev.Data functions for preference storage and processing operations.  
+    -ClearSession  
+        Clear alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -Confirm  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        When specified, stores the setting only in the current session (Global  
-        variable) without persisting to preferences. Setting will be lost when the  
-        session ends.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears only the session setting (Global variable) without  
-        affecting persistent preferences.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3641,19 +3355,10 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
    EnsureSQLiteStudioInstalled  
 ```` 
 
-### SYNOPSIS 
-    Ensures SQLiteStudio is installed and accessible from the command line.  
-
 ### SYNTAX 
 ```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
-
-### DESCRIPTION 
-    Verifies if SQLiteStudio is installed and available in the system PATH. If not  
-    found, it first checks if the PATH environment variable needs updating. If that  
-    doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures  
-    the PATH environment variable.  
 
 ### PARAMETERS 
     <CommonParameters>  
@@ -3671,38 +3376,31 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
    Get-SQLiteSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the complete schema information from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the sqlite_master table to obtain the complete schema  
-    definition of a SQLite database, including tables, views, indexes and triggers.  
-    It accepts either a connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string that specifies the database location and any  
-        additional connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct filesystem path to the SQLite database file.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3719,66 +3417,58 @@ Get-SQLiteSchema [<CommonParameters>]
    Get-SQLiteTableColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a specific column in a SQLite database table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function provides a convenient way to extract data from a single column in a  
-    SQLite database table. It supports two connection methods: direct database file  
-    path or connection string. The function includes options to limit the number of  
-    returned records and uses proper SQLite query construction for optimal  
-    performance.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        The name of the table from which to retrieve the column data.  
+    -ColumnName <string>  
+        The name of the column to retrieve  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column whose data should be retrieved.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Default is 100. Use -1 to return all  
-        records without limit.  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3795,56 +3485,49 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
    Get-SQLiteTableData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database table with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries data from a SQLite database table using either a connection  
-    string or database file path. It provides flexibility in connecting to the  
-    database and controlling the amount of data retrieved through the Count parameter.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the full file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table to query data from. The table must exist in the  
-        database.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        Specifies the maximum number of records to return. Default is 100.  
-        Use -1 to return all records. Must be -1 or a positive integer.  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3861,39 +3544,31 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
    Get-SQLiteTables  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of table names from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the sqlite_master system table to retrieve all user-defined table names  
-    from a SQLite database. Supports connecting via either a direct connection string  
-    or a database file path. Returns the table names as a collection of strings.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The full connection string to connect to the SQLite database. Should include the  
-        Data Source and Version parameters at minimum.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full filesystem path to the SQLite database file. The function will create  
-        an appropriate connection string internally.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3910,47 +3585,40 @@ Get-SQLiteTables [<CommonParameters>]
    Get-SQLiteTableSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the schema information for a specified SQLite table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database to get detailed schema information for  
-    a specified table. It uses the SQLite PRAGMA table_info command to return column  
-    definitions including names, types, nullable status, and default values.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the direct file path to the SQLite database file. This is converted  
-        internally to a connection string.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table for which to retrieve schema information.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3967,53 +3635,48 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
 
-### SYNOPSIS 
-    Creates and returns a SQLite transaction object for batch operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a SQLite database connection and transaction object that can be used  
-    for batch operations. The caller is responsible for committing or rolling back  
-    the transaction. The connection will be automatically created if the database  
-    file doesn't exist.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
+    -CreateDatabaseIfNotExists <bool>  
+        Whether to create the database file if it does not exist.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -CreateDatabaseIfNotExists <Boolean>  
-        Whether to create the database file if it doesn't exist. Defaults to true.  
-        Required?                    false  
-        Position?                    named  
-        Default value                True  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4030,64 +3693,58 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-
    Get-SQLiteViewColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves column data from a SQLite view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes a SELECT query against a specified SQLite view to retrieve data from a  
-    single column. Supports connecting via either a connection string or database file  
-    path. Allows limiting the number of returned records or retrieving all records.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite database connection string. This parameter is mutually exclusive with  
-        DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the SQLite view to query data from.  
+    -ColumnName <string>  
+        The name of the column.  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column within the view to retrieve data from.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records. Defaults  
-        to 100 if not specified.  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4104,55 +3761,48 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
    Get-SQLiteViewData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries a SQLite database view using either a connection string or database file  
-    path. The function supports limiting the number of returned records and provides  
-    verbose output for tracking query execution.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view from which to retrieve data.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records.  
-        Defaults to 100 if not specified.  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4169,40 +3819,31 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
    Get-SQLiteViews  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of views from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Gets all view names from the specified SQLite database file or connection string.  
-    Returns an array of view names that can be used for further database operations.  
-    The function supports two parameter sets for flexibility: providing either a  
-    connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. Use this when you need  
-        to specify custom connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. Use this for simple file-based  
-        connections.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4219,48 +3860,40 @@ Get-SQLiteViews [<CommonParameters>]
    Get-SQLiteViewSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the SQL schema definition for a SQLite view.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database's system tables to extract the SQL  
-    definition of a specified view. It supports connecting via either a connection  
-    string or direct database file path and returns the complete SQL schema that  
-    defines the requested view.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string used to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view whose schema definition should be retrieved.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4277,73 +3910,65 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
    Invoke-SQLiteQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes one or more SQL queries against a SQLite database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes SQL queries against a SQLite database with parameter support and  
-    configurable transaction isolation. Can use an external transaction for batch  
-    operations or create its own internal transaction. When using an external  
-    transaction, the caller is responsible for committing/rolling back.  
-    Connection priority: Transaction > ConnectionString > DatabaseFilePath.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access. Used if no Transaction is provided.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
-        Used if no Transaction or ConnectionString is provided.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query or queries to execute.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     -Transaction <Object>  
-        An existing SQLite transaction to use. When provided, the function will not  
-        commit or rollback the transaction - that's the caller's responsibility.  
-        Takes priority over ConnectionString and DatabaseFilePath.  
+        An existing SQLite transaction to use for the queries.  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be passed via pipeline.  
-        Required?                    true  
-        Position?                    4  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional parameters for the queries as hashtables. Format: @{"param"="value"}  
-        Required?                    false  
-        Position?                    5  
-        Default value                @()  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
-        an internal transaction.  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4360,68 +3985,58 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
    Invoke-SQLiteStudio  
 ```` 
 
-### SYNOPSIS 
-    Executes SQLite database queries with support for parameters and transactions.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides a PowerShell interface for executing SQLite queries with support for:  
-    - Connection via connection string or database file path  
-    - Parameterized queries to prevent SQL injection  
-    - Transaction isolation level control  
-    - Multiple query execution in a single transaction  
-    - Pipeline input for queries and parameters  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for connecting to the database.  
-        Format: "Data Source=mydb.sqlite"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        The isolation level to use. Default is ReadCommitted.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
         Required?                    true  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be provided via pipeline.  
-        Each query can be parameterized using @parameter notation.  
-        Required?                    true  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query.  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Hashtable of parameters to use in queries. Format: @{"param" = "value"}  
-        Multiple parameter sets can be provided for multiple queries.  
-        Required?                    false  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Controls the transaction isolation. Default is ReadCommitted.  
-        Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      parameters  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4438,42 +4053,36 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
 
-### SYNOPSIS 
-    Creates a new SQLite database file.  
-
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a new SQLite database file at the specified path if it does not already  
-    exist. The function ensures the target directory exists and creates a valid  
-    SQLite database by establishing and closing a connection.  
-
 ### PARAMETERS 
-    -DatabaseFilePath <String>  
-        The full path where the SQLite database file should be created. If the directory  
-        path does not exist, it will be created automatically.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4493,79 +4102,78 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
    Invoke-SqlServerQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes SQL queries against a SQL Server database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes one or more SQL queries against a SQL Server database, supporting  
-    parameters and configurable transaction isolation levels. All queries execute  
-    within a single transaction that rolls back on error.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The complete connection string for connecting to the SQL Server database.  
+    -ConnectionString <string>  
+        The connection string to the SqlServer database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <String>  
-        The SQL Server host name or IP address. Defaults to "." (local server).  
+    -HostName <string>  
+        The hostName of SqlServer  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <String>  
-        The username for SQL Server authentication.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Password <String>  
-        The password for SQL Server authentication.  
-        Required?                    true  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Accepts pipeline input.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional hashtable of parameters for the queries. Format: @{"param"="value"}.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Password <string>  
+        The password for SqlServer  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -User <string>  
+        The username for SqlServer  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4585,68 +4193,56 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of all available key-value store names from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the SQLite database to get unique store names based on the provided  
-    synchronization key. The function handles database initialization if needed and  
-    performs synchronization for non-local scopes. Returns store names that are  
-    not marked as deleted and match the specified synchronization scope.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Key to identify synchronization scope. Use '%' for all stores, 'Local' for  
-        local stores only. Synchronization occurs for non-local scopes. Supports SQL  
-        LIKE pattern matching for flexible store filtering.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                %  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for preferences database files. When specified, overrides the  
-        default database location for storing key-value store configurations.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc. When enabled, retrieves settings from session variables  
-        instead of persistent storage.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving. Forces a fresh  
-        retrieval of settings by clearing any cached session data before processing.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc. Forces retrieval from persistent storage,  
-        bypassing any session-cached settings.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4663,72 +4259,65 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the database if not found and handles synchronization  
-    for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Do not use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4745,86 +4334,83 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a key-value store database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a SQLite-based key-value store. The  
-    function supports optional default values and synchronization across different  
-    scopes. It can use session-based settings or direct database access and  
-    provides automatic database initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4841,56 +4427,47 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates SQLite databases with required schema in two locations if they do not  
-    exist:  
-    1. Local machine for immediate access  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both databases have identical schema with synchronization  
-    support.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4907,93 +4484,90 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
    Remove-KeyFromStore                  --> removekey  
 ```` 
 
-### SYNOPSIS 
-    Deletes a key from the specified key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes a key-value pair from the SQLite database store. For local stores,  
-    performs a hard delete removing the record permanently. For synchronized stores,  
-    marks the record as deleted with a timestamp and triggers synchronization to  
-    propagate the deletion across all synchronized instances.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to delete from.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to be deleted  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key to be deleted from the store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional synchronization scope identifier. Defaults to "Local". When not "Local",  
-        triggers synchronization after marking record as deleted.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5010,85 +4584,81 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
    Remove-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Removes a key-value store from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes all entries for a specified store from the database. For local stores,  
-    performs a physical delete. For synchronized stores, marks entries as deleted  
-    and triggers synchronization. This function supports both local and cloud-  
-    synchronized stores with proper audit trail maintenance.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to remove.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to delete  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        The synchronization scope identifier. Defaults to "Local" for non-synchronized  
-        stores.  
+    -WhatIf  
         Required?                    false  
-        Position?                    2  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5105,102 +4675,99 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a SQLite database store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using SQLite. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5217,62 +4784,56 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store databases.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow databases using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5292,69 +4853,65 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
    Get-GenXdevPreference                --> getPreference  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    The function implements a two-tier preference retrieval system. It first checks  
-    the local store for a preference value. If not found, it falls back to the  
-    default store. If still not found, returns the provided default value.  
-
 ### PARAMETERS 
-    -Name <String>  
-        The name of the preference to retrieve from the preference stores.  
-        Required?                    true  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        The default value if preference is not found  
+        Required?                    false  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        The fallback value to return if the preference is not found in any store.  
-        Required?                    false  
-        Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DefaultPreference  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+    -Name <string>  
+        The name of the preference to retrieve  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5371,60 +4928,47 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
 
-### SYNOPSIS 
-    Gets all preference names from session storage and database stores.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a unique list of preference names by combining keys from session  
-    storage (global variables) and both the local and default preference stores.  
-    The function respects session management parameters to control which sources  
-    are queried.  
-    The function first checks session storage (unless SkipSession is specified),  
-    then falls back to database stores (unless SessionOnly is specified). It  
-    merges all keys, removes duplicates, sorts them alphabetically, and returns  
-    the combined list.  
-    This function is useful when you need to see all available preference settings,  
-    regardless of whether they are stored in session or persistent storage.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5441,48 +4985,47 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
    Get-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Gets the configured database path for preference data files used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
         Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears the session database path setting (Global variable) before retrieving the configuration.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5499,87 +5042,81 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
    Remove-GenXdevPreference             --> removePreference  
 ```` 
 
-### SYNOPSIS 
-    Removes a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function removes a preference value from both the local store and  
-    optionally from the default store. It provides two parameter sets - one for  
-    local removal only and another for removing from both local and default stores.  
-    The function ensures proper synchronization when modifying the default store.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name of the preference to remove. This is required and can be  
-        provided via pipeline input.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to remove  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -RemoveDefault [<SwitchParameter>]  
-        When specified, removes the preference from both the local and default stores.  
-        If not specified, only removes from the local store.  
+    -PreferencesDatabasePath <string>  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    2  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Alias: DatabasePath  
+    -RemoveDefault  
+        Switch to also remove the preference from defaults  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    1  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           All  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5596,88 +5133,81 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
 
-### SYNOPSIS 
-    Sets a default preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages default preferences in the GenXdev preference system. It  
-    handles storing values, removing preferences when values are empty, and ensures  
-    changes are synchronized across the system. The function supports null values by  
-    removing the preference entirely in such cases. When a value is provided, it is  
-    stored in the key-value store and synchronized across all consumers.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set in the default store. This  
-        parameter is required and cannot be null or empty.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. Can be null or empty, which  
-        will result in removing the preference from the store.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set in defaults  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
         Position?                    2  
-        Default value                  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files. This parameter is optional and can  
-        be used to override the default database path.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5694,85 +5224,81 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
    Set-GenXdevPreference                --> setPreference  
 ```` 
 
-### SYNOPSIS 
-    Sets a preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages preferences in the GenXdev local store. It can set new  
-    preferences, update existing ones, or remove them when a null/empty value is  
-    provided. The preferences are stored with synchronization set to "Local".  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set. This is required and must not  
-        be null or empty.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. If null or empty, the preference  
-        will be removed instead of being set.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5789,71 +5315,63 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
    Set-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Sets the database path for preferences used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function configures the global database path used by the GenXdev.Data  
-    module for various preference storage and data operations. Settings are  
-    stored in the current session (using Global variables) and can be cleared  
-    from the session (using -ClearSession).  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
-        A database path where preference data files are located. This path will be used  
-        by GenXdev.Data functions for preference storage and processing operations.  
+    -ClearSession  
+        Clear alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -Confirm  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        When specified, stores the setting only in the current session (Global  
-        variable) without persisting to preferences. Setting will be lost when the  
-        session ends.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears only the session setting (Global variable) without  
-        affecting persistent preferences.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5873,19 +5391,10 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
    EnsureSQLiteStudioInstalled  
 ```` 
 
-### SYNOPSIS 
-    Ensures SQLiteStudio is installed and accessible from the command line.  
-
 ### SYNTAX 
 ```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
-
-### DESCRIPTION 
-    Verifies if SQLiteStudio is installed and available in the system PATH. If not  
-    found, it first checks if the PATH environment variable needs updating. If that  
-    doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures  
-    the PATH environment variable.  
 
 ### PARAMETERS 
     <CommonParameters>  
@@ -5903,38 +5412,31 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
    Get-SQLiteSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the complete schema information from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the sqlite_master table to obtain the complete schema  
-    definition of a SQLite database, including tables, views, indexes and triggers.  
-    It accepts either a connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string that specifies the database location and any  
-        additional connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct filesystem path to the SQLite database file.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5951,66 +5453,58 @@ Get-SQLiteSchema [<CommonParameters>]
    Get-SQLiteTableColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a specific column in a SQLite database table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function provides a convenient way to extract data from a single column in a  
-    SQLite database table. It supports two connection methods: direct database file  
-    path or connection string. The function includes options to limit the number of  
-    returned records and uses proper SQLite query construction for optimal  
-    performance.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        The name of the table from which to retrieve the column data.  
+    -ColumnName <string>  
+        The name of the column to retrieve  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column whose data should be retrieved.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Default is 100. Use -1 to return all  
-        records without limit.  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6027,56 +5521,49 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
    Get-SQLiteTableData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database table with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries data from a SQLite database table using either a connection  
-    string or database file path. It provides flexibility in connecting to the  
-    database and controlling the amount of data retrieved through the Count parameter.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the full file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table to query data from. The table must exist in the  
-        database.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        Specifies the maximum number of records to return. Default is 100.  
-        Use -1 to return all records. Must be -1 or a positive integer.  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6093,39 +5580,31 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
    Get-SQLiteTables  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of table names from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the sqlite_master system table to retrieve all user-defined table names  
-    from a SQLite database. Supports connecting via either a direct connection string  
-    or a database file path. Returns the table names as a collection of strings.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The full connection string to connect to the SQLite database. Should include the  
-        Data Source and Version parameters at minimum.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full filesystem path to the SQLite database file. The function will create  
-        an appropriate connection string internally.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6142,47 +5621,40 @@ Get-SQLiteTables [<CommonParameters>]
    Get-SQLiteTableSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the schema information for a specified SQLite table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database to get detailed schema information for  
-    a specified table. It uses the SQLite PRAGMA table_info command to return column  
-    definitions including names, types, nullable status, and default values.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the direct file path to the SQLite database file. This is converted  
-        internally to a connection string.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table for which to retrieve schema information.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6199,53 +5671,48 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
 
-### SYNOPSIS 
-    Creates and returns a SQLite transaction object for batch operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a SQLite database connection and transaction object that can be used  
-    for batch operations. The caller is responsible for committing or rolling back  
-    the transaction. The connection will be automatically created if the database  
-    file doesn't exist.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
+    -CreateDatabaseIfNotExists <bool>  
+        Whether to create the database file if it does not exist.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -CreateDatabaseIfNotExists <Boolean>  
-        Whether to create the database file if it doesn't exist. Defaults to true.  
-        Required?                    false  
-        Position?                    named  
-        Default value                True  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6262,64 +5729,58 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-
    Get-SQLiteViewColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves column data from a SQLite view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes a SELECT query against a specified SQLite view to retrieve data from a  
-    single column. Supports connecting via either a connection string or database file  
-    path. Allows limiting the number of returned records or retrieving all records.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite database connection string. This parameter is mutually exclusive with  
-        DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the SQLite view to query data from.  
+    -ColumnName <string>  
+        The name of the column.  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column within the view to retrieve data from.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records. Defaults  
-        to 100 if not specified.  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6336,55 +5797,48 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
    Get-SQLiteViewData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries a SQLite database view using either a connection string or database file  
-    path. The function supports limiting the number of returned records and provides  
-    verbose output for tracking query execution.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view from which to retrieve data.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records.  
-        Defaults to 100 if not specified.  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6401,40 +5855,31 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
    Get-SQLiteViews  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of views from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Gets all view names from the specified SQLite database file or connection string.  
-    Returns an array of view names that can be used for further database operations.  
-    The function supports two parameter sets for flexibility: providing either a  
-    connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. Use this when you need  
-        to specify custom connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. Use this for simple file-based  
-        connections.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6451,48 +5896,40 @@ Get-SQLiteViews [<CommonParameters>]
    Get-SQLiteViewSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the SQL schema definition for a SQLite view.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database's system tables to extract the SQL  
-    definition of a specified view. It supports connecting via either a connection  
-    string or direct database file path and returns the complete SQL schema that  
-    defines the requested view.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string used to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view whose schema definition should be retrieved.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6509,73 +5946,65 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
    Invoke-SQLiteQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes one or more SQL queries against a SQLite database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes SQL queries against a SQLite database with parameter support and  
-    configurable transaction isolation. Can use an external transaction for batch  
-    operations or create its own internal transaction. When using an external  
-    transaction, the caller is responsible for committing/rolling back.  
-    Connection priority: Transaction > ConnectionString > DatabaseFilePath.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access. Used if no Transaction is provided.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
-        Used if no Transaction or ConnectionString is provided.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query or queries to execute.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     -Transaction <Object>  
-        An existing SQLite transaction to use. When provided, the function will not  
-        commit or rollback the transaction - that's the caller's responsibility.  
-        Takes priority over ConnectionString and DatabaseFilePath.  
+        An existing SQLite transaction to use for the queries.  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be passed via pipeline.  
-        Required?                    true  
-        Position?                    4  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional parameters for the queries as hashtables. Format: @{"param"="value"}  
-        Required?                    false  
-        Position?                    5  
-        Default value                @()  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
-        an internal transaction.  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6592,68 +6021,58 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
    Invoke-SQLiteStudio  
 ```` 
 
-### SYNOPSIS 
-    Executes SQLite database queries with support for parameters and transactions.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides a PowerShell interface for executing SQLite queries with support for:  
-    - Connection via connection string or database file path  
-    - Parameterized queries to prevent SQL injection  
-    - Transaction isolation level control  
-    - Multiple query execution in a single transaction  
-    - Pipeline input for queries and parameters  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for connecting to the database.  
-        Format: "Data Source=mydb.sqlite"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        The isolation level to use. Default is ReadCommitted.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
         Required?                    true  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be provided via pipeline.  
-        Each query can be parameterized using @parameter notation.  
-        Required?                    true  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query.  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Hashtable of parameters to use in queries. Format: @{"param" = "value"}  
-        Multiple parameter sets can be provided for multiple queries.  
-        Required?                    false  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Controls the transaction isolation. Default is ReadCommitted.  
-        Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      parameters  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6670,42 +6089,36 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
 
-### SYNOPSIS 
-    Creates a new SQLite database file.  
-
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a new SQLite database file at the specified path if it does not already  
-    exist. The function ensures the target directory exists and creates a valid  
-    SQLite database by establishing and closing a connection.  
-
 ### PARAMETERS 
-    -DatabaseFilePath <String>  
-        The full path where the SQLite database file should be created. If the directory  
-        path does not exist, it will be created automatically.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6725,79 +6138,78 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
    Invoke-SqlServerQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes SQL queries against a SQL Server database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes one or more SQL queries against a SQL Server database, supporting  
-    parameters and configurable transaction isolation levels. All queries execute  
-    within a single transaction that rolls back on error.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The complete connection string for connecting to the SQL Server database.  
+    -ConnectionString <string>  
+        The connection string to the SqlServer database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <String>  
-        The SQL Server host name or IP address. Defaults to "." (local server).  
+    -HostName <string>  
+        The hostName of SqlServer  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <String>  
-        The username for SQL Server authentication.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Password <String>  
-        The password for SQL Server authentication.  
-        Required?                    true  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Accepts pipeline input.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional hashtable of parameters for the queries. Format: @{"param"="value"}.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Password <string>  
+        The password for SqlServer  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -User <string>  
+        The username for SqlServer  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6817,68 +6229,56 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of all available key-value store names from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the SQLite database to get unique store names based on the provided  
-    synchronization key. The function handles database initialization if needed and  
-    performs synchronization for non-local scopes. Returns store names that are  
-    not marked as deleted and match the specified synchronization scope.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Key to identify synchronization scope. Use '%' for all stores, 'Local' for  
-        local stores only. Synchronization occurs for non-local scopes. Supports SQL  
-        LIKE pattern matching for flexible store filtering.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                %  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for preferences database files. When specified, overrides the  
-        default database location for storing key-value store configurations.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc. When enabled, retrieves settings from session variables  
-        instead of persistent storage.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving. Forces a fresh  
-        retrieval of settings by clearing any cached session data before processing.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc. Forces retrieval from persistent storage,  
-        bypassing any session-cached settings.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6895,72 +6295,65 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the database if not found and handles synchronization  
-    for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Do not use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6977,86 +6370,83 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a key-value store database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a SQLite-based key-value store. The  
-    function supports optional default values and synchronization across different  
-    scopes. It can use session-based settings or direct database access and  
-    provides automatic database initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7073,56 +6463,47 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates SQLite databases with required schema in two locations if they do not  
-    exist:  
-    1. Local machine for immediate access  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both databases have identical schema with synchronization  
-    support.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7139,93 +6520,90 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
    Remove-KeyFromStore                  --> removekey  
 ```` 
 
-### SYNOPSIS 
-    Deletes a key from the specified key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes a key-value pair from the SQLite database store. For local stores,  
-    performs a hard delete removing the record permanently. For synchronized stores,  
-    marks the record as deleted with a timestamp and triggers synchronization to  
-    propagate the deletion across all synchronized instances.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to delete from.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to be deleted  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key to be deleted from the store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional synchronization scope identifier. Defaults to "Local". When not "Local",  
-        triggers synchronization after marking record as deleted.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7242,85 +6620,81 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
    Remove-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Removes a key-value store from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes all entries for a specified store from the database. For local stores,  
-    performs a physical delete. For synchronized stores, marks entries as deleted  
-    and triggers synchronization. This function supports both local and cloud-  
-    synchronized stores with proper audit trail maintenance.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to remove.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to delete  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        The synchronization scope identifier. Defaults to "Local" for non-synchronized  
-        stores.  
+    -WhatIf  
         Required?                    false  
-        Position?                    2  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7337,102 +6711,99 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a SQLite database store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using SQLite. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7449,62 +6820,56 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store databases.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow databases using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7524,69 +6889,65 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
    Get-GenXdevPreference                --> getPreference  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    The function implements a two-tier preference retrieval system. It first checks  
-    the local store for a preference value. If not found, it falls back to the  
-    default store. If still not found, returns the provided default value.  
-
 ### PARAMETERS 
-    -Name <String>  
-        The name of the preference to retrieve from the preference stores.  
-        Required?                    true  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        The default value if preference is not found  
+        Required?                    false  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        The fallback value to return if the preference is not found in any store.  
-        Required?                    false  
-        Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DefaultPreference  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+    -Name <string>  
+        The name of the preference to retrieve  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7603,60 +6964,47 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
 
-### SYNOPSIS 
-    Gets all preference names from session storage and database stores.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a unique list of preference names by combining keys from session  
-    storage (global variables) and both the local and default preference stores.  
-    The function respects session management parameters to control which sources  
-    are queried.  
-    The function first checks session storage (unless SkipSession is specified),  
-    then falls back to database stores (unless SessionOnly is specified). It  
-    merges all keys, removes duplicates, sorts them alphabetically, and returns  
-    the combined list.  
-    This function is useful when you need to see all available preference settings,  
-    regardless of whether they are stored in session or persistent storage.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7673,48 +7021,47 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
    Get-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Gets the configured database path for preference data files used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
         Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears the session database path setting (Global variable) before retrieving the configuration.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7731,87 +7078,81 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
    Remove-GenXdevPreference             --> removePreference  
 ```` 
 
-### SYNOPSIS 
-    Removes a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function removes a preference value from both the local store and  
-    optionally from the default store. It provides two parameter sets - one for  
-    local removal only and another for removing from both local and default stores.  
-    The function ensures proper synchronization when modifying the default store.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name of the preference to remove. This is required and can be  
-        provided via pipeline input.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to remove  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -RemoveDefault [<SwitchParameter>]  
-        When specified, removes the preference from both the local and default stores.  
-        If not specified, only removes from the local store.  
+    -PreferencesDatabasePath <string>  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    2  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Alias: DatabasePath  
+    -RemoveDefault  
+        Switch to also remove the preference from defaults  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    1  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           All  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7828,88 +7169,81 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
 
-### SYNOPSIS 
-    Sets a default preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages default preferences in the GenXdev preference system. It  
-    handles storing values, removing preferences when values are empty, and ensures  
-    changes are synchronized across the system. The function supports null values by  
-    removing the preference entirely in such cases. When a value is provided, it is  
-    stored in the key-value store and synchronized across all consumers.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set in the default store. This  
-        parameter is required and cannot be null or empty.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. Can be null or empty, which  
-        will result in removing the preference from the store.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set in defaults  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
         Position?                    2  
-        Default value                  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files. This parameter is optional and can  
-        be used to override the default database path.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7926,85 +7260,81 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
    Set-GenXdevPreference                --> setPreference  
 ```` 
 
-### SYNOPSIS 
-    Sets a preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages preferences in the GenXdev local store. It can set new  
-    preferences, update existing ones, or remove them when a null/empty value is  
-    provided. The preferences are stored with synchronization set to "Local".  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set. This is required and must not  
-        be null or empty.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. If null or empty, the preference  
-        will be removed instead of being set.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8021,71 +7351,63 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
    Set-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Sets the database path for preferences used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function configures the global database path used by the GenXdev.Data  
-    module for various preference storage and data operations. Settings are  
-    stored in the current session (using Global variables) and can be cleared  
-    from the session (using -ClearSession).  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
-        A database path where preference data files are located. This path will be used  
-        by GenXdev.Data functions for preference storage and processing operations.  
+    -ClearSession  
+        Clear alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -Confirm  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        When specified, stores the setting only in the current session (Global  
-        variable) without persisting to preferences. Setting will be lost when the  
-        session ends.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears only the session setting (Global variable) without  
-        affecting persistent preferences.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8105,19 +7427,10 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
    EnsureSQLiteStudioInstalled  
 ```` 
 
-### SYNOPSIS 
-    Ensures SQLiteStudio is installed and accessible from the command line.  
-
 ### SYNTAX 
 ```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
-
-### DESCRIPTION 
-    Verifies if SQLiteStudio is installed and available in the system PATH. If not  
-    found, it first checks if the PATH environment variable needs updating. If that  
-    doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures  
-    the PATH environment variable.  
 
 ### PARAMETERS 
     <CommonParameters>  
@@ -8135,38 +7448,31 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
    Get-SQLiteSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the complete schema information from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the sqlite_master table to obtain the complete schema  
-    definition of a SQLite database, including tables, views, indexes and triggers.  
-    It accepts either a connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string that specifies the database location and any  
-        additional connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct filesystem path to the SQLite database file.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8183,66 +7489,58 @@ Get-SQLiteSchema [<CommonParameters>]
    Get-SQLiteTableColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a specific column in a SQLite database table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function provides a convenient way to extract data from a single column in a  
-    SQLite database table. It supports two connection methods: direct database file  
-    path or connection string. The function includes options to limit the number of  
-    returned records and uses proper SQLite query construction for optimal  
-    performance.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        The name of the table from which to retrieve the column data.  
+    -ColumnName <string>  
+        The name of the column to retrieve  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column whose data should be retrieved.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Default is 100. Use -1 to return all  
-        records without limit.  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8259,56 +7557,49 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
    Get-SQLiteTableData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database table with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries data from a SQLite database table using either a connection  
-    string or database file path. It provides flexibility in connecting to the  
-    database and controlling the amount of data retrieved through the Count parameter.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the full file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table to query data from. The table must exist in the  
-        database.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        Specifies the maximum number of records to return. Default is 100.  
-        Use -1 to return all records. Must be -1 or a positive integer.  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8325,39 +7616,31 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
    Get-SQLiteTables  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of table names from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the sqlite_master system table to retrieve all user-defined table names  
-    from a SQLite database. Supports connecting via either a direct connection string  
-    or a database file path. Returns the table names as a collection of strings.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The full connection string to connect to the SQLite database. Should include the  
-        Data Source and Version parameters at minimum.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full filesystem path to the SQLite database file. The function will create  
-        an appropriate connection string internally.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8374,47 +7657,40 @@ Get-SQLiteTables [<CommonParameters>]
    Get-SQLiteTableSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the schema information for a specified SQLite table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database to get detailed schema information for  
-    a specified table. It uses the SQLite PRAGMA table_info command to return column  
-    definitions including names, types, nullable status, and default values.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the direct file path to the SQLite database file. This is converted  
-        internally to a connection string.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table for which to retrieve schema information.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8431,53 +7707,48 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
 
-### SYNOPSIS 
-    Creates and returns a SQLite transaction object for batch operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a SQLite database connection and transaction object that can be used  
-    for batch operations. The caller is responsible for committing or rolling back  
-    the transaction. The connection will be automatically created if the database  
-    file doesn't exist.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
+    -CreateDatabaseIfNotExists <bool>  
+        Whether to create the database file if it does not exist.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -CreateDatabaseIfNotExists <Boolean>  
-        Whether to create the database file if it doesn't exist. Defaults to true.  
-        Required?                    false  
-        Position?                    named  
-        Default value                True  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8494,64 +7765,58 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-
    Get-SQLiteViewColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves column data from a SQLite view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes a SELECT query against a specified SQLite view to retrieve data from a  
-    single column. Supports connecting via either a connection string or database file  
-    path. Allows limiting the number of returned records or retrieving all records.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite database connection string. This parameter is mutually exclusive with  
-        DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the SQLite view to query data from.  
+    -ColumnName <string>  
+        The name of the column.  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column within the view to retrieve data from.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records. Defaults  
-        to 100 if not specified.  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8568,55 +7833,48 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
    Get-SQLiteViewData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries a SQLite database view using either a connection string or database file  
-    path. The function supports limiting the number of returned records and provides  
-    verbose output for tracking query execution.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view from which to retrieve data.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records.  
-        Defaults to 100 if not specified.  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8633,40 +7891,31 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
    Get-SQLiteViews  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of views from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Gets all view names from the specified SQLite database file or connection string.  
-    Returns an array of view names that can be used for further database operations.  
-    The function supports two parameter sets for flexibility: providing either a  
-    connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. Use this when you need  
-        to specify custom connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. Use this for simple file-based  
-        connections.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8683,48 +7932,40 @@ Get-SQLiteViews [<CommonParameters>]
    Get-SQLiteViewSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the SQL schema definition for a SQLite view.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database's system tables to extract the SQL  
-    definition of a specified view. It supports connecting via either a connection  
-    string or direct database file path and returns the complete SQL schema that  
-    defines the requested view.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string used to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view whose schema definition should be retrieved.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8741,73 +7982,65 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
    Invoke-SQLiteQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes one or more SQL queries against a SQLite database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes SQL queries against a SQLite database with parameter support and  
-    configurable transaction isolation. Can use an external transaction for batch  
-    operations or create its own internal transaction. When using an external  
-    transaction, the caller is responsible for committing/rolling back.  
-    Connection priority: Transaction > ConnectionString > DatabaseFilePath.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access. Used if no Transaction is provided.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
-        Used if no Transaction or ConnectionString is provided.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query or queries to execute.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     -Transaction <Object>  
-        An existing SQLite transaction to use. When provided, the function will not  
-        commit or rollback the transaction - that's the caller's responsibility.  
-        Takes priority over ConnectionString and DatabaseFilePath.  
+        An existing SQLite transaction to use for the queries.  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be passed via pipeline.  
-        Required?                    true  
-        Position?                    4  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional parameters for the queries as hashtables. Format: @{"param"="value"}  
-        Required?                    false  
-        Position?                    5  
-        Default value                @()  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
-        an internal transaction.  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8824,68 +8057,58 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
    Invoke-SQLiteStudio  
 ```` 
 
-### SYNOPSIS 
-    Executes SQLite database queries with support for parameters and transactions.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides a PowerShell interface for executing SQLite queries with support for:  
-    - Connection via connection string or database file path  
-    - Parameterized queries to prevent SQL injection  
-    - Transaction isolation level control  
-    - Multiple query execution in a single transaction  
-    - Pipeline input for queries and parameters  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for connecting to the database.  
-        Format: "Data Source=mydb.sqlite"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        The isolation level to use. Default is ReadCommitted.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
         Required?                    true  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be provided via pipeline.  
-        Each query can be parameterized using @parameter notation.  
-        Required?                    true  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query.  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Hashtable of parameters to use in queries. Format: @{"param" = "value"}  
-        Multiple parameter sets can be provided for multiple queries.  
-        Required?                    false  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Controls the transaction isolation. Default is ReadCommitted.  
-        Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      parameters  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8902,42 +8125,36 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
 
-### SYNOPSIS 
-    Creates a new SQLite database file.  
-
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a new SQLite database file at the specified path if it does not already  
-    exist. The function ensures the target directory exists and creates a valid  
-    SQLite database by establishing and closing a connection.  
-
 ### PARAMETERS 
-    -DatabaseFilePath <String>  
-        The full path where the SQLite database file should be created. If the directory  
-        path does not exist, it will be created automatically.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8957,79 +8174,78 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
    Invoke-SqlServerQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes SQL queries against a SQL Server database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes one or more SQL queries against a SQL Server database, supporting  
-    parameters and configurable transaction isolation levels. All queries execute  
-    within a single transaction that rolls back on error.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The complete connection string for connecting to the SQL Server database.  
+    -ConnectionString <string>  
+        The connection string to the SqlServer database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <String>  
-        The SQL Server host name or IP address. Defaults to "." (local server).  
+    -HostName <string>  
+        The hostName of SqlServer  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <String>  
-        The username for SQL Server authentication.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Password <String>  
-        The password for SQL Server authentication.  
-        Required?                    true  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Accepts pipeline input.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional hashtable of parameters for the queries. Format: @{"param"="value"}.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Password <string>  
+        The password for SqlServer  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -User <string>  
+        The username for SqlServer  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9049,68 +8265,56 @@ Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-Iso
    Get-KeyValueStoreNames               --> getstorenames  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of all available key-value store names from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the SQLite database to get unique store names based on the provided  
-    synchronization key. The function handles database initialization if needed and  
-    performs synchronization for non-local scopes. Returns store names that are  
-    not marked as deleted and match the specified synchronization scope.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Key to identify synchronization scope. Use '%' for all stores, 'Local' for  
-        local stores only. Synchronization occurs for non-local scopes. Supports SQL  
-        LIKE pattern matching for flexible store filtering.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                %  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for preferences database files. When specified, overrides the  
-        default database location for storing key-value store configurations.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc. When enabled, retrieves settings from session variables  
-        instead of persistent storage.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving. Forces a fresh  
-        retrieval of settings by clearing any cached session data before processing.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc. Forces retrieval from persistent storage,  
-        bypassing any session-cached settings.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9127,72 +8331,65 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <String>] [-DatabasePath <String>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore SQLite database to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the database if not found and handles synchronization  
-    for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Do not use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9209,86 +8406,83 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabaseP
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a key-value store database.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValue] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a SQLite-based key-value store. The  
-    function supports optional default values and synchronization across different  
-    scopes. It can use session-based settings or direct database access and  
-    provides automatic database initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9305,56 +8499,47 @@ Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName] <String> [[-DefaultValu
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes and synchronizes KeyValueStore databases between local and OneDrive.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates SQLite databases with required schema in two locations if they do not  
-    exist:  
-    1. Local machine for immediate access  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both databases have identical schema with synchronization  
-    support.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9371,93 +8556,90 @@ Initialize-KeyValueStores [-SessionOnly] [-ClearSession] [[-DatabasePath] <Strin
    Remove-KeyFromStore                  --> removekey  
 ```` 
 
-### SYNOPSIS 
-    Deletes a key from the specified key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-SynchronizationKey] <String>] [-SessionOnly] [-ClearSession] [-DatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes a key-value pair from the SQLite database store. For local stores,  
-    performs a hard delete removing the record permanently. For synchronized stores,  
-    marks the record as deleted with a timestamp and triggers synchronization to  
-    propagate the deletion across all synchronized instances.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to delete from.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to be deleted  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key to be deleted from the store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional synchronization scope identifier. Defaults to "Local". When not "Local",  
-        triggers synchronization after marking record as deleted.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9474,85 +8656,81 @@ Remove-KeyFromStore [-StoreName] <String> [-KeyName] <String> [[-Synchronization
    Remove-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Removes a key-value store from the database.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Removes all entries for a specified store from the database. For local stores,  
-    performs a physical delete. For synchronized stores, marks entries as deleted  
-    and triggers synchronization. This function supports both local and cloud-  
-    synchronized stores with proper audit trail maintenance.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to remove.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store to delete  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        The synchronization scope identifier. Defaults to "Local" for non-synchronized  
-        stores.  
+    -WhatIf  
         Required?                    false  
-        Position?                    2  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9569,102 +8747,99 @@ Remove-KeyValueStore [-StoreName] <String> [[-SynchronizationKey] <String>] [-Da
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a SQLite database store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <String>] [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using SQLite. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9681,62 +8856,56 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName] <String> [[-Value] <Strin
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store databases.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow databases using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9756,69 +8925,65 @@ Sync-KeyValueStore [[-SynchronizationKey] <String>] [-DatabasePath <String>] [-S
    Get-GenXdevPreference                --> getPreference  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    The function implements a two-tier preference retrieval system. It first checks  
-    the local store for a preference value. If not found, it falls back to the  
-    default store. If still not found, returns the provided default value.  
-
 ### PARAMETERS 
-    -Name <String>  
-        The name of the preference to retrieve from the preference stores.  
-        Required?                    true  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        The default value if preference is not found  
+        Required?                    false  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        The fallback value to return if the preference is not found in any store.  
-        Required?                    false  
-        Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DefaultPreference  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+    -Name <string>  
+        The name of the preference to retrieve  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9835,60 +9000,47 @@ Get-GenXdevPreference [-Name] <String> [[-DefaultValue] <String>] [-PreferencesD
    Get-GenXdevPreferenceNames           --> getPreferenceNames  
 ```` 
 
-### SYNOPSIS 
-    Gets all preference names from session storage and database stores.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabasePath] <String>] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a unique list of preference names by combining keys from session  
-    storage (global variables) and both the local and default preference stores.  
-    The function respects session management parameters to control which sources  
-    are queried.  
-    The function first checks session storage (unless SkipSession is specified),  
-    then falls back to database stores (unless SessionOnly is specified). It  
-    merges all keys, removes duplicates, sorts them alphabetically, and returns  
-    the combined list.  
-    This function is useful when you need to see all available preference settings,  
-    regardless of whether they are stored in session or persistent storage.  
-
 ### PARAMETERS 
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9905,48 +9057,47 @@ Get-GenXdevPreferenceNames [-SessionOnly] [-ClearSession] [[-PreferencesDatabase
    Get-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Gets the configured database path for preference data files used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function retrieves the global database path used by the GenXdev.Data module for various preference storage and data operations. It checks Global variables first (unless SkipSession is specified), then uses system defaults.  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
         Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears the session database path setting (Global variable) before retrieving the configuration.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        When specified, skips checking the session setting (Global variable) and retrieves only from persistent preferences.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9963,87 +9114,81 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-Sessi
    Remove-GenXdevPreference             --> removePreference  
 ```` 
 
-### SYNOPSIS 
-    Removes a preference value from the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDatabasePath <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function removes a preference value from both the local store and  
-    optionally from the default store. It provides two parameter sets - one for  
-    local removal only and another for removing from both local and default stores.  
-    The function ensures proper synchronization when modifying the default store.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name of the preference to remove. This is required and can be  
-        provided via pipeline input.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to remove  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -RemoveDefault [<SwitchParameter>]  
-        When specified, removes the preference from both the local and default stores.  
-        If not specified, only removes from the local store.  
+    -PreferencesDatabasePath <string>  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    2  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Alias: DatabasePath  
+    -RemoveDefault  
+        Switch to also remove the preference from defaults  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    1  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           All  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10060,88 +9205,81 @@ Remove-GenXdevPreference [-Name] <String> [[-RemoveDefault]] [-PreferencesDataba
    Set-GenXdevDefaultPreference         --> setPreferenceDefault  
 ```` 
 
-### SYNOPSIS 
-    Sets a default preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-PreferencesDatabasePath] <String>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages default preferences in the GenXdev preference system. It  
-    handles storing values, removing preferences when values are empty, and ensures  
-    changes are synchronized across the system. The function supports null values by  
-    removing the preference entirely in such cases. When a value is provided, it is  
-    stored in the key-value store and synchronized across all consumers.  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set in the default store. This  
-        parameter is required and cannot be null or empty.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. Can be null or empty, which  
-        will result in removing the preference from the store.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set in defaults  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
         Position?                    2  
-        Default value                  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files. This parameter is optional and can  
-        be used to override the default database path.  
+    -WhatIf  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10158,85 +9296,81 @@ Set-GenXdevDefaultPreference [-Name] <String> [[-Value] <String>] [[-Preferences
    Set-GenXdevPreference                --> setPreference  
 ```` 
 
-### SYNOPSIS 
-    Sets a preference value in the GenXdev preferences store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <String>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function manages preferences in the GenXdev local store. It can set new  
-    preferences, update existing ones, or remove them when a null/empty value is  
-    provided. The preferences are stored with synchronization set to "Local".  
-
 ### PARAMETERS 
-    -Name <String>  
-        Specifies the name (key) of the preference to set. This is required and must not  
-        be null or empty.  
+    -ClearSession  
+        Clear the session setting (Global variable) before retrieving  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Name <string>  
+        The name of the preference to set  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceName  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        Specifies the value to store for the preference. If null or empty, the preference  
-        will be removed instead of being set.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Value <string>  
+        The value to store for the preference  
+        Required?                    false  
+        Position?                    1  
         Accept pipeline input?       true (ByPropertyName)  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      PreferenceValue  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        Use alternative settings stored in session for Data preferences like Language,  
-        Database paths, etc.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        Clear the session setting (Global variable) before retrieving.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -PreferencesDatabasePath <String>  
-        Database path for preference data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
-        Required?                    false  
-        Position?                    named  
-        Default value                False  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10253,71 +9387,63 @@ Set-GenXdevPreference [-Name] <String> [[-Value] <String>] [-SessionOnly] [-Clea
    Set-GenXdevPreferencesDatabasePath  
 ```` 
 
-### SYNOPSIS 
-    Sets the database path for preferences used in GenXdev.Data operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function configures the global database path used by the GenXdev.Data  
-    module for various preference storage and data operations. Settings are  
-    stored in the current session (using Global variables) and can be cleared  
-    from the session (using -ClearSession).  
-
 ### PARAMETERS 
-    -PreferencesDatabasePath <String>  
-        A database path where preference data files are located. This path will be used  
-        by GenXdev.Data functions for preference storage and processing operations.  
+    -ClearSession  
+        Clear alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SkipSession [<SwitchParameter>]  
-        Dont use alternative settings stored in session for Data preferences like  
-        Language, Database paths, etc.  
+    -Confirm  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SessionOnly [<SwitchParameter>]  
-        When specified, stores the setting only in the current session (Global  
-        variable) without persisting to preferences. Setting will be lost when the  
-        session ends.  
+    -PreferencesDatabasePath <string>  
+        Database path for preference data files  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      DatabasePath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ClearSession [<SwitchParameter>]  
-        When specified, clears only the session setting (Global variable) without  
-        affecting persistent preferences.  
+    -SessionOnly  
+        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                False  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -SkipSession  
+        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      FromPreferences  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10337,19 +9463,10 @@ Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <String>] [-SkipS
    EnsureSQLiteStudioInstalled  
 ```` 
 
-### SYNOPSIS 
-    Ensures SQLiteStudio is installed and accessible from the command line.  
-
 ### SYNTAX 
 ```PowerShell 
 EnsureSQLiteStudioInstalled [<CommonParameters>] 
 ```` 
-
-### DESCRIPTION 
-    Verifies if SQLiteStudio is installed and available in the system PATH. If not  
-    found, it first checks if the PATH environment variable needs updating. If that  
-    doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures  
-    the PATH environment variable.  
 
 ### PARAMETERS 
     <CommonParameters>  
@@ -10367,38 +9484,31 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
    Get-SQLiteSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the complete schema information from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the sqlite_master table to obtain the complete schema  
-    definition of a SQLite database, including tables, views, indexes and triggers.  
-    It accepts either a connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string that specifies the database location and any  
-        additional connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct filesystem path to the SQLite database file.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10415,66 +9525,58 @@ Get-SQLiteSchema [<CommonParameters>]
    Get-SQLiteTableColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a specific column in a SQLite database table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <String> [-TableName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function provides a convenient way to extract data from a single column in a  
-    SQLite database table. It supports two connection methods: direct database file  
-    path or connection string. The function includes options to limit the number of  
-    returned records and uses proper SQLite query construction for optimal  
-    performance.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        The name of the table from which to retrieve the column data.  
+    -ColumnName <string>  
+        The name of the column to retrieve  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column whose data should be retrieved.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Default is 100. Use -1 to return all  
-        records without limit.  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10491,56 +9593,49 @@ Get-SQLiteTableColumnData [-TableName] <String> [-ColumnName] <String> [[-Count]
    Get-SQLiteTableData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database table with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <String> [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries data from a SQLite database table using either a connection  
-    string or database file path. It provides flexibility in connecting to the  
-    database and controlling the amount of data retrieved through the Count parameter.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the full file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table to query data from. The table must exist in the  
-        database.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        Specifies the maximum number of records to return. Default is 100.  
-        Use -1 to return all records. Must be -1 or a positive integer.  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10557,39 +9652,31 @@ Get-SQLiteTableData [-TableName] <String> [[-Count] <Int32>] [<CommonParameters>
    Get-SQLiteTables  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of table names from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the sqlite_master system table to retrieve all user-defined table names  
-    from a SQLite database. Supports connecting via either a direct connection string  
-    or a database file path. Returns the table names as a collection of strings.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The full connection string to connect to the SQLite database. Should include the  
-        Data Source and Version parameters at minimum.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full filesystem path to the SQLite database file. The function will create  
-        an appropriate connection string internally.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10606,47 +9693,40 @@ Get-SQLiteTables [<CommonParameters>]
    Get-SQLiteTableSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the schema information for a specified SQLite table.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <String> [-TableName] <String> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <String> [-TableName] <String> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
+   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database to get detailed schema information for  
-    a specified table. It uses the SQLite PRAGMA table_info command to return column  
-    definitions including names, types, nullable status, and default values.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        Specifies the SQLite connection string in the format:  
-        "Data Source=path_to_database_file"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        Specifies the direct file path to the SQLite database file. This is converted  
-        internally to a connection string.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -TableName <String>  
-        Specifies the name of the table for which to retrieve schema information.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10663,53 +9743,48 @@ Get-SQLiteTableSchema [-TableName] <String> [<CommonParameters>]
    Get-SQLiteTransaction                --> getsqltx, newsqltx  
 ```` 
 
-### SYNOPSIS 
-    Creates and returns a SQLite transaction object for batch operations.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <String> [-IsolationLevel <String>] [-CreateDatabaseIfNotExists <Boolean>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
+   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a SQLite database connection and transaction object that can be used  
-    for batch operations. The caller is responsible for committing or rolling back  
-    the transaction. The connection will be automatically created if the database  
-    file doesn't exist.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
+    -CreateDatabaseIfNotExists <bool>  
+        Whether to create the database file if it does not exist.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -CreateDatabaseIfNotExists <Boolean>  
-        Whether to create the database file if it doesn't exist. Defaults to true.  
-        Required?                    false  
-        Position?                    named  
-        Default value                True  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10726,64 +9801,58 @@ Get-SQLiteTransaction [-DatabaseFilePath] <String> [-IsolationLevel <String>] [-
    Get-SQLiteViewColumnData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves column data from a SQLite view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <String> [-ViewName] <String> [-ColumnName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes a SELECT query against a specified SQLite view to retrieve data from a  
-    single column. Supports connecting via either a connection string or database file  
-    path. Allows limiting the number of returned records or retrieving all records.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite database connection string. This parameter is mutually exclusive with  
-        DatabaseFilePath.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the SQLite view to query data from.  
+    -ColumnName <string>  
+        The name of the column.  
         Required?                    true  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -ColumnName <String>  
-        The name of the column within the view to retrieve data from.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    3  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records. Defaults  
-        to 100 if not specified.  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
         Required?                    false  
-        Position?                    4  
-        Default value                100  
+        Position?                    3  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10800,55 +9869,48 @@ Get-SQLiteViewColumnData [-ViewName] <String> [-ColumnName] <String> [[-Count] <
    Get-SQLiteViewData  
 ```` 
 
-### SYNOPSIS 
-    Retrieves data from a SQLite database view with optional record limiting.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <String> [-ViewName] <String> [[-Count] <Int32>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
+   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries a SQLite database view using either a connection string or database file  
-    path. The function supports limiting the number of returned records and provides  
-    verbose output for tracking query execution.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view from which to retrieve data.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Count <Int32>  
-        The maximum number of records to return. Use -1 to return all records.  
-        Defaults to 100 if not specified.  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
         Required?                    false  
-        Position?                    3  
-        Default value                100  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10865,40 +9927,31 @@ Get-SQLiteViewData [-DatabaseFilePath] <String> [-ViewName] <String> [[-Count] <
    Get-SQLiteViews  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a list of views from a SQLite database.  
-
 ### SYNTAX 
 ```PowerShell 
 Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <String> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <String> [<CommonParameters>] 
+   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
+   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Gets all view names from the specified SQLite database file or connection string.  
-    Returns an array of view names that can be used for further database operations.  
-    The function supports two parameter sets for flexibility: providing either a  
-    connection string or a direct path to the database file.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string to connect to the SQLite database. Use this when you need  
-        to specify custom connection parameters.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. Use this for simple file-based  
-        connections.  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           DatabaseFilePath  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10915,48 +9968,40 @@ Get-SQLiteViews [<CommonParameters>]
    Get-SQLiteViewSchema  
 ```` 
 
-### SYNOPSIS 
-    Retrieves the SQL schema definition for a SQLite view.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <String> [-ViewName] <String> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <String> [-ViewName] <String> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
+   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    This function queries the SQLite database's system tables to extract the SQL  
-    definition of a specified view. It supports connecting via either a connection  
-    string or direct database file path and returns the complete SQL schema that  
-    defines the requested view.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The connection string used to connect to the SQLite database. This parameter is  
-        mutually exclusive with DatabaseFilePath.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The full path to the SQLite database file. This parameter is mutually exclusive  
-        with ConnectionString.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -ViewName <String>  
-        The name of the view whose schema definition should be retrieved.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10973,73 +10018,65 @@ Get-SQLiteViewSchema [-ViewName] <String> [<CommonParameters>]
    Invoke-SQLiteQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes one or more SQL queries against a SQLite database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>] [[-Transaction] <Object>] [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes SQL queries against a SQLite database with parameter support and  
-    configurable transaction isolation. Can use an external transaction for batch  
-    operations or create its own internal transaction. When using an external  
-    transaction, the caller is responsible for committing/rolling back.  
-    Connection priority: Transaction > ConnectionString > DatabaseFilePath.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for database access. Used if no Transaction is provided.  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    false  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
         Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The file path to the SQLite database. Will be converted to a connection string.  
-        Used if no Transaction or ConnectionString is provided.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    2  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query or queries to execute.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           (All)  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     -Transaction <Object>  
-        An existing SQLite transaction to use. When provided, the function will not  
-        commit or rollback the transaction - that's the caller's responsibility.  
-        Takes priority over ConnectionString and DatabaseFilePath.  
+        An existing SQLite transaction to use for the queries.  
         Required?                    false  
-        Position?                    3  
-        Default value                  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be passed via pipeline.  
-        Required?                    true  
-        Position?                    4  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional parameters for the queries as hashtables. Format: @{"param"="value"}  
-        Required?                    false  
-        Position?                    5  
-        Default value                @()  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted. Only used when creating  
-        an internal transaction.  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11056,68 +10093,58 @@ Invoke-SQLiteQuery [[-ConnectionString] <String>] [[-DatabaseFilePath] <String>]
    Invoke-SQLiteStudio  
 ```` 
 
-### SYNOPSIS 
-    Executes SQLite database queries with support for parameters and transactions.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <String> [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides a PowerShell interface for executing SQLite queries with support for:  
-    - Connection via connection string or database file path  
-    - Parameterized queries to prevent SQL injection  
-    - Transaction isolation level control  
-    - Multiple query execution in a single transaction  
-    - Pipeline input for queries and parameters  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The SQLite connection string for connecting to the database.  
-        Format: "Data Source=mydb.sqlite"  
+    -ConnectionString <string>  
+        The connection string to the SQLite database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseFilePath  
+        Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        The isolation level to use. Default is ReadCommitted.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
         Required?                    true  
         Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Accept pipeline input?       true (ByValue, ByPropertyName)  
+        Parameter set name           (All)  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabaseFilePath <String>  
-        The direct file system path to the SQLite database file.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Can be provided via pipeline.  
-        Each query can be parameterized using @parameter notation.  
-        Required?                    true  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query.  
+        Required?                    false  
         Position?                    2  
-        Default value                  
         Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Hashtable of parameters to use in queries. Format: @{"param" = "value"}  
-        Multiple parameter sets can be provided for multiple queries.  
-        Required?                    false  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Controls the transaction isolation. Default is ReadCommitted.  
-        Available levels: ReadUncommitted, ReadCommitted, RepeatableRead, Serializable  
-        Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      parameters  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11134,42 +10161,36 @@ Invoke-SQLiteStudio [-Queries] <String[]> [[-SqlParameters] <Hashtable[]>] [-Iso
    New-SQLiteDatabase                   --> nsqldb  
 ```` 
 
-### SYNOPSIS 
-    Creates a new SQLite database file.  
-
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates a new SQLite database file at the specified path if it does not already  
-    exist. The function ensures the target directory exists and creates a valid  
-    SQLite database by establishing and closing a connection.  
-
 ### PARAMETERS 
-    -DatabaseFilePath <String>  
-        The full path where the SQLite database file should be created. If the directory  
-        path does not exist, it will be created automatically.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseFilePath <string>  
+        The path to the SQLite database file  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11189,79 +10210,78 @@ New-SQLiteDatabase [-DatabaseFilePath] <String> [-WhatIf] [-Confirm] [<CommonPar
    Invoke-SqlServerQuery  
 ```` 
 
-### SYNOPSIS 
-    Executes SQL queries against a SQL Server database with transaction support.  
-
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-User] <String> [-Password] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <String> [-Queries] <String[]> [-SqlParameters] <Hashtable[]> [-IsolationLevel <String>] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
+   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Executes one or more SQL queries against a SQL Server database, supporting  
-    parameters and configurable transaction isolation levels. All queries execute  
-    within a single transaction that rolls back on error.  
-
 ### PARAMETERS 
-    -ConnectionString <String>  
-        The complete connection string for connecting to the SQL Server database.  
+    -ConnectionString <string>  
+        The connection string to the SqlServer database.  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <String>  
-        The SQL Server host name or IP address. Defaults to "." (local server).  
+    -HostName <string>  
+        The hostName of SqlServer  
         Required?                    true  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <String>  
-        The username for SQL Server authentication.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Password <String>  
-        The password for SQL Server authentication.  
-        Required?                    true  
-        Position?                    3  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Queries <String[]>  
-        One or more SQL queries to execute. Accepts pipeline input.  
-        Required?                    true  
-        Position?                    1  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SqlParameters <Hashtable[]>  
-        Optional hashtable of parameters for the queries. Format: @{"param"="value"}.  
-        Required?                    true  
-        Position?                    2  
-        Default value                  
-        Accept pipeline input?       true (ByValue, ByPropertyName)  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -IsolationLevel <String>  
-        Transaction isolation level. Defaults to ReadCommitted.  
+    -IsolationLevel <string>  
+        The isolation level to use. default is ReadCommitted.  
         Required?                    false  
-        Position?                    named  
-        Default value                ReadCommitted  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Password <string>  
+        The password for SqlServer  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Queries <string[]>  
+        The query to execute.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      q, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SqlParameters <hashtable[]>  
+        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
+        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Aliases                      data, parameters, args  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -User <string>  
+        The username for SqlServer  
+        Required?                    true  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           HostNameWithUsernameAndPassword  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
