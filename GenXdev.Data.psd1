@@ -12,7 +12,7 @@
 RootModule = 'GenXdev.Data.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.272.2025'
+ModuleVersion = '1.274.2025'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
@@ -51,8 +51,8 @@ ClrVersion = '9.0.0.1'
 ProcessorArchitecture = 'Amd64'
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.272.2025'; }, 
-               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.272.2025'; })
+RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.274.2025'; }, 
+               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.274.2025'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -130,19 +130,19 @@ FileList = 'GenXdev.Data.KeyValueStore.psm1', 'GenXdev.Data.Preferences.psm1',
                'Tests\GenXdev.Data.Preferences\Set-GenXdevPreference.Tests.ps1', 
                'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
                'Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1', 
-               'Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.ps1', 
                'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.ps1', 
+               'Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1', 
                'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableData.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.ps1', 
                'Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTables.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableData.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTransaction.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTables.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevPreferencesDatabasePath.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTransaction.ps1', 
                'Functions\GenXdev.Data.SQLite\Get-SQLiteViewColumnData.ps1', 
                'Functions\GenXdev.Data.SQLite\Get-SQLiteViewData.ps1', 
                'Functions\GenXdev.Data.SQLite\Get-SQLiteViews.ps1', 
