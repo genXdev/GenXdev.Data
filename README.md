@@ -123,7 +123,9 @@ Update-Module
 
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -189,7 +191,9 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -264,7 +268,11 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabaseP
 
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -357,7 +365,9 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValu
 
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -414,7 +424,10 @@ Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
+    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -514,7 +527,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-Synchronization
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string>
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -605,7 +621,11 @@ Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-Da
 
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -714,7 +734,9 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <strin
 
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -783,7 +805,10 @@ Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-S
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue]
+    <string>] [-PreferencesDatabasePath <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -858,7 +883,9 @@ Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesD
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath]
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -915,7 +942,9 @@ Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] 
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -972,7 +1001,10 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-Sessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]]
+    [-PreferencesDatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1063,7 +1095,10 @@ Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDataba
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value]
+    <string>] [[-PreferencesDatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1154,7 +1189,10 @@ Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-Preferences
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>]
+    [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath
+    <string>] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1245,7 +1283,10 @@ Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-Clea
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SkipSession]
+    [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1342,9 +1383,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1383,9 +1426,15 @@ Get-SQLiteSchema [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string>
+    [-ColumnName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1451,9 +1500,14 @@ Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1510,9 +1564,11 @@ Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1551,9 +1607,12 @@ Get-SQLiteTables [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string>
+    [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <string>
+    [-TableName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1601,8 +1660,14 @@ Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+Get-SQLiteTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1659,9 +1724,14 @@ Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitt
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1727,8 +1797,10 @@ Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1785,9 +1857,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1826,9 +1900,12 @@ Get-SQLiteViews [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string>
+    [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <string>
+    [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1876,7 +1953,12 @@ Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>]
+    [[-DatabaseFilePath] <string>] [[-Transaction] <Object>]
+    [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1951,9 +2033,20 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters]
+    <hashtable[]>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2019,7 +2112,8 @@ Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2068,11 +2162,30 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonPar
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
+    <hashtable[]> [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-ConnectionString] <string>
+    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
+    [-Password] <string> [-Queries] <string[]>
+    [-SqlParameters] <hashtable[]> [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2159,7 +2272,9 @@ Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2225,7 +2340,9 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2300,7 +2417,11 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabaseP
 
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2393,7 +2514,9 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValu
 
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2450,7 +2573,10 @@ Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
+    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2550,7 +2676,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-Synchronization
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string>
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2641,7 +2770,11 @@ Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-Da
 
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2750,7 +2883,9 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <strin
 
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2819,7 +2954,10 @@ Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-S
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue]
+    <string>] [-PreferencesDatabasePath <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2894,7 +3032,9 @@ Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesD
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath]
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2951,7 +3091,9 @@ Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] 
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3008,7 +3150,10 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-Sessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]]
+    [-PreferencesDatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3099,7 +3244,10 @@ Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDataba
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value]
+    <string>] [[-PreferencesDatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3190,7 +3338,10 @@ Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-Preferences
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>]
+    [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath
+    <string>] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3281,7 +3432,10 @@ Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-Clea
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SkipSession]
+    [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3378,9 +3532,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3419,9 +3575,15 @@ Get-SQLiteSchema [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string>
+    [-ColumnName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3487,9 +3649,14 @@ Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3546,9 +3713,11 @@ Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3587,9 +3756,12 @@ Get-SQLiteTables [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string>
+    [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <string>
+    [-TableName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3637,8 +3809,14 @@ Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+Get-SQLiteTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3695,9 +3873,14 @@ Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitt
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3763,8 +3946,10 @@ Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3821,9 +4006,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3862,9 +4049,12 @@ Get-SQLiteViews [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string>
+    [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <string>
+    [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3912,7 +4102,12 @@ Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>]
+    [[-DatabaseFilePath] <string>] [[-Transaction] <Object>]
+    [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -3987,9 +4182,20 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters]
+    <hashtable[]>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4055,7 +4261,8 @@ Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4104,11 +4311,30 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonPar
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
+    <hashtable[]> [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-ConnectionString] <string>
+    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
+    [-Password] <string> [-Queries] <string[]>
+    [-SqlParameters] <hashtable[]> [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4195,7 +4421,9 @@ Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4261,7 +4489,9 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4336,7 +4566,11 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabaseP
 
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4429,7 +4663,9 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValu
 
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4486,7 +4722,10 @@ Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
+    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4586,7 +4825,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-Synchronization
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string>
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4677,7 +4919,11 @@ Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-Da
 
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4786,7 +5032,9 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <strin
 
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4855,7 +5103,10 @@ Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-S
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue]
+    <string>] [-PreferencesDatabasePath <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4930,7 +5181,9 @@ Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesD
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath]
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4987,7 +5240,9 @@ Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] 
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5044,7 +5299,10 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-Sessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]]
+    [-PreferencesDatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5135,7 +5393,10 @@ Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDataba
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value]
+    <string>] [[-PreferencesDatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5226,7 +5487,10 @@ Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-Preferences
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>]
+    [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath
+    <string>] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5317,7 +5581,10 @@ Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-Clea
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SkipSession]
+    [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5414,9 +5681,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5455,9 +5724,15 @@ Get-SQLiteSchema [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string>
+    [-ColumnName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5523,9 +5798,14 @@ Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5582,9 +5862,11 @@ Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5623,9 +5905,12 @@ Get-SQLiteTables [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string>
+    [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <string>
+    [-TableName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5673,8 +5958,14 @@ Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+Get-SQLiteTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5731,9 +6022,14 @@ Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitt
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5799,8 +6095,10 @@ Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5857,9 +6155,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5898,9 +6198,12 @@ Get-SQLiteViews [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string>
+    [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <string>
+    [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5948,7 +6251,12 @@ Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>]
+    [[-DatabaseFilePath] <string>] [[-Transaction] <Object>]
+    [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6023,9 +6331,20 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters]
+    <hashtable[]>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6091,7 +6410,8 @@ Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6140,11 +6460,30 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonPar
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
+    <hashtable[]> [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-ConnectionString] <string>
+    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
+    [-Password] <string> [-Queries] <string[]>
+    [-SqlParameters] <hashtable[]> [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6231,7 +6570,9 @@ Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6297,7 +6638,9 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6372,7 +6715,11 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabaseP
 
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6465,7 +6812,9 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValu
 
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6522,7 +6871,10 @@ Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
+    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6622,7 +6974,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-Synchronization
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string>
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6713,7 +7068,11 @@ Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-Da
 
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6822,7 +7181,9 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <strin
 
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6891,7 +7252,10 @@ Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-S
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue]
+    <string>] [-PreferencesDatabasePath <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -6966,7 +7330,9 @@ Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesD
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath]
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7023,7 +7389,9 @@ Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] 
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7080,7 +7448,10 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-Sessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]]
+    [-PreferencesDatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7171,7 +7542,10 @@ Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDataba
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value]
+    <string>] [[-PreferencesDatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7262,7 +7636,10 @@ Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-Preferences
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>]
+    [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath
+    <string>] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7353,7 +7730,10 @@ Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-Clea
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SkipSession]
+    [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7450,9 +7830,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7491,9 +7873,15 @@ Get-SQLiteSchema [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string>
+    [-ColumnName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7559,9 +7947,14 @@ Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7618,9 +8011,11 @@ Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7659,9 +8054,12 @@ Get-SQLiteTables [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string>
+    [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <string>
+    [-TableName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7709,8 +8107,14 @@ Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+Get-SQLiteTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7767,9 +8171,14 @@ Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitt
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7835,8 +8244,10 @@ Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7893,9 +8304,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7934,9 +8347,12 @@ Get-SQLiteViews [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string>
+    [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <string>
+    [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7984,7 +8400,12 @@ Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>]
+    [[-DatabaseFilePath] <string>] [[-Transaction] <Object>]
+    [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8059,9 +8480,20 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters]
+    <hashtable[]>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8127,7 +8559,8 @@ Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8176,11 +8609,30 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonPar
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
+    <hashtable[]> [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-ConnectionString] <string>
+    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
+    [-Password] <string> [-Queries] <string[]>
+    [-SqlParameters] <hashtable[]> [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8267,7 +8719,9 @@ Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8333,7 +8787,9 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>] [-DatabasePath <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8408,7 +8864,11 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabaseP
 
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValue] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8501,7 +8961,9 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName] <string> [[-DefaultValu
 
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Initialize-KeyValueStores [[-DatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8558,7 +9020,10 @@ Initialize-KeyValueStores [[-DatabasePath] <string>] [-SessionOnly] [-ClearSessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-SynchronizationKey] <string>] [-SessionOnly] [-ClearSession] [-DatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
+    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8658,7 +9123,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName] <string> [[-Synchronization
 
 ### SYNTAX 
 ```PowerShell 
-Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-KeyValueStore [-StoreName] <string>
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8749,7 +9217,11 @@ Remove-KeyValueStore [-StoreName] <string> [[-SynchronizationKey] <string>] [-Da
 
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <string>] [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8858,7 +9330,9 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName] <string> [[-Value] <strin
 
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
+    [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8927,7 +9401,10 @@ Sync-KeyValueStore [[-SynchronizationKey] <string>] [-DatabasePath <string>] [-S
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreference [-Name] <string> [[-DefaultValue]
+    <string>] [-PreferencesDatabasePath <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9002,7 +9479,9 @@ Get-GenXdevPreference [-Name] <string> [[-DefaultValue] <string>] [-PreferencesD
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferenceNames [[-PreferencesDatabasePath]
+    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9059,7 +9538,9 @@ Get-GenXdevPreferenceNames [[-PreferencesDatabasePath] <string>] [-SessionOnly] 
 
 ### SYNTAX 
 ```PowerShell 
-Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9116,7 +9597,10 @@ Get-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-Sessi
 
 ### SYNTAX 
 ```PowerShell 
-Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDatabasePath <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]]
+    [-PreferencesDatabasePath <string>] [-SessionOnly]
+    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9207,7 +9691,10 @@ Remove-GenXdevPreference [-Name] <string> [[-RemoveDefault]] [-PreferencesDataba
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-PreferencesDatabasePath] <string>] [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevDefaultPreference [-Name] <string> [[-Value]
+    <string>] [[-PreferencesDatabasePath] <string>]
+    [-SessionOnly] [-ClearSession] [-SkipSession] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9298,7 +9785,10 @@ Set-GenXdevDefaultPreference [-Name] <string> [[-Value] <string>] [[-Preferences
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath <string>] [-SkipSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreference [-Name] <string> [[-Value] <string>]
+    [-SessionOnly] [-ClearSession] [-PreferencesDatabasePath
+    <string>] [-SkipSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9389,7 +9879,10 @@ Set-GenXdevPreference [-Name] <string> [[-Value] <string>] [-SessionOnly] [-Clea
 
 ### SYNTAX 
 ```PowerShell 
-Set-GenXdevPreferencesDatabasePath [[-PreferencesDatabasePath] <string>] [-SkipSession] [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm] [<CommonParameters>] 
+Set-GenXdevPreferencesDatabasePath
+    [[-PreferencesDatabasePath] <string>] [-SkipSession]
+    [-SessionOnly] [-ClearSession] [-WhatIf] [-Confirm]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9486,9 +9979,11 @@ EnsureSQLiteStudioInstalled [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteSchema [<CommonParameters>]  
-   Get-SQLiteSchema [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteSchema [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteSchema [<CommonParameters>]
+Get-SQLiteSchema [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteSchema [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9527,9 +10022,15 @@ Get-SQLiteSchema [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-ConnectionString] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableColumnData [-DatabaseFilePath] <string> [-TableName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableColumnData [-TableName] <string>
+    [-ColumnName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteTableColumnData [-DatabaseFilePath] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9595,9 +10096,14 @@ Get-SQLiteTableColumnData [-TableName] <string> [-ColumnName] <string> [[-Count]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-ConnectionString] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteTableData [-DatabaseFilePath] <string> [-TableName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteTableData [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLiteTableData [-DatabaseFilePath] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9654,9 +10160,11 @@ Get-SQLiteTableData [-TableName] <string> [[-Count] <int>] [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTables [<CommonParameters>]  
-   Get-SQLiteTables [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteTables [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteTables [<CommonParameters>]
+Get-SQLiteTables [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteTables [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9695,9 +10203,12 @@ Get-SQLiteTables [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-ConnectionString] <string> [-TableName] <string> [<CommonParameters>]  
-   Get-SQLiteTableSchema [-DatabaseFilePath] <string> [-TableName] <string> [<CommonParameters>] 
+Get-SQLiteTableSchema [-TableName] <string>
+    [<CommonParameters>]
+Get-SQLiteTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>]
+Get-SQLiteTableSchema [-DatabaseFilePath] <string>
+    [-TableName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9745,8 +10256,14 @@ Get-SQLiteTableSchema [-TableName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]  
-   Get-SQLiteTransaction [-ConnectionString] <string> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+Get-SQLiteTransaction [-DatabaseFilePath] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+Get-SQLiteTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9803,9 +10320,14 @@ Get-SQLiteTransaction [-DatabaseFilePath] <string> [-IsolationLevel {ReadCommitt
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-ConnectionString] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewColumnData [-DatabaseFilePath] <string> [-ViewName] <string> [-ColumnName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>]
+Get-SQLiteViewColumnData [-DatabaseFilePath] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9871,8 +10393,10 @@ Get-SQLiteViewColumnData [-ViewName] <string> [-ColumnName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>]  
-   Get-SQLiteViewData [-ConnectionString] <string> [-ViewName] <string> [[-Count] <int>] [<CommonParameters>] 
+Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLiteViewData [-ConnectionString] <string> [-ViewName]
+    <string> [[-Count] <int>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9929,9 +10453,11 @@ Get-SQLiteViewData [-DatabaseFilePath] <string> [-ViewName] <string> [[-Count] <
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViews [<CommonParameters>]  
-   Get-SQLiteViews [-ConnectionString] <string> [<CommonParameters>]  
-   Get-SQLiteViews [-DatabaseFilePath] <string> [<CommonParameters>] 
+Get-SQLiteViews [<CommonParameters>]
+Get-SQLiteViews [-ConnectionString] <string>
+    [<CommonParameters>]
+Get-SQLiteViews [-DatabaseFilePath] <string>
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -9970,9 +10496,12 @@ Get-SQLiteViews [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-ConnectionString] <string> [-ViewName] <string> [<CommonParameters>]  
-   Get-SQLiteViewSchema [-DatabaseFilePath] <string> [-ViewName] <string> [<CommonParameters>] 
+Get-SQLiteViewSchema [-ViewName] <string>
+    [<CommonParameters>]
+Get-SQLiteViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>]
+Get-SQLiteViewSchema [-DatabaseFilePath] <string>
+    [-ViewName] <string> [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -10020,7 +10549,12 @@ Get-SQLiteViewSchema [-ViewName] <string> [<CommonParameters>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>] [[-Transaction] <Object>] [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteQuery [[-ConnectionString] <string>]
+    [[-DatabaseFilePath] <string>] [[-Transaction] <Object>]
+    [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -10095,9 +10629,20 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>] [[-DatabaseFilePath] <string>]
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters]
+    <hashtable[]>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SQLiteStudio [-ConnectionString] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
+    <string[]> [[-SqlParameters] <hashtable[]>]
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -10163,7 +10708,8 @@ Invoke-SQLiteStudio [-Queries] <string[]> [[-SqlParameters] <hashtable[]>] [-Iso
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonParameters>] 
+New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -10212,11 +10758,30 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf] [-Confirm] [<CommonPar
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-ConnectionString] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-User] <string> [-Password] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>]  
-   Invoke-SqlServerQuery [-HostName] <string> [-Queries] <string[]> [-SqlParameters] <hashtable[]> [-IsolationLevel {ReadCommitted | ReadUncommitted | RepeatableRead | Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
+    <hashtable[]> [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-ConnectionString] <string>
+    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
+    [-Password] <string> [-Queries] <string[]>
+    [-SqlParameters] <hashtable[]> [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>]
+Invoke-SqlServerQuery [-HostName] <string> [-Queries]
+    <string[]> [-SqlParameters] <hashtable[]>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
