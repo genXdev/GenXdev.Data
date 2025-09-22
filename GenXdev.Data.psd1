@@ -12,7 +12,7 @@
 RootModule = 'GenXdev.Data.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.278.2025'
+ModuleVersion = '1.280.2025'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
@@ -51,8 +51,8 @@ ClrVersion = '9.0.0.1'
 ProcessorArchitecture = 'Amd64'
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.278.2025'; }, 
-               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.278.2025'; })
+RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.280.2025'; }, 
+               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.280.2025'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -116,26 +116,26 @@ FileList = 'GenXdev.Data.KeyValueStore.psm1', 'GenXdev.Data.Preferences.psm1',
                'Tests\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Get-GenXdevPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Remove-GenXdevPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Set-GenXdevPreference.Tests.ps1', 
-               'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
                'Functions\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.ps1', 
                'Functions\GenXdev.Data.KeyValueStore\Get-StoreKeys.ps1', 
                'Functions\GenXdev.Data.KeyValueStore\Get-ValueByKeyFromStore.ps1', 
-               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1', 
                'Functions\GenXdev.Data.KeyValueStore\Initialize-KeyValueStores.ps1', 
+               'Functions\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.ps1', 
+               'Functions\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.ps1', 
+               'Functions\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.ps1', 
+               'Tests\GenXdev.Data.Preferences\Get-GenXdevPreference.Tests.ps1', 
+               'Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.ps1', 
+               'Tests\GenXdev.Data.Preferences\Remove-GenXdevPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.Preferences\Set-GenXdevPreference.Tests.ps1', 
+               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1', 
                'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.ps1', 
                'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.ps1', 
-               'Functions\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.ps1', 
                'Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.ps1', 
-               'Functions\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.ps1', 
-               'Functions\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.ps1', 
-               'Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.ps1', 
                'Functions\GenXdev.Data.Preferences\Set-GenXdevPreferencesDatabasePath.ps1', 
+               'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
                'Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1', 
                'Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.ps1', 
                'Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.ps1', 
