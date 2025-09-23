@@ -12,7 +12,7 @@
 RootModule = 'GenXdev.Data.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.284.2025'
+ModuleVersion = '1.286.2025'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
@@ -51,8 +51,8 @@ ClrVersion = '9.0.0.1'
 ProcessorArchitecture = 'Amd64'
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.284.2025'; }, 
-               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.284.2025'; })
+RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.286.2025'; }, 
+               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.286.2025'; })
 
 # Assemblies that must be loaded prior to importing this module
 # RequiredAssemblies = @()
@@ -138,10 +138,10 @@ FileList = 'GenXdev.Data.KeyValueStore.psm1', 'GenXdev.Data.Preferences.psm1',
                'Functions\GenXdev.Data.SQLite\Invoke-SQLiteQuery.ps1', 
                'Functions\GenXdev.Data.SQLite\Invoke-SQLiteStudio.ps1', 
                'Functions\GenXdev.Data.SQLite\New-SQLiteDatabase.ps1', 
-               'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-StoreKeys.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-ValueByKeyFromStore.Tests.ps1', 
+               'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.Tests.ps1', 
