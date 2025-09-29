@@ -12,4 +12,17 @@ if ($major -ne 10) {
 
 
 
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\EnsureSSMSInstalled.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerSchema.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerTableColumnData.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerTableData.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerTables.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerTableSchema.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerTransaction.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerViewColumnData.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerViewData.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerViews.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Get-SQLServerViewSchema.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\Invoke-SSMS.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.SqlServer\New-SQLServerDatabase.ps1"

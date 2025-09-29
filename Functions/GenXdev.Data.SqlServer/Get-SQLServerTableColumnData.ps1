@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteTableColumnData.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerTableColumnData.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,21 +29,21 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves data from a specific column in a SQLite database table.
+Retrieves data from a specific column in a SQL database table.
 
 .DESCRIPTION
 This function provides a convenient way to extract data from a single column in a
-SQLite database table. It supports two connection methods: direct database file
+SQL database table. It supports two connection methods: direct database file
 path or connection string. The function includes options to limit the number of
-returned records and uses proper SQLite query construction for optimal
+returned records and uses proper SQL query construction for optimal
 performance.
 
 .PARAMETER ConnectionString
-The connection string to connect to the SQLite database. This parameter is
+The connection string to connect to the SQL database. This parameter is
 mutually exclusive with DatabaseFilePath.
 
 .PARAMETER DatabaseFilePath
-The file path to the SQLite database file. This parameter is mutually exclusive
+The file path to the SQL database file. This parameter is mutually exclusive
 with ConnectionString.
 
 .PARAMETER TableName
@@ -57,24 +57,24 @@ The maximum number of records to return. Default is 100. Use -1 to return all
 records without limit.
 
 .EXAMPLE
-Get-SQLiteTableColumnData -DatabaseFilePath "C:\MyDb.sqlite" `
+Get-SQLServerTableColumnData -DatabaseFilePath "C:\MyDb.sqlite" `
     -TableName "Employees" `
     -ColumnName "Email" `
     -Count 10
 
 .EXAMPLE
-Get-SQLiteTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
+Get-SQLServerTableColumnData "C:\MyDb.sqlite" "Employees" "Email"
 #>
-function Get-SQLiteTableColumnData {
+function Get-SQLServerTableColumnData {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     param (
         ###############################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database'
+            HelpMessage = 'The connection string to the SQL Server database'
         )]
         [ValidateNotNullOrEmpty()]
         [string] $ConnectionString,
@@ -82,14 +82,21 @@ function Get-SQLiteTableColumnData {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database'
         )]
         [ValidateNotNullOrEmpty()]
-        [string] $DatabaseFilePath,
+        [string] $DatabaseName,
         ###############################################################################
         [Parameter(
             Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name'
+        )]
+        [string] $Server = 'localhost',
+        ###############################################################################
+        [Parameter(
+            Position = 2,
             Mandatory = $true,
             HelpMessage = 'The name of the table to query'
         )]
@@ -97,7 +104,7 @@ function Get-SQLiteTableColumnData {
         [string] $TableName,
         ###############################################################################
         [Parameter(
-            Position = 2,
+            Position = 3,
             Mandatory = $true,
             HelpMessage = 'The name of the column to retrieve'
         )]
@@ -105,7 +112,7 @@ function Get-SQLiteTableColumnData {
         [string] $ColumnName,
         ###############################################################################
         [Parameter(
-            Position = 3,
+            Position = 4,
             Mandatory = $false,
             HelpMessage = 'Number of records to return. Default 100. Use -1 for all'
         )]
@@ -132,9 +139,9 @@ function Get-SQLiteTableColumnData {
         # log the constructed query for debugging
         Microsoft.PowerShell.Utility\Write-Verbose "Executing SQL query: $query"
 
-        # prepare parameters for Invoke-SQLiteQuery and execute the query
+        # prepare parameters for Invoke-SQLServerQuery and execute the query
         $PSBoundParameters['Queries'] = $query
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

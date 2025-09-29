@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteViews.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerViews.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,31 +29,33 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves a list of views from a SQLite database.
+Retrieves a list of views from a SQL Server database.
 
 .DESCRIPTION
-Gets all view names from the specified SQLite database file or connection string.
-Returns an array of view names that can be used for further database operations.
-The function supports two parameter sets for flexibility: providing either a
-connection string or a direct path to the database file.
+Gets all view names from the specified SQL Server database. Returns an array
+of view names that can be used for further database operations. The function
+supports two parameter sets for flexibility: providing either a connection string
+or a database name with server.
 
 .PARAMETER ConnectionString
-The connection string to connect to the SQLite database. Use this when you need
-to specify custom connection parameters.
+The connection string to connect to the SQL Server database. Use this when you
+need to specify custom connection parameters.
 
-.PARAMETER DatabaseFilePath
-The full path to the SQLite database file. Use this for simple file-based
-connections.
+.PARAMETER DatabaseName
+The name of the SQL Server database.
+
+.PARAMETER Server
+The SQL Server instance name. Defaults to 'localhost'.
 
 .EXAMPLE
-Get-SQLiteViews -DatabaseFilePath "C:\Databases\MyDatabase.sqlite"
+Get-SQLServerViews -DatabaseName "MyDatabase" -Server "localhost"
 
 .EXAMPLE
-s -ConnectionString "Data Source=C:\Databases\MyDatabase.sqlite;Version=3;"
+Get-SQLServerViews -ConnectionString "Server=localhost;Database=MyDatabase;Integrated Security=true;"
 #>
-function Get-SQLiteViews {
+function Get-SQLServerViews {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseSingularNouns', '')]
     param (
         ###############################################################################
@@ -61,30 +63,37 @@ function Get-SQLiteViews {
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [string]$ConnectionString,
         ###############################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
-        [string]$DatabaseFilePath
+        [string]$DatabaseName,
+        ###############################################################################
+        [Parameter(
+            Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = '.'
     )
 
     begin {
 
         # log the start of the view retrieval process
-        Microsoft.PowerShell.Utility\Write-Verbose 'Preparing to retrieve SQLite views...'
+        Microsoft.PowerShell.Utility\Write-Verbose 'Preparing to retrieve SQL views...'
     }
 
 
     process {
 
-        # define the SQL query to retrieve all view names from sqlite_master
-        $query = "SELECT name FROM sqlite_master WHERE type='view'"
+        # define the SQL query to retrieve all view names from SQL Server system tables
+        $query = "SELECT name FROM sys.views ORDER BY name"
 
         # log the query being executed for troubleshooting
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
@@ -93,7 +102,7 @@ function Get-SQLiteViews {
         $PSBoundParameters['Queries'] = $query
 
         # invoke the query and return results using parameter splatting
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

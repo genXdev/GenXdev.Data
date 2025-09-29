@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteTableData.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerTableData.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,19 +29,19 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves data from a SQLite database table with optional record limiting.
+Retrieves data from a SQL database table with optional record limiting.
 
 .DESCRIPTION
-This function queries data from a SQLite database table using either a connection
+This function queries data from a SQL database table using either a connection
 string or database file path. It provides flexibility in connecting to the
 database and controlling the amount of data retrieved through the Count parameter.
 
 .PARAMETER ConnectionString
-Specifies the SQLite connection string in the format:
+Specifies the SQL connection string in the format:
 "Data Source=path_to_database_file"
 
 .PARAMETER DatabaseFilePath
-Specifies the full file system path to the SQLite database file.
+Specifies the full file system path to the SQL database file.
 
 .PARAMETER TableName
 Specifies the name of the table to query data from. The table must exist in the
@@ -52,21 +52,21 @@ Specifies the maximum number of records to return. Default is 100.
 Use -1 to return all records. Must be -1 or a positive integer.
 
 .EXAMPLE
-Get-SQLiteTableData -DatabaseFilePath "C:\data\users.db" -TableName "Employees" -Count 50
+Get-SQLServerTableData -DatabaseFilePath "C:\data\users.db" -TableName "Employees" -Count 50
 
 .EXAMPLE
-Get-SQLiteTableData "C:\data\users.db" "Employees"
+Get-SQLServerTableData "C:\data\users.db" "Employees"
 #>
-function Get-SQLiteTableData {
+function Get-SQLServerTableData {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     param (
         ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$ConnectionString,
@@ -75,16 +75,23 @@ function Get-SQLiteTableData {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('dbpath', 'indexpath')]
-        [string]$DatabaseFilePath,
+        [string]$DatabaseName,
 
         ###########################################################################
         [Parameter(
             Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = 'localhost',
+
+        ###########################################################################
+        [Parameter(
+            Position = 2,
             Mandatory = $true,
             HelpMessage = 'The name of the table to query data from.'
         )]
@@ -93,7 +100,7 @@ function Get-SQLiteTableData {
 
         ###########################################################################
         [Parameter(
-            Position = 2,
+            Position = 3,
             Mandatory = $false,
             HelpMessage = 'The maximum number of records to return. -1 for all.'
         )]
@@ -103,7 +110,7 @@ function Get-SQLiteTableData {
 
     begin {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteTableData for table: $TableName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLServerTableData for table: $TableName"
         Microsoft.PowerShell.Utility\Write-Verbose "Record limit set to: $(if($Count -eq -1){'unlimited'}else{$Count})"
     }
 
@@ -120,11 +127,11 @@ function Get-SQLiteTableData {
 
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
-        # add the constructed query to the parameter set for Invoke-SQLiteQuery
+        # add the constructed query to the parameter set for Invoke-SQLServerQuery
         $PSBoundParameters['Queries'] = $query
 
-        # execute the query and return results through the SQLite provider
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        # execute the query and return results through the SQL provider
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

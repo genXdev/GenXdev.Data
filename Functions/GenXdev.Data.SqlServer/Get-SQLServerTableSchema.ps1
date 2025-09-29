@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteTableSchema.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerTableSchema.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,42 +29,44 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves the schema information for a specified SQLite table.
+Retrieves the schema information for a specified SQL Server table.
 
 .DESCRIPTION
-This function queries the SQLite database to get detailed schema information for
-a specified table. It uses the SQLite PRAGMA table_info command to return column
-definitions including names, types, nullable status, and default values.
+This function queries the SQL Server database to get detailed schema information for
+a specified table. It uses the SQL Server INFORMATION_SCHEMA.COLUMNS view to return
+column definitions including names, types, nullable status, and default values.
 
 .PARAMETER ConnectionString
-Specifies the SQLite connection string in the format:
-"Data Source=path_to_database_file"
+Specifies the SQL Server connection string in the format:
+"Server=servername;Database=databasename;Integrated Security=true"
 
-.PARAMETER DatabaseFilePath
-Specifies the direct file path to the SQLite database file. This is converted
-internally to a connection string.
+.PARAMETER DatabaseName
+Specifies the name of the SQL Server database.
+
+.PARAMETER Server
+Specifies the SQL Server instance name. Defaults to 'localhost'.
 
 .PARAMETER TableName
 Specifies the name of the table for which to retrieve schema information.
 
 .EXAMPLE
-Get-SQLiteTableSchema -DatabaseFilePath "C:\Databases\mydb.sqlite" `
+Get-SQLServerTableSchema -DatabaseName "mydb" -Server "localhost" `
     -TableName "Users"
 
 .EXAMPLE
-Get-SQLiteTableSchema -ConnectionString "Data Source=C:\Databases\mydb.sqlite" `
+Get-SQLServerTableSchema -ConnectionString "Server=localhost;Database=mydb;Integrated Security=true" `
     -TableName "Products"
 #>
-function Get-SQLiteTableSchema {
+function Get-SQLServerTableSchema {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     param (
         ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database'
+            HelpMessage = 'The connection string to the SQL Server database'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$ConnectionString,
@@ -73,16 +75,23 @@ function Get-SQLiteTableSchema {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('dbpath', 'indexpath')]
-        [string]$DatabaseFilePath,
+        [string]$DatabaseName,
 
         ###########################################################################
         [Parameter(
             Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name'
+        )]
+        [string]$Server = '.',
+
+        ###########################################################################
+        [Parameter(
+            Position = 2,
             Mandatory = $true,
             HelpMessage = 'The name of the table'
         )]
@@ -99,14 +108,27 @@ function Get-SQLiteTableSchema {
 
     process {
 
-        # construct the PRAGMA query to get detailed table column information
-        $PSBoundParameters['Queries'] = "PRAGMA table_info($TableName)"
+        # construct the INFORMATION_SCHEMA query to get detailed table column information
+        $PSBoundParameters['Queries'] = @"
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    IS_NULLABLE,
+    COLUMN_DEFAULT,
+    CHARACTER_MAXIMUM_LENGTH,
+    NUMERIC_PRECISION,
+    NUMERIC_SCALE,
+    ORDINAL_POSITION
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = '$TableName'
+ORDER BY ORDINAL_POSITION
+"@
 
         # log the execution of the schema query
-        Microsoft.PowerShell.Utility\Write-Verbose 'Executing schema query against SQLite database'
+        Microsoft.PowerShell.Utility\Write-Verbose 'Executing schema query against SQL Server database'
 
-        # execute the query and return results using existing Invoke-SQLiteQuery
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        # execute the query and return results using existing Invoke-SQLServerQuery
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

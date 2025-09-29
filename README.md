@@ -93,19 +93,32 @@ Update-Module
 | [Get-SQLiteTableData](#get-sqlitetabledata) | &nbsp; | Retrieves data from a SQLite database table with optional record limiting. |
 | [Get-SQLiteTables](#get-sqlitetables) | &nbsp; | Retrieves a list of table names from a SQLite database. |
 | [Get-SQLiteTableSchema](#get-sqlitetableschema) | &nbsp; | Retrieves the schema information for a specified SQLite table. |
-| [Get-SQLiteTransaction](#get-sqlitetransaction) | getsqltx, newsqltx | Creates and returns a SQLite transaction object for batch operations. |
+| [Get-SQLiteTransaction](#get-sqlitetransaction) | &nbsp; | Creates and returns a SQLite transaction object for batch operations. |
 | [Get-SQLiteViewColumnData](#get-sqliteviewcolumndata) | &nbsp; | Retrieves column data from a SQLite view with optional record limiting. |
 | [Get-SQLiteViewData](#get-sqliteviewdata) | &nbsp; | Retrieves data from a SQLite database view with optional record limiting. |
 | [Get-SQLiteViews](#get-sqliteviews) | &nbsp; | Retrieves a list of views from a SQLite database. |
 | [Get-SQLiteViewSchema](#get-sqliteviewschema) | &nbsp; | Retrieves the SQL schema definition for a SQLite view. |
 | [Invoke-SQLiteQuery](#invoke-sqlitequery) | &nbsp; | Executes one or more SQL queries against a SQLite database with transaction support. |
 | [Invoke-SQLiteStudio](#invoke-sqlitestudio) | &nbsp; | Executes SQLite database queries with support for parameters and transactions. |
-| [New-SQLiteDatabase](#new-sqlitedatabase) | nsqldb | Creates a new SQLite database file. |
+| [New-SQLiteDatabase](#new-sqlitedatabase) | &nbsp; | Creates a new SQLite database file. |
 
 ### GenXdev.Data.SqlServer
 | Command | Aliases | Description |
 | :--- | :--- | :--- |
-| [Invoke-SqlServerQuery](#invoke-sqlserverquery) | &nbsp; | Executes SQL queries against a SQL Server database with transaction support. |
+| [EnsureSSMSInstalled](#ensuressmsinstalled) | &nbsp; | Ensures SSMS is installed and accessible from the command line. |
+| [Get-SQLServerSchema](#get-sqlserverschema) | &nbsp; | Retrieves the complete schema information from a SQL Server database. |
+| [Get-SQLServerTableColumnData](#get-sqlservertablecolumndata) | &nbsp; | Retrieves data from a specific column in a SQL database table. |
+| [Get-SQLServerTableData](#get-sqlservertabledata) | &nbsp; | Retrieves data from a SQL database table with optional record limiting. |
+| [Get-SQLServerTables](#get-sqlservertables) | &nbsp; | Retrieves a list of table names from a SQL Server database. |
+| [Get-SQLServerTableSchema](#get-sqlservertableschema) | &nbsp; | Retrieves the schema information for a specified SQL Server table. |
+| [Get-SQLServerTransaction](#get-sqlservertransaction) | getsqltx, newsqltx | Creates and returns a SQL Server transaction object for batch operations. |
+| [Get-SQLServerViewColumnData](#get-sqlserverviewcolumndata) | &nbsp; | Retrieves column data from a SQL view with optional record limiting. |
+| [Get-SQLServerViewData](#get-sqlserverviewdata) | &nbsp; | Retrieves data from a SQL database view with optional record limiting. |
+| [Get-SQLServerViews](#get-sqlserverviews) | &nbsp; | Retrieves a list of views from a SQL Server database. |
+| [Get-SQLServerViewSchema](#get-sqlserverviewschema) | &nbsp; | Retrieves the SQL schema definition for a SQL Server view. |
+| [Invoke-SqlServerQuery](#invoke-sqlserverquery) | &nbsp; | Executes one or more SQL queries against a SQL Server database with transaction support. |
+| [Invoke-SSMS](#invoke-ssms) | sqlservermanagementstudio, ssms | Executes SQL Server database queries with support for parameters and transactions. |
+| [New-SQLServerDatabase](#new-sqlserverdatabase) | nsqldb | Creates a new SQL Server database. |
 
 <br/><hr/><br/>
 
@@ -1655,7 +1668,7 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 ##	Get-SQLiteTransaction 
 ```PowerShell 
 
-   Get-SQLiteTransaction                --> getsqltx, newsqltx  
+   Get-SQLiteTransaction  
 ```` 
 
 ### SYNTAX 
@@ -2107,7 +2120,7 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 ##	New-SQLiteDatabase 
 ```PowerShell 
 
-   New-SQLiteDatabase                   --> nsqldb  
+   New-SQLiteDatabase  
 ```` 
 
 ### SYNTAX 
@@ -2154,43 +2167,44 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
-##	Invoke-SqlServerQuery 
+##	EnsureSSMSInstalled 
 ```PowerShell 
 
-   Invoke-SqlServerQuery  
+   EnsureSSMSInstalled  
 ```` 
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
-    <hashtable[]> [-IsolationLevel {ReadCommitted |
-    ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <string>
-    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
-    [-Password] <string> [-Queries] <string[]>
-    [-SqlParameters] <hashtable[]> [-IsolationLevel
-    {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
+EnsureSSMSInstalled [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerSchema 
+```PowerShell 
+
+   Get-SQLServerSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerSchema [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerSchema [-ConnectionString] <string>
     [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
     -ConnectionString <string>  
-        The connection string to the SqlServer database.  
+        The connection string to the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
@@ -2198,12 +2212,653 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <string>  
-        The hostName of SqlServer  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableColumnData 
+```PowerShell 
+
+   Get-SQLServerTableColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-TableName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column to retrieve  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableData 
+```PowerShell 
+
+   Get-SQLServerTableData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableData [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTables 
+```PowerShell 
+
+   Get-SQLServerTables  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTables [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerTables [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableSchema 
+```PowerShell 
+
+   Get-SQLServerTableSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [<CommonParameters>]
+Get-SQLServerTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTransaction 
+```PowerShell 
+
+   Get-SQLServerTransaction             --> getsqltx, newsqltx  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
+    <string>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Get-SQLServerTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewColumnData 
+```PowerShell 
+
+   Get-SQLServerViewColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewData 
+```PowerShell 
+
+   Get-SQLServerViewData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewData [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerViewData [-ConnectionString] <string>
+    [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViews 
+```PowerShell 
+
+   Get-SQLServerViews  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViews [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerViews [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewSchema 
+```PowerShell 
+
+   Get-SQLServerViewSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [<CommonParameters>]
+Get-SQLServerViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SqlServerQuery 
+```PowerShell 
+
+   Invoke-SQLServerQuery  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SQLServerQuery [[-Queries] <string[]>]
+    [[-DatabaseName] <string>] [[-Server] <string>]
+    [[-Transaction] <Object>] [[-ConnectionString] <string>]
+    [[-SqlParameters] <hashtable[]>] [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL database.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -2216,40 +2871,128 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Password <string>  
-        The password for SqlServer  
-        Required?                    true  
-        Position?                    2  
-        Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Queries <string[]>  
-        The query to execute.  
-        Required?                    true  
+        The query or queries to execute.  
+        Required?                    false  
         Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
-        Aliases                      q, Name, Text, Query  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SqlParameters <hashtable[]>  
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
-        Required?                    true  
-        Position?                    1  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    5  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Parameter set name           (All)  
         Aliases                      data, parameters, args  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <string>  
-        The username for SqlServer  
+    -Transaction <Object>  
+        An existing SQL Server transaction to use for the queries.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SSMS 
+```PowerShell 
+
+   Invoke-SSMS                          --> sqlservermanagementstudio, ssms  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SSMS [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	New-SQLServerDatabase 
+```PowerShell 
+
+   New-SQLServerDatabase                --> nsqldb  
+```` 
+
+### SYNTAX 
+```PowerShell 
+New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to connect to SQL Server  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database to create  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
         Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
+        Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -3804,7 +4547,7 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 ##	Get-SQLiteTransaction 
 ```PowerShell 
 
-   Get-SQLiteTransaction                --> getsqltx, newsqltx  
+   Get-SQLiteTransaction  
 ```` 
 
 ### SYNTAX 
@@ -4256,7 +4999,7 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 ##	New-SQLiteDatabase 
 ```PowerShell 
 
-   New-SQLiteDatabase                   --> nsqldb  
+   New-SQLiteDatabase  
 ```` 
 
 ### SYNTAX 
@@ -4303,43 +5046,44 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
-##	Invoke-SqlServerQuery 
+##	EnsureSSMSInstalled 
 ```PowerShell 
 
-   Invoke-SqlServerQuery  
+   EnsureSSMSInstalled  
 ```` 
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
-    <hashtable[]> [-IsolationLevel {ReadCommitted |
-    ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <string>
-    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
-    [-Password] <string> [-Queries] <string[]>
-    [-SqlParameters] <hashtable[]> [-IsolationLevel
-    {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
+EnsureSSMSInstalled [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerSchema 
+```PowerShell 
+
+   Get-SQLServerSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerSchema [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerSchema [-ConnectionString] <string>
     [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
     -ConnectionString <string>  
-        The connection string to the SqlServer database.  
+        The connection string to the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
@@ -4347,12 +5091,653 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <string>  
-        The hostName of SqlServer  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableColumnData 
+```PowerShell 
+
+   Get-SQLServerTableColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-TableName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column to retrieve  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableData 
+```PowerShell 
+
+   Get-SQLServerTableData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableData [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTables 
+```PowerShell 
+
+   Get-SQLServerTables  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTables [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerTables [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableSchema 
+```PowerShell 
+
+   Get-SQLServerTableSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [<CommonParameters>]
+Get-SQLServerTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTransaction 
+```PowerShell 
+
+   Get-SQLServerTransaction             --> getsqltx, newsqltx  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
+    <string>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Get-SQLServerTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewColumnData 
+```PowerShell 
+
+   Get-SQLServerViewColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewData 
+```PowerShell 
+
+   Get-SQLServerViewData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewData [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerViewData [-ConnectionString] <string>
+    [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViews 
+```PowerShell 
+
+   Get-SQLServerViews  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViews [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerViews [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewSchema 
+```PowerShell 
+
+   Get-SQLServerViewSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [<CommonParameters>]
+Get-SQLServerViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SqlServerQuery 
+```PowerShell 
+
+   Invoke-SQLServerQuery  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SQLServerQuery [[-Queries] <string[]>]
+    [[-DatabaseName] <string>] [[-Server] <string>]
+    [[-Transaction] <Object>] [[-ConnectionString] <string>]
+    [[-SqlParameters] <hashtable[]>] [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL database.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -4365,40 +5750,128 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Password <string>  
-        The password for SqlServer  
-        Required?                    true  
-        Position?                    2  
-        Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Queries <string[]>  
-        The query to execute.  
-        Required?                    true  
+        The query or queries to execute.  
+        Required?                    false  
         Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
-        Aliases                      q, Name, Text, Query  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SqlParameters <hashtable[]>  
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
-        Required?                    true  
-        Position?                    1  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    5  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Parameter set name           (All)  
         Aliases                      data, parameters, args  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <string>  
-        The username for SqlServer  
+    -Transaction <Object>  
+        An existing SQL Server transaction to use for the queries.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SSMS 
+```PowerShell 
+
+   Invoke-SSMS                          --> sqlservermanagementstudio, ssms  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SSMS [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	New-SQLServerDatabase 
+```PowerShell 
+
+   New-SQLServerDatabase                --> nsqldb  
+```` 
+
+### SYNTAX 
+```PowerShell 
+New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to connect to SQL Server  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database to create  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
         Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
+        Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -5953,7 +7426,7 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 ##	Get-SQLiteTransaction 
 ```PowerShell 
 
-   Get-SQLiteTransaction                --> getsqltx, newsqltx  
+   Get-SQLiteTransaction  
 ```` 
 
 ### SYNTAX 
@@ -6405,7 +7878,7 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 ##	New-SQLiteDatabase 
 ```PowerShell 
 
-   New-SQLiteDatabase                   --> nsqldb  
+   New-SQLiteDatabase  
 ```` 
 
 ### SYNTAX 
@@ -6452,43 +7925,44 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
-##	Invoke-SqlServerQuery 
+##	EnsureSSMSInstalled 
 ```PowerShell 
 
-   Invoke-SqlServerQuery  
+   EnsureSSMSInstalled  
 ```` 
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
-    <hashtable[]> [-IsolationLevel {ReadCommitted |
-    ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <string>
-    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
-    [-Password] <string> [-Queries] <string[]>
-    [-SqlParameters] <hashtable[]> [-IsolationLevel
-    {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
+EnsureSSMSInstalled [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerSchema 
+```PowerShell 
+
+   Get-SQLServerSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerSchema [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerSchema [-ConnectionString] <string>
     [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
     -ConnectionString <string>  
-        The connection string to the SqlServer database.  
+        The connection string to the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
@@ -6496,12 +7970,653 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <string>  
-        The hostName of SqlServer  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableColumnData 
+```PowerShell 
+
+   Get-SQLServerTableColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-TableName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column to retrieve  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableData 
+```PowerShell 
+
+   Get-SQLServerTableData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableData [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTables 
+```PowerShell 
+
+   Get-SQLServerTables  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTables [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerTables [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableSchema 
+```PowerShell 
+
+   Get-SQLServerTableSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [<CommonParameters>]
+Get-SQLServerTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTransaction 
+```PowerShell 
+
+   Get-SQLServerTransaction             --> getsqltx, newsqltx  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
+    <string>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Get-SQLServerTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewColumnData 
+```PowerShell 
+
+   Get-SQLServerViewColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewData 
+```PowerShell 
+
+   Get-SQLServerViewData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewData [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerViewData [-ConnectionString] <string>
+    [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViews 
+```PowerShell 
+
+   Get-SQLServerViews  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViews [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerViews [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewSchema 
+```PowerShell 
+
+   Get-SQLServerViewSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [<CommonParameters>]
+Get-SQLServerViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SqlServerQuery 
+```PowerShell 
+
+   Invoke-SQLServerQuery  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SQLServerQuery [[-Queries] <string[]>]
+    [[-DatabaseName] <string>] [[-Server] <string>]
+    [[-Transaction] <Object>] [[-ConnectionString] <string>]
+    [[-SqlParameters] <hashtable[]>] [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL database.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -6514,40 +8629,128 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Password <string>  
-        The password for SqlServer  
-        Required?                    true  
-        Position?                    2  
-        Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Queries <string[]>  
-        The query to execute.  
-        Required?                    true  
+        The query or queries to execute.  
+        Required?                    false  
         Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
-        Aliases                      q, Name, Text, Query  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SqlParameters <hashtable[]>  
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
-        Required?                    true  
-        Position?                    1  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    5  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Parameter set name           (All)  
         Aliases                      data, parameters, args  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <string>  
-        The username for SqlServer  
+    -Transaction <Object>  
+        An existing SQL Server transaction to use for the queries.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SSMS 
+```PowerShell 
+
+   Invoke-SSMS                          --> sqlservermanagementstudio, ssms  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SSMS [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	New-SQLServerDatabase 
+```PowerShell 
+
+   New-SQLServerDatabase                --> nsqldb  
+```` 
+
+### SYNTAX 
+```PowerShell 
+New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to connect to SQL Server  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database to create  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
         Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
+        Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -8102,7 +10305,7 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 ##	Get-SQLiteTransaction 
 ```PowerShell 
 
-   Get-SQLiteTransaction                --> getsqltx, newsqltx  
+   Get-SQLiteTransaction  
 ```` 
 
 ### SYNTAX 
@@ -8554,7 +10757,7 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 ##	New-SQLiteDatabase 
 ```PowerShell 
 
-   New-SQLiteDatabase                   --> nsqldb  
+   New-SQLiteDatabase  
 ```` 
 
 ### SYNTAX 
@@ -8601,43 +10804,44 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
-##	Invoke-SqlServerQuery 
+##	EnsureSSMSInstalled 
 ```PowerShell 
 
-   Invoke-SqlServerQuery  
+   EnsureSSMSInstalled  
 ```` 
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
-    <hashtable[]> [-IsolationLevel {ReadCommitted |
-    ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <string>
-    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
-    [-Password] <string> [-Queries] <string[]>
-    [-SqlParameters] <hashtable[]> [-IsolationLevel
-    {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
+EnsureSSMSInstalled [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerSchema 
+```PowerShell 
+
+   Get-SQLServerSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerSchema [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerSchema [-ConnectionString] <string>
     [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
     -ConnectionString <string>  
-        The connection string to the SqlServer database.  
+        The connection string to the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
@@ -8645,12 +10849,653 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <string>  
-        The hostName of SqlServer  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableColumnData 
+```PowerShell 
+
+   Get-SQLServerTableColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-TableName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column to retrieve  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableData 
+```PowerShell 
+
+   Get-SQLServerTableData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableData [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTables 
+```PowerShell 
+
+   Get-SQLServerTables  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTables [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerTables [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableSchema 
+```PowerShell 
+
+   Get-SQLServerTableSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [<CommonParameters>]
+Get-SQLServerTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTransaction 
+```PowerShell 
+
+   Get-SQLServerTransaction             --> getsqltx, newsqltx  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
+    <string>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Get-SQLServerTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewColumnData 
+```PowerShell 
+
+   Get-SQLServerViewColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewData 
+```PowerShell 
+
+   Get-SQLServerViewData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewData [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerViewData [-ConnectionString] <string>
+    [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViews 
+```PowerShell 
+
+   Get-SQLServerViews  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViews [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerViews [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewSchema 
+```PowerShell 
+
+   Get-SQLServerViewSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [<CommonParameters>]
+Get-SQLServerViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SqlServerQuery 
+```PowerShell 
+
+   Invoke-SQLServerQuery  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SQLServerQuery [[-Queries] <string[]>]
+    [[-DatabaseName] <string>] [[-Server] <string>]
+    [[-Transaction] <Object>] [[-ConnectionString] <string>]
+    [[-SqlParameters] <hashtable[]>] [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL database.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -8663,40 +11508,128 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Password <string>  
-        The password for SqlServer  
-        Required?                    true  
-        Position?                    2  
-        Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Queries <string[]>  
-        The query to execute.  
-        Required?                    true  
+        The query or queries to execute.  
+        Required?                    false  
         Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
-        Aliases                      q, Name, Text, Query  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SqlParameters <hashtable[]>  
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
-        Required?                    true  
-        Position?                    1  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    5  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Parameter set name           (All)  
         Aliases                      data, parameters, args  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <string>  
-        The username for SqlServer  
+    -Transaction <Object>  
+        An existing SQL Server transaction to use for the queries.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SSMS 
+```PowerShell 
+
+   Invoke-SSMS                          --> sqlservermanagementstudio, ssms  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SSMS [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	New-SQLServerDatabase 
+```PowerShell 
+
+   New-SQLServerDatabase                --> nsqldb  
+```` 
+
+### SYNTAX 
+```PowerShell 
+New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to connect to SQL Server  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database to create  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
         Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
+        Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -10251,7 +13184,7 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 ##	Get-SQLiteTransaction 
 ```PowerShell 
 
-   Get-SQLiteTransaction                --> getsqltx, newsqltx  
+   Get-SQLiteTransaction  
 ```` 
 
 ### SYNTAX 
@@ -10703,7 +13636,7 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 ##	New-SQLiteDatabase 
 ```PowerShell 
 
-   New-SQLiteDatabase                   --> nsqldb  
+   New-SQLiteDatabase  
 ```` 
 
 ### SYNTAX 
@@ -10750,43 +13683,44 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
 &nbsp;<hr/>
 ###	GenXdev.Data.SqlServer<hr/> 
 
-##	Invoke-SqlServerQuery 
+##	EnsureSSMSInstalled 
 ```PowerShell 
 
-   Invoke-SqlServerQuery  
+   EnsureSSMSInstalled  
 ```` 
 
 ### SYNTAX 
 ```PowerShell 
-Invoke-SqlServerQuery [-Queries] <string[]> [-SqlParameters]
-    <hashtable[]> [-IsolationLevel {ReadCommitted |
-    ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-ConnectionString] <string>
-    [-Queries] <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
-    [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-User] <string>
-    [-Password] <string> [-Queries] <string[]>
-    [-SqlParameters] <hashtable[]> [-IsolationLevel
-    {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>]
-Invoke-SqlServerQuery [-HostName] <string> [-Queries]
-    <string[]> [-SqlParameters] <hashtable[]>
-    [-IsolationLevel {ReadCommitted | ReadUncommitted |
-    RepeatableRead | Serializable | Snapshot | Chaos}]
+EnsureSSMSInstalled [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerSchema 
+```PowerShell 
+
+   Get-SQLServerSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerSchema [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerSchema [-ConnectionString] <string>
     [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
     -ConnectionString <string>  
-        The connection string to the SqlServer database.  
+        The connection string to the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
@@ -10794,12 +13728,653 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -HostName <string>  
-        The hostName of SqlServer  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           HostnameOnly, HostNameWithUsernameAndPassword, HostNameWithCredentials  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableColumnData 
+```PowerShell 
+
+   Get-SQLServerTableColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-TableName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerTableColumnData [-ConnectionString] <string>
+    [-TableName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column to retrieve  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. Default 100. Use -1 for all  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableData 
+```PowerShell 
+
+   Get-SQLServerTableData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableData [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerTableData [-ConnectionString] <string>
+    [-TableName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The maximum number of records to return. -1 for all.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table to query data from.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTables 
+```PowerShell 
+
+   Get-SQLServerTables  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTables [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerTables [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTableSchema 
+```PowerShell 
+
+   Get-SQLServerTableSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTableSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-TableName] <string> [<CommonParameters>]
+Get-SQLServerTableSchema [-ConnectionString] <string>
+    [-TableName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -TableName <string>  
+        The name of the table  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerTransaction 
+```PowerShell 
+
+   Get-SQLServerTransaction             --> getsqltx, newsqltx  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
+    <string>] [-IsolationLevel {ReadCommitted |
+    ReadUncommitted | RepeatableRead | Serializable |
+    Snapshot | Chaos}] [<CommonParameters>]
+Get-SQLServerTransaction [-ConnectionString] <string>
+    [-IsolationLevel {ReadCommitted | ReadUncommitted |
+    RepeatableRead | Serializable | Snapshot | Chaos}]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -IsolationLevel <string>  
+        Transaction isolation level.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewColumnData 
+```PowerShell 
+
+   Get-SQLServerViewColumnData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewColumnData [-DatabaseName] <string>
+    [[-Server] <string>] [-ViewName] <string> [-ColumnName]
+    <string> [[-Count] <int>] [<CommonParameters>]
+Get-SQLServerViewColumnData [-ConnectionString] <string>
+    [-ViewName] <string> [-ColumnName] <string> [[-Count]
+    <int>] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ColumnName <string>  
+        The name of the column.  
+        Required?                    true  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        The number of records to return. Default is 100. -1 for all.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewData 
+```PowerShell 
+
+   Get-SQLServerViewData  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewData [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>]
+Get-SQLServerViewData [-ConnectionString] <string>
+    [-ViewName] <string> [[-Count] <int>]
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Count <int>  
+        Number of records to return. -1 for all records.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view to query.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViews 
+```PowerShell 
+
+   Get-SQLServerViews  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViews [-DatabaseName] <string> [[-Server]
+    <string>] [<CommonParameters>]
+Get-SQLServerViews [-ConnectionString] <string>
+    [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Get-SQLServerViewSchema 
+```PowerShell 
+
+   Get-SQLServerViewSchema  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Get-SQLServerViewSchema [-DatabaseName] <string> [[-Server]
+    <string>] [-ViewName] <string> [<CommonParameters>]
+Get-SQLServerViewSchema [-ConnectionString] <string>
+    [-ViewName] <string> [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ViewName <string>  
+        The name of the view.  
+        Required?                    true  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SqlServerQuery 
+```PowerShell 
+
+   Invoke-SQLServerQuery  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SQLServerQuery [[-Queries] <string[]>]
+    [[-DatabaseName] <string>] [[-Server] <string>]
+    [[-Transaction] <Object>] [[-ConnectionString] <string>]
+    [[-SqlParameters] <hashtable[]>] [-IsolationLevel
+    {ReadCommitted | ReadUncommitted | RepeatableRead |
+    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -ConnectionString <string>  
+        The connection string to the SQL database.  
+        Required?                    false  
+        Position?                    4  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database.  
+        Required?                    false  
+        Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -10812,40 +14387,128 @@ Invoke-SqlServerQuery [-HostName] <string> [-Queries]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Password <string>  
-        The password for SqlServer  
-        Required?                    true  
-        Position?                    2  
-        Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Queries <string[]>  
-        The query to execute.  
-        Required?                    true  
+        The query or queries to execute.  
+        Required?                    false  
         Position?                    0  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
-        Aliases                      q, Name, Text, Query  
+        Parameter set name           (All)  
+        Aliases                      q, Value, Name, Text, Query  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name.  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SqlParameters <hashtable[]>  
-        Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}  
-        Required?                    true  
-        Position?                    1  
+        Query parameters as hashtables.  
+        Required?                    false  
+        Position?                    5  
         Accept pipeline input?       true (ByValue, ByPropertyName, FromRemainingArguments)  
-        Parameter set name           Default, HostnameOnly, ConnectionString, HostNameWithCredentials, HostNameWithUsernameAndPassword  
+        Parameter set name           (All)  
         Aliases                      data, parameters, args  
         Dynamic?                     false  
         Accept wildcard characters?  false  
-    -User <string>  
-        The username for SqlServer  
+    -Transaction <Object>  
+        An existing SQL Server transaction to use for the queries.  
+        Required?                    false  
+        Position?                    3  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	Invoke-SSMS 
+```PowerShell 
+
+   Invoke-SSMS                          --> sqlservermanagementstudio, ssms  
+```` 
+
+### SYNTAX 
+```PowerShell 
+Invoke-SSMS [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	New-SQLServerDatabase 
+```PowerShell 
+
+   New-SQLServerDatabase                --> nsqldb  
+```` 
+
+### SYNTAX 
+```PowerShell 
+New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
+```` 
+
+### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConnectionString <string>  
+        The connection string to connect to SQL Server  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabaseName <string>  
+        The name of the SQL Server database to create  
+        Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -Server <string>  
+        The SQL Server instance name  
+        Required?                    false  
         Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           HostNameWithUsernameAndPassword  
+        Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  

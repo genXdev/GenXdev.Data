@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteViewData.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerViewData.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,19 +29,19 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves data from a SQLite database view with optional record limiting.
+Retrieves data from a SQL database view with optional record limiting.
 
 .DESCRIPTION
-Queries a SQLite database view using either a connection string or database file
+Queries a SQL database view using either a connection string or database file
 path. The function supports limiting the number of returned records and provides
 verbose output for tracking query execution.
 
 .PARAMETER ConnectionString
-The connection string to connect to the SQLite database. This parameter is
+The connection string to connect to the SQL database. This parameter is
 mutually exclusive with DatabaseFilePath.
 
 .PARAMETER DatabaseFilePath
-The file path to the SQLite database file. This parameter is mutually exclusive
+The file path to the SQL database file. This parameter is mutually exclusive
 with ConnectionString.
 
 .PARAMETER ViewName
@@ -52,23 +52,23 @@ The maximum number of records to return. Use -1 to return all records.
 Defaults to 100 if not specified.
 
 .EXAMPLE
-Get-SQLiteViewData -DatabaseFilePath "C:\MyDb.sqlite" `
+Get-SQLServerViewData -DatabaseFilePath "C:\MyDb.sqlite" `
     -ViewName "CustomerView" `
     -Count 50
 
 .EXAMPLE
-Get-SQLiteViewData "C:\MyDb.sqlite" "CustomerView"
+Get-SQLServerViewData "C:\MyDb.sqlite" "CustomerView"
 #>
-function Get-SQLiteViewData {
+function Get-SQLServerViewData {
 
-    [CmdletBinding(DefaultParameterSetName = 'DatabaseFilePath')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     param (
         ########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
         [string]$ConnectionString,
@@ -77,16 +77,23 @@ function Get-SQLiteViewData {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('dbpath', 'indexpath')]
-        [string]$DatabaseFilePath,
+        [string]$DatabaseName,
 
         ########################################################################
         [Parameter(
             Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = 'localhost',
+
+        ########################################################################
+        [Parameter(
+            Position = 2,
             Mandatory = $true,
             HelpMessage = 'The name of the view to query.'
         )]
@@ -95,7 +102,7 @@ function Get-SQLiteViewData {
 
         ########################################################################
         [Parameter(
-            Position = 2,
+            Position = 3,
             Mandatory = $false,
             HelpMessage = 'Number of records to return. -1 for all records.'
         )]
@@ -105,7 +112,7 @@ function Get-SQLiteViewData {
 
     begin {
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLiteViewData for view: $ViewName"
+        Microsoft.PowerShell.Utility\Write-Verbose "Starting Get-SQLServerViewData for view: $ViewName"
     }
 
 
@@ -121,11 +128,11 @@ function Get-SQLiteViewData {
 
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
-        # prepare parameters for Invoke-SQLiteQuery
+        # prepare parameters for Invoke-SQLServerQuery
         $PSBoundParameters['Queries'] = $query
 
         # execute query and return results
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

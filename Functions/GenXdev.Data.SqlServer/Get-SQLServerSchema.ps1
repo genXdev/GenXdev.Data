@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteSchema.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerSchema.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,29 +29,33 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves the complete schema information from a SQLite database.
+Retrieves the complete schema information from a SQL Server database.
 
 .DESCRIPTION
-This function queries the sqlite_master table to obtain the complete schema
-definition of a SQLite database, including tables, views, indexes and triggers.
-It accepts either a connection string or a direct path to the database file.
+This function queries SQL Server system tables and information schema to obtain
+the complete schema definition of a SQL Server database, including tables, views,
+indexes, stored procedures and other database objects. It accepts either a
+connection string or database name with server parameters.
 
 .PARAMETER ConnectionString
-The SQLite connection string that specifies the database location and any
+The SQL Server connection string that specifies the database location and any
 additional connection parameters.
 
-.PARAMETER DatabaseFilePath
-The direct filesystem path to the SQLite database file.
+.PARAMETER DatabaseName
+The name of the SQL Server database.
+
+.PARAMETER Server
+The SQL Server instance name. Defaults to 'localhost'.
 
 .EXAMPLE
-Get-SQLiteSchema -DatabaseFilePath "C:\Databases\inventory.db"
+Get-SQLServerSchema -DatabaseName "inventory" -Server "localhost"
 
 .EXAMPLE
-Get-SQLiteSchema -ConnectionString "Data Source=C:\Databases\inventory.db;Version=3;"
+Get-SQLServerSchema -ConnectionString "Server=localhost;Database=inventory;Integrated Security=true;"
 #>
-function Get-SQLiteSchema {
+function Get-SQLServerSchema {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
 
     param (
         ########################################################################
@@ -59,7 +63,7 @@ function Get-SQLiteSchema {
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [string]$ConnectionString,
 
@@ -67,10 +71,18 @@ function Get-SQLiteSchema {
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
-        [string]$DatabaseFilePath
+        [string]$DatabaseName,
+
+        ########################################################################
+        [Parameter(
+            Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = 'localhost'
     )
 
     begin {
@@ -82,11 +94,18 @@ function Get-SQLiteSchema {
 
     process {
 
-        # prepare the query to retrieve the complete database schema
-        $PSBoundParameters['Queries'] = 'SELECT * FROM sqlite_master'
+        # prepare comprehensive schema queries for SQL Server
+        $schemaQueries = @(
+            "SELECT 'TABLE' as object_type, name, schema_id, object_id FROM sys.tables ORDER BY name",
+            "SELECT 'VIEW' as object_type, name, schema_id, object_id FROM sys.views ORDER BY name",
+            "SELECT 'PROCEDURE' as object_type, name, schema_id, object_id FROM sys.procedures ORDER BY name",
+            "SELECT 'FUNCTION' as object_type, name, schema_id, object_id FROM sys.objects WHERE type IN ('FN','IF','TF') ORDER BY name"
+        )
 
-        # execute the schema query using the existing Invoke-SQLiteQuery function
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        $PSBoundParameters['Queries'] = $schemaQueries
+
+        # execute the schema queries using the existing Invoke-SQLServerQuery function
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

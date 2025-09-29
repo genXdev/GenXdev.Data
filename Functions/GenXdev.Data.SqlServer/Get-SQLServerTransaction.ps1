@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteTransaction.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerTransaction.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,19 +29,21 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Creates and returns a SQLite transaction object for batch operations.
+Creates and returns a SQL Server transaction object for batch operations.
 
 .DESCRIPTION
-Creates a SQLite database connection and transaction object that can be used
+Creates a SQL Server database connection and transaction object that can be used
 for batch operations. The caller is responsible for committing or rolling back
-the transaction. The connection will be automatically created if the database
-file doesn't exist.
+the transaction. Requires an existing SQL Server database and connection.
 
 .PARAMETER ConnectionString
-The SQLite connection string for database access.
+The SQL Server connection string for database access.
 
-.PARAMETER DatabaseFilePath
-The file path to the SQLite database. Will be converted to a connection string.
+.PARAMETER DatabaseName
+The name of the SQL Server database. Used with Server parameter to create connection string.
+
+.PARAMETER Server
+The SQL Server instance name. Defaults to 'localhost'.
 
 .PARAMETER IsolationLevel
 Transaction isolation level. Defaults to ReadCommitted.
@@ -50,10 +52,10 @@ Transaction isolation level. Defaults to ReadCommitted.
 Whether to create the database file if it doesn't exist. Defaults to true.
 
 .EXAMPLE
-$transaction = Get-SQLiteTransaction -DatabaseFilePath "C:\data.db"
+$transaction = Get-SQLServerTransaction -Server "localhost" -DatabaseName "MyDatabase"
 try {
-    Invoke-SQLiteQuery -Transaction $transaction -Queries "INSERT INTO Users..."
-    Invoke-SQLiteQuery -Transaction $transaction -Queries "UPDATE Users..."
+    Invoke-SQLServerQuery -Transaction $transaction -Queries "INSERT INTO Users..."
+    Invoke-SQLServerQuery -Transaction $transaction -Queries "UPDATE Users..."
     $transaction.Commit()
 } catch {
     $transaction.Rollback()
@@ -63,11 +65,11 @@ try {
 }
 
 .EXAMPLE
-$transaction = Get-SQLiteTransaction -ConnectionString "Data Source=C:\data.db"
+$transaction = Get-SQLServerTransaction -ConnectionString "Server=localhost;Database=MyDB;Integrated Security=true"
 #>
-function Get-SQLiteTransaction {
+function Get-SQLServerTransaction {
 
-    [CmdletBinding(DefaultParameterSetName = 'DatabaseFilePath')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     [Alias('getsqltx', 'newsqltx')]
     param (
         ###########################################################################
@@ -75,7 +77,7 @@ function Get-SQLiteTransaction {
             Position = 0,
             Mandatory,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [string]$ConnectionString,
 
@@ -83,12 +85,20 @@ function Get-SQLiteTransaction {
         [Parameter(
             Position = 0,
             Mandatory,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('dbpath', 'indexpath')]
-        [string]$DatabaseFilePath,
+        [string]$DatabaseName,
+
+        ###########################################################################
+        [Parameter(
+            Position = 1,
+            Mandatory = $false,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = '.',
 
         ###########################################################################
         [Parameter(
@@ -96,52 +106,45 @@ function Get-SQLiteTransaction {
             HelpMessage = 'Transaction isolation level.'
         )]
         [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
-        [string]$IsolationLevel = "ReadCommitted",
-
-        ###########################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Whether to create the database file if it does not exist.'
-        )]
-        [bool]$CreateDatabaseIfNotExists = $true
+        [string]$IsolationLevel = "ReadCommitted"
         ###########################################################################
     )
 
     begin {
-        # load SQLite client assembly
-        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.Sqlite'
-
-        # initialize connection string from file path if provided
-        if ($PSCmdlet.ParameterSetName -eq 'DatabaseFilePath') {
-            $expandedPath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath
-            # create database if it doesn't exist and CreateDatabaseIfNotExists is true
-            if ($CreateDatabaseIfNotExists -and -not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $expandedPath)) {
-                Microsoft.PowerShell.Utility\Write-Verbose "Creating database file: $expandedPath"
-
-                # use Copy-IdenticalParamValues to pass compatible parameters to New-SQLiteDatabase
-                $params = GenXdev.Helpers\Copy-IdenticalParamValues `
-                    -BoundParameters $PSBoundParameters `
-                    -FunctionName 'GenXdev.Data\New-SQLiteDatabase' `
-                    -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable -Scope Local -ErrorAction SilentlyContinue)
-
-                GenXdev.Data\New-SQLiteDatabase @params
+        # load SQL Server client assembly - prefer Microsoft.Data.SqlClient, fallback to System.Data.SqlClient
+        try {
+            GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'Microsoft.Data.SqlClient'
+            $sqlClientType = 'Microsoft.Data.SqlClient'
+        }
+        catch {
+            try {
+                GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
+                $sqlClientType = 'System.Data.SqlClient'
             }
+            catch {
+                # Fallback to built-in System.Data.SqlClient (older .NET Framework)
+                $sqlClientType = 'System.Data.SqlClient'
+            }
+        }
 
-            $connString = "Data Source=$expandedPath"
+        # initialize connection string from parameters
+        if ($PSCmdlet.ParameterSetName -eq 'DatabaseName') {
+            $connString = "Server=$Server;Database=$DatabaseName;Integrated Security=true;TrustServerCertificate=true"
         }
         else {
             $connString = $ConnectionString
         }
 
-        Microsoft.PowerShell.Utility\Write-Verbose "Creating SQLite transaction with connection string: $connString"
+        Microsoft.PowerShell.Utility\Write-Verbose "Creating SQL Server transaction with connection string: $connString"
     }
 
     process {
         try {
             # establish database connection
-            $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SQLite.SQLiteConnection($connString)
+            $connectionClass = "$sqlClientType.SqlConnection"
+            $connection = Microsoft.PowerShell.Utility\New-Object $connectionClass($connString)
             $connection.Open()
-            Microsoft.PowerShell.Utility\Write-Verbose 'SQLite connection opened successfully'
+            Microsoft.PowerShell.Utility\Write-Verbose 'SQL Server connection opened successfully'
 
             # begin transaction with specified isolation
             $transaction = $connection.BeginTransaction($IsolationLevel)

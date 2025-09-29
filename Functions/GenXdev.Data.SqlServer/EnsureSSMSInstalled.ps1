@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : EnsureSQLiteStudioInstalled.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : EnsureSSMSInstalled.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,19 +29,19 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Ensures SQLiteStudio is installed and accessible from the command line.
+Ensures SSMS is installed and accessible from the command line.
 
 .DESCRIPTION
-Verifies if SQLiteStudio is installed and available in the system PATH. If not
+Verifies if SSMS is installed and available in the system PATH. If not
 found, it first checks if the PATH environment variable needs updating. If that
-doesn't resolve the issue, it installs SQLiteStudio using WinGet and configures
+doesn't resolve the issue, it installs SSMS using WinGet and configures
 the PATH environment variable.
 
 .EXAMPLE
-EnsureSQLiteStudioInstalled
-Checks and ensures SQLiteStudio is installed and accessible.
+EnsureSSMSInstalled
+Checks and ensures SSMS is installed and accessible.
 #>
-function EnsureSQLiteStudioInstalled {
+function EnsureSSMSInstalled {
 
     [CmdletBinding()]
     param()
@@ -72,42 +72,13 @@ function EnsureSQLiteStudioInstalled {
             PowerShellGet\Install-Module 'Microsoft.WinGet.Client' -Force -AllowClobber
             Microsoft.PowerShell.Core\Import-Module 'Microsoft.WinGet.Client'
         }
-    }
 
+        $searchPath  = GenXdev.FileSystem\Find-Item `
+             "${Env:ProgramFiles(x86)}\*SQL Server Management*\Ssms.exe",
+             "${Env:ProgramFiles}\*SQL Server Management*\Ssms.exe" |
+             Microsoft.PowerShell.Utility\Sort-Object LastWriteTime -Descending | Microsoft.PowerShell.Utility\Select-Object -First 1
 
-    process {
-
-        # check if sqlitestudio executable is available in the system path
-        if (@(Microsoft.PowerShell.Core\Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -eq 0) {
-
-            # determine the default installation directory for sqlitestudio
-            $sqliteStudioPath = (GenXdev.FileSystem\Expand-Path "${env:ProgramFiles}\SQLiteStudio")
-
-            # get current user path environment variable
-            $currentPath = [Environment]::GetEnvironmentVariable('PATH', 'User')
-
-            # add sqlitestudio to path if not already present
-            if ($currentPath -notlike "*$sqliteStudioPath*") {
-
-                Microsoft.PowerShell.Utility\Write-Verbose 'Adding SQLiteStudio directory to user PATH...'
-                [Environment]::SetEnvironmentVariable(
-                    'PATH',
-                    "$currentPath;$sqliteStudioPath",
-                    'User')
-            }
-
-            # ensure current session has updated path only if not already present
-            if ($env:PATH -notlike "*$sqliteStudioPath*") {
-                $env:PATH = "$env:PATH;$sqliteStudioPath"
-            }
-
-            # verify if path update resolved the missing executable
-            if (@(Microsoft.PowerShell.Core\Get-Command 'SQLiteStudio.exe' -ErrorAction SilentlyContinue).Length -gt 0) {
-
-                return
-            }
-
-            Microsoft.PowerShell.Utility\Write-Host 'SQLiteStudio not found. Installing SQLiteStudio...'
+        if (-not $searchPath) {
 
             # ensure winget package manager is available
             if (-not (IsWinGetInstalled)) {
@@ -115,17 +86,22 @@ function EnsureSQLiteStudioInstalled {
                 InstallWinGet
             }
 
-            # attempt installation using winget
-            Microsoft.PowerShell.Utility\Write-Verbose 'Installing SQLiteStudio using WinGet...'
-            Microsoft.WinGet.Client\Install-WinGetPackage -Id 'PawelSalawa.SQLiteStudio' -Force
+            Microsoft.WinGet.Client\Install-WinGetPackage -Id "Microsoft SQL Server Management Studio 22 Preview"
 
-            # verify successful installation
-            if (-not (Microsoft.PowerShell.Core\Get-Command 'SQLiteStudioU.exe' -ErrorAction SilentlyContinue)) {
-
-                Microsoft.PowerShell.Utility\Write-Error 'SQLiteStudio installation failed.'
-                return
-            }
+            $searchPath  = GenXdev.FileSystem\Find-Item  `
+             "${Env:ProgramFiles(x86)}\*SQL Server Management*\Ssms.exe",
+             "${Env:ProgramFiles}\*SQL Server Management*\Ssms.exe" |
+             Microsoft.PowerShell.Utility\Sort-Object LastWriteTime -Descending | Microsoft.PowerShell.Utility\Select-Object -First 1
         }
+
+        if (-not $searchPath) {
+            Throw "SSMS not found after installation attempt."
+        }
+    }
+
+
+    process {
+
     }
 
     end {}

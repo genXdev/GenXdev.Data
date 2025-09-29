@@ -1,6 +1,6 @@
 <##############################################################################
-Part of PowerShell module : GenXdev.Data.SQLite
-Original cmdlet filename  : Get-SQLiteViewSchema.ps1
+Part of PowerShell module : GenXdev.Data.SqlServer
+Original cmdlet filename  : Get-SQLServerViewSchema.ps1
 Original author           : René Vaessen / GenXdev
 Version                   : 1.288.2025
 ################################################################################
@@ -29,55 +29,64 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Retrieves the SQL schema definition for a SQLite view.
+Retrieves the SQL schema definition for a SQL Server view.
 
 .DESCRIPTION
-This function queries the SQLite database's system tables to extract the SQL
+This function queries the SQL Server database's system tables to extract the SQL
 definition of a specified view. It supports connecting via either a connection
-string or direct database file path and returns the complete SQL schema that
-defines the requested view.
+string or database name with server parameters and returns the complete SQL schema
+that defines the requested view.
 
 .PARAMETER ConnectionString
-The connection string used to connect to the SQLite database. This parameter is
-mutually exclusive with DatabaseFilePath.
+The connection string used to connect to the SQL Server database. This parameter is
+mutually exclusive with DatabaseName.
 
-.PARAMETER DatabaseFilePath
-The full path to the SQLite database file. This parameter is mutually exclusive
-with ConnectionString.
+.PARAMETER DatabaseName
+The name of the SQL Server database. This parameter is mutually exclusive with
+ConnectionString.
+
+.PARAMETER Server
+The SQL Server instance name. Defaults to 'localhost'.
 
 .PARAMETER ViewName
 The name of the view whose schema definition should be retrieved.
 
 .EXAMPLE
-Get-SQLiteViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
+Get-SQLServerViewSchema -DatabaseFilePath "C:\Databases\MyApp.sqlite" `
                     -ViewName "CustomerOrders"
 
 #>
-function Get-SQLiteViewSchema {
+function Get-SQLServerViewSchema {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
+    [CmdletBinding(DefaultParameterSetName = 'DatabaseName')]
     param (
         ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
             ParameterSetName = 'ConnectionString',
-            HelpMessage = 'The connection string to the SQLite database.'
+            HelpMessage = 'The connection string to the SQL Server database.'
         )]
         [string]$ConnectionString,
         ###########################################################################
         [Parameter(
             Position = 0,
             Mandatory = $true,
-            ParameterSetName = 'DatabaseFilePath',
-            HelpMessage = 'The path to the SQLite database file.'
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The name of the SQL Server database.'
         )]
         [ValidateNotNullOrEmpty()]
-        [Alias('dbpath', 'indexpath')]
-        [string]$DatabaseFilePath,
+        [string]$DatabaseName,
         ###########################################################################
         [Parameter(
             Position = 1,
+            ParameterSetName = 'DatabaseName',
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = 'localhost',
+        ###########################################################################
+        [Parameter(
+            Position = 2,
             Mandatory = $true,
             HelpMessage = 'The name of the view.'
         )]
@@ -93,15 +102,15 @@ function Get-SQLiteViewSchema {
 
     process {
 
-        # construct query to fetch the view definition from sqlite_master table
-        $query = "SELECT sql FROM sqlite_master WHERE name = '$ViewName'"
+        # construct query to fetch the view definition from SQL Server system views
+        $query = "SELECT OBJECT_DEFINITION(OBJECT_ID('$ViewName')) AS view_definition"
 
         # log the query being executed
         Microsoft.PowerShell.Utility\Write-Verbose "Executing query: $query"
 
-        # add the query to parameters and execute it using Invoke-SQLiteQuery
+        # add the query to parameters and execute it using Invoke-SQLServerQuery
         $PSBoundParameters['Queries'] = $query
-        GenXdev.Data\Invoke-SQLiteQuery @PSBoundParameters
+        GenXdev.Data\Invoke-SQLServerQuery @PSBoundParameters
     }
 
     end {

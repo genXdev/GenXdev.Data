@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : Invoke-SqlServerQuery.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.286.2025
+Version                   : 1.288.2025
 ################################################################################
 MIT License
 
@@ -29,200 +29,121 @@ SOFTWARE.
 ###############################################################################
 <#
 .SYNOPSIS
-Executes SQL queries against a SQL Server database with transaction support.
+Executes one or more SQL queries against a SQL Server database with transaction support.
 
 .DESCRIPTION
-Executes one or more SQL queries against a SQL Server database, supporting
-parameters and configurable transaction isolation levels. All queries execute
-within a single transaction that rolls back on error.
+Executes SQL queries against a SQL Server database with parameter support and
+configurable transaction isolation. Can use an external transaction for batch
+operations or create its own internal transaction. When using an external
+transaction, the caller is responsible for committing/rolling back.
+Connection priority: Transaction > ConnectionString > DatabaseName (requires Server).
 
 .PARAMETER ConnectionString
-The complete connection string for connecting to the SQL Server database.
+The SQL Server connection string for database access. Used if no Transaction is provided.
 
-.PARAMETER HostName
-The SQL Server host name or IP address. Defaults to "." (local server).
+.PARAMETER DatabaseName
+The name of the SQL Server database to connect to. Requires Server parameter.
+Used if no Transaction or ConnectionString is provided.
 
-.PARAMETER User
-The username for SQL Server authentication.
+.PARAMETER Server
+The SQL Server instance name. Used with DatabaseName to create connection string.
 
-.PARAMETER Password
-The password for SQL Server authentication.
+.PARAMETER Transaction
+An existing SQL Server transaction to use. When provided, the function will not
+commit or rollback the transaction - that's the caller's responsibility.
+Takes priority over ConnectionString and DatabaseName/Server.
 
 .PARAMETER Queries
-One or more SQL queries to execute. Accepts pipeline input.
+One or more SQL queries to execute. Can be passed via pipeline.
 
 .PARAMETER SqlParameters
-Optional hashtable of parameters for the queries. Format: @{"param"="value"}.
+Optional parameters for the queries as hashtables. Format: @{"param"="value"}
 
 .PARAMETER IsolationLevel
-Transaction isolation level. Defaults to ReadCommitted.
+Transaction isolation level. Defaults to ReadCommitted. Only used when creating
+an internal transaction.
 
 .EXAMPLE
-Execute query with explicit connection string
-Invoke-SqlServerQuery -ConnectionString "Server=.;Database=test;Trusted_Connection=True" `
-    -Query "SELECT * FROM Users WHERE Id = @Id" `
-    -SqlParameters @{"Id"=1}
+Invoke-SQLServerQuery -Server "localhost" -DatabaseName "MyDB" -Queries "SELECT * FROM Users"
 
 .EXAMPLE
-Execute query using host and credentials
-isq -HostName "dbserver" -User "sa" -Password "pwd" `
-    -q "SELECT * FROM Users" -data @{"Id"=1}
+"SELECT * FROM Users" | Invoke-SQLServerQuery -ConnectionString "Server=localhost;Database=MyDB;Integrated Security=true" -SqlParameters @{"UserId"=1}
+
+.EXAMPLE
+Batch operations using external transaction
+$tx = Get-SQLServerTransaction -Server "localhost" -DatabaseName "MyDB"
+try {
+    Invoke-SQLServerQuery -Transaction $tx -Queries "INSERT INTO Users VALUES (@name)" -SqlParameters @{"name"="John"}
+    Invoke-SQLServerQuery -Transaction $tx -Queries "UPDATE Users SET active=1 WHERE name=@name" -SqlParameters @{"name"="John"}
+    $tx.Commit()
+} catch {
+    $tx.Rollback()
+    throw
+} finally {
+    $tx.Connection.Close()
+}
 #>
-function Invoke-SqlServerQuery {
+function Invoke-SQLServerQuery {
 
-    [CmdletBinding(DefaultParameterSetName = 'Default')]
-    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingPlainTextForPassword', 'Password', Justification = 'Common pattern for SQL authentication')]
+    [CmdletBinding()]
+
     param (
-
-        ###############################################################################
-
-        [Parameter(
-            ParameterSetName = 'ConnectionString',
+        ###########################################################################
+        [Alias("q", "Value", "Name", "Text", "Query")]
+        [parameter(
             Position = 0,
-            Mandatory,
-            HelpMessage = 'The connection string to the SqlServer database.'
+            ValueFromRemainingArguments,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName,
+            HelpMessage = 'The query or queries to execute.'
+        )]
+        [string[]]$Queries,
+
+        ###########################################################################
+        [Parameter(
+            Position = 1,
+            Mandatory = $false,
+            HelpMessage = 'The name of the SQL Server database.'
+        )]
+        [ValidateNotNullOrEmpty()]
+        [string]$DatabaseName = 'master',
+
+        ###########################################################################
+        [Parameter(
+            Position = 2,
+            Mandatory = $false,
+            HelpMessage = 'The SQL Server instance name.'
+        )]
+        [string]$Server = '.',
+
+        ###########################################################################
+        [Parameter(
+            Position = 3,
+            Mandatory = $false,
+            HelpMessage = 'An existing SQL Server transaction to use for the queries.'
+        )]
+        [object]$Transaction,
+
+        ###########################################################################
+        [Parameter(
+            Position = 4,
+            Mandatory = $false,
+            HelpMessage = 'The connection string to the SQL database.'
         )]
         [string]$ConnectionString,
-        ###############################################################################
 
-        [Parameter(
-            ParameterSetName = 'HostNameWithCredentials',
-            Position = 0,
-            Mandatory,
-            HelpMessage = 'The hostName of SqlServer'
-        )]
-        [Parameter(
-            ParameterSetName = 'HostNameWithUsernameAndPassword',
-            Position = 0,
-            Mandatory,
-            HelpMessage = 'The hostName of SqlServer'
-        )]
-        [Parameter(
-            ParameterSetName = 'HostnameOnly',
-            Position = 0,
-            Mandatory,
-            HelpMessage = 'The hostName of SqlServer'
-        )]
-        [string]$HostName,
-
-
-        ###############################################################################
-
-        [Parameter(
-            ParameterSetName = 'HostNameWithUsernameAndPassword',
-            Position = 1,
-            Mandatory,
-            HelpMessage = 'The username for SqlServer'
-        )]
-        [string]$User,
-        ###############################################################################
-
-        [Parameter(
-            ParameterSetName = 'HostNameWithUsernameAndPassword',
-            Position = 2,
-            Mandatory,
-            HelpMessage = 'The password for SqlServer'
-        )]
-        [string]$Password,
-        ###############################################################################
-
-        [Alias('q', 'Name', 'Text', 'Query')]
-        [parameter(
-            ParameterSetName = 'HostNameWithUsernameAndPassword',
-            Mandatory,
-            Position = 3,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
-        )]
-        [parameter(
-            ParameterSetName = 'HostNameWithCredentials',
-            Mandatory,
-            Position = 2,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
-        )]
-        [parameter(
-            ParameterSetName = 'ConnectionString',
-            Mandatory,
-            Position = 1,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
-        )]
-        [parameter(
-            ParameterSetName = 'HostnameOnly',
-            Mandatory,
-            Position = 1,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
-        )]
-        [parameter(
-            ParameterSetName = 'Default',
-            Mandatory,
-            Position = 0,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'The query to execute.'
-        )]
-        [string[]] $Queries,
-        ###############################################################################
-        [parameter(
-            ParameterSetName = 'HostNameWithUsernameAndPassword',
-            Mandatory,
-            Position = 4,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
-        )]
-        [parameter(
-            ParameterSetName = 'HostNameWithCredentials',
-            Mandatory,
-            Position = 3,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
-        )]
-        [parameter(
-            ParameterSetName = 'ConnectionString',
-            Mandatory,
-            Position = 2,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
-        )]
-        [parameter(
-            ParameterSetName = 'HostnameOnly',
-            Mandatory,
-            Position = 2,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
-        )]
-        [parameter(
-            ParameterSetName = 'Default',
-            Mandatory,
-            Position = 1,
-            ValueFromRemainingArguments,
-            ValueFromPipeline,
-            ValueFromPipelineByPropertyName,
-            HelpMessage = 'Optional parameters for the query. like @{"Id" = 1; "Name" = "John"}'
-        )]
+        ###########################################################################
         [Alias('data', 'parameters', 'args')]
-        [System.Collections.Hashtable[]] $SqlParameters,
-        ###############################################################################
+        [parameter(
+            Position = 5,
+            ValueFromRemainingArguments,
+            ValueFromPipeline,
+            ValueFromPipelineByPropertyName,
+            HelpMessage = 'Query parameters as hashtables.'
+        )]
+        [System.Collections.Hashtable[]]$SqlParameters = @(),
 
+        ###########################################################################
         [Parameter(
             Mandatory = $false,
             HelpMessage = 'The isolation level to use. default is ReadCommitted.'
@@ -232,50 +153,54 @@ function Invoke-SqlServerQuery {
     )
 
     begin {
-        # load SQL client assembly
+        # Use System.Data.SqlClient only - what works on this system
+        $script:SqlClientLibrary = 'System.Data.SqlClient'
         GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
+        Microsoft.PowerShell.Utility\Add-Type -AssemblyName System.Data.SqlClient
 
-        # prepare connection based on parameter set
-        Microsoft.PowerShell.Utility\Write-Verbose "Preparing SQL connection using $($PSCmdlet.ParameterSetName) mode"
-
-        # set default hostname to local server if not specified but needed
-        if ($PSCmdlet.ParameterSetName -ne 'ConnectionString' -and [string]::IsNullOrEmpty($HostName)) {
-
-            $hostName = '.'
-            Microsoft.PowerShell.Utility\Write-Verbose 'Using default local server hostname (.)'
+        # determine connection source priority: Transaction > ConnectionString > DatabaseName+Server
+        if ($null -ne $Transaction) {
+            $connection = $Transaction.Connection
+            $transaction = $Transaction
+            $isExternalTransaction = $true
+            Microsoft.PowerShell.Utility\Write-Verbose 'Using external transaction'
         }
-
-        # build connection string if not provided directly
-        if ($PSCmdlet.ParameterSetName -ne 'ConnectionString') {
-
-            $connectionString = "Server=$HostName;"
-
-            if ($User) {
-
-                $connectionString += "User Id=$User;Password=$Password;"
-            }
-            else {
-
-                $connectionString += 'Trusted_Connection=True;'
-            }
+        elseif (-not [String]::IsNullOrWhiteSpace($ConnectionString)) {
+            $connString = $ConnectionString
+            $isExternalTransaction = $false
+            Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with connection string: $connString"
+        }
+        elseif (-not [String]::IsNullOrWhiteSpace($DatabaseName)) {
+            $connString = "Server=$Server;Database=$DatabaseName;Integrated Security=true;TrustServerCertificate=true"
+            $isExternalTransaction = $false
+            Microsoft.PowerShell.Utility\Write-Verbose "Will create internal transaction with server: $Server, database: $DatabaseName"
+        }
+        else {
+            throw 'You must provide either a Transaction, ConnectionString, or DatabaseName (with optional Server) parameter.'
         }
     }
 
-
     process {
-
         try {
-            # establish database connection
-            Microsoft.PowerShell.Utility\Write-Verbose 'Opening SQL connection'
-            $connection = Microsoft.PowerShell.Utility\New-Object System.Data.SqlServer.SqlServerConnection($connectionString)
-            $connection.Open()
+            # establish database connection and transaction if not using external
+            if (-not $isExternalTransaction) {
+                $connectionClass = "$script:SqlClientLibrary.SqlConnection"
+                $connection = Microsoft.PowerShell.Utility\New-Object $connectionClass($connString)
+                $connection.Open()
+                Microsoft.PowerShell.Utility\Write-Verbose "Successfully connected using $script:SqlClientLibrary"
 
-            # begin transaction with specified isolation
-            Microsoft.PowerShell.Utility\Write-Verbose "Beginning transaction with $IsolationLevel isolation"
-            $transaction = $connection.BeginTransaction($IsolationLevel)
+                # begin transaction with specified isolation
+                $transaction = $connection.BeginTransaction($IsolationLevel)
+                Microsoft.PowerShell.Utility\Write-Verbose "Started internal transaction with $IsolationLevel isolation"
+            }
 
             # ensure parameters array exists
-            $sqlParameters = $sqlParameters -or @()
+            $SqlParameters = if ($SqlParameters) { $SqlParameters } else { @() }
+
+            # validate that queries are provided
+            if (-not $Queries -or $Queries.Count -eq 0) {
+                throw 'You must provide at least one query to execute.'
+            }
 
             try {
                 $idx = -1
@@ -284,59 +209,71 @@ function Invoke-SqlServerQuery {
                 $Queries | Microsoft.PowerShell.Core\ForEach-Object {
 
                     $idx++
-                    Microsoft.PowerShell.Utility\Write-Verbose "Executing query #$($idx + 1)"
+                    Microsoft.PowerShell.Utility\Write-Verbose "Executing query $($idx + 1) of $($Queries.Count)"
 
-                    # select appropriate parameter set for this query
-                    $data = $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
+                    # get parameter set for current query
+                    [System.Collections.Hashtable] $data = if ($SqlParameters.Length -gt $idx) {
+                        $SqlParameters[[Math]::Min($idx, $SqlParameters.Count - 1)]
+                    }
+                    else {
+                        $null
+                    }
 
-                    # prepare and configure command
+                    # prepare command
                     $command = $connection.CreateCommand()
                     $command.CommandText = $PSItem
                     $command.Transaction = $transaction
 
-                    # add any supplied parameters
+                    # add parameters if provided
                     if ($null -ne $data) {
-
                         $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
+                            $value = $PSItem.Value
 
-                            Microsoft.PowerShell.Utility\Write-Verbose "Adding parameter $($_.Key) = $($_.Value)"
-                            $command.Parameters.AddWithValue($_.Key, $_.Value)
+                            $null = $command.Parameters.AddWithValue(
+                                '@' + $PSItem.Key,
+                                $value
+                            )
                         }
                     }
 
-                    # execute and process results
+                    # execute and read results
                     $reader = $command.ExecuteReader()
 
-                    # convert each row to a hashtable
                     while ($reader.Read()) {
-
                         $record = @{}
-
                         for ($i = 0; $i -lt $reader.FieldCount; $i++) {
-
-                            $record[$reader.GetName($i)] = $reader.GetValue($i)
+                            $name = $reader.GetName($i)
+                            $value = $reader.GetValue($i)
+                            $record[$name] = $value
                         }
-
                         Microsoft.PowerShell.Utility\Write-Output $record
                     }
 
                     $reader.Close()
                 }
 
-                # commit if all succeeded
-                Microsoft.PowerShell.Utility\Write-Verbose 'Committing transaction'
-                $transaction.Commit()
+                # only commit if we created the transaction internally
+                if (-not $isExternalTransaction) {
+                    $transaction.Commit()
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal transaction committed successfully'
+                }
             }
             catch {
-                # rollback on any error
-                Microsoft.PowerShell.Utility\Write-Verbose 'Error occurred, rolling back transaction'
-                $transaction.Rollback()
+                # only rollback if we created the transaction internally
+                if (-not $isExternalTransaction) {
+                    $transaction.Rollback()
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal transaction rolled back due to error'
+                }
                 throw $_
             }
             finally {
-                # ensure connections are closed
-                if ($reader) { $reader.Close() }
-                if ($connection.State -eq 'Open') { $connection.Close() }
+                if ($null -ne $reader) { $reader.Close(); $reader = $null; }
+
+                # only close connection if we created it internally
+                if (-not $isExternalTransaction) {
+                    $connection.Close()
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Internal connection closed'
+                }
             }
         }
         catch {
