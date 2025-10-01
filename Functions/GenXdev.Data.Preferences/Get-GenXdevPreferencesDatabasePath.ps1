@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Get-GenXdevPreferencesDatabasePath.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -113,7 +113,9 @@ function Get-GenXdevPreferencesDatabasePath {
 
         if (-not ([string]::IsNullOrWhiteSpace($PreferencesDatabasePath))) {
 
-            $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path "$PreferencesDatabasePath" -CreateDirectory
+            # strip .db extension if present (legacy SQLite path) to get directory
+            $cleanPath = $PreferencesDatabasePath -replace '\.db$', ''
+            $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path "$cleanPath" -CreateDirectory
             return
         }
 
@@ -126,9 +128,9 @@ function Get-GenXdevPreferencesDatabasePath {
 
         if (-not $SessionOnly) {
 
-            # use default path since no session variable or JSON file
+            # use default directory path (strip .db extension for JSON storage)
             $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path `
-                "$($Env:LOCALAPPDATA)\GenXdev\Preferences.db" `
+                "$($Env:LOCALAPPDATA)\GenXdev\Preferences" `
                 -CreateDirectory
 
             if (-not [string]::IsNullOrWhiteSpace($resolvedDatabasePath)) {
@@ -137,7 +139,7 @@ function Get-GenXdevPreferencesDatabasePath {
         }
         # SessionOnly is specified but no session variable found, use default
         $resolvedDatabasePath = GenXdev.FileSystem\Expand-Path `
-            "$($Env:LOCALAPPDATA)\GenXdev\Preferences.db" `
+            "$($Env:LOCALAPPDATA)\GenXdev\Preferences" `
             -CreateDirectory
 
     }

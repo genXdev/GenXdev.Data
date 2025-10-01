@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SQLite
 Original cmdlet filename  : New-SQLiteDatabase.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -40,11 +40,22 @@ SQLite database by establishing and closing a connection.
 The full path where the SQLite database file should be created. If the directory
 path does not exist, it will be created automatically.
 
+.PARAMETER ForceConsent
+Force a consent prompt even if a preference is already set for SQLite package
+installation, overriding any saved consent preferences.
+
+.PARAMETER ConsentToThirdPartySoftwareInstallation
+Automatically consent to third-party software installation and set a persistent
+preference flag for SQLite package, bypassing interactive consent prompts.
+
 .EXAMPLE
 New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite"
 
 .EXAMPLE
 nsqldb "C:\Databases\MyNewDb.sqlite"
+
+.EXAMPLE
+New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite" -ConsentToThirdPartySoftwareInstallation
 #>
 function New-SQLiteDatabase {
 
@@ -58,13 +69,40 @@ function New-SQLiteDatabase {
             Position = 0,
             HelpMessage = 'The path to the SQLite database file'
         )]
-        [string]$DatabaseFilePath
+        [string]$DatabaseFilePath,
+
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Force a consent prompt even if preference is set for SQLite package installation.'
+        )]
+        [switch] $ForceConsent,
+
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Automatically consent to third-party software installation and set persistent flag for SQLite package.'
+        )]
+        [switch] $ConsentToThirdPartySoftwareInstallation
         ########################################################################
     )
 
     begin {
-        # load SQLite client assembly
-        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.Sqlite'
+        # load SQLite client assembly with embedded consent using Copy-IdenticalParamValues
+        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
+            -DefaultValues (
+            Microsoft.PowerShell.Utility\Get-Variable -Scope Local `
+                -ErrorAction SilentlyContinue
+        )
+
+        # Set specific parameters for SQLite package
+        $ensureParams['PackageKey'] = 'System.Data.Sqlite'
+        $ensureParams['Description'] = 'SQLite database engine for .NET applications'
+        $ensureParams['Publisher'] = 'SQLite Development Team'
+
+        GenXdev.Helpers\EnsureNuGetAssembly @ensureParams
 
         # expand the path and create directory if needed
         $DatabaseFilePath = GenXdev.FileSystem\Expand-Path $DatabaseFilePath -CreateDirectory

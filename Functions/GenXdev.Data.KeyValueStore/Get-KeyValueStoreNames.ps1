@@ -1,71 +1,3 @@
-<##############################################################################
-Part of PowerShell module : GenXdev.Data.KeyValueStore
-Original cmdlet filename  : Get-KeyValueStoreNames.ps1
-Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
-################################################################################
-MIT License
-
-Copyright 2021-2025 GenXdev
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-################################################################################>
-###############################################################################
-<#
-.SYNOPSIS
-Retrieves a list of all available key-value store names from the database.
-
-.DESCRIPTION
-Queries the SQLite database to get unique store names based on the provided
-synchronization key. The function handles database initialization if needed and
-performs synchronization for non-local scopes. Returns store names that are
-not marked as deleted and match the specified synchronization scope.
-
-.PARAMETER SynchronizationKey
-Key to identify synchronization scope. Use '%' for all stores, 'Local' for
-local stores only. Synchronization occurs for non-local scopes. Supports SQL
-LIKE pattern matching for flexible store filtering.
-
-.PARAMETER DatabasePath
-Directory path for preferences database files. When specified, overrides the
-default database location for storing key-value store configurations.
-
-.PARAMETER SessionOnly
-Use alternative settings stored in session for Data preferences like Language,
-Database paths, etc. When enabled, retrieves settings from session variables
-instead of persistent storage.
-
-.PARAMETER ClearSession
-Clear the session setting (Global variable) before retrieving. Forces a fresh
-retrieval of settings by clearing any cached session data before processing.
-
-.PARAMETER SkipSession
-Dont use alternative settings stored in session for Data preferences like
-Language, Database paths, etc. Forces retrieval from persistent storage,
-bypassing any session-cached settings.
-
-.EXAMPLE
-Get-KeyValueStoreNames -SynchronizationKey "Local" -DatabasePath "C:\Data"
-
-.EXAMPLE
-getstorenames "%"
-#>
 ###############################################################################
 function Get-KeyValueStoreNames {
 
@@ -86,59 +18,36 @@ function Get-KeyValueStoreNames {
             Mandatory = $false,
             HelpMessage = 'Database path for key-value store data files'
         )]
-        [string] $DatabasePath,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
-        )]
-        [switch] $SessionOnly,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
-        )]
-        [switch] $ClearSession,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
-        )]
-        [Alias('FromPreferences')]
-        [switch] $SkipSession
+        [string] $DatabasePath
         ###############################################################################
     )
 
     begin {
 
-        # use provided database path or default to local app data
+        # use provided base path or default to local app data
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqlite.db') `
-                -CreateDirectory
+            $basePath = "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStore"
         }
         else {
 
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
-                -CreateDirectory
+            $basePath = $DatabasePath
         }
 
-        # output verbose message for database file path
+        # output verbose message for store directory path
         Microsoft.PowerShell.Utility\Write-Verbose (
-            "Using database at: $databaseFilePath"
+            "Using KeyValueStore directory: $basePath"
         )
     }
 
     process {
 
-        # check if database file exists and create if needed
-        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
+        # ensure store directory structure exists
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $basePath)) {
 
-            # output verbose information about database initialization
+            # output verbose information about directory initialization
             Microsoft.PowerShell.Utility\Write-Verbose (
-                'Database not found, initializing...'
+                'Store directory not found, initializing...'
             )
 
             # copy identical parameter values for Initialize-KeyValueStores
@@ -149,12 +58,12 @@ function Get-KeyValueStoreNames {
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
-            # initialize the key value stores database
-                GenXdev.Data\Initialize-KeyValueStores @initParams
+            # initialize the key value stores directory
+            GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
         # perform synchronization for non-local stores
-        if ($SynchronizationKey -ne 'Local') {
+        if ($SynchronizationKey -ne 'Local' -and $SynchronizationKey -ne '%') {
 
             # output verbose information about synchronization
             Microsoft.PowerShell.Utility\Write-Verbose (
@@ -173,36 +82,47 @@ function Get-KeyValueStoreNames {
             $syncParams.SynchronizationKey = $SynchronizationKey
 
             # synchronize the key value store with remote sources
-                GenXdev.Data\Sync-KeyValueStore @syncParams
+            GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
-        # construct sql query to get unique store names
-        $sqlQuery = @'
-SELECT DISTINCT storeName
-FROM KeyValueStore
-WHERE synchronizationKey LIKE @syncKey
-AND deletedDate IS NULL;
-'@
-
-        # create parameters hashtable for the sql query
-        $params = @{
-            'syncKey' = $SynchronizationKey
-        }
-
-        # output verbose information about the query parameters
+        # output verbose information about the scan operation
         Microsoft.PowerShell.Utility\Write-Verbose (
-            "Querying stores with sync key: $SynchronizationKey"
+            "Scanning for stores with sync key pattern: $SynchronizationKey"
         )
 
-        # execute the sql query and extract store names from results
-            GenXdev.Data\Invoke-SQLiteQuery `
-                -DatabaseFilePath $databaseFilePath `
-                -Queries $sqlQuery `
-                -SqlParameters $params |
-                Microsoft.PowerShell.Core\ForEach-Object storeName
+        # get all JSON files in the store directory
+        $jsonFiles = Microsoft.PowerShell.Management\Get-ChildItem `
+            -LiteralPath $basePath `
+            -Filter '*.json' `
+            -File `
+            -ErrorAction SilentlyContinue
+
+        # create hashtable to collect unique store names
+        $storeNames = @{}
+
+        # parse filenames to extract store names
+        foreach ($file in $jsonFiles) {
+            # filename format: SyncKey_StoreName.json
+            if ($file.Name -match '^(.+?)_(.+?)\.json$') {
+                $fileSyncKey = $matches[1]
+                $fileStoreName = $matches[2]
+
+                # check if synchronization key matches pattern
+                if ($SynchronizationKey -eq '%' -or
+                    $fileSyncKey -like $SynchronizationKey) {
+
+                    # add to unique store names collection
+                    if (-not $storeNames.ContainsKey($fileStoreName)) {
+                        $storeNames[$fileStoreName] = $true
+                    }
+                }
+            }
+        }
+
+        # return sorted unique store names
+        $storeNames.Keys | Microsoft.PowerShell.Utility\Sort-Object
     }
 
     end {
     }
 }
-###############################################################################

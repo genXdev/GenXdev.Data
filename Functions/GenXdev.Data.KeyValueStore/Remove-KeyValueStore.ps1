@@ -1,70 +1,4 @@
-<##############################################################################
-Part of PowerShell module : GenXdev.Data.KeyValueStore
-Original cmdlet filename  : Remove-KeyValueStore.ps1
-Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
-################################################################################
-MIT License
-
-Copyright 2021-2025 GenXdev
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-################################################################################>
-################################################################################
-<#
-.SYNOPSIS
-Removes a key-value store from the database.
-
-.DESCRIPTION
-Removes all entries for a specified store from the database. For local stores,
-performs a physical delete. For synchronized stores, marks entries as deleted
-and triggers synchronization. This function supports both local and cloud-
-synchronized stores with proper audit trail maintenance.
-
-.PARAMETER StoreName
-The name of the key-value store to remove.
-
-.PARAMETER SynchronizationKey
-The synchronization scope identifier. Defaults to "Local" for non-synchronized
-stores.
-
-.PARAMETER SessionOnly
-Use alternative settings stored in session for Data preferences like Language,
-Database paths, etc.
-
-.PARAMETER ClearSession
-Clear the session setting (Global variable) before retrieving.
-
-.PARAMETER DatabasePath
-Database path for key-value store data files.
-
-.PARAMETER SkipSession
-Dont use alternative settings stored in session for Data preferences like
-Language, Database paths, etc.
-
-.EXAMPLE
-Remove-KeyValueStore -StoreName "ConfigurationStore" -SynchronizationKey "Cloud"
-
-.EXAMPLE
-Remove-KeyValueStore "ConfigurationStore" "Cloud"
-#>
-################################################################################
+﻿################################################################################
 function Remove-KeyValueStore {
 
     [CmdletBinding(SupportsShouldProcess = $true)]
@@ -88,66 +22,39 @@ function Remove-KeyValueStore {
             Mandatory = $false,
             HelpMessage = ('Database path for key-value store data files')
         )]
-        [string]$DatabasePath,
-        #######################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Use alternative settings stored in session for ' +
-                'Data preferences like Language, Database paths, etc')
-        )]
-        [switch]$SessionOnly,
-        #######################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Clear the session setting (Global variable) ' +
-                'before retrieving')
-        )]
-        [switch]$ClearSession,
-        #######################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Dont use alternative settings stored in session ' +
-                'for Data preferences like Language, Database paths, etc')
-        )]
-        [Alias('FromPreferences')]
-        [switch]$SkipSession
+        [string]$DatabasePath
         #######################################################################
     )
 
     begin {
 
-        # determine database file path using provided path or default location
+        # determine base directory path using provided path or default location
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
             # build default path to local application data folder
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqlite.db') `
-                -CreateDirectory
+            $basePath = "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStore"
         }
         else {
 
-            # use provided database path and ensure directory exists
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
-                -CreateDirectory
+            # use provided base path
+            $basePath = $DatabasePath
         }
 
-        # output verbose information about database location
+        # output verbose information about store directory location
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Using database at: $databaseFilePath"
+            "Using KeyValueStore directory: $basePath"
     }
 
     process {
 
-        # check if database file exists and initialize if necessary
-        if (-not (Microsoft.PowerShell.Management\Test-Path `
-                    -LiteralPath $databaseFilePath)) {
+        # ensure store directory structure exists
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $basePath)) {
 
-            # output verbose information about database initialization
+            # output verbose information about directory initialization
             Microsoft.PowerShell.Utility\Write-Verbose `
-                'Database not found, initializing new database'
+                'Store directory not found, initializing'
 
-            # create new database with required schema
+            # create directory structure
             $null = GenXdev.Data\Initialize-KeyValueStores
         }
 
@@ -158,65 +65,74 @@ function Remove-KeyValueStore {
         Microsoft.PowerShell.Utility\Write-Verbose `
             "Operation performed by: $lastModifiedBy"
 
-        # determine appropriate sql operation based on synchronization scope
+        # determine appropriate operation based on synchronization scope
         if ($SynchronizationKey -eq 'Local') {
-
-            # prepare for physical deletion of local store entries
-            $operation = 'Deleting local store'
-            $sqlQuery = @'
-DELETE FROM KeyValueStore
-WHERE storeName = @storeName
-AND synchronizationKey = @syncKey;
-'@
+            $operation = 'Deleting local store file'
         }
         else {
-
-            # prepare for logical deletion with audit trail for sync stores
-            $operation = 'Marking sync store as deleted'
-            $sqlQuery = @'
-UPDATE KeyValueStore
-SET deletedDate = CURRENT_TIMESTAMP,
-    lastModified = CURRENT_TIMESTAMP,
-    lastModifiedBy = @modifiedBy
-WHERE storeName = @storeName
-AND synchronizationKey = @syncKey;
-'@
+            $operation = 'Marking all keys in sync store as deleted'
         }
 
         # verify user consent for potentially destructive operation
         if ($PSCmdlet.ShouldProcess($StoreName, $operation)) {
 
-            # construct parameter hashtable for sql query execution
-            $params = @{
-                'storeName'  = $StoreName
-                'syncKey'    = $SynchronizationKey
-                'modifiedBy' = $lastModifiedBy
-            }
+            # get JSON file path for this store
+            $storeFilePath = GenXdev.Data\GetStoreFilePath `
+                -SynchronizationKey $SynchronizationKey `
+                -StoreName $StoreName `
+                -BasePath $basePath
 
-            # output verbose information about database operation
+            # output verbose information about file operation
             Microsoft.PowerShell.Utility\Write-Verbose `
-                "Executing database operation for store: $StoreName"
+                "Processing store file: $storeFilePath"
 
-            # transfer applicable parameters from current function to query function
-            $queryParams = GenXdev.Helpers\Copy-IdenticalParamValues `
-                -BoundParameters $PSBoundParameters `
-                -FunctionName 'GenXdev.Data\Invoke-SQLiteQuery' `
-                -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                    -Scope Local `
-                    -ErrorAction SilentlyContinue)
+            if ($SynchronizationKey -eq 'Local') {
+                # physical deletion for local stores
+                if (Microsoft.PowerShell.Management\Test-Path -LiteralPath $storeFilePath) {
+                    Microsoft.PowerShell.Utility\Write-Verbose `
+                        'Deleting local store file'
 
-            # configure specific parameters for database query execution
-            $queryParams.DatabaseFilePath = $databaseFilePath
-            $queryParams.Queries = $sqlQuery
-            $queryParams.SqlParameters = $params
+                    Microsoft.PowerShell.Management\Remove-Item `
+                        -LiteralPath $storeFilePath `
+                        -Force `
+                        -ErrorAction Stop
+                }
+                else {
+                    Microsoft.PowerShell.Utility\Write-Verbose `
+                        'Store file does not exist'
+                }
+            }
+            else {
+                # mark all keys as deleted for synchronized stores
+                Microsoft.PowerShell.Utility\Write-Verbose `
+                    'Marking all keys as deleted in synchronized store'
 
-            # execute sql command against sqlite database
-            $null = GenXdev.Data\Invoke-SQLiteQuery @queryParams
+                # read existing store data with retry logic
+                $storeData = GenXdev.FileSystem\ReadJsonWithRetry -FilePath $storeFilePath
 
-            # initiate synchronization process for cloud-synchronized stores
-            if ($SynchronizationKey -ne 'Local') {
+                # mark all keys as deleted
+                $currentTime = (Microsoft.PowerShell.Utility\Get-Date).ToString('o')
+                foreach ($key in $storeData.Keys) {
+                    if ($storeData[$key] -is [hashtable]) {
+                        $storeData[$key]['deletedDate'] = $currentTime
+                        $storeData[$key]['lastModified'] = $currentTime
+                        $storeData[$key]['lastModifiedBy'] = $lastModifiedBy
+                    }
+                    else {
+                        # legacy format, convert to new format with deletion
+                        $storeData[$key] = @{
+                            value          = $storeData[$key]
+                            lastModified   = $currentTime
+                            lastModifiedBy = $lastModifiedBy
+                            deletedDate    = $currentTime
+                        }
+                    }
+                }
 
-                # output verbose information about synchronization trigger
+                # write updated store data atomically with retry logic
+                GenXdev.FileSystem\WriteJsonAtomic -FilePath $storeFilePath -Data $storeData
+
+                # initiate synchronization process for cloud-synchronized stores
                 Microsoft.PowerShell.Utility\Write-Verbose `
                     "Triggering synchronization for key: $SynchronizationKey"
 
@@ -240,4 +156,3 @@ AND synchronizationKey = @syncKey;
     end {
     }
 }
-################################################################################

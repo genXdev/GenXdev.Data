@@ -1,41 +1,13 @@
-<##############################################################################
-Part of PowerShell module : GenXdev.Data.KeyValueStore
-Original cmdlet filename  : Get-ValueByKeyFromStore.ps1
-Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
-################################################################################
-MIT License
-
-Copyright 2021-2025 GenXdev
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-################################################################################>
-###############################################################################
+﻿###############################################################################
 <#
 .SYNOPSIS
-Retrieves a value from a key-value store database.
+Retrieves a value from a JSON-based key-value store.
 
 .DESCRIPTION
-Retrieves a value for a specified key from a SQLite-based key-value store. The
-function supports optional default values and synchronization across different
-scopes. It can use session-based settings or direct database access and
-provides automatic database initialization and synchronization capabilities.
+Retrieves a value for a specified key from a JSON file-based key-value store.
+The function supports optional default values and synchronization across
+different scopes. It can use session-based settings or direct file access and
+provides automatic directory initialization and synchronization capabilities.
 
 .PARAMETER StoreName
 The name of the key-value store to query.
@@ -49,19 +21,8 @@ Optional default value to return if the key is not found.
 .PARAMETER SynchronizationKey
 Optional key to identify synchronization scope. Defaults to "Local".
 
-.PARAMETER SessionOnly
-Use alternative settings stored in session for Data preferences like Language,
-Database paths, etc.
-
-.PARAMETER ClearSession
-Clear the session setting (Global variable) before retrieving.
-
 .PARAMETER DatabasePath
 Database path for key-value store data files.
-
-.PARAMETER SkipSession
-Dont use alternative settings stored in session for Data preferences like
-Language, Database paths, etc.
 
 .EXAMPLE
 Get-ValueByKeyFromStore -StoreName "AppSettings" -KeyName "Theme" `
@@ -114,64 +75,38 @@ function Get-ValueByKeyFromStore {
             Mandatory = $false,
             HelpMessage = 'Database path for key-value store data files'
         )]
-        [string]$DatabasePath,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Use alternative settings stored in session for Data ' +
-                'preferences like Language, Database paths, etc')
-        )]
-        [switch]$SessionOnly,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Clear the session setting (Global variable) before ' +
-                'retrieving')
-        )]
-        [switch]$ClearSession,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = ('Dont use alternative settings stored in session for ' +
-                'Data preferences like Language, Database paths, etc')
-        )]
-        [Alias('FromPreferences')]
-        [switch]$SkipSession
+        [string]$DatabasePath
         ###############################################################################
     )
 
     begin {
 
-        # check if custom database path was provided
+        # check if custom base path was provided
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-            # use default database path in local app data folder
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqlite.db') `
-                -CreateDirectory
+            # use default base path in local app data folder
+            $basePath = "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStore"
         }
         else {
 
-            # expand provided database path and ensure directory exists
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
-                -CreateDirectory
+            # use provided base path
+            $basePath = $DatabasePath
         }
 
-        # output database location for debugging purposes
+        # output base directory location for debugging purposes
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Using database at: $databaseFilePath"
+            "Using KeyValueStore directory: $basePath"
     }
 
 
     process {
 
-        # check if database file exists and initialize if needed
-        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $databaseFilePath)) {
+        # ensure store directory structure exists
+        if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $basePath)) {
 
-            # log database initialization activity
+            # log directory initialization activity
             Microsoft.PowerShell.Utility\Write-Verbose `
-                'Database not found, initializing...'
+                'Store directory not found, initializing...'
 
             # copy identical parameter values for initialize function
             $initParams = GenXdev.Helpers\Copy-IdenticalParamValues `
@@ -181,7 +116,7 @@ function Get-ValueByKeyFromStore {
                     -Scope Local `
                     -ErrorAction SilentlyContinue)
 
-            # initialize the key-value store database
+            # initialize the key-value store directory structure
             GenXdev.Data\Initialize-KeyValueStores @initParams
         }
 
@@ -207,68 +142,49 @@ function Get-ValueByKeyFromStore {
             GenXdev.Data\Sync-KeyValueStore @syncParams
         }
 
-        # define sql query to retrieve value from key-value store
-        $sqlQuery = @'
-SELECT value
-FROM KeyValueStore
-WHERE storeName = @storeName
-AND keyName = @keyName
-AND synchronizationKey = @syncKey
-AND deletedDate IS NULL;
-'@
-
-        # prepare parameters for database query
-        $params = @{
-            'storeName' = $StoreName
-            'keyName'   = $KeyName
-            'syncKey'   = $SynchronizationKey
-        }
+        # get JSON file path for this store
+        $storeFilePath = GenXdev.Data\GetStoreFilePath `
+            -SynchronizationKey $SynchronizationKey `
+            -StoreName $StoreName `
+            -BasePath $basePath
 
         # log the query operation details
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Querying store '$StoreName' for key '$KeyName'"
+            "Querying store '$StoreName' for key '$KeyName' at: $storeFilePath"
 
-        # copy identical parameter values for query function
-        $queryParams = GenXdev.Helpers\Copy-IdenticalParamValues `
-            -BoundParameters $PSBoundParameters `
-            -FunctionName 'GenXdev.Data\Invoke-SQLiteQuery' `
-            -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
-                -Scope Local `
-                -ErrorAction SilentlyContinue)
+        # read the JSON store data with retry logic
+        $storeData = GenXdev.FileSystem\ReadJsonWithRetry -FilePath $storeFilePath
 
-        # set database file path for query execution
-        $queryParams.DatabaseFilePath = $databaseFilePath
+        # check if key exists and is not deleted
+        if ($storeData.ContainsKey($KeyName)) {
+            $entry = $storeData[$KeyName]
 
-        # set sql query text for execution
-        $queryParams.Queries = $sqlQuery
+            # check if entry has metadata structure
+            if ($entry -is [hashtable] -and $entry.ContainsKey('deletedDate')) {
+                # entry has metadata, check if deleted
+                if ($null -eq $entry['deletedDate']) {
+                    # log successful value retrieval
+                    Microsoft.PowerShell.Utility\Write-Verbose 'Value found'
 
-        # set parameters for sql query placeholders
-        $queryParams.SqlParameters = $params
+                    # return the value from the entry
+                    return $entry['value']
+                }
+            }
+            else {
+                # legacy format without metadata, return directly
+                Microsoft.PowerShell.Utility\Write-Verbose `
+                    'Value found (legacy format)'
 
-        # execute database query to retrieve the value
-        $result = GenXdev.Data\Invoke-SQLiteQuery @queryParams
-
-        # determine return value based on query result
-        if ($result) {
-
-            # log successful value retrieval
-            Microsoft.PowerShell.Utility\Write-Verbose 'Value found'
-
-            # return the retrieved value from database
-            return $result.value
+                return $entry
+            }
         }
-        else {
 
-            # log fallback to default value
-            Microsoft.PowerShell.Utility\Write-Verbose `
-                'No value found, returning default'
+        # log fallback to default value
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            'No value found, returning default'
 
-            # return the specified default value
-            return $DefaultValue
-        }
-    }
-
-    end {
+        # return the specified default value
+        return $DefaultValue
+    }    end {
     }
 }
-###############################################################################

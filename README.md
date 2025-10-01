@@ -64,14 +64,15 @@ Update-Module
 ### GenXdev.Data.KeyValueStore
 | Command | Aliases | Description |
 | :--- | :--- | :--- |
-| [Get-KeyValueStoreNames](#get-keyvaluestorenames) | getstorenames | Retrieves a list of all available key-value store names from the database. |
+| [Get-KeyValueStoreNames](#get-keyvaluestorenames) | getstorenames | &nbsp; |
 | [Get-StoreKeys](#get-storekeys) | getkeys | Retrieves all key names for a given key-value store. |
-| [Get-ValueByKeyFromStore](#get-valuebykeyfromstore) | getvalue | Retrieves a value from a key-value store database. |
-| [Initialize-KeyValueStores](#initialize-keyvaluestores) | &nbsp; | Initializes and synchronizes KeyValueStore databases between local and OneDrive. |
-| [Remove-KeyFromStore](#remove-keyfromstore) | removekey | Deletes a key from the specified key-value store. |
-| [Remove-KeyValueStore](#remove-keyvaluestore) | &nbsp; | Removes a key-value store from the database. |
-| [Set-ValueByKeyInStore](#set-valuebykeyinstore) | setvalue | Manages key-value pairs in a SQLite database store. |
-| [Sync-KeyValueStore](#sync-keyvaluestore) | &nbsp; | Synchronizes local and OneDrive key-value store databases. |
+| [Get-ValueByKeyFromStore](#get-valuebykeyfromstore) | getvalue | Retrieves a value from a JSON-based key-value store. |
+| [GetStoreFilePath](#getstorefilepath) | &nbsp; | &nbsp; |
+| [Initialize-KeyValueStores](#initialize-keyvaluestores) | &nbsp; | Initializes KeyValueStore directory structure for local and OneDrive storage. |
+| [Remove-KeyFromStore](#remove-keyfromstore) | removekey | &nbsp; |
+| [Remove-KeyValueStore](#remove-keyvaluestore) | &nbsp; | &nbsp; |
+| [Set-ValueByKeyInStore](#set-valuebykeyinstore) | setvalue | Manages key-value pairs in a JSON file-based store. |
+| [Sync-KeyValueStore](#sync-keyvaluestore) | &nbsp; | Synchronizes local and OneDrive key-value store JSON files. |
 
 ### GenXdev.Data.Preferences
 | Command | Aliases | Description |
@@ -137,20 +138,10 @@ Update-Module
 ### SYNTAX 
 ```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -DatabasePath <string>  
         Database path for key-value store data files  
         Required?                    false  
@@ -158,24 +149,6 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
@@ -202,67 +175,47 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
+### SYNOPSIS 
+    Retrieves all key names for a given key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
+    keys for a specified store. Can optionally filter by synchronization scope.  
+    Automatically initializes the directory structure if not found and handles  
+    synchronization for non-local stores.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Name of the store whose keys should be retrieved  
+    -StoreName <String>  
+        The name of the key-value store to query. This identifies the logical grouping  
+        of keys and values in the database.  
         Required?                    true  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope, defaults to all  
-        Required?                    false  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional scope identifier for synchronization. Use "Local" for local-only data.  
+        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
+        Required?                    false  
+        Position?                    2  
+        Default value                %  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Directory path for keyvalue database files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -279,85 +232,106 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
+### SYNOPSIS 
+    Retrieves a value from a JSON-based key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-DefaultValue] <string>]
-    [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
+    <String> [[-DefaultValue] <String>]
+    [[-SynchronizationKey] <String>] [-DatabasePath
+    <String>] [<CommonParameters>] 
+```` 
+
+### DESCRIPTION 
+    Retrieves a value for a specified key from a JSON file-based key-value store.  
+    The function supports optional default values and synchronization across  
+    different scopes. It can use session-based settings or direct file access and  
+    provides automatic directory initialization and synchronization capabilities.  
+
+### PARAMETERS 
+    -StoreName <String>  
+        The name of the key-value store to query.  
+        Required?                    true  
+        Position?                    1  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -KeyName <String>  
+        The key whose value should be retrieved.  
+        Required?                    true  
+        Position?                    2  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DefaultValue <String>  
+        Optional default value to return if the key is not found.  
+        Required?                    false  
+        Position?                    3  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional key to identify synchronization scope. Defaults to "Local".  
+        Required?                    false  
+        Position?                    4  
+        Default value                Local  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	GetStoreFilePath 
+```PowerShell 
+
+   GetStoreFilePath  
+```` 
+
+### SYNTAX 
+```PowerShell 
+GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePath] <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DefaultValue <string>  
-        A optional default value  
+    -BasePath <string>  
         Required?                    false  
         Position?                    2  
         Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Key to retrieve from the specified store  
-        Required?                    true  
-        Position?                    1  
-        Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
-        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    0  
+        Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    3  
+        Required?                    true  
+        Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -376,49 +350,29 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
    Initialize-KeyValueStores  
 ```` 
 
+### SYNOPSIS 
+    Initializes KeyValueStore directory structure for local and OneDrive storage.  
+
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>]
-    [-SessionOnly] [-ClearSession] [-SkipSession]
+Initialize-KeyValueStores [[-DatabasePath] <String>]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Creates directory structure for JSON-based key-value stores in two locations:  
+    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
+    2. OneDrive folder for cloud synchronization  
+    The function ensures both directories exist and are properly configured.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -DatabasePath <String>  
+        Base directory path for key-value store JSON files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -438,21 +392,11 @@ Initialize-KeyValueStores [[-DatabasePath] <string>]
 ### SYNTAX 
 ```PowerShell 
 Remove-KeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
-    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string> [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -477,24 +421,6 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -542,20 +468,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
 ```PowerShell 
 Remove-KeyValueStore [-StoreName] <string>
     [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -571,24 +487,6 @@ Remove-KeyValueStore [-StoreName] <string>
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -632,103 +530,79 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
+### SYNOPSIS 
+    Manages key-value pairs in a JSON file-based store.  
+
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
-    <string> [[-Value] <string>] [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
+    <String> [[-Value] <String>] [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Provides persistent storage for key-value pairs using JSON files. Handles both  
+    insertion of new entries and updates to existing ones. Supports optional  
+    synchronization for non-local stores. This function implements an upsert  
+    operation that either inserts new key-value pairs or updates existing ones  
+    based on the combination of synchronization key, store name, and key name.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Name of the key to set or update  
+    -StoreName <String>  
+        The name of the store where the key-value pair will be saved.  
         Required?                    true  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Store name for the key-value pair  
+    -KeyName <String>  
+        The unique identifier for the value within the specified store.  
         Required?                    true  
-        Position?                    0  
+        Position?                    2  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
+    -Value <String>  
+        The data to be stored, associated with the specified key.  
         Required?                    false  
         Position?                    3  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -Value <string>  
-        Value to be stored  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope. Use "Local" for local-only storage.  
+        Defaults to "Local". Non-local values trigger store synchronization.  
         Required?                    false  
-        Position?                    2  
+        Position?                    4  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -WhatIf  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -WhatIf [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -Confirm [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -745,58 +619,37 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
+### SYNOPSIS 
+    Synchronizes local and OneDrive key-value store JSON files.  
+
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <String>]
+    [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Performs two-way synchronization between local and OneDrive shadow JSON files using  
+    a last-modified timestamp strategy. Records are merged based on their last  
+    modification time, with newer versions taking precedence.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope for the operation. Using "Local" will skip  
+        synchronization as it indicates local-only records.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -1676,11 +1529,15 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 Get-SQLiteTransaction [-DatabaseFilePath] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLiteTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -1690,6 +1547,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -1709,6 +1575,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseFilePath  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -1971,6 +1846,8 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
     [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -1984,6 +1861,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file.  
         Required?                    false  
@@ -1991,6 +1877,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -2125,7 +2020,9 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+New-SQLiteDatabase [-DatabaseFilePath] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
     [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -2138,10 +2035,28 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
         Aliases                      cf  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file  
         Required?                    true  
         Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -2512,10 +2427,14 @@ Get-SQLServerTableSchema [-ConnectionString] <string>
 Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
     <string>] [-IsolationLevel {ReadCommitted |
     ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
+    Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLServerTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -2529,12 +2448,30 @@ Get-SQLServerTransaction [-ConnectionString] <string>
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -2840,7 +2777,9 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
     [[-Transaction] <Object>] [[-ConnectionString] <string>]
     [[-SqlParameters] <hashtable[]>] [-IsolationLevel
     {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+    Serializable | Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -2853,10 +2792,28 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    false  
         Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -2946,26 +2903,31 @@ Invoke-SSMS [<CommonParameters>]
 ### SYNTAX 
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
-    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
-New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
-    [-Confirm] [<CommonParameters>] 
+    <string>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -2978,6 +2940,15 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -Server <string>  
         The SQL Server instance name  
         Required?                    false  
@@ -2985,14 +2956,6 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -WhatIf  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -3016,20 +2979,10 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
 ### SYNTAX 
 ```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -DatabasePath <string>  
         Database path for key-value store data files  
         Required?                    false  
@@ -3037,24 +2990,6 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
@@ -3081,67 +3016,47 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
+### SYNOPSIS 
+    Retrieves all key names for a given key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
+    keys for a specified store. Can optionally filter by synchronization scope.  
+    Automatically initializes the directory structure if not found and handles  
+    synchronization for non-local stores.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Name of the store whose keys should be retrieved  
+    -StoreName <String>  
+        The name of the key-value store to query. This identifies the logical grouping  
+        of keys and values in the database.  
         Required?                    true  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope, defaults to all  
-        Required?                    false  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional scope identifier for synchronization. Use "Local" for local-only data.  
+        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
+        Required?                    false  
+        Position?                    2  
+        Default value                %  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Directory path for keyvalue database files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3158,85 +3073,106 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
+### SYNOPSIS 
+    Retrieves a value from a JSON-based key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-DefaultValue] <string>]
-    [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
+    <String> [[-DefaultValue] <String>]
+    [[-SynchronizationKey] <String>] [-DatabasePath
+    <String>] [<CommonParameters>] 
+```` 
+
+### DESCRIPTION 
+    Retrieves a value for a specified key from a JSON file-based key-value store.  
+    The function supports optional default values and synchronization across  
+    different scopes. It can use session-based settings or direct file access and  
+    provides automatic directory initialization and synchronization capabilities.  
+
+### PARAMETERS 
+    -StoreName <String>  
+        The name of the key-value store to query.  
+        Required?                    true  
+        Position?                    1  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -KeyName <String>  
+        The key whose value should be retrieved.  
+        Required?                    true  
+        Position?                    2  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DefaultValue <String>  
+        Optional default value to return if the key is not found.  
+        Required?                    false  
+        Position?                    3  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional key to identify synchronization scope. Defaults to "Local".  
+        Required?                    false  
+        Position?                    4  
+        Default value                Local  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	GetStoreFilePath 
+```PowerShell 
+
+   GetStoreFilePath  
+```` 
+
+### SYNTAX 
+```PowerShell 
+GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePath] <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DefaultValue <string>  
-        A optional default value  
+    -BasePath <string>  
         Required?                    false  
         Position?                    2  
         Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Key to retrieve from the specified store  
-        Required?                    true  
-        Position?                    1  
-        Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
-        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    0  
+        Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    3  
+        Required?                    true  
+        Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -3255,49 +3191,29 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
    Initialize-KeyValueStores  
 ```` 
 
+### SYNOPSIS 
+    Initializes KeyValueStore directory structure for local and OneDrive storage.  
+
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>]
-    [-SessionOnly] [-ClearSession] [-SkipSession]
+Initialize-KeyValueStores [[-DatabasePath] <String>]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Creates directory structure for JSON-based key-value stores in two locations:  
+    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
+    2. OneDrive folder for cloud synchronization  
+    The function ensures both directories exist and are properly configured.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -DatabasePath <String>  
+        Base directory path for key-value store JSON files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3317,21 +3233,11 @@ Initialize-KeyValueStores [[-DatabasePath] <string>]
 ### SYNTAX 
 ```PowerShell 
 Remove-KeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
-    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string> [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -3356,24 +3262,6 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -3421,20 +3309,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
 ```PowerShell 
 Remove-KeyValueStore [-StoreName] <string>
     [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -3450,24 +3328,6 @@ Remove-KeyValueStore [-StoreName] <string>
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -3511,103 +3371,79 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
+### SYNOPSIS 
+    Manages key-value pairs in a JSON file-based store.  
+
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
-    <string> [[-Value] <string>] [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
+    <String> [[-Value] <String>] [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Provides persistent storage for key-value pairs using JSON files. Handles both  
+    insertion of new entries and updates to existing ones. Supports optional  
+    synchronization for non-local stores. This function implements an upsert  
+    operation that either inserts new key-value pairs or updates existing ones  
+    based on the combination of synchronization key, store name, and key name.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Name of the key to set or update  
+    -StoreName <String>  
+        The name of the store where the key-value pair will be saved.  
         Required?                    true  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Store name for the key-value pair  
+    -KeyName <String>  
+        The unique identifier for the value within the specified store.  
         Required?                    true  
-        Position?                    0  
+        Position?                    2  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
+    -Value <String>  
+        The data to be stored, associated with the specified key.  
         Required?                    false  
         Position?                    3  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -Value <string>  
-        Value to be stored  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope. Use "Local" for local-only storage.  
+        Defaults to "Local". Non-local values trigger store synchronization.  
         Required?                    false  
-        Position?                    2  
+        Position?                    4  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -WhatIf  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -WhatIf [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -Confirm [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3624,58 +3460,37 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
+### SYNOPSIS 
+    Synchronizes local and OneDrive key-value store JSON files.  
+
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <String>]
+    [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Performs two-way synchronization between local and OneDrive shadow JSON files using  
+    a last-modified timestamp strategy. Records are merged based on their last  
+    modification time, with newer versions taking precedence.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope for the operation. Using "Local" will skip  
+        synchronization as it indicates local-only records.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -4555,11 +4370,15 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 Get-SQLiteTransaction [-DatabaseFilePath] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLiteTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -4569,6 +4388,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -4588,6 +4416,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseFilePath  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -4850,6 +4687,8 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
     [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -4863,6 +4702,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file.  
         Required?                    false  
@@ -4870,6 +4718,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -5004,7 +4861,9 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+New-SQLiteDatabase [-DatabaseFilePath] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
     [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -5017,10 +4876,28 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
         Aliases                      cf  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file  
         Required?                    true  
         Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -5391,10 +5268,14 @@ Get-SQLServerTableSchema [-ConnectionString] <string>
 Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
     <string>] [-IsolationLevel {ReadCommitted |
     ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
+    Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLServerTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -5408,12 +5289,30 @@ Get-SQLServerTransaction [-ConnectionString] <string>
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -5719,7 +5618,9 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
     [[-Transaction] <Object>] [[-ConnectionString] <string>]
     [[-SqlParameters] <hashtable[]>] [-IsolationLevel
     {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+    Serializable | Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -5732,10 +5633,28 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    false  
         Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -5825,26 +5744,31 @@ Invoke-SSMS [<CommonParameters>]
 ### SYNTAX 
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
-    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
-New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
-    [-Confirm] [<CommonParameters>] 
+    <string>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -5857,6 +5781,15 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -Server <string>  
         The SQL Server instance name  
         Required?                    false  
@@ -5864,14 +5797,6 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -WhatIf  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -5895,20 +5820,10 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
 ### SYNTAX 
 ```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -DatabasePath <string>  
         Database path for key-value store data files  
         Required?                    false  
@@ -5916,24 +5831,6 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
@@ -5960,67 +5857,47 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
+### SYNOPSIS 
+    Retrieves all key names for a given key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
+    keys for a specified store. Can optionally filter by synchronization scope.  
+    Automatically initializes the directory structure if not found and handles  
+    synchronization for non-local stores.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Name of the store whose keys should be retrieved  
+    -StoreName <String>  
+        The name of the key-value store to query. This identifies the logical grouping  
+        of keys and values in the database.  
         Required?                    true  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope, defaults to all  
-        Required?                    false  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional scope identifier for synchronization. Use "Local" for local-only data.  
+        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
+        Required?                    false  
+        Position?                    2  
+        Default value                %  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Directory path for keyvalue database files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6037,85 +5914,106 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
+### SYNOPSIS 
+    Retrieves a value from a JSON-based key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-DefaultValue] <string>]
-    [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
+    <String> [[-DefaultValue] <String>]
+    [[-SynchronizationKey] <String>] [-DatabasePath
+    <String>] [<CommonParameters>] 
+```` 
+
+### DESCRIPTION 
+    Retrieves a value for a specified key from a JSON file-based key-value store.  
+    The function supports optional default values and synchronization across  
+    different scopes. It can use session-based settings or direct file access and  
+    provides automatic directory initialization and synchronization capabilities.  
+
+### PARAMETERS 
+    -StoreName <String>  
+        The name of the key-value store to query.  
+        Required?                    true  
+        Position?                    1  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -KeyName <String>  
+        The key whose value should be retrieved.  
+        Required?                    true  
+        Position?                    2  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DefaultValue <String>  
+        Optional default value to return if the key is not found.  
+        Required?                    false  
+        Position?                    3  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional key to identify synchronization scope. Defaults to "Local".  
+        Required?                    false  
+        Position?                    4  
+        Default value                Local  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	GetStoreFilePath 
+```PowerShell 
+
+   GetStoreFilePath  
+```` 
+
+### SYNTAX 
+```PowerShell 
+GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePath] <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DefaultValue <string>  
-        A optional default value  
+    -BasePath <string>  
         Required?                    false  
         Position?                    2  
         Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Key to retrieve from the specified store  
-        Required?                    true  
-        Position?                    1  
-        Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
-        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    0  
+        Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    3  
+        Required?                    true  
+        Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -6134,49 +6032,29 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
    Initialize-KeyValueStores  
 ```` 
 
+### SYNOPSIS 
+    Initializes KeyValueStore directory structure for local and OneDrive storage.  
+
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>]
-    [-SessionOnly] [-ClearSession] [-SkipSession]
+Initialize-KeyValueStores [[-DatabasePath] <String>]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Creates directory structure for JSON-based key-value stores in two locations:  
+    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
+    2. OneDrive folder for cloud synchronization  
+    The function ensures both directories exist and are properly configured.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -DatabasePath <String>  
+        Base directory path for key-value store JSON files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6196,21 +6074,11 @@ Initialize-KeyValueStores [[-DatabasePath] <string>]
 ### SYNTAX 
 ```PowerShell 
 Remove-KeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
-    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string> [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -6235,24 +6103,6 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -6300,20 +6150,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
 ```PowerShell 
 Remove-KeyValueStore [-StoreName] <string>
     [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -6329,24 +6169,6 @@ Remove-KeyValueStore [-StoreName] <string>
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -6390,103 +6212,79 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
+### SYNOPSIS 
+    Manages key-value pairs in a JSON file-based store.  
+
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
-    <string> [[-Value] <string>] [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
+    <String> [[-Value] <String>] [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Provides persistent storage for key-value pairs using JSON files. Handles both  
+    insertion of new entries and updates to existing ones. Supports optional  
+    synchronization for non-local stores. This function implements an upsert  
+    operation that either inserts new key-value pairs or updates existing ones  
+    based on the combination of synchronization key, store name, and key name.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Name of the key to set or update  
+    -StoreName <String>  
+        The name of the store where the key-value pair will be saved.  
         Required?                    true  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Store name for the key-value pair  
+    -KeyName <String>  
+        The unique identifier for the value within the specified store.  
         Required?                    true  
-        Position?                    0  
+        Position?                    2  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
+    -Value <String>  
+        The data to be stored, associated with the specified key.  
         Required?                    false  
         Position?                    3  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -Value <string>  
-        Value to be stored  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope. Use "Local" for local-only storage.  
+        Defaults to "Local". Non-local values trigger store synchronization.  
         Required?                    false  
-        Position?                    2  
+        Position?                    4  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -WhatIf  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -WhatIf [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -Confirm [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6503,58 +6301,37 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
+### SYNOPSIS 
+    Synchronizes local and OneDrive key-value store JSON files.  
+
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <String>]
+    [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Performs two-way synchronization between local and OneDrive shadow JSON files using  
+    a last-modified timestamp strategy. Records are merged based on their last  
+    modification time, with newer versions taking precedence.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope for the operation. Using "Local" will skip  
+        synchronization as it indicates local-only records.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -7434,11 +7211,15 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 Get-SQLiteTransaction [-DatabaseFilePath] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLiteTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -7448,6 +7229,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -7467,6 +7257,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseFilePath  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -7729,6 +7528,8 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
     [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -7742,6 +7543,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file.  
         Required?                    false  
@@ -7749,6 +7559,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -7883,7 +7702,9 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+New-SQLiteDatabase [-DatabaseFilePath] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
     [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -7896,10 +7717,28 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
         Aliases                      cf  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file  
         Required?                    true  
         Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -8270,10 +8109,14 @@ Get-SQLServerTableSchema [-ConnectionString] <string>
 Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
     <string>] [-IsolationLevel {ReadCommitted |
     ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
+    Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLServerTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -8287,12 +8130,30 @@ Get-SQLServerTransaction [-ConnectionString] <string>
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -8598,7 +8459,9 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
     [[-Transaction] <Object>] [[-ConnectionString] <string>]
     [[-SqlParameters] <hashtable[]>] [-IsolationLevel
     {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+    Serializable | Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -8611,10 +8474,28 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    false  
         Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -8704,26 +8585,31 @@ Invoke-SSMS [<CommonParameters>]
 ### SYNTAX 
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
-    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
-New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
-    [-Confirm] [<CommonParameters>] 
+    <string>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -8736,6 +8622,15 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -Server <string>  
         The SQL Server instance name  
         Required?                    false  
@@ -8743,14 +8638,6 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -WhatIf  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -8774,20 +8661,10 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
 ### SYNTAX 
 ```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -DatabasePath <string>  
         Database path for key-value store data files  
         Required?                    false  
@@ -8795,24 +8672,6 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
@@ -8839,67 +8698,47 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
+### SYNOPSIS 
+    Retrieves all key names for a given key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
+    keys for a specified store. Can optionally filter by synchronization scope.  
+    Automatically initializes the directory structure if not found and handles  
+    synchronization for non-local stores.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Name of the store whose keys should be retrieved  
+    -StoreName <String>  
+        The name of the key-value store to query. This identifies the logical grouping  
+        of keys and values in the database.  
         Required?                    true  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope, defaults to all  
-        Required?                    false  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional scope identifier for synchronization. Use "Local" for local-only data.  
+        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
+        Required?                    false  
+        Position?                    2  
+        Default value                %  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Directory path for keyvalue database files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8916,85 +8755,106 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
+### SYNOPSIS 
+    Retrieves a value from a JSON-based key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-DefaultValue] <string>]
-    [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
+    <String> [[-DefaultValue] <String>]
+    [[-SynchronizationKey] <String>] [-DatabasePath
+    <String>] [<CommonParameters>] 
+```` 
+
+### DESCRIPTION 
+    Retrieves a value for a specified key from a JSON file-based key-value store.  
+    The function supports optional default values and synchronization across  
+    different scopes. It can use session-based settings or direct file access and  
+    provides automatic directory initialization and synchronization capabilities.  
+
+### PARAMETERS 
+    -StoreName <String>  
+        The name of the key-value store to query.  
+        Required?                    true  
+        Position?                    1  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -KeyName <String>  
+        The key whose value should be retrieved.  
+        Required?                    true  
+        Position?                    2  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DefaultValue <String>  
+        Optional default value to return if the key is not found.  
+        Required?                    false  
+        Position?                    3  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional key to identify synchronization scope. Defaults to "Local".  
+        Required?                    false  
+        Position?                    4  
+        Default value                Local  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	GetStoreFilePath 
+```PowerShell 
+
+   GetStoreFilePath  
+```` 
+
+### SYNTAX 
+```PowerShell 
+GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePath] <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DefaultValue <string>  
-        A optional default value  
+    -BasePath <string>  
         Required?                    false  
         Position?                    2  
         Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Key to retrieve from the specified store  
-        Required?                    true  
-        Position?                    1  
-        Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
-        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    0  
+        Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    3  
+        Required?                    true  
+        Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -9013,49 +8873,29 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
    Initialize-KeyValueStores  
 ```` 
 
+### SYNOPSIS 
+    Initializes KeyValueStore directory structure for local and OneDrive storage.  
+
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>]
-    [-SessionOnly] [-ClearSession] [-SkipSession]
+Initialize-KeyValueStores [[-DatabasePath] <String>]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Creates directory structure for JSON-based key-value stores in two locations:  
+    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
+    2. OneDrive folder for cloud synchronization  
+    The function ensures both directories exist and are properly configured.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -DatabasePath <String>  
+        Base directory path for key-value store JSON files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9075,21 +8915,11 @@ Initialize-KeyValueStores [[-DatabasePath] <string>]
 ### SYNTAX 
 ```PowerShell 
 Remove-KeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
-    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string> [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -9114,24 +8944,6 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -9179,20 +8991,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
 ```PowerShell 
 Remove-KeyValueStore [-StoreName] <string>
     [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -9208,24 +9010,6 @@ Remove-KeyValueStore [-StoreName] <string>
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -9269,103 +9053,79 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
+### SYNOPSIS 
+    Manages key-value pairs in a JSON file-based store.  
+
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
-    <string> [[-Value] <string>] [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
+    <String> [[-Value] <String>] [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Provides persistent storage for key-value pairs using JSON files. Handles both  
+    insertion of new entries and updates to existing ones. Supports optional  
+    synchronization for non-local stores. This function implements an upsert  
+    operation that either inserts new key-value pairs or updates existing ones  
+    based on the combination of synchronization key, store name, and key name.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Name of the key to set or update  
+    -StoreName <String>  
+        The name of the store where the key-value pair will be saved.  
         Required?                    true  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Store name for the key-value pair  
+    -KeyName <String>  
+        The unique identifier for the value within the specified store.  
         Required?                    true  
-        Position?                    0  
+        Position?                    2  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
+    -Value <String>  
+        The data to be stored, associated with the specified key.  
         Required?                    false  
         Position?                    3  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -Value <string>  
-        Value to be stored  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope. Use "Local" for local-only storage.  
+        Defaults to "Local". Non-local values trigger store synchronization.  
         Required?                    false  
-        Position?                    2  
+        Position?                    4  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -WhatIf  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -WhatIf [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -Confirm [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9382,58 +9142,37 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
+### SYNOPSIS 
+    Synchronizes local and OneDrive key-value store JSON files.  
+
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <String>]
+    [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Performs two-way synchronization between local and OneDrive shadow JSON files using  
+    a last-modified timestamp strategy. Records are merged based on their last  
+    modification time, with newer versions taking precedence.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope for the operation. Using "Local" will skip  
+        synchronization as it indicates local-only records.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -10313,11 +10052,15 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 Get-SQLiteTransaction [-DatabaseFilePath] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLiteTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -10327,6 +10070,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -10346,6 +10098,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseFilePath  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -10608,6 +10369,8 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
     [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -10621,6 +10384,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file.  
         Required?                    false  
@@ -10628,6 +10400,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -10762,7 +10543,9 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+New-SQLiteDatabase [-DatabaseFilePath] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
     [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -10775,10 +10558,28 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
         Aliases                      cf  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file  
         Required?                    true  
         Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -11149,10 +10950,14 @@ Get-SQLServerTableSchema [-ConnectionString] <string>
 Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
     <string>] [-IsolationLevel {ReadCommitted |
     ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
+    Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLServerTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -11166,12 +10971,30 @@ Get-SQLServerTransaction [-ConnectionString] <string>
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -11477,7 +11300,9 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
     [[-Transaction] <Object>] [[-ConnectionString] <string>]
     [[-SqlParameters] <hashtable[]>] [-IsolationLevel
     {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+    Serializable | Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -11490,10 +11315,28 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    false  
         Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -11583,26 +11426,31 @@ Invoke-SSMS [<CommonParameters>]
 ### SYNTAX 
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
-    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
-New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
-    [-Confirm] [<CommonParameters>] 
+    <string>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -11615,6 +11463,15 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -Server <string>  
         The SQL Server instance name  
         Required?                    false  
@@ -11622,14 +11479,6 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -WhatIf  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -11653,20 +11502,10 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
 ### SYNTAX 
 ```PowerShell 
 Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -DatabasePath <string>  
         Database path for key-value store data files  
         Required?                    false  
@@ -11674,24 +11513,6 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
@@ -11718,67 +11539,47 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
+### SYNOPSIS 
+    Retrieves all key names for a given key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
+    keys for a specified store. Can optionally filter by synchronization scope.  
+    Automatically initializes the directory structure if not found and handles  
+    synchronization for non-local stores.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Name of the store whose keys should be retrieved  
+    -StoreName <String>  
+        The name of the key-value store to query. This identifies the logical grouping  
+        of keys and values in the database.  
         Required?                    true  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope, defaults to all  
-        Required?                    false  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional scope identifier for synchronization. Use "Local" for local-only data.  
+        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
+        Required?                    false  
+        Position?                    2  
+        Default value                %  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Directory path for keyvalue database files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11795,85 +11596,106 @@ Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
+### SYNOPSIS 
+    Retrieves a value from a JSON-based key-value store.  
+
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-DefaultValue] <string>]
-    [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
+    <String> [[-DefaultValue] <String>]
+    [[-SynchronizationKey] <String>] [-DatabasePath
+    <String>] [<CommonParameters>] 
+```` 
+
+### DESCRIPTION 
+    Retrieves a value for a specified key from a JSON file-based key-value store.  
+    The function supports optional default values and synchronization across  
+    different scopes. It can use session-based settings or direct file access and  
+    provides automatic directory initialization and synchronization capabilities.  
+
+### PARAMETERS 
+    -StoreName <String>  
+        The name of the key-value store to query.  
+        Required?                    true  
+        Position?                    1  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -KeyName <String>  
+        The key whose value should be retrieved.  
+        Required?                    true  
+        Position?                    2  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DefaultValue <String>  
+        Optional default value to return if the key is not found.  
+        Required?                    false  
+        Position?                    3  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -SynchronizationKey <String>  
+        Optional key to identify synchronization scope. Defaults to "Local".  
+        Required?                    false  
+        Position?                    4  
+        Default value                Local  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    <CommonParameters>  
+        This cmdlet supports the common parameters: Verbose, Debug,  
+        ErrorAction, ErrorVariable, WarningAction, WarningVariable,  
+        OutBuffer, PipelineVariable, and OutVariable. For more information, see  
+        about_CommonParameters     (https://go.microsoft.com/fwlink/?LinkID=113216).   
+
+<br/><hr/><br/>
+ 
+
+##	GetStoreFilePath 
+```PowerShell 
+
+   GetStoreFilePath  
+```` 
+
+### SYNTAX 
+```PowerShell 
+GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePath] <string>] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DefaultValue <string>  
-        A optional default value  
+    -BasePath <string>  
         Required?                    false  
         Position?                    2  
         Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Key to retrieve from the specified store  
-        Required?                    true  
-        Position?                    1  
-        Accept pipeline input?       false  
-        Parameter set name           Default  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
-        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    0  
+        Position?                    1  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    3  
+        Required?                    true  
+        Position?                    0  
         Accept pipeline input?       false  
-        Parameter set name           Default  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -11892,49 +11714,29 @@ Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
    Initialize-KeyValueStores  
 ```` 
 
+### SYNOPSIS 
+    Initializes KeyValueStore directory structure for local and OneDrive storage.  
+
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <string>]
-    [-SessionOnly] [-ClearSession] [-SkipSession]
+Initialize-KeyValueStores [[-DatabasePath] <String>]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Creates directory structure for JSON-based key-value stores in two locations:  
+    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
+    2. OneDrive folder for cloud synchronization  
+    The function ensures both directories exist and are properly configured.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -DatabasePath <String>  
+        Base directory path for key-value store JSON files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11954,21 +11756,11 @@ Initialize-KeyValueStores [[-DatabasePath] <string>]
 ### SYNTAX 
 ```PowerShell 
 Remove-KeyFromStore [-StoreName] <string> [-KeyName]
-    <string> [[-SynchronizationKey] <string>] [-SessionOnly]
-    [-ClearSession] [-DatabasePath <string>] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string> [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -11993,24 +11785,6 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -12058,20 +11832,10 @@ Remove-KeyFromStore [-StoreName] <string> [-KeyName]
 ```PowerShell 
 Remove-KeyValueStore [-StoreName] <string>
     [[-SynchronizationKey] <string>] [-DatabasePath
-    <string>] [-SessionOnly] [-ClearSession] [-SkipSession]
-    [-WhatIf] [-Confirm] [<CommonParameters>] 
+    <string>] [-WhatIf] [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -Confirm  
         Required?                    false  
         Position?                    Named  
@@ -12087,24 +11851,6 @@ Remove-KeyValueStore [-StoreName] <string>
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -StoreName <string>  
@@ -12148,103 +11894,79 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
+### SYNOPSIS 
+    Manages key-value pairs in a JSON file-based store.  
+
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
-    <string> [[-Value] <string>] [[-SynchronizationKey]
-    <string>] [-DatabasePath <string>] [-SessionOnly]
-    [-ClearSession] [-SkipSession] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
+    <String> [[-Value] <String>] [[-SynchronizationKey]
+    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Provides persistent storage for key-value pairs using JSON files. Handles both  
+    insertion of new entries and updates to existing ones. Supports optional  
+    synchronization for non-local stores. This function implements an upsert  
+    operation that either inserts new key-value pairs or updates existing ones  
+    based on the combination of synchronization key, store name, and key name.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -KeyName <string>  
-        Name of the key to set or update  
+    -StoreName <String>  
+        The name of the store where the key-value pair will be saved.  
         Required?                    true  
         Position?                    1  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -StoreName <string>  
-        Store name for the key-value pair  
+    -KeyName <String>  
+        The unique identifier for the value within the specified store.  
         Required?                    true  
-        Position?                    0  
+        Position?                    2  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
+    -Value <String>  
+        The data to be stored, associated with the specified key.  
         Required?                    false  
         Position?                    3  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -Value <string>  
-        Value to be stored  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope. Use "Local" for local-only storage.  
+        Defaults to "Local". Non-local values trigger store synchronization.  
         Required?                    false  
-        Position?                    2  
+        Position?                    4  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -WhatIf  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
-        Dynamic?                     false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -WhatIf [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
+        Accept wildcard characters?  false  
+    -Confirm [<SwitchParameter>]  
+        Required?                    false  
+        Position?                    named  
+        Default value                  
+        Accept pipeline input?       false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -12261,58 +11983,37 @@ Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
+### SYNOPSIS 
+    Synchronizes local and OneDrive key-value store JSON files.  
+
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <string>]
-    [-DatabasePath <string>] [-SessionOnly] [-ClearSession]
-    [-SkipSession] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <String>]
+    [-DatabasePath <String>] [<CommonParameters>] 
 ```` 
 
+### DESCRIPTION 
+    Performs two-way synchronization between local and OneDrive shadow JSON files using  
+    a last-modified timestamp strategy. Records are merged based on their last  
+    modification time, with newer versions taking precedence.  
+
 ### PARAMETERS 
-    -ClearSession  
-        Clear the session setting (Global variable) before retrieving  
+    -SynchronizationKey <String>  
+        Identifies the synchronization scope for the operation. Using "Local" will skip  
+        synchronization as it indicates local-only records.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    1  
+        Default value                Local  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
-    -DatabasePath <string>  
-        Database path for key-value store data files  
+    -DatabasePath <String>  
+        Database path for key-value store data files.  
         Required?                    false  
-        Position?                    Named  
+        Position?                    named  
+        Default value                  
         Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SessionOnly  
-        Use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SkipSession  
-        Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      FromPreferences  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -SynchronizationKey <string>  
-        Key to identify synchronization scope  
-        Required?                    false  
-        Position?                    0  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      None  
-        Dynamic?                     false  
+        Aliases                        
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -13192,11 +12893,15 @@ Get-SQLiteTableSchema [-DatabaseFilePath] <string>
 Get-SQLiteTransaction [-DatabaseFilePath] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>]
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLiteTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
-    [-CreateDatabaseIfNotExists <bool>] [<CommonParameters>] 
+    [-CreateDatabaseIfNotExists <bool>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -13206,6 +12911,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -13225,6 +12939,15 @@ Get-SQLiteTransaction [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseFilePath  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -13487,6 +13210,8 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
     [-Queries] <string[]> [[-SqlParameters] <hashtable[]>]
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -13500,6 +13225,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file.  
         Required?                    false  
@@ -13507,6 +13241,15 @@ Invoke-SQLiteQuery [[-ConnectionString] <string>]
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      dbpath, indexpath  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     -IsolationLevel <string>  
@@ -13641,7 +13384,9 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
+New-SQLiteDatabase [-DatabaseFilePath] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
     [-Confirm] [<CommonParameters>] 
 ```` 
 
@@ -13654,10 +13399,28 @@ New-SQLiteDatabase [-DatabaseFilePath] <string> [-WhatIf]
         Aliases                      cf  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQLite package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseFilePath <string>  
         The path to the SQLite database file  
         Required?                    true  
         Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQLite package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -14028,10 +13791,14 @@ Get-SQLServerTableSchema [-ConnectionString] <string>
 Get-SQLServerTransaction [-DatabaseName] <string> [[-Server]
     <string>] [-IsolationLevel {ReadCommitted |
     ReadUncommitted | RepeatableRead | Serializable |
-    Snapshot | Chaos}] [<CommonParameters>]
+    Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
 Get-SQLServerTransaction [-ConnectionString] <string>
     [-IsolationLevel {ReadCommitted | ReadUncommitted |
     RepeatableRead | Serializable | Snapshot | Chaos}]
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
     [<CommonParameters>] 
 ```` 
 
@@ -14045,12 +13812,30 @@ Get-SQLServerTransaction [-ConnectionString] <string>
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -14356,7 +14141,9 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
     [[-Transaction] <Object>] [[-ConnectionString] <string>]
     [[-SqlParameters] <hashtable[]>] [-IsolationLevel
     {ReadCommitted | ReadUncommitted | RepeatableRead |
-    Serializable | Snapshot | Chaos}] [<CommonParameters>] 
+    Serializable | Snapshot | Chaos}] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
@@ -14369,10 +14156,28 @@ Invoke-SQLServerQuery [[-Queries] <string[]>]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -DatabaseName <string>  
         The name of the SQL Server database.  
         Required?                    false  
         Position?                    1  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
         Accept pipeline input?       false  
         Parameter set name           (All)  
         Aliases                      None  
@@ -14462,26 +14267,31 @@ Invoke-SSMS [<CommonParameters>]
 ### SYNTAX 
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
-    <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
-New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
-    [-Confirm] [<CommonParameters>] 
+    <string>] [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>]
+New-SQLServerDatabase [-ConnectionString] <string>
+    [-ForceConsent]
+    [-ConsentToThirdPartySoftwareInstallation]
+    [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
-    -Confirm  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      cf  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
         Position?                    0  
         Accept pipeline input?       false  
         Parameter set name           ConnectionString  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -ConsentToThirdPartySoftwareInstallation  
+        Automatically consent to third-party software installation and set persistent flag for SQL Server package.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
@@ -14494,6 +14304,15 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Aliases                      None  
         Dynamic?                     false  
         Accept wildcard characters?  false  
+    -ForceConsent  
+        Force a consent prompt even if preference is set for SQL Server package installation.  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -Server <string>  
         The SQL Server instance name  
         Required?                    false  
@@ -14501,14 +14320,6 @@ New-SQLServerDatabase [-ConnectionString] <string> [-WhatIf]
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
-        Dynamic?                     false  
-        Accept wildcard characters?  false  
-    -WhatIf  
-        Required?                    false  
-        Position?                    Named  
-        Accept pipeline input?       false  
-        Parameter set name           (All)  
-        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  

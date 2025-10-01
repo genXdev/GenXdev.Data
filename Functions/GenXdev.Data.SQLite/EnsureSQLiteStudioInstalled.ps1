@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SQLite
 Original cmdlet filename  : EnsureSQLiteStudioInstalled.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -68,6 +68,18 @@ function EnsureSQLiteStudioInstalled {
         #>
         function InstallWinGet {
 
+            # Request consent before installing WinGet PowerShell client
+            $consent = GenXdev.FileSystem\Confirm-InstallationConsent `
+                -ApplicationName 'Microsoft.WinGet.Client' `
+                -Source 'PowerShell Gallery' `
+                -Description 'PowerShell module required for package management operations' `
+                -Publisher 'Microsoft'
+
+            if (-not $consent) {
+                Microsoft.PowerShell.Utility\Write-Error 'Installation consent denied for Microsoft.WinGet.Client module.'
+                return
+            }
+
             Microsoft.PowerShell.Utility\Write-Verbose 'Installing WinGet PowerShell client...'
             PowerShellGet\Install-Module 'Microsoft.WinGet.Client' -Force -AllowClobber
             Microsoft.PowerShell.Core\Import-Module 'Microsoft.WinGet.Client'
@@ -108,6 +120,18 @@ function EnsureSQLiteStudioInstalled {
             }
 
             Microsoft.PowerShell.Utility\Write-Host 'SQLiteStudio not found. Installing SQLiteStudio...'
+
+            # Request consent before installing SQLiteStudio
+            $consent = GenXdev.FileSystem\Confirm-InstallationConsent `
+                -ApplicationName 'SQLiteStudio' `
+                -Source 'Winget' `
+                -Description 'Database management tool required for SQLite operations' `
+                -Publisher 'Pawel Salawa'
+
+            if (-not $consent) {
+                Microsoft.PowerShell.Utility\Write-Error 'Installation consent denied for SQLiteStudio. SQLite operations may not be available.'
+                return
+            }
 
             # ensure winget package manager is available
             if (-not (IsWinGetInstalled)) {

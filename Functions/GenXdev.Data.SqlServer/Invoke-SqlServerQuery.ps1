@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : Invoke-SqlServerQuery.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -63,6 +63,14 @@ Optional parameters for the queries as hashtables. Format: @{"param"="value"}
 Transaction isolation level. Defaults to ReadCommitted. Only used when creating
 an internal transaction.
 
+.PARAMETER ForceConsent
+Force a consent prompt even if a preference is already set for SQL Server package
+installation, overriding any saved consent preferences.
+
+.PARAMETER ConsentToThirdPartySoftwareInstallation
+Automatically consent to third-party software installation and set a persistent
+preference flag for SQL Server package, bypassing interactive consent prompts.
+
 .EXAMPLE
 Invoke-SQLServerQuery -Server "localhost" -DatabaseName "MyDB" -Queries "SELECT * FROM Users"
 
@@ -82,6 +90,9 @@ try {
 } finally {
     $tx.Connection.Close()
 }
+
+.EXAMPLE
+Invoke-SQLServerQuery -Server "localhost" -DatabaseName "MyDB" -Queries "SELECT * FROM Users" -ConsentToThirdPartySoftwareInstallation
 #>
 function Invoke-SQLServerQuery {
 
@@ -149,13 +160,39 @@ function Invoke-SQLServerQuery {
             HelpMessage = 'The isolation level to use. default is ReadCommitted.'
         )]
         [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
-        [string]$IsolationLevel = "ReadCommitted"
+        [string]$IsolationLevel = "ReadCommitted",
+
+        ###########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Force a consent prompt even if preference is set for SQL Server package installation.'
+        )]
+        [switch] $ForceConsent,
+
+        ###########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Automatically consent to third-party software installation and set persistent flag for SQL Server package.'
+        )]
+        [switch] $ConsentToThirdPartySoftwareInstallation
     )
 
     begin {
-        # Use System.Data.SqlClient only - what works on this system
-        $script:SqlClientLibrary = 'System.Data.SqlClient'
-        GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
+        # load SQL Server client assembly with embedded consent using Copy-IdenticalParamValues
+        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
+            -DefaultValues (
+            Microsoft.PowerShell.Utility\Get-Variable -Scope Local `
+                -ErrorAction SilentlyContinue
+        )
+
+        # Set specific parameters for SQL Server package
+        $ensureParams['PackageKey'] = 'System.Data.SqlClient'
+        $ensureParams['Description'] = 'SQL Server client library required for database operations'
+        $ensureParams['Publisher'] = 'Microsoft'
+
+        GenXdev.Helpers\EnsureNuGetAssembly @ensureParams
         Microsoft.PowerShell.Utility\Add-Type -AssemblyName System.Data.SqlClient
 
         # determine connection source priority: Transaction > ConnectionString > DatabaseName+Server
@@ -184,10 +221,10 @@ function Invoke-SQLServerQuery {
         try {
             # establish database connection and transaction if not using external
             if (-not $isExternalTransaction) {
-                $connectionClass = "$script:SqlClientLibrary.SqlConnection"
+                $connectionClass = "System.Data.SqlClient.SqlConnection"
                 $connection = Microsoft.PowerShell.Utility\New-Object $connectionClass($connString)
                 $connection.Open()
-                Microsoft.PowerShell.Utility\Write-Verbose "Successfully connected using $script:SqlClientLibrary"
+                Microsoft.PowerShell.Utility\Write-Verbose "Successfully connected using System.Data.SqlClient"
 
                 # begin transaction with specified isolation
                 $transaction = $connection.BeginTransaction($IsolationLevel)

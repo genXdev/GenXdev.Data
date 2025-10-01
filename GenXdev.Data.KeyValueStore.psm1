@@ -15,6 +15,7 @@ if ($major -ne 10) {
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Get-StoreKeys.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Get-ValueByKeyFromStore.ps1"
+. "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\GetStoreFilePath.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Initialize-KeyValueStores.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.ps1"
 . "$PSScriptRoot\Functions\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.ps1"

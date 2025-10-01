@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : Get-SQLServerTransaction.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -51,6 +51,14 @@ Transaction isolation level. Defaults to ReadCommitted.
 .PARAMETER CreateDatabaseIfNotExists
 Whether to create the database file if it doesn't exist. Defaults to true.
 
+.PARAMETER ForceConsent
+Force a consent prompt even if a preference is already set for SQL Server package
+installation, overriding any saved consent preferences.
+
+.PARAMETER ConsentToThirdPartySoftwareInstallation
+Automatically consent to third-party software installation and set a persistent
+preference flag for SQL Server package, bypassing interactive consent prompts.
+
 .EXAMPLE
 $transaction = Get-SQLServerTransaction -Server "localhost" -DatabaseName "MyDatabase"
 try {
@@ -66,6 +74,9 @@ try {
 
 .EXAMPLE
 $transaction = Get-SQLServerTransaction -ConnectionString "Server=localhost;Database=MyDB;Integrated Security=true"
+
+.EXAMPLE
+$transaction = Get-SQLServerTransaction -Server "localhost" -DatabaseName "MyDatabase" -ConsentToThirdPartySoftwareInstallation
 #>
 function Get-SQLServerTransaction {
 
@@ -106,26 +117,40 @@ function Get-SQLServerTransaction {
             HelpMessage = 'Transaction isolation level.'
         )]
         [ValidateSet('ReadCommitted', 'ReadUncommitted', 'RepeatableRead', 'Serializable', 'Snapshot', 'Chaos')]
-        [string]$IsolationLevel = "ReadCommitted"
+        [string]$IsolationLevel = "ReadCommitted",
+
+        ###########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Force a consent prompt even if preference is set for SQL Server package installation.'
+        )]
+        [switch] $ForceConsent,
+
+        ###########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Automatically consent to third-party software installation and set persistent flag for SQL Server package.'
+        )]
+        [switch] $ConsentToThirdPartySoftwareInstallation
         ###########################################################################
     )
 
     begin {
-        # load SQL Server client assembly - prefer Microsoft.Data.SqlClient, fallback to System.Data.SqlClient
-        try {
-            GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'Microsoft.Data.SqlClient'
-            $sqlClientType = 'Microsoft.Data.SqlClient'
-        }
-        catch {
-            try {
-                GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
-                $sqlClientType = 'System.Data.SqlClient'
-            }
-            catch {
-                # Fallback to built-in System.Data.SqlClient (older .NET Framework)
-                $sqlClientType = 'System.Data.SqlClient'
-            }
-        }
+        # load SQL Server client assembly with embedded consent using Copy-IdenticalParamValues
+        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
+            -DefaultValues (
+            Microsoft.PowerShell.Utility\Get-Variable -Scope Local `
+                -ErrorAction SilentlyContinue
+        )
+
+        # Set specific parameters for SQL Server package
+        $ensureParams['PackageKey'] = 'System.Data.SqlClient'
+        $ensureParams['Description'] = 'SQL Server client library required for database operations'
+        $ensureParams['Publisher'] = 'Microsoft'
+
+        GenXdev.Helpers\EnsureNuGetAssembly @ensureParams
 
         # initialize connection string from parameters
         if ($PSCmdlet.ParameterSetName -eq 'DatabaseName') {
@@ -141,7 +166,7 @@ function Get-SQLServerTransaction {
     process {
         try {
             # establish database connection
-            $connectionClass = "$sqlClientType.SqlConnection"
+            $connectionClass = "System.Data.SqlClient.SqlConnection"
             $connection = Microsoft.PowerShell.Utility\New-Object $connectionClass($connString)
             $connection.Open()
             Microsoft.PowerShell.Utility\Write-Verbose 'SQL Server connection opened successfully'

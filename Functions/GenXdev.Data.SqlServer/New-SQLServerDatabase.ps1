@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : New-SQLServerDatabase.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -45,6 +45,14 @@ The SQL Server instance name where the database should be created. Defaults to '
 .PARAMETER ConnectionString
 Alternative connection string to use instead of Server parameter. Should connect to master database or have appropriate permissions.
 
+.PARAMETER ForceConsent
+Force a consent prompt even if a preference is already set for SQL Server package
+installation, overriding any saved consent preferences.
+
+.PARAMETER ConsentToThirdPartySoftwareInstallation
+Automatically consent to third-party software installation and set a persistent
+preference flag for SQL Server package, bypassing interactive consent prompts.
+
 .EXAMPLE
 New-SQLServerDatabase -DatabaseName "MyNewDatabase" -Server "localhost"
 
@@ -53,10 +61,13 @@ New-SQLServerDatabase "MyNewDatabase"
 
 .EXAMPLE
 New-SQLServerDatabase -DatabaseName "MyNewDatabase" -ConnectionString "Server=localhost;Database=master;Integrated Security=true"
+
+.EXAMPLE
+New-SQLServerDatabase -DatabaseName "MyNewDatabase" -Server "localhost" -ConsentToThirdPartySoftwareInstallation
 #>
 function New-SQLServerDatabase {
 
-    [CmdletBinding(SupportsShouldProcess = $true)]
+    [CmdletBinding()]
     [Alias('nsqldb')]
 
     param (
@@ -69,7 +80,6 @@ function New-SQLServerDatabase {
         )]
         [ValidateNotNullOrEmpty()]
         [string]$DatabaseName,
-
         ########################################################################
         [Parameter(
             Position = 1,
@@ -77,7 +87,6 @@ function New-SQLServerDatabase {
             HelpMessage = 'The SQL Server instance name'
         )]
         [string]$Server = '.',
-
         ########################################################################
         [Parameter(
             Mandatory = $true,
@@ -85,26 +94,41 @@ function New-SQLServerDatabase {
             ParameterSetName = 'ConnectionString',
             HelpMessage = 'The connection string to connect to SQL Server'
         )]
-        [string]$ConnectionString
+        [string]$ConnectionString,
+
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Force a consent prompt even if preference is set for SQL Server package installation.'
+        )]
+        [switch] $ForceConsent,
+
+        ########################################################################
+        [Parameter(
+            Mandatory = $false,
+            HelpMessage = 'Automatically consent to third-party software installation and set persistent flag for SQL Server package.'
+        )]
+        [switch] $ConsentToThirdPartySoftwareInstallation
         ########################################################################
     )
 
     begin {
-        # load SQL Server client assembly - prefer Microsoft.Data.SqlClient, fallback to System.Data.SqlClient
-        try {
-            GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'Microsoft.Data.SqlClient'
-            $sqlClientType = 'Microsoft.Data.SqlClient'
-        }
-        catch {
-            try {
-                GenXdev.Helpers\EnsureNuGetAssembly -PackageKey 'System.Data.SqlClient'
-                $sqlClientType = 'System.Data.SqlClient'
-            }
-            catch {
-                # Fallback to built-in System.Data.SqlClient (older .NET Framework)
-                $sqlClientType = 'System.Data.SqlClient'
-            }
-        }
+        # load SQL Server client assembly with embedded consent using Copy-IdenticalParamValues
+        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            -BoundParameters $PSBoundParameters `
+            -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
+            -DefaultValues (
+            Microsoft.PowerShell.Utility\Get-Variable -Scope Local `
+                -ErrorAction SilentlyContinue
+        )
+
+        # Set specific parameters for SQL Server package
+        $ensureParams['PackageKey'] = 'System.Data.SqlClient'
+        $ensureParams['Description'] = 'SQL Server client library required for database operations'
+        $ensureParams['Publisher'] = 'Microsoft'
+
+        GenXdev.Helpers\EnsureNuGetAssembly @ensureParams
+
 
         # prepare connection string
         if ($PSCmdlet.ParameterSetName -eq 'DatabaseName') {

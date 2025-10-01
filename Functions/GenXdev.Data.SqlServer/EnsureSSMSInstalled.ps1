@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : EnsureSSMSInstalled.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
+Version                   : 1.290.2025
 ################################################################################
 MIT License
 
@@ -68,6 +68,16 @@ function EnsureSSMSInstalled {
         #>
         function InstallWinGet {
 
+            $consent = GenXdev.FileSystem\Confirm-InstallationConsent `
+                -ApplicationName 'Microsoft.WinGet.Client' `
+                -Source 'PowerShell Gallery' `
+                -Description 'Required for installing SQL Server Management Studio' `
+                -Publisher 'Microsoft'
+
+            if (-not $consent) {
+                throw "Installation consent denied for Microsoft.WinGet.Client module. Cannot proceed with SSMS installation."
+            }
+
             Microsoft.PowerShell.Utility\Write-Verbose 'Installing WinGet PowerShell client...'
             PowerShellGet\Install-Module 'Microsoft.WinGet.Client' -Force -AllowClobber
             Microsoft.PowerShell.Core\Import-Module 'Microsoft.WinGet.Client'
@@ -84,6 +94,16 @@ function EnsureSSMSInstalled {
             if (-not (IsWinGetInstalled)) {
 
                 InstallWinGet
+            }
+
+            $consent = GenXdev.FileSystem\Confirm-InstallationConsent `
+                -ApplicationName 'SQL Server Management Studio 22 Preview' `
+                -Source 'Winget' `
+                -Description 'Required for SQL Server database management and administration' `
+                -Publisher 'Microsoft'
+
+            if (-not $consent) {
+                throw "Installation consent denied for SQL Server Management Studio. Cannot proceed with SSMS installation."
             }
 
             Microsoft.WinGet.Client\Install-WinGetPackage -Id "Microsoft SQL Server Management Studio 22 Preview"

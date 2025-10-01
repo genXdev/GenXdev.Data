@@ -1,63 +1,22 @@
-<##############################################################################
-Part of PowerShell module : GenXdev.Data.KeyValueStore
-Original cmdlet filename  : Initialize-KeyValueStores.ps1
-Original author           : René Vaessen / GenXdev
-Version                   : 1.288.2025
-################################################################################
-MIT License
-
-Copyright 2021-2025 GenXdev
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-################################################################################>
 ###############################################################################
 <#
 .SYNOPSIS
-Initializes and synchronizes KeyValueStore databases between local and OneDrive.
+Initializes KeyValueStore directory structure for local and OneDrive storage.
 
 .DESCRIPTION
-Creates SQLite databases with required schema in two locations if they don't
-exist:
-1. Local machine for immediate access
+Creates directory structure for JSON-based key-value stores in two locations:
+1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)
 2. OneDrive folder for cloud synchronization
-The function ensures both databases have identical schema with synchronization
-support.
-
-.PARAMETER SessionOnly
-Use alternative settings stored in session for Data preferences like Language,
-Database paths, etc.
-
-.PARAMETER ClearSession
-Clear the session setting (Global variable) before retrieving.
+The function ensures both directories exist and are properly configured.
 
 .PARAMETER DatabasePath
-Database path for key-value store data files.
-
-.PARAMETER SkipSession
-Dont use alternative settings stored in session for Data preferences like
-Language, Database paths, etc.
+Base directory path for key-value store JSON files.
 
 .EXAMPLE
-Initialize-KeyValueStores -SessionOnly -ClearSession -DatabasePath "C:\MyDb.db"
+Initialize-KeyValueStores -DatabasePath "C:\MyStores"
 
 .EXAMPLE
-Initialize-KeyValueStores -SkipSession
+Initialize-KeyValueStores
 #>
 function Initialize-KeyValueStores {
 
@@ -68,103 +27,67 @@ function Initialize-KeyValueStores {
         ###############################################################################
         [Parameter(
             Mandatory = $false,
-            HelpMessage = 'Use alternative settings stored in session for Data preferences like Language, Database paths, etc'
-        )]
-        [switch] $SessionOnly,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Clear the session setting (Global variable) before retrieving'
-        )]
-        [switch] $ClearSession,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
             HelpMessage = 'Database path for key-value store data files'
         )]
-        [string] $DatabasePath,
-        ###############################################################################
-        [Parameter(
-            Mandatory = $false,
-            HelpMessage = 'Dont use alternative settings stored in session for Data preferences like Language, Database paths, etc'
-        )]
-        [Alias('FromPreferences')]
-        [switch] $SkipSession
+        [string] $DatabasePath
         ###############################################################################
     )
 
     begin {
 
-        # use provided database path or default to local app data
+        # use provided base path or default to local app data
         if ([string]::IsNullOrWhiteSpace($DatabasePath)) {
 
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path `
-            ("$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\" +
-                'KeyValueStores.sqlite.db') `
+            $basePath = GenXdev.FileSystem\Expand-Path `
+                "$($ENV:LOCALAPPDATA)\GenXdev.PowerShell\KeyValueStore" `
                 -CreateDirectory
         }
         else {
 
-            $databaseFilePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
+            $basePath = GenXdev.FileSystem\Expand-Path $DatabasePath `
                 -CreateDirectory
         }
 
-        # output verbose message showing selected database path
+        # output verbose message showing selected base path
         Microsoft.PowerShell.Utility\Write-Verbose `
-            "Using database at: $databaseFilePath"
+            "Using KeyValueStore directory: $basePath"
 
-        # determine the path for onedrive synchronized database
-        $shadowDbPath = GenXdev.FileSystem\Expand-Path `
-        ('~\Onedrive\GenXdev.PowerShell.SyncObjects\' +
-            'KeyValueStores.sqlite.db') `
+        # determine the path for onedrive synchronized store directory
+        $shadowPath = GenXdev.FileSystem\Expand-Path `
+            '~\Onedrive\GenXdev.PowerShell.SyncObjects\KeyValueStore' `
             -CreateDirectory
 
-        # extract the directory path for the shadow database
-        $shadowPath = [System.IO.Path]::GetDirectoryName($shadowDbPath)
-
-        # make the onedrive sync folder hidden to prevent user interference
-        $folder = [System.IO.DirectoryInfo]::new($shadowPath)
-
-        $folder.Attributes = $folder.Attributes -bor `
-            [System.IO.FileAttributes]::Hidden
+        # output verbose message for shadow path
+        Microsoft.PowerShell.Utility\Write-Verbose `
+            "Using OneDrive sync directory: $shadowPath"
     }
 
 
     process {
 
-        # iterate through both database paths to ensure they exist
-        foreach ($dbPath in @($databaseFilePath, $shadowDbPath)) {
+        # iterate through both directory paths to ensure they exist
+        foreach ($storePath in @($basePath, $shadowPath)) {
 
-            # create database if it doesn't exist
-            if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $dbPath)) {
+            # create directory if it doesn't exist
+            if (-not (Microsoft.PowerShell.Management\Test-Path -LiteralPath $storePath)) {
 
-                # output verbose message about database creation
+                # output verbose message about directory creation
                 Microsoft.PowerShell.Utility\Write-Verbose `
-                    "Creating KeyValueStore database at: $dbPath"
+                    "Creating KeyValueStore directory at: $storePath"
 
-                # create new sqlite database file
-                $null = GenXdev.Data\New-SQLiteDatabase -DatabaseFilePath $dbPath
+                # create directory structure
+                $null = GenXdev.FileSystem\Expand-Path $storePath `
+                    -CreateDirectory
+            }
 
-                # create table schema with synchronization support columns
-                $sqlCreateTable = @'
-CREATE TABLE IF NOT EXISTS KeyValueStore (
-    synchronizationKey TEXT NOT NULL DEFAULT 'Local',
-    storeName TEXT NOT NULL,
-    keyName TEXT NOT NULL,
-    value TEXT,
-    lastModified DATETIME DEFAULT CURRENT_TIMESTAMP,
-    deletedDate DATETIME,
-    lastModifiedBy TEXT,
-    PRIMARY KEY (synchronizationKey, storeName, keyName)
-);
-CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
-    ON KeyValueStore (synchronizationKey, storeName, keyName);
-'@
-
-                # execute table creation sql against the database
-                $null = GenXdev.Data\Invoke-SQLiteQuery `
-                    -DatabaseFilePath $dbPath `
-                    -Queries $sqlCreateTable
+            # make the onedrive sync folder hidden to prevent user interference
+            if ($storePath -eq $shadowPath) {
+                # ensure directory exists before setting attributes
+                if (Microsoft.PowerShell.Management\Test-Path -LiteralPath $storePath) {
+                    $folder = [System.IO.DirectoryInfo]::new($storePath)
+                    $folder.Attributes = $folder.Attributes -bor `
+                        [System.IO.FileAttributes]::Hidden
+                }
             }
         }
     }
@@ -172,4 +95,3 @@ CREATE UNIQUE INDEX IF NOT EXISTS idx_KeyValueStore
     end {
     }
 }
-###############################################################################
