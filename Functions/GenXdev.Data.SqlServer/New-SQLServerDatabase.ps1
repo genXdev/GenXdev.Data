@@ -67,7 +67,7 @@ New-SQLServerDatabase -DatabaseName "MyNewDatabase" -Server "localhost" -Consent
 #>
 function New-SQLServerDatabase {
 
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess = $true)]
     [Alias('nsqldb')]
 
     param (
