@@ -2904,15 +2904,23 @@ Invoke-SSMS [<CommonParameters>]
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
     <string>] [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>]
 New-SQLServerDatabase [-ConnectionString] <string>
     [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>] 
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
@@ -2956,6 +2964,14 @@ New-SQLServerDatabase [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -5745,15 +5761,23 @@ Invoke-SSMS [<CommonParameters>]
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
     <string>] [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>]
 New-SQLServerDatabase [-ConnectionString] <string>
     [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>] 
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
@@ -5797,6 +5821,14 @@ New-SQLServerDatabase [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -8586,15 +8618,23 @@ Invoke-SSMS [<CommonParameters>]
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
     <string>] [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>]
 New-SQLServerDatabase [-ConnectionString] <string>
     [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>] 
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
@@ -8638,6 +8678,14 @@ New-SQLServerDatabase [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -11427,15 +11475,23 @@ Invoke-SSMS [<CommonParameters>]
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
     <string>] [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>]
 New-SQLServerDatabase [-ConnectionString] <string>
     [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>] 
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
@@ -11479,6 +11535,14 @@ New-SQLServerDatabase [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
@@ -14268,15 +14332,23 @@ Invoke-SSMS [<CommonParameters>]
 ```PowerShell 
 New-SQLServerDatabase [-DatabaseName] <string> [[-Server]
     <string>] [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>]
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>]
 New-SQLServerDatabase [-ConnectionString] <string>
     [-ForceConsent]
-    [-ConsentToThirdPartySoftwareInstallation]
-    [<CommonParameters>] 
+    [-ConsentToThirdPartySoftwareInstallation] [-WhatIf]
+    [-Confirm] [<CommonParameters>] 
 ```` 
 
 ### PARAMETERS 
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
     -ConnectionString <string>  
         The connection string to connect to SQL Server  
         Required?                    true  
@@ -14320,6 +14392,14 @@ New-SQLServerDatabase [-ConnectionString] <string>
         Accept pipeline input?       false  
         Parameter set name           DatabaseName  
         Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -WhatIf  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      wi  
         Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
