@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Get-GenXdevPreference.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -178,7 +178,7 @@ function Get-GenXdevPreference {
         if (-not $SessionOnly) {
 
             # copy parameters for database path resolution function
-            $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -201,7 +201,7 @@ function Get-GenXdevPreference {
                     "Checking local store for preference '$Name'"
 
                 # copy identical parameter values for local store retrieval
-                $getLocalParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                $getLocalParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
                     -FunctionName 'GenXdev.Data\Get-ValueByKeyFromStore' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -226,7 +226,7 @@ function Get-GenXdevPreference {
                         'Preference not found locally, checking defaults store'
 
                     # copy identical parameter values for defaults store retrieval
-                    $getDefaultParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                    $getDefaultParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                         -BoundParameters $PSBoundParameters `
                         -FunctionName 'GenXdev.Data\Get-ValueByKeyFromStore' `
                         -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `

@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Set-GenXdevDefaultPreference.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -129,7 +129,7 @@ function Set-GenXdevDefaultPreference {
     begin {
 
         # copy identical parameter values to prepare for database path lookup
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -162,7 +162,7 @@ function Set-GenXdevDefaultPreference {
             if ($PSCmdlet.ShouldProcess($Name, 'Remove default preference')) {
 
                 # copy identical parameter values for Remove-GenXdevPreference
-                $removeParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                $removeParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
                     -FunctionName 'GenXdev.Data\Remove-GenXdevPreference' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -189,7 +189,7 @@ function Set-GenXdevDefaultPreference {
         if ($PSCmdlet.ShouldProcess($Name, 'Set default preference')) {
 
             # copy identical parameter values for Set-ValueByKeyInStore
-            $setParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $setParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Set-ValueByKeyInStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -207,7 +207,7 @@ function Set-GenXdevDefaultPreference {
             GenXdev.Data\Set-ValueByKeyInStore @setParams
 
             # copy identical parameter values for Sync-KeyValueStore
-            $syncParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $syncParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Sync-KeyValueStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `

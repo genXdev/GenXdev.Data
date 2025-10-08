@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SQLite
 Original cmdlet filename  : Get-SQLiteTables.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 

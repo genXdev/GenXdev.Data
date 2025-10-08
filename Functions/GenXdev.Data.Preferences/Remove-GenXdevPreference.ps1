@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Remove-GenXdevPreference.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -132,7 +132,7 @@ function Remove-GenXdevPreference {
     begin {
 
         # copy identical parameter values to prepare for database path lookup
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -191,7 +191,7 @@ function Remove-GenXdevPreference {
                 $Name + ' from local store')
 
             # copy identical parameter values for Remove-KeyFromStore
-            $removeLocalParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $removeLocalParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Remove-KeyFromStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -212,7 +212,7 @@ function Remove-GenXdevPreference {
                 Microsoft.PowerShell.Utility\Write-Verbose ('Removing preference ' + $Name + ' from default store')
 
                 # copy identical parameter values for Remove-KeyFromStore (defaults)
-                $removeDefaultParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                $removeDefaultParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
                     -FunctionName 'GenXdev.Data\Remove-KeyFromStore' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `

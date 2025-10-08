@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Set-GenXdevPreference.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -190,7 +190,7 @@ function Set-GenXdevPreference {
 
         # handle persistent storage (default behavior)
         # resolve database path only when needed for persistent operations
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -215,7 +215,7 @@ function Set-GenXdevPreference {
                 )) {
 
                 # copy identical parameter values for Remove-GenXdevPreference
-                $removeParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+                $removeParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
                     -FunctionName 'GenXdev.Data\Remove-GenXdevPreference' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -242,7 +242,7 @@ function Set-GenXdevPreference {
             )) {
 
             # copy identical parameter values for Set-ValueByKeyInStore
-            $setParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $setParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Set-ValueByKeyInStore' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `

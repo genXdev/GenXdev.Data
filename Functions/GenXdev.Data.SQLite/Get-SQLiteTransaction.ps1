@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SQLite
 Original cmdlet filename  : Get-SQLiteTransaction.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -134,7 +134,7 @@ function Get-SQLiteTransaction {
 
     begin {
         # load SQLite client assembly with embedded consent using Copy-IdenticalParamValues
-        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $ensureParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
             -DefaultValues (
@@ -157,7 +157,7 @@ function Get-SQLiteTransaction {
                 Microsoft.PowerShell.Utility\Write-Verbose "Creating database file: $expandedPath"
 
                 # use Copy-IdenticalParamValues to pass compatible parameters to New-SQLiteDatabase
-                $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+                $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
                     -BoundParameters $PSBoundParameters `
                     -FunctionName 'GenXdev.Data\New-SQLiteDatabase' `
                     -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable -Scope Local -ErrorAction SilentlyContinue)

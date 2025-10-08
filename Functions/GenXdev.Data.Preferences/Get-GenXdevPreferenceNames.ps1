@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.Preferences
 Original cmdlet filename  : Get-GenXdevPreferenceNames.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -114,7 +114,7 @@ function Get-GenXdevPreferenceNames {
     begin {
 
         # copy identical parameter values to prepare for database path lookup
-        $params = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $params = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Data\Get-GenXdevPreferencesDatabasePath' `
             -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -196,7 +196,7 @@ function Get-GenXdevPreferenceNames {
                 'Retrieving keys from local preferences store'
 
             # copy identical parameter values for Get-StoreKeys (local)
-            $getLocalKeysParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $getLocalKeysParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Get-StoreKeys' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `
@@ -220,7 +220,7 @@ function Get-GenXdevPreferenceNames {
                 'Retrieving keys from default preferences store'
 
             # copy identical parameter values for Get-StoreKeys (defaults)
-            $getDefaultKeysParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+            $getDefaultKeysParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
                 -BoundParameters $PSBoundParameters `
                 -FunctionName 'GenXdev.Data\Get-StoreKeys' `
                 -DefaultValues (Microsoft.PowerShell.Utility\Get-Variable `

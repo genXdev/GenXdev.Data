@@ -175,47 +175,39 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the directory structure if not found and handles  
-    synchronization for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -232,63 +224,59 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a JSON-based key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
-    <String> [[-DefaultValue] <String>]
-    [[-SynchronizationKey] <String>] [-DatabasePath
-    <String>] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a JSON file-based key-value store.  
-    The function supports optional default values and synchronization across  
-    different scopes. It can use session-based settings or direct file access and  
-    provides automatic directory initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -350,29 +338,21 @@ GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePat
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes KeyValueStore directory structure for local and OneDrive storage.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <String>]
+Initialize-KeyValueStores [[-DatabasePath] <string>]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates directory structure for JSON-based key-value stores in two locations:  
-    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both directories exist and are properly configured.  
-
 ### PARAMETERS 
-    -DatabasePath <String>  
-        Base directory path for key-value store JSON files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -530,79 +510,75 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a JSON file-based store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
-    <String> [[-Value] <String>] [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using JSON files. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -619,37 +595,30 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store JSON files.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>]
-    [-DatabasePath <String>] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow JSON files using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3032,47 +3001,39 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the directory structure if not found and handles  
-    synchronization for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3089,63 +3050,59 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a JSON-based key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
-    <String> [[-DefaultValue] <String>]
-    [[-SynchronizationKey] <String>] [-DatabasePath
-    <String>] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a JSON file-based key-value store.  
-    The function supports optional default values and synchronization across  
-    different scopes. It can use session-based settings or direct file access and  
-    provides automatic directory initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3207,29 +3164,21 @@ GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePat
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes KeyValueStore directory structure for local and OneDrive storage.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <String>]
+Initialize-KeyValueStores [[-DatabasePath] <string>]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates directory structure for JSON-based key-value stores in two locations:  
-    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both directories exist and are properly configured.  
-
 ### PARAMETERS 
-    -DatabasePath <String>  
-        Base directory path for key-value store JSON files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3387,79 +3336,75 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a JSON file-based store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
-    <String> [[-Value] <String>] [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using JSON files. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -3476,37 +3421,30 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store JSON files.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>]
-    [-DatabasePath <String>] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow JSON files using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5889,47 +5827,39 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the directory structure if not found and handles  
-    synchronization for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -5946,63 +5876,59 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a JSON-based key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
-    <String> [[-DefaultValue] <String>]
-    [[-SynchronizationKey] <String>] [-DatabasePath
-    <String>] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a JSON file-based key-value store.  
-    The function supports optional default values and synchronization across  
-    different scopes. It can use session-based settings or direct file access and  
-    provides automatic directory initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6064,29 +5990,21 @@ GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePat
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes KeyValueStore directory structure for local and OneDrive storage.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <String>]
+Initialize-KeyValueStores [[-DatabasePath] <string>]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates directory structure for JSON-based key-value stores in two locations:  
-    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both directories exist and are properly configured.  
-
 ### PARAMETERS 
-    -DatabasePath <String>  
-        Base directory path for key-value store JSON files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6244,79 +6162,75 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a JSON file-based store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
-    <String> [[-Value] <String>] [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using JSON files. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -6333,37 +6247,30 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store JSON files.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>]
-    [-DatabasePath <String>] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow JSON files using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8746,47 +8653,39 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the directory structure if not found and handles  
-    synchronization for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8803,63 +8702,59 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a JSON-based key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
-    <String> [[-DefaultValue] <String>]
-    [[-SynchronizationKey] <String>] [-DatabasePath
-    <String>] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a JSON file-based key-value store.  
-    The function supports optional default values and synchronization across  
-    different scopes. It can use session-based settings or direct file access and  
-    provides automatic directory initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -8921,29 +8816,21 @@ GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePat
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes KeyValueStore directory structure for local and OneDrive storage.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <String>]
+Initialize-KeyValueStores [[-DatabasePath] <string>]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates directory structure for JSON-based key-value stores in two locations:  
-    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both directories exist and are properly configured.  
-
 ### PARAMETERS 
-    -DatabasePath <String>  
-        Base directory path for key-value store JSON files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9101,79 +8988,75 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a JSON file-based store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
-    <String> [[-Value] <String>] [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using JSON files. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -9190,37 +9073,30 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store JSON files.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>]
-    [-DatabasePath <String>] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow JSON files using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11603,47 +11479,39 @@ Get-KeyValueStoreNames [[-SynchronizationKey] <string>]
    Get-StoreKeys                        --> getkeys  
 ```` 
 
-### SYNOPSIS 
-    Retrieves all key names for a given key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [<CommonParameters>] 
+Get-StoreKeys [-StoreName] <string> [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Queries the KeyValueStore JSON file to retrieve all active (non-deleted)  
-    keys for a specified store. Can optionally filter by synchronization scope.  
-    Automatically initializes the directory structure if not found and handles  
-    synchronization for non-local stores.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query. This identifies the logical grouping  
-        of keys and values in the database.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -StoreName <string>  
+        Name of the store whose keys should be retrieved  
         Required?                    true  
+        Position?                    0  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope, defaults to all  
+        Required?                    false  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional scope identifier for synchronization. Use "Local" for local-only data.  
-        Defaults to "%" which matches all scopes. Triggers sync for non-local scopes.  
-        Required?                    false  
-        Position?                    2  
-        Default value                %  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Directory path for keyvalue database files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11660,63 +11528,59 @@ Get-StoreKeys [-StoreName] <String> [[-SynchronizationKey]
    Get-ValueByKeyFromStore              --> getvalue  
 ```` 
 
-### SYNOPSIS 
-    Retrieves a value from a JSON-based key-value store.  
-
 ### SYNTAX 
 ```PowerShell 
-Get-ValueByKeyFromStore [-StoreName] <String> [-KeyName]
-    <String> [[-DefaultValue] <String>]
-    [[-SynchronizationKey] <String>] [-DatabasePath
-    <String>] [<CommonParameters>] 
+Get-ValueByKeyFromStore [-StoreName] <string> [-KeyName]
+    <string> [[-DefaultValue] <string>]
+    [[-SynchronizationKey] <string>] [-DatabasePath
+    <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Retrieves a value for a specified key from a JSON file-based key-value store.  
-    The function supports optional default values and synchronization across  
-    different scopes. It can use session-based settings or direct file access and  
-    provides automatic directory initialization and synchronization capabilities.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the key-value store to query.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DefaultValue <string>  
+        A optional default value  
+        Required?                    false  
+        Position?                    2  
+        Accept pipeline input?       false  
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Key to retrieve from the specified store  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The key whose value should be retrieved.  
+    -StoreName <string>  
+        Name of the store to retrieve the key from  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DefaultValue <String>  
-        Optional default value to return if the key is not found.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Optional key to identify synchronization scope. Defaults to "Local".  
-        Required?                    false  
-        Position?                    4  
-        Default value                Local  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           Default  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11778,29 +11642,21 @@ GetStoreFilePath [-SynchronizationKey] <string> [-StoreName] <string> [[-BasePat
    Initialize-KeyValueStores  
 ```` 
 
-### SYNOPSIS 
-    Initializes KeyValueStore directory structure for local and OneDrive storage.  
-
 ### SYNTAX 
 ```PowerShell 
-Initialize-KeyValueStores [[-DatabasePath] <String>]
+Initialize-KeyValueStores [[-DatabasePath] <string>]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Creates directory structure for JSON-based key-value stores in two locations:  
-    1. Local machine for immediate access ($ENV:LOCALAPPDATA\GenXdev.PowerShell\KeyValueStore\)  
-    2. OneDrive folder for cloud synchronization  
-    The function ensures both directories exist and are properly configured.  
-
 ### PARAMETERS 
-    -DatabasePath <String>  
-        Base directory path for key-value store JSON files.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -11958,79 +11814,75 @@ Remove-KeyValueStore [-StoreName] <string>
    Set-ValueByKeyInStore                --> setvalue  
 ```` 
 
-### SYNOPSIS 
-    Manages key-value pairs in a JSON file-based store.  
-
 ### SYNTAX 
 ```PowerShell 
-Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
-    <String> [[-Value] <String>] [[-SynchronizationKey]
-    <String>] [-DatabasePath <String>] [-WhatIf] [-Confirm]
+Set-ValueByKeyInStore [-StoreName] <string> [-KeyName]
+    <string> [[-Value] <string>] [[-SynchronizationKey]
+    <string>] [-DatabasePath <string>] [-WhatIf] [-Confirm]
     [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Provides persistent storage for key-value pairs using JSON files. Handles both  
-    insertion of new entries and updates to existing ones. Supports optional  
-    synchronization for non-local stores. This function implements an upsert  
-    operation that either inserts new key-value pairs or updates existing ones  
-    based on the combination of synchronization key, store name, and key name.  
-
 ### PARAMETERS 
-    -StoreName <String>  
-        The name of the store where the key-value pair will be saved.  
+    -Confirm  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      cf  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
+    -KeyName <string>  
+        Name of the key to set or update  
         Required?                    true  
         Position?                    1  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -KeyName <String>  
-        The unique identifier for the value within the specified store.  
+    -StoreName <string>  
+        Store name for the key-value pair  
         Required?                    true  
-        Position?                    2  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -Value <String>  
-        The data to be stored, associated with the specified key.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
         Position?                    3  
-        Default value                  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope. Use "Local" for local-only storage.  
-        Defaults to "Local". Non-local values trigger store synchronization.  
+    -Value <string>  
+        Value to be stored  
         Required?                    false  
-        Position?                    4  
-        Default value                Local  
+        Position?                    2  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -WhatIf  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -WhatIf [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
-        Accept wildcard characters?  false  
-    -Confirm [<SwitchParameter>]  
-        Required?                    false  
-        Position?                    named  
-        Default value                  
-        Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      wi  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  
@@ -12047,37 +11899,30 @@ Set-ValueByKeyInStore [-StoreName] <String> [-KeyName]
    Sync-KeyValueStore  
 ```` 
 
-### SYNOPSIS 
-    Synchronizes local and OneDrive key-value store JSON files.  
-
 ### SYNTAX 
 ```PowerShell 
-Sync-KeyValueStore [[-SynchronizationKey] <String>]
-    [-DatabasePath <String>] [<CommonParameters>] 
+Sync-KeyValueStore [[-SynchronizationKey] <string>]
+    [-DatabasePath <string>] [<CommonParameters>] 
 ```` 
 
-### DESCRIPTION 
-    Performs two-way synchronization between local and OneDrive shadow JSON files using  
-    a last-modified timestamp strategy. Records are merged based on their last  
-    modification time, with newer versions taking precedence.  
-
 ### PARAMETERS 
-    -SynchronizationKey <String>  
-        Identifies the synchronization scope for the operation. Using "Local" will skip  
-        synchronization as it indicates local-only records.  
+    -DatabasePath <string>  
+        Database path for key-value store data files  
         Required?                    false  
-        Position?                    1  
-        Default value                Local  
+        Position?                    Named  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
-    -DatabasePath <String>  
-        Database path for key-value store data files.  
+    -SynchronizationKey <string>  
+        Key to identify synchronization scope  
         Required?                    false  
-        Position?                    named  
-        Default value                  
+        Position?                    0  
         Accept pipeline input?       false  
-        Aliases                        
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
         Accept wildcard characters?  false  
     <CommonParameters>  
         This cmdlet supports the common parameters: Verbose, Debug,  

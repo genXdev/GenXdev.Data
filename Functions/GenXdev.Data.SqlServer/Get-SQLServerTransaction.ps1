@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : Get-SQLServerTransaction.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.296.2025
+Version                   : 1.298.2025
 ################################################################################
 MIT License
 
@@ -137,7 +137,7 @@ function Get-SQLServerTransaction {
 
     begin {
         # load SQL Server client assembly with embedded consent using Copy-IdenticalParamValues
-        $ensureParams = GenXdev.Helpers\Copy-IdenticalParamValues `
+        $ensureParams = GenXdev.FileSystem\Copy-IdenticalParamValues `
             -BoundParameters $PSBoundParameters `
             -FunctionName 'GenXdev.Helpers\EnsureNuGetAssembly' `
             -DefaultValues (
