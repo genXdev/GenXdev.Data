@@ -11,10 +11,3 @@ if ($major -ne 10) {
 
 
 
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.ps1"
-. "$PSScriptRoot\Functions\GenXdev.Data.Preferences\Set-GenXdevPreferencesDatabasePath.ps1"

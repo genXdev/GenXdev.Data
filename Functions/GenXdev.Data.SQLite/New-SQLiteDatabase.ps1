@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SQLite
 Original cmdlet filename  : New-SQLiteDatabase.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.300.2025
+Version                   : 1.302.2025
 ################################################################################
 Copyright (c)  René Vaessen / GenXdev
 
@@ -49,6 +49,9 @@ nsqldb "C:\Databases\MyNewDb.sqlite"
 .EXAMPLE
 New-SQLiteDatabase -DatabaseFilePath "C:\Databases\MyNewDb.sqlite" -ConsentToThirdPartySoftwareInstallation
 #>
+
+# don't remove this line [dontrefactor]
+
 function New-SQLiteDatabase {
 
     [CmdletBinding(SupportsShouldProcess = $true)]

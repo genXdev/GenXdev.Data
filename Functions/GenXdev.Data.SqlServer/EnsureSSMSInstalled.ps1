@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : EnsureSSMSInstalled.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 1.300.2025
+Version                   : 1.302.2025
 ################################################################################
 Copyright (c)  René Vaessen / GenXdev
 
@@ -98,7 +98,7 @@ function EnsureSSMSInstalled {
                 throw "Installation consent denied for SQL Server Management Studio. Cannot proceed with SSMS installation."
             }
 
-            Microsoft.WinGet.Client\Install-WinGetPackage -Id "Microsoft SQL Server Management Studio 22 Preview"
+            Microsoft.WinGet.Client\Install-WinGetPackage -Id "Microsoft.SQLServerManagementStudio.22.Preview"
 
             $searchPath  = GenXdev.FileSystem\Find-Item  `
              "${Env:ProgramFiles(x86)}\*SQL Server Management*\Ssms.exe",
