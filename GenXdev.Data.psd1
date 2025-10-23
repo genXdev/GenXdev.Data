@@ -12,7 +12,7 @@
 RootModule = 'GenXdev.Data.psm1'
 
 # Version number of this module.
-ModuleVersion = '1.308.2025'
+ModuleVersion = '2.1.2025'
 
 # Supported PSEditions
 CompatiblePSEditions = 'Core'
@@ -33,7 +33,7 @@ Copyright = 'Copyright 2021-2025 GenXdev'
 Description = 'A Windows PowerShell module with helpers for working with data and databases'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '7.5.0'
+PowerShellVersion = '7.5.4'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''
@@ -51,8 +51,8 @@ ClrVersion = '9.0.0.1'
 ProcessorArchitecture = 'Amd64'
 
 # Modules that must be imported into the global environment prior to importing this module
-RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '1.308.2025'; }, 
-               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '1.308.2025'; })
+RequiredModules = @(@{ModuleName = 'GenXdev.Helpers'; ModuleVersion = '2.1.2025'; }, 
+               @{ModuleName = 'GenXdev.FileSystem'; ModuleVersion = '2.1.2025'; })
 
 # Assemblies that must be loaded prior to importing this module
 RequiredAssemblies = 'lib\GenXdev.Data.dll'
@@ -119,61 +119,50 @@ FileList = '.gitignore', 'GenXdev.Data.csproj',
                'GenXdev.Data.psd1', 'GenXdev.Data.psm1', 'GenXdev.Data.SQLite.psm1', 
                'GenXdev.Data.SqlServer.psm1', 'LICENSE', 'powershell.jpg', 'README.md', 
                'lib\GenXdev.Data.deps.json', 'lib\GenXdev.Data.dll', 
+               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.cs', 
+               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.cs', 
+               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.cs', 
+               'Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.cs', 
+               'Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Get-KeyValueStorePath.cs', 
+               'Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Get-StoreKeys.cs', 
+               'Functions\GenXdev.Data.Preferences\Set-GenXdevPreferencesDatabasePath.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Get-ValueByKeyFromStore.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Initialize-KeyValueStores.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Remove-KeyFromStore.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.cs', 
                'Functions\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.cs', 
-               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreference.cs', 
-               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferenceNames.cs', 
-               'Functions\GenXdev.Data.Preferences\Get-GenXdevPreferencesDatabasePath.cs', 
-               'Functions\GenXdev.Data.Preferences\Remove-GenXdevPreference.cs', 
-               'Functions\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.cs', 
-               'Functions\GenXdev.Data.Preferences\Set-GenXdevPreference.cs', 
-               'Functions\GenXdev.Data.Preferences\Set-GenXdevPreferencesDatabasePath.cs', 
-               'lib\lib\Microsoft.Extensions.Configuration.UserSecrets.dll', 
-               'Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableData.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTables.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteTransaction.ps1', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewColumnData.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewData.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteViews.cs', 
-               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewSchema.cs', 
-               'Functions\GenXdev.Data.SQLite\Invoke-SQLiteQuery.ps1', 
-               'Functions\GenXdev.Data.SQLite\Invoke-SQLiteStudio.cs', 
-               'Functions\GenXdev.Data.SQLite\New-SQLiteDatabase.ps1', 
                'Functions\GenXdev.Data.SqlServer\EnsureSSMSInstalled.ps1', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerSchema.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerTableColumnData.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerTableData.cs', 
+               'Functions\GenXdev.Data.SQLite\EnsureSQLiteStudioInstalled.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteSchema.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerTables.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableColumnData.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerTableSchema.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableData.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerTransaction.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTables.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerViewColumnData.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTableSchema.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerViewData.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteTransaction.ps1', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerViews.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewColumnData.cs', 
                'Functions\GenXdev.Data.SqlServer\Get-SQLServerViewSchema.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewData.cs', 
                'Functions\GenXdev.Data.SqlServer\Invoke-SqlServerQuery.ps1', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteViews.cs', 
                'Functions\GenXdev.Data.SqlServer\Invoke-SSMS.cs', 
+               'Functions\GenXdev.Data.SQLite\Get-SQLiteViewSchema.cs', 
                'Functions\GenXdev.Data.SqlServer\New-SQLServerDatabase.ps1', 
-               'Tests\GenXdev.Data.Preferences\Get-GenXdevPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTableData.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTables.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Remove-GenXdevPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTableSchema.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTransaction.Tests.ps1', 
-               'Tests\GenXdev.Data.Preferences\Set-GenXdevPreference.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\Invoke-SQLServerQuery.Tests.ps1', 
-               'Tests\GenXdev.Data.SqlServer\New-SQLServerDatabase.Tests.ps1', 
+               'Functions\GenXdev.Data.SQLite\Invoke-SQLiteQuery.ps1', 
+               'Functions\GenXdev.Data.SQLite\Invoke-SQLiteStudio.cs', 
+               'Functions\GenXdev.Data.SQLite\New-SQLiteDatabase.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-KeyValueStoreNames.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-StoreKeys.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Get-ValueByKeyFromStore.Tests.ps1', 
@@ -181,18 +170,16 @@ FileList = '.gitignore', 'GenXdev.Data.csproj',
                'Tests\GenXdev.Data.KeyValueStore\Remove-KeyValueStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Set-ValueByKeyInStore.Tests.ps1', 
                'Tests\GenXdev.Data.KeyValueStore\Sync-KeyValueStore.Tests.ps1', 
-               'lib\runtimes\win-arm64\ggml-base-whisper.dll', 
-               'lib\runtimes\win-arm64\ggml-cpu-whisper.dll', 
-               'lib\runtimes\win-arm64\ggml-whisper.dll', 
-               'lib\runtimes\win-arm64\whisper.dll', 
-               'lib\runtimes\win-x64\ggml-base-whisper.dll', 
-               'lib\runtimes\win-x64\ggml-cpu-whisper.dll', 
-               'lib\runtimes\win-x64\ggml-whisper.dll', 
-               'lib\runtimes\win-x64\whisper.dll', 
-               'lib\runtimes\win-x86\ggml-base-whisper.dll', 
-               'lib\runtimes\win-x86\ggml-cpu-whisper.dll', 
-               'lib\runtimes\win-x86\ggml-whisper.dll', 
-               'lib\runtimes\win-x86\whisper.dll'
+               'Tests\GenXdev.Data.Preferences\Get-GenXdevPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.Preferences\Remove-GenXdevPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.Preferences\Set-GenXdevDefaultPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.Preferences\Set-GenXdevPreference.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTableData.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTables.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTableSchema.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\Get-SQLServerTransaction.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\Invoke-SQLServerQuery.Tests.ps1', 
+               'Tests\GenXdev.Data.SqlServer\New-SQLServerDatabase.Tests.ps1'
 
 # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
 PrivateData = @{
