@@ -2,7 +2,7 @@
 // Part of PowerShell module : GenXdev.Data.SqlServer
 // Original cmdlet filename  : Get-SQLServerTableSchema.cs
 // Original author           : René Vaessen / GenXdev
-// Version                   : 2.1.2025
+// Version                   : 2.3.2026
 // ################################################################################
 // Copyright (c)  René Vaessen / GenXdev
 //
@@ -22,7 +22,6 @@
 
 
 using System.Collections;
-using System.Linq;
 using System.Management.Automation;
 
 namespace GenXdev.Data.SqlServer

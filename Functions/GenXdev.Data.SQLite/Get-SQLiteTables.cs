@@ -2,7 +2,7 @@
 // Part of PowerShell module : GenXdev.Data.SQLite
 // Original cmdlet filename  : Get-SQLiteTables.cs
 // Original author           : René Vaessen / GenXdev
-// Version                   : 2.1.2025
+// Version                   : 2.3.2026
 // ################################################################################
 // Copyright (c)  René Vaessen / GenXdev
 //

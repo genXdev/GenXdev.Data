@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : EnsureSSMSInstalled.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 2.1.2025
+Version                   : 2.3.2026
 ################################################################################
 Copyright (c)  René Vaessen / GenXdev
 
@@ -36,7 +36,9 @@ Checks and ensures SSMS is installed and accessible.
 function EnsureSSMSInstalled {
 
     [CmdletBinding()]
-    param()
+    param(
+        [switch] $Force
+    )
 
     begin {
 
@@ -80,7 +82,7 @@ function EnsureSSMSInstalled {
              "${Env:ProgramFiles}\*SQL Server Management*\Ssms.exe" |
              Microsoft.PowerShell.Utility\Sort-Object LastWriteTime -Descending | Microsoft.PowerShell.Utility\Select-Object -First 1
 
-        if (-not $searchPath) {
+        if ($Force -or -not $searchPath) {
 
             # ensure winget package manager is available
             if (-not (IsWinGetInstalled)) {

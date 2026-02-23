@@ -468,12 +468,22 @@ New-SQLiteDatabase [-DatabaseFilePath] <string>
 
 ### SYNTAX 
 ```PowerShell 
-EnsureSSMSInstalled [<CommonParameters>] 
+EnsureSSMSInstalled [-Force] [<CommonParameters>] 
 ``` 
 
 ### PARAMETERS 
 ```yaml 
  
+``` 
+```yaml 
+    -Force  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
 ``` 
 ```yaml 
     <CommonParameters>  
@@ -5647,12 +5657,22 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-EnsureSSMSInstalled [<CommonParameters>] 
+EnsureSSMSInstalled [-Force] [<CommonParameters>] 
 ``` 
 
 ### PARAMETERS 
 ```yaml 
  
+``` 
+```yaml 
+    -Force  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
 ``` 
 ```yaml 
     <CommonParameters>  
@@ -8952,12 +8972,22 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-EnsureSSMSInstalled [<CommonParameters>] 
+EnsureSSMSInstalled [-Force] [<CommonParameters>] 
 ``` 
 
 ### PARAMETERS 
 ```yaml 
  
+``` 
+```yaml 
+    -Force  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
 ``` 
 ```yaml 
     <CommonParameters>  
@@ -12257,12 +12287,22 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-EnsureSSMSInstalled [<CommonParameters>] 
+EnsureSSMSInstalled [-Force] [<CommonParameters>] 
 ``` 
 
 ### PARAMETERS 
 ```yaml 
  
+``` 
+```yaml 
+    -Force  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
 ``` 
 ```yaml 
     <CommonParameters>  
@@ -15562,12 +15602,22 @@ Invoke-SQLiteStudio [-DatabaseFilePath] <string> [-Queries]
 
 ### SYNTAX 
 ```PowerShell 
-EnsureSSMSInstalled [<CommonParameters>] 
+EnsureSSMSInstalled [-Force] [<CommonParameters>] 
 ``` 
 
 ### PARAMETERS 
 ```yaml 
  
+``` 
+```yaml 
+    -Force  
+        Required?                    false  
+        Position?                    Named  
+        Accept pipeline input?       false  
+        Parameter set name           (All)  
+        Aliases                      None  
+        Dynamic?                     false  
+        Accept wildcard characters?  false  
 ``` 
 ```yaml 
     <CommonParameters>  
