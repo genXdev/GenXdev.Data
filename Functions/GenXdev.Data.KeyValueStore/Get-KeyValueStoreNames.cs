@@ -2,7 +2,7 @@
 // Part of PowerShell module : GenXdev.Data.KeyValueStore
 // Original cmdlet filename  : Get-KeyValueStoreNames.cs
 // Original author           : René Vaessen / GenXdev
-// Version                   : 2.3.2026
+// Version                   : 3.3.2026
 // ################################################################################
 // Copyright (c)  René Vaessen / GenXdev
 //
