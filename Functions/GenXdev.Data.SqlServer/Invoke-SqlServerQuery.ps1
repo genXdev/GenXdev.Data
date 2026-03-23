@@ -2,7 +2,7 @@
 Part of PowerShell module : GenXdev.Data.SqlServer
 Original cmdlet filename  : Invoke-SqlServerQuery.ps1
 Original author           : René Vaessen / GenXdev
-Version                   : 3.3.2026
+Version                   : 3.23.2026
 ################################################################################
 Copyright (c)  René Vaessen / GenXdev
 
@@ -95,7 +95,6 @@ function Invoke-SQLServerQuery {
         [Alias("q", "Value", "Name", "Text", "Query")]
         [parameter(
             Position = 0,
-            ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
             HelpMessage = 'The query or queries to execute.'
@@ -139,7 +138,6 @@ function Invoke-SQLServerQuery {
         [Alias('data', 'parameters', 'args')]
         [parameter(
             Position = 5,
-            ValueFromRemainingArguments,
             ValueFromPipeline,
             ValueFromPipelineByPropertyName,
             HelpMessage = 'Query parameters as hashtables.'
@@ -256,7 +254,12 @@ function Invoke-SQLServerQuery {
                     # add parameters if provided
                     if ($null -ne $data) {
                         $data.GetEnumerator() | Microsoft.PowerShell.Core\ForEach-Object {
-                            $value = $PSItem.Value
+                            $value = if ($null -eq $PSItem.Value) {
+                                [DBNull]::Value
+                            }
+                            else {
+                                $PSItem.Value
+                            }
 
                             $null = $command.Parameters.AddWithValue(
                                 '@' + $PSItem.Key,
